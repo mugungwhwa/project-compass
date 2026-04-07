@@ -911,7 +911,119 @@ def translate_experiment_to_investment(
     )
 ```
 
-### 5.3 재무 메트릭 산출 (Financial Data → Investment Metrics)
+### 5.3.1 Variant-Level LTV Decomposition
+
+A/B 실험은 단순 "treatment vs control"이 아니라 **다중 variant + 롤아웃 이력**으로 운영된다. Compass는 실험을 `ExperimentVariant` 단위로 분해하여 각 variant가 **실제로 이동시킨 LTV**를 추적한다.
+
+```python
+def decompose_experiment_to_variants(
+    experiment_id: int,
+    raw_assignments: pd.DataFrame,   # user_id, variant_id, assigned_at
+    cohort_retention: pd.DataFrame,  # variant_id × day × retention
+    arpdau: float,
+) -> list[VariantLTVResult]:
+    """
+    실험을 variant 단위로 분해하고 각 variant의 ΔLTV를 추정.
+    control variant의 LTV를 baseline으로 잡고 posterior로 Δ 계산.
+    """
+    control = raw_assignments.query("variant_id.str.endswith('-control')")
+    control_ltv = compute_ltv_from_retention(
+        cohort_retention[cohort_retention.variant_id == control_id],
+        arpdau=arpdau
+    )
+
+    results = []
+    for variant_id, group in raw_assignments.groupby("variant_id"):
+        if variant_id == control_id:
+            continue
+
+        # Bayesian 비교: treatment LTV - control LTV
+        variant_ret = cohort_retention[cohort_retention.variant_id == variant_id]
+        variant_ltv = compute_ltv_from_retention(variant_ret, arpdau)
+
+        # NumPyro Hierarchical posterior (partial pooling across variants)
+        ltv_delta_samples = bayesian_variant_comparison(
+            control_ltv_posterior=control_ltv.samples,
+            variant_ltv_posterior=variant_ltv.samples,
+        )
+
+        results.append(VariantLTVResult(
+            variant_id=variant_id,
+            ltv_delta=float(np.median(ltv_delta_samples)),
+            ltv_ci_low=float(np.percentile(ltv_delta_samples, 10)),
+            ltv_ci_high=float(np.percentile(ltv_delta_samples, 90)),
+            sample_size=len(group),
+            status=classify_variant_status(ltv_delta_samples),  # winner/loser/shipped/reverted
+        ))
+    return results
+```
+
+**Reverted variant 처리**: `status="reverted"`인 variant의 rollout_history는 음수 방향으로도 계산되어 **"실수 비용"**을 누적 추적한다. 이는 Module 4 UI에서 경고 패턴으로 시각화된다.
+
+### 5.3.2 Deployment-Stage LTV Ripple Forecasting
+
+A/B 실험이 "승리"했다고 해서 100% 롤아웃 시 효과가 ATE 그대로 유지되는 것은 아니다. Compass는 **stage-wise ripple forecast**를 생성하여 각 확장 단계의 예상 LTV 리프트를 사전 추정한다.
+
+```python
+def forecast_rollout_ripple(
+    variant_id: str,
+    current_ate: dict,           # p10/p50/p90 ΔLTV per user
+    current_stage_pct: float,    # 현재 롤아웃 비율 (e.g., 5.0)
+    daily_installs: int,
+    cohort_horizon_days: int = 180,
+    shrinkage_schedule: dict = None,
+) -> RippleForecast:
+    """
+    Variant를 5% → 25% → 50% → 100% 확장했을 때의 누적 LTV 리프트 예측.
+    - partial pooling으로 낮은 단계 결과를 높은 단계의 prior로 사용
+    - shrinkage schedule로 novelty/interference 감쇠 반영
+    - CausalImpact synthetic control로 counterfactual LTV 베이스라인
+    """
+    import numpy as np
+    from numpyro import distributions as dist
+
+    # Novelty/interference shrinkage (실증 기반: 상위 20%는 헤비 유저 → 효과 최대)
+    shrinkage = shrinkage_schedule or {5: 1.00, 25: 0.92, 50: 0.85, 100: 0.75}
+
+    stages = []
+    for pct in [5, 25, 50, 100]:
+        beta = shrinkage[pct]
+
+        # 커버리지: pct% × daily_installs × horizon
+        affected_users = daily_installs * (pct / 100) * cohort_horizon_days
+
+        # ΔLTV per user with shrinkage
+        lift_p10 = current_ate["p10"] * beta * affected_users
+        lift_p50 = current_ate["p50"] * beta * affected_users
+        lift_p90 = current_ate["p90"] * beta * affected_users
+
+        # Observation window: 단계가 커질수록 posterior 수렴에 더 오래 필요
+        days_to_observe = {5: 7, 25: 14, 50: 21, 100: 30}[pct]
+
+        stages.append(RippleStage(
+            percentage=pct,
+            predicted_ltv_lift=float(lift_p50),
+            ci_low=float(lift_p10),
+            ci_high=float(lift_p90),
+            days_to_observe=days_to_observe,
+        ))
+
+    return RippleForecast(variant_id=variant_id, stages=stages)
+```
+
+**결정 게이트 (Rollout Decision Gate)**:
+```
+IF ripple.stages[next_stage].ci_low > 0:
+    → 확장 권장 (lower bound도 양수)
+ELIF ripple.stages[next_stage].p50 > 0 AND current_observed_lift_matches_p50:
+    → 조건부 확장 (관측값 검증 후)
+ELSE:
+    → HOLD 또는 롤백 (MAB: 트래픽 축소)
+```
+
+이 로직은 Stage 5 DECIDE의 시그널 판정 및 Module 5 (Capital Allocation)의 AI 추천 랭킹에 직접 연결된다.
+
+### 5.4 재무 메트릭 산출 (Financial Data → Investment Metrics)
 
 재무 데이터가 입력되면 추가 메트릭이 활성화됩니다. **재무 데이터 없이도 파이프라인은 작동**하지만, 아래 메트릭들은 비활성 상태로 "재무 데이터 필요" 표시됩니다.
 

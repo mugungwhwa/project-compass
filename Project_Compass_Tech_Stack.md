@@ -345,6 +345,48 @@ Data Analysis
 | **pandas** | 데이터 처리 | 코호트 데이터 전처리, 피벗 |
 | **W&B** (Weights & Biases) | 실험 추적 | 학습 로그, 모델 버전, 비교 대시보드 (무료 티어) |
 | **psycopg2** / **asyncpg** | DB 연결 | Supabase PostgreSQL 직접 연결 |
+| **CausalImpact** (tfcausalimpact) | 합성 통제(Synthetic Control) | 롤아웃 단계(%) 확장 시 counterfactual LTV 추정 |
+| **statsmodels** | 시계열 / VAR | Cumulative LTV ripple 추세 분해, 구조 변화 탐지 |
+| **mabwiser** | Contextual Multi-Armed Bandit | 적응형 롤아웃 트래픽 분배 (Thompson Sampling) |
+| **prophet** (선택) | 베이스라인 LTV 예측 | Counterfactual 시계열 fit으로 ripple 비교 기준선 |
+
+##### Rollout-Stage LTV Ripple Prediction (Variant → Investment Ripple)
+
+기존 번역 파이프라인은 "ATE → ΔLTV per user"에서 멈춘다. Compass의 차별화는 **"이 variant를 5% → 25% → 50% → 100%로 확장하면 포트폴리오 전체 LTV가 어떻게 파급되는가"**를 단계별로 예측하는 것이다.
+
+```
+Variant ATE (A/B 결과)
+    │
+    ├─► [1] 단계별 커버리지 모델링
+    │    rollout% × DAU × exposure_ratio → 영향받는 코호트 크기
+    │
+    ├─► [2] Bayesian Hierarchical Model (NumPyro)
+    │    - Partial pooling: 5% 결과 → 25% posterior update
+    │    - variant_effect ~ Normal(ATE, σ²) with rollout-decay prior
+    │
+    ├─► [3] Counterfactual Cumulative LTV (CausalImpact)
+    │    - 롤아웃 전 기간을 pre-period로 사용
+    │    - 단계 확장 후 synthetic control과 비교 → 순수 ripple 효과
+    │
+    ├─► [4] Ripple Decay Function
+    │    실제 ATE는 롤아웃이 커질수록 감쇠하는 경향:
+    │      - Novelty effect 희석 (5% → 100%에서 효과 60~80%로 감소)
+    │      - Interference / 인접 feature 간섭
+    │      - Heterogeneous treatment effect (HTE) — 상위 코호트부터 먼저 반응
+    │    → shrinkage 계수 β(stage) ∈ [0.6, 1.0]
+    │
+    └─► [5] 출력: Stage별 ΔLTV with P10/P50/P90
+         stages: [{pct, predicted_ltv_lift, ci_low, ci_high, days_to_observe}]
+```
+
+**적응형 롤아웃 루프 (optional):**
+Contextual Bandit (mabwiser)로 variant별 트래픽 비율을 자동 조정 — 투자 가치가 크레디블 인터벌 하한에서도 양수면 트래픽 확대, 음수로 드리프트하면 축소/롤백. 이것이 Compass가 "Decision OS"로 불리는 이유다 (단순 A/B 리포팅이 아닌 **자본 배분 자동 조정**).
+
+**신기술 스택 요약:**
+- `tfcausalimpact`: Google CausalImpact Python 포팅, pre/post 구조 변화 추정
+- `mabwiser`: Fidelity Investments 오픈소스, Contextual Bandit / Thompson Sampling
+- `statsmodels.tsa.VAR`: Vector Autoregression으로 retention × revenue × DAU 연동 예측
+- `numpyro.infer.SVI` (Hierarchical): partial pooling으로 stage별 효과 공유
 
 #### 3.3 베이지안 추론 엔진 상세
 

@@ -904,14 +904,56 @@ Settings (사이드바 하단 또는 프로필 메뉴)
 
 ### 7.4 Module 4: Experiment Investment Board
 
-**핵심 질문**: "R&D가 투자 가치를 만들고 있는가?"
+**핵심 질문**: "R&D가 투자 가치를 만들고 있는가? — 그리고 어떤 variant가 실제로 LTV를 움직였는가?"
 
-- 좌측: 실험 포트폴리오 테이블 (이름, 상태, ATE, ΔLTV, ROI)
+#### 7.4.1 상단 레이어 — 포트폴리오 개요
+- KPI 카드: Velocity, Ship Rate × Win Rate, 누적 ΔLTV, 평균 Time-to-Decision
+- 실험 포트폴리오 테이블 (이름, 상태, ATE, ΔLTV, ROI)
   - 초록 행: shipped winners
   - 회색 행: not shipped
   - 노랑 행: 진행 중
-- 우측: 누적 ΔLTV 스택 영역 차트
-- 상단 KPI 카드: Velocity, Ship Rate × Win Rate, 누적 ΔLTV, 평균 Time-to-Decision
+  - 빨강 행: reverted (롤백) — "실수 비용" 컬럼 강조
+
+#### 7.4.2 중단 레이어 — Variant Impact Board (신규)
+
+실험을 클릭하면 우측 슬라이드 패널로 variant 단위 상세 뷰가 열린다.
+
+**Variant Impact Chart (수평 막대 + 에러바)**
+- 각 variant를 한 행으로 표시: `Control | V1 | V2 | ...`
+- 막대 길이: ΔLTV per user (control 대비)
+- 에러바: P10~P90 크레디블 인터벌
+- 색상 코드:
+  - 회색: control (baseline)
+  - 초록: winner (CI 하한 > 0)
+  - 빨강: loser (CI 상한 < 0)
+  - 점선 초록: shipped (실제 배포됨)
+  - 점선 빨강: reverted (배포 후 롤백)
+- 각 variant 우측 끝: sample_size, confidence %
+
+**Rollout History Timeline (신규)**
+- 가로축: 시간 (shipped_at → 현재 또는 reverted_at)
+- 세로축 좌: 롤아웃 비율 (0~100%), 계단식 라인
+- 세로축 우: 누적 ΔLTV ($), 영역 차트
+- 주요 이벤트 마커: 5% → 15% → 35% → 60% → 100% 확장 지점
+- Reverted variant는 롤백 지점에서 빨간 X 마커 + 회색 음영으로 "이후 기간 = 기회비용"
+
+#### 7.4.3 하단 레이어 — Ripple Forecast Fan Chart (신규)
+
+**핵심 차별화**: "이 variant를 지금 50%로 확대하면?"에 대한 답.
+
+- 가로축: 롤아웃 단계 (5% → 25% → 50% → 100%)
+- 세로축: 예상 누적 ΔLTV ($)
+- Fan 밴드: P10/P50/P90 (기존 Fan Chart 스타일 재사용 — Section 4.1)
+- 각 단계에 `days_to_observe` 배지 ("50% = 21일 관측 필요")
+- 현재 단계는 굵은 수직선 표시, 다음 단계는 점멸 마커
+- 하단 Decision Gate 배지:
+  - 초록: "다음 단계 확장 권장 (CI 하한도 양수)"
+  - 노랑: "조건부 확장 — 관측값 검증 후"
+  - 빨강: "HOLD 또는 롤백 권장"
+
+**상호작용**:
+- Fan Chart 위에서 단계 클릭 → 해당 단계의 예상 LTV, 관측 필요 일수, shrinkage 계수 툴팁 표시
+- "What-if" 슬라이더: shrinkage 계수 조작 → fan 밴드 실시간 갱신 (비관/낙관 시나리오)
 
 ### 7.5 Module 5: Capital Allocation Console
 
