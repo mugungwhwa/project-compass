@@ -141,7 +141,7 @@ Content:   모듈에 따라 Context 영역이 동적으로 변경
 **시그널 텍스트 원칙**: 단독 투자 판단("INVEST MORE")보다 구체적 다음 액션("Increase rollout", "Keep testing before scaling")을 우선 표기. 시그널은 Executive Overview의 요약이며, 실제 가치 창출 근거는 Module 3(Actions)과 Module 4(Experiments)에서 도출됨.
 
 **색맹 접근성**: 색상만으로 구분하지 않음. 반드시 아이콘 + 텍스트 + 위치를 함께 사용.
-대안 팔레트: Green 대신 Blue(`#2563EB`) 사용 → Blue/Amber/Red는 색각 이상에 본질적으로 안전.
+대안 팔레트: Green 대신 Blue(`#5B9AFF`) 사용 → Blue/Amber/Red는 색각 이상에 본질적으로 안전.
 
 ---
 
@@ -168,9 +168,9 @@ Retention (%)
 ### 4.2 밴드 스타일링
 
 ```
-P50 선:         #2563EB (파랑, 실선, 2px)
-P25-P75 밴드:   #2563EB at 25% opacity
-P10-P90 밴드:   #2563EB at 12% opacity
+P50 선:         #5B9AFF (accent-blue, 실선, 2px)   ← deck palette
+P25-P75 밴드:   #5B9AFF at 25% opacity
+P10-P90 밴드:   #5B9AFF at 12% opacity
 벤치마크 밴드:  #94A3B8 at 15% opacity (회색, 게임 데이터와 구별)
 
 관측 데이터:    실선 + 점 (●)
@@ -936,6 +936,31 @@ Settings (사이드바 하단 또는 프로필 메뉴)
 
 ### 8.2 색상 시스템
 
+#### 8.2.1 덱 브랜드 팔레트 (Source of Truth)
+
+Compass 덱(`Project_Compass_Deck_v2.html`) 에서 추출한 공식 브랜드 팔레트. 모든 차트 시리즈, UI 강조색, 크레디블 인터벌 시각화에 이 팔레트를 사용한다.
+
+```
+Primary Accent:  #5B9AFF   (bright blue)   — P50선, 주요 시리즈, CTA
+Secondary:       #3EDDB5   (mint/teal)      — 점근선 마커, BEP선, ROAS선
+Tertiary:        #FFA94D   (warm orange)    — 벤치마크선, UA Spend, 경고
+Accent4:         #FF6B8A   (coral)          — 손실/부정 신호, 브레이크이븐선
+Accent5:         #A78BFA   (lavender)       — 실험/Live Ops 시리즈
+```
+
+CSS 변수 (`globals.css`):
+```css
+--accent-blue:     #5B9AFF;
+--accent-green:    #3EDDB5;
+--accent-orange:   #FFA94D;
+--accent-coral:    #FF6B8A;
+--accent-lavender: #A78BFA;
+```
+
+> **레거시**: `#2563EB` 는 사이드바 브랜드 로고 색상으로만 유지 (`--brand`). 차트/UI 강조색으로 사용 금지.
+
+#### 8.2.2 전체 색상 시스템
+
 ```
 배경:
   Light:   #FFFFFF / #F8FAFC (surface)
@@ -950,19 +975,19 @@ Settings (사이드바 하단 또는 프로필 메뉴)
   Positive:  #16A34A (bg: #DCFCE7)
   Warning:   #D97706 (bg: #FEF3C7)
   Negative:  #DC2626 (bg: #FEE2E2)
-  Neutral:   #2563EB (bg: #DBEAFE)
+  Neutral:   #5B9AFF (bg: #EFF6FF)   ← deck palette (구 #2563EB)
 
-차트 시리즈:
-  Series 1:  #2563EB (blue)
-  Series 2:  #7C3AED (violet)
-  Series 3:  #0891B2 (cyan)
-  Series 4:  #059669 (emerald)
-  Series 5:  #D97706 (amber)
+차트 시리즈 (덱 팔레트 기준):
+  Series 1:  #5B9AFF (accent-blue)   ← Primary — 매출, P50
+  Series 2:  #A78BFA (lavender)      ← 실험, Live Ops
+  Series 3:  #3EDDB5 (mint)          ← BEP, ROAS, 성공 지표
+  Series 4:  #FFA94D (orange)        ← UA Spend, 벤치마크
+  Series 5:  #FF6B8A (coral)         ← 손실, 위험 지표
 
 크레디블 인터벌:
-  P50 선:       #2563EB (solid, 2px)
-  P25-P75:      #2563EB at 25% opacity
-  P10-P90:      #2563EB at 12% opacity
+  P50 선:       #5B9AFF (solid, 2px)   ← deck palette (구 #2563EB)
+  P25-P75:      #5B9AFF at 25% opacity
+  P10-P90:      #5B9AFF at 12% opacity
   벤치마크:     #94A3B8 at 15% opacity
 ```
 
