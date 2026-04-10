@@ -20,7 +20,10 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState, useRef, useEffect, useCallback, useId } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Gamepad2, ChevronDown, ChevronLeft, ChevronRight, Calendar, Check } from "lucide-react"
+import { Gamepad2, ChevronDown, Calendar, Check } from "lucide-react"
+import { DayPicker, type DateRange } from "react-day-picker"
+import { ko as koLocale, enUS } from "react-day-picker/locale"
+import "react-day-picker/style.css"
 import { mockCashRunway, mockFinancialHealth, mockCapitalKPIs, getGameData } from "@/shared/api"
 import { CompassLogo } from "@/shared/ui/compass-logo"
 import { useLocale } from "@/shared/i18n"
@@ -34,6 +37,23 @@ const GAMES = [
 ]
 
 const COHORT_MONTHS = ["2026-01", "2026-02", "2026-03", "2026-04"]
+
+const MONTH_LABELS_EN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+const MONTH_LABELS_KO = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+
+/** Available months (set — fast lookup for which cells are selectable) */
+const AVAILABLE_SET = new Set(COHORT_MONTHS)
+
+function formatCohort(ym: string, locale: string): string {
+  const [year, month] = ym.split("-")
+  const mi = parseInt(month, 10) - 1
+  return locale === "ko"
+    ? `${year}년 ${MONTH_LABELS_KO[mi]}`
+    : `${MONTH_LABELS_EN[mi]} ${year}`
+}
+
+function cohortYear(ym: string): string { return ym.split("-")[0] }
+function cohortMonthIdx(ym: string): number { return parseInt(ym.split("-")[1], 10) - 1 }
 
 type Metric = {
   labelKey: TranslationKey
@@ -110,30 +130,27 @@ function MetricCell({
 
 export function RunwayStatusBar() {
   const router = useRouter()
-  const { t } = useLocale()
+  const { t, locale } = useLocale()
 
   const gameListId  = useId()
   const calListId   = useId()
 
   const [selectedGame, setSelectedGame]     = useState(GAMES[0])
-  const [selectedCohort, setSelectedCohort] = useState("2026-03")
-
-  const metrics = buildMetrics(selectedGame.id, selectedCohort)
+  const [dateRange, setDateRange]           = useState<DateRange>({
+    from: new Date(2026, 2, 1),   // Mar 1
+    to:   new Date(2026, 2, 31),  // Mar 31
+  })
   const [gameOpen, setGameOpen]             = useState(false)
   const [calendarOpen, setCalendarOpen]     = useState(false)
 
-  // Keyboard active-index for each dropdown
-  const [gameActiveIdx, setGameActiveIdx]       = useState(-1)
-  const [calendarActiveIdx, setCalendarActiveIdx] = useState(-1)
+  // Derive cohort month from dateRange for metrics lookup
+  const selectedCohort = dateRange.from
+    ? `${dateRange.from.getFullYear()}-${String(dateRange.from.getMonth() + 1).padStart(2, "0")}`
+    : "2026-03"
+  const metrics = buildMetrics(selectedGame.id, selectedCohort)
 
-  const cohortIdx = COHORT_MONTHS.indexOf(selectedCohort)
-
-  const prevCohort = useCallback(() => {
-    if (cohortIdx > 0) setSelectedCohort(COHORT_MONTHS[cohortIdx - 1])
-  }, [cohortIdx])
-  const nextCohort = useCallback(() => {
-    if (cohortIdx < COHORT_MONTHS.length - 1) setSelectedCohort(COHORT_MONTHS[cohortIdx + 1])
-  }, [cohortIdx])
+  // Keyboard active-index for game dropdown
+  const [gameActiveIdx, setGameActiveIdx] = useState(-1)
 
   // Refs for trigger buttons and container wrappers
   const gameRef         = useRef<HTMLDivElement>(null)
@@ -141,7 +158,6 @@ export function RunwayStatusBar() {
   const gameTriggerRef  = useRef<HTMLButtonElement>(null)
   const calTriggerRef   = useRef<HTMLButtonElement>(null)
   const gameItemsRef    = useRef<(HTMLButtonElement | null)[]>([])
-  const calItemsRef     = useRef<(HTMLButtonElement | null)[]>([])
 
   // Close dropdowns on outside click
   useEffect(() => {
@@ -171,20 +187,6 @@ export function RunwayStatusBar() {
       setGameActiveIdx(-1)
     }
   }, [gameOpen, selectedGame.id])
-
-  // Auto-focus selected item when calendar dropdown opens
-  useEffect(() => {
-    if (calendarOpen) {
-      const idx = COHORT_MONTHS.indexOf(selectedCohort)
-      const focusIdx = idx >= 0 ? idx : 0
-      setCalendarActiveIdx(focusIdx)
-      requestAnimationFrame(() => {
-        calItemsRef.current[focusIdx]?.focus()
-      })
-    } else {
-      setCalendarActiveIdx(-1)
-    }
-  }, [calendarOpen, selectedCohort])
 
   // Game trigger keyboard handler
   function handleGameTriggerKeyDown(e: React.KeyboardEvent<HTMLButtonElement>) {
@@ -222,7 +224,7 @@ export function RunwayStatusBar() {
     }
   }
 
-  // Calendar trigger keyboard handler
+  // Calendar trigger keyboard handler (simplified — DayPicker handles internal nav)
   function handleCalTriggerKeyDown(e: React.KeyboardEvent<HTMLButtonElement>) {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault()
@@ -230,37 +232,6 @@ export function RunwayStatusBar() {
       setGameOpen(false)
     } else if (e.key === "Escape") {
       setCalendarOpen(false)
-    } else if (e.key === "ArrowLeft") {
-      e.preventDefault()
-      prevCohort()
-    } else if (e.key === "ArrowRight") {
-      e.preventDefault()
-      nextCohort()
-    }
-  }
-
-  // Calendar dropdown keyboard handler
-  function handleCalDropdownKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
-    if (e.key === "ArrowDown") {
-      e.preventDefault()
-      const next = Math.min(calendarActiveIdx + 1, COHORT_MONTHS.length - 1)
-      setCalendarActiveIdx(next)
-      calItemsRef.current[next]?.focus()
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault()
-      const prev = Math.max(calendarActiveIdx - 1, 0)
-      setCalendarActiveIdx(prev)
-      calItemsRef.current[prev]?.focus()
-    } else if (e.key === "Enter") {
-      e.preventDefault()
-      if (calendarActiveIdx >= 0) {
-        setSelectedCohort(COHORT_MONTHS[calendarActiveIdx])
-        setCalendarOpen(false)
-        calTriggerRef.current?.focus()
-      }
-    } else if (e.key === "Escape") {
-      setCalendarOpen(false)
-      calTriggerRef.current?.focus()
     }
   }
 
@@ -300,10 +271,10 @@ export function RunwayStatusBar() {
         </div>
       </div>
 
-      {/* Right: Segmented Pill — game selector | ◀ cohort ▶ */}
-      <div className="flex items-center">
+      {/* Right: Game + Period — same visual language as MetricCells (no borders) */}
+      <div className="flex items-center gap-1">
 
-        {/* ── Left segment: Game selector ── */}
+        {/* ── Game selector (MetricCell style) ── */}
         <div ref={gameRef} className="relative">
           <button
             ref={gameTriggerRef}
@@ -314,23 +285,17 @@ export function RunwayStatusBar() {
             aria-expanded={gameOpen}
             aria-controls={gameListId}
             className={cn(
-              "inline-flex h-9 items-center gap-1.5 rounded-l-[var(--radius-card)]",
-              "border border-r-0 border-[var(--border-default)]",
-              "px-2.5 bg-[var(--bg-1)] text-body text-[var(--fg-1)]",
-              "transition-colors duration-[var(--duration-micro)] hover:bg-[var(--bg-3)] hover:text-[var(--fg-0)]",
-              gameOpen && "bg-[var(--bg-3)] text-[var(--fg-0)]",
+              "inline-flex items-baseline gap-1.5 rounded-[var(--radius-inline)] px-2 py-1",
+              "transition-colors hover:bg-[var(--bg-3)]",
+              gameOpen && "bg-[var(--bg-3)]",
               focusRing,
             )}
           >
-            <Gamepad2 className="h-3.5 w-3.5 flex-shrink-0 text-[var(--fg-2)]" aria-hidden />
-            <span className="font-medium">{selectedGame.label}</span>
-            <motion.span
-              animate={{ rotate: gameOpen ? 180 : 0 }}
-              transition={chevronTransition}
-              className="flex items-center"
-            >
-              <ChevronDown className="h-3 w-3 flex-shrink-0 text-[var(--fg-3)]" aria-hidden />
-            </motion.span>
+            <span className="text-caption uppercase tracking-wider text-[var(--fg-2)]">
+              {locale === "ko" ? "게임" : "TITLE"}
+            </span>
+            <span className="text-h2 text-[var(--fg-0)]">{selectedGame.label}</span>
+            <ChevronDown className="h-3 w-3 flex-shrink-0 self-center text-[var(--fg-3)]" aria-hidden />
           </button>
 
           {/* Game dropdown */}
@@ -382,129 +347,69 @@ export function RunwayStatusBar() {
           </AnimatePresence>
         </div>
 
-        {/* ── Right segment: ◀ Cohort Month ▶ ── */}
-        <div ref={calendarRef} className="relative flex items-center">
-          {/* Prev month arrow */}
-          <button
-            type="button"
-            onClick={prevCohort}
-            onKeyDown={(e) => {
-              if (e.key === "ArrowLeft") { e.preventDefault(); prevCohort() }
-            }}
-            disabled={cohortIdx <= 0}
-            aria-label="Previous cohort month"
-            className={cn(
-              "inline-flex h-9 items-center border-y border-l px-1",
-              "border-[var(--border-default)] bg-[var(--bg-1)] text-[var(--fg-2)]",
-              "transition-colors duration-[var(--duration-micro)] hover:bg-[var(--bg-3)] hover:text-[var(--fg-0)]",
-              "disabled:opacity-30 disabled:cursor-not-allowed",
-              focusRing,
-            )}
-          >
-            <ChevronLeft className="h-3.5 w-3.5" aria-hidden />
-          </button>
-
-          {/* Month label — click opens full dropdown */}
+        {/* ── Period selector (MetricCell style) ── */}
+        <div ref={calendarRef} className="relative">
           <button
             ref={calTriggerRef}
             type="button"
             onClick={() => { setCalendarOpen((o) => !o); setGameOpen(false) }}
             onKeyDown={handleCalTriggerKeyDown}
-            aria-haspopup="listbox"
+            aria-haspopup="dialog"
             aria-expanded={calendarOpen}
             aria-controls={calListId}
             className={cn(
-              "inline-flex h-9 items-center gap-1.5 border-y px-2.5",
-              "border-[var(--border-default)] bg-[var(--bg-1)] text-body text-[var(--fg-1)]",
-              "transition-colors duration-[var(--duration-micro)] hover:bg-[var(--bg-3)] hover:text-[var(--fg-0)]",
-              calendarOpen && "bg-[var(--bg-3)] text-[var(--fg-0)]",
+              "inline-flex items-baseline gap-1.5 rounded-[var(--radius-inline)] px-2 py-1",
+              "transition-colors hover:bg-[var(--bg-3)]",
+              calendarOpen && "bg-[var(--bg-3)]",
               focusRing,
             )}
           >
-            <Calendar className="h-3.5 w-3.5 flex-shrink-0 text-[var(--fg-2)]" aria-hidden />
-            {/* Animated cohort text on change */}
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={selectedCohort}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.1 }}
-                className="font-mono text-caption"
-              >
-                {selectedCohort}
-              </motion.span>
-            </AnimatePresence>
-            <motion.span
-              animate={{ rotate: calendarOpen ? 180 : 0 }}
-              transition={chevronTransition}
-              className="flex items-center"
-            >
-              <ChevronDown className="h-3 w-3 flex-shrink-0 text-[var(--fg-3)]" aria-hidden />
-            </motion.span>
+            <span className="text-caption uppercase tracking-wider text-[var(--fg-2)]">
+              {locale === "ko" ? "기간" : "PERIOD"}
+            </span>
+            <span className="font-mono text-h2 text-[var(--fg-0)] whitespace-nowrap">
+              {dateRange.from && dateRange.to
+                ? locale === "ko"
+                  ? `${dateRange.from.getMonth() + 1}/${dateRange.from.getDate()}–${dateRange.to.getMonth() + 1}/${dateRange.to.getDate()}`
+                  : `${MONTH_LABELS_EN[dateRange.from.getMonth()]} ${dateRange.from.getDate()}–${dateRange.to.getDate()}`
+                : formatCohort(selectedCohort, locale)}
+            </span>
+            <ChevronDown className="h-3 w-3 flex-shrink-0 self-center text-[var(--fg-3)]" aria-hidden />
           </button>
 
-          {/* Next month arrow */}
-          <button
-            type="button"
-            onClick={nextCohort}
-            onKeyDown={(e) => {
-              if (e.key === "ArrowRight") { e.preventDefault(); nextCohort() }
-            }}
-            disabled={cohortIdx >= COHORT_MONTHS.length - 1}
-            aria-label="Next cohort month"
-            className={cn(
-              "inline-flex h-9 items-center rounded-r-[var(--radius-card)] border px-1",
-              "border-[var(--border-default)] bg-[var(--bg-1)] text-[var(--fg-2)]",
-              "transition-colors duration-[var(--duration-micro)] hover:bg-[var(--bg-3)] hover:text-[var(--fg-0)]",
-              "disabled:opacity-30 disabled:cursor-not-allowed",
-              focusRing,
-            )}
-          >
-            <ChevronRight className="h-3.5 w-3.5" aria-hidden />
-          </button>
-
-          {/* Cohort month dropdown */}
+          {/* Date range picker popover */}
           <AnimatePresence>
             {calendarOpen && (
               <motion.div
                 id={calListId}
-                role="listbox"
-                aria-label="Select cohort month"
-                className={cn(dropdownBase, "min-w-[140px]")}
+                aria-label="Select date range"
+                className={cn(
+                  "absolute right-0 top-full z-50 mt-2",
+                  "rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)]",
+                  "shadow-[0_8px_32px_rgba(0,0,0,0.10)] p-4",
+                )}
                 variants={dropdownVariants}
                 initial="hidden"
                 animate="visible"
                 exit="hidden"
                 transition={dropdownTransition}
-                onKeyDown={handleCalDropdownKeyDown}
               >
-                {COHORT_MONTHS.map((month, idx) => (
-                  <button
-                    key={month}
-                    ref={(el) => { calItemsRef.current[idx] = el }}
-                    role="option"
-                    aria-selected={month === selectedCohort}
-                    type="button"
-                    tabIndex={-1}
-                    onClick={() => { setSelectedCohort(month); setCalendarOpen(false); calTriggerRef.current?.focus() }}
-                    className={cn(
-                      "flex w-full items-center justify-between px-3 py-2 text-body",
-                      "transition-colors duration-[var(--duration-micro)]",
-                      "hover:bg-[var(--bg-3)]",
-                      month === selectedCohort
-                        ? "text-[var(--brand)] font-medium"
-                        : "text-[var(--fg-1)]",
-                      calendarActiveIdx === idx && "bg-[var(--bg-3)]",
-                      focusRing,
-                    )}
-                  >
-                    <span className="font-mono text-caption">{month}</span>
-                    {month === selectedCohort && (
-                      <Check className="h-3.5 w-3.5 flex-shrink-0 text-[var(--brand)]" aria-hidden />
-                    )}
-                  </button>
-                ))}
+                <DayPicker
+                  mode="range"
+                  selected={dateRange}
+                  onSelect={(range) => {
+                    if (range) setDateRange(range)
+                    if (range?.from && range?.to) {
+                      setCalendarOpen(false)
+                      calTriggerRef.current?.focus()
+                    }
+                  }}
+                  locale={locale === "ko" ? koLocale : enUS}
+                  defaultMonth={dateRange.from ?? new Date(2026, 2)}
+                  numberOfMonths={1}
+                  showOutsideDays
+                  style={{ ["--rdp-accent-color" as string]: "var(--brand)", ["--rdp-range_middle-background-color" as string]: "var(--brand-tint)" }}
+                />
               </motion.div>
             )}
           </AnimatePresence>

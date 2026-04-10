@@ -513,6 +513,27 @@ Compass uses a two-layer prediction system that mirrors the data availability li
 - ML Tracking: W&B (Weights & Biases) free tier
 - Detailed specifications: See `Project_Compass_Tech_Stack.md`
 
+### 8.4.1 Vercel 배포 가이드 (제출용 호스팅)
+
+**현재 배포 상태**: GitHub 연동 완료, `git push` 시 자동 재배포
+
+**Vercel 프로젝트 설정**:
+- Git Repo: `mugungwhwa/project-compass`
+- Root Directory: `compass`
+- Framework: Next.js (자동 감지)
+- Install Command Override: `npm install --legacy-peer-deps`
+  - 이유: `@visx` 라이브러리가 peer dependency로 React 18만 명시하나 React 19에서 정상 동작. 클린 설치 시 peer conflict 방지.
+- Build Command: `next build` (기본값)
+- Node.js: Vercel 기본 (v20)
+
+**배포 워크플로우**:
+1. 로컬에서 변경 → `git push` → Vercel 자동 빌드 & 배포
+2. 모든 페이지가 Static 빌드이므로 Hobby (무료) 플랜으로 충분
+
+**주의사항**:
+- 커밋되지 않은 변경사항은 Vercel에 반영되지 않음 — 반드시 push 후 확인
+- 새 dependency 추가 시 `@visx`처럼 React 19 peer dependency 충돌 여부 확인 필요
+
 ### 8.5 External Platform Integration (Silo Bridging)
 
 **Silo 2 — MMP (Attribution & UA):**

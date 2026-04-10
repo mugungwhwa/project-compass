@@ -13,7 +13,8 @@
 :root {
   /* ---------- Background scale (Light) ---------- */
   --bg-0: #FAFAF7;   /* outermost canvas, off-white */
-  --bg-1: #FFFFFF;   /* page background, cards */
+  --bg-0: #F7F8FA;   /* app shell background — very light gray (Toss DPS ref) */
+  --bg-1: #FFFFFF;   /* cards, panels, elevated surfaces */
   --bg-2: #F5F5F2;   /* subtle panel, table stripe */
   --bg-3: #ECECE8;   /* hover, inset */
   --bg-4: #E2E2DD;   /* borders strong, dividers */
@@ -84,7 +85,7 @@
   /* These keep existing widgets from breaking while we refactor them module-by-module.
      Each alias should be removed as its last consumer is migrated to the new tokens.
      Tracking: docs/Project_Compass_Design_Migration_Log.md §3 */
-  --background: var(--bg-1);
+  --background: var(--bg-0);
   --card: var(--bg-1);
   --border: var(--border-default);
   --text-primary: var(--fg-0);
@@ -148,6 +149,29 @@ html[data-theme="dark"] {
   --chart-grid: #243040;
   --chart-band-inner: rgba(26, 127, 232, 0.28);
   --chart-band-outer: rgba(26, 127, 232, 0.14);
+}
+
+/* ---------- Cursor standardization ---------- */
+/*
+  Policy: all interactive elements show pointer cursor.
+  This avoids per-component cursor-pointer classes.
+  - buttons, links, selects, summary → pointer
+  - disabled → not-allowed (handled by :disabled)
+  - text inputs → text (browser default, no override needed)
+*/
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+[role="option"],
+[role="tab"],
+[role="menuitem"],
+select,
+summary,
+a[href] {
+  cursor: pointer;
+}
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
 }
 
 /* ---------- Base body ---------- */
