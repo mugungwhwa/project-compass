@@ -33,7 +33,7 @@ export function HeroSection() {
     <section className="flex min-h-[80vh] w-full flex-col items-center justify-center bg-[var(--bg-0)] px-6 text-center">
       <motion.h1
         className="mb-8 max-w-4xl text-6xl font-bold leading-[1.1] tracking-tight text-[var(--fg-0)] md:text-7xl lg:text-8xl"
-        style={{ fontFamily: "var(--font-instrument-serif, Georgia, serif)" }}
+        style={{ fontFamily: "var(--font-instrument-serif), var(--font-noto-serif-kr), Georgia, serif" }}
         initial={initial}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, delay: 0, ease: EASE }}

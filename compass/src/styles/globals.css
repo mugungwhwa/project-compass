@@ -184,7 +184,8 @@ button:disabled,
 body {
   font-family:
     var(--font-geist-sans),
-    var(--font-noto-kr),
+    "Pretendard Variable",
+    Pretendard,
     "Apple SD Gothic Neo",
     "Malgun Gothic",
     system-ui,
@@ -204,7 +205,7 @@ body {
 
 /* ---------- Font role utilities ---------- */
 .font-display {
-  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-family: var(--font-instrument-serif), var(--font-noto-serif-kr), Georgia, serif;
   font-weight: 400;
   letter-spacing: -0.02em;
 }
@@ -221,7 +222,7 @@ body {
 
 /* ---------- Typography scale ---------- */
 .text-display {
-  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-family: var(--font-instrument-serif), var(--font-noto-serif-kr), Georgia, serif;
   font-size: 36px;
   line-height: 1.15;
   letter-spacing: -0.02em;
