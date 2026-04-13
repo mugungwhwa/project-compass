@@ -14,11 +14,13 @@ const C = RANKING_TREND_COLORS
 
 type RankingTrendProps = {
   data: RankingHistoryPoint[]
+  expanded?: boolean
+  onToggle?: () => void
 }
 
-export function RankingTrend({ data }: RankingTrendProps) {
+export function RankingTrend({ data, expanded: externalExpanded, onToggle: externalToggle }: RankingTrendProps) {
   const { t } = useLocale()
-  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 240 })
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 240, expanded: externalExpanded, onToggle: externalToggle })
 
   return (
     <motion.div

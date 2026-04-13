@@ -13,9 +13,15 @@ import {
   mockSaturationTrend,
 } from "@/shared/api"
 import { PageTransition, FadeInUp } from "@/shared/ui/page-transition"
+import { useGridLayout } from "@/shared/hooks"
+import { motion } from "framer-motion"
+
+const GRID_TRANSITION = { duration: 0.3, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }
 
 export default function MarketGapPage() {
   const { t } = useLocale()
+  const benchGrid = useGridLayout(2)
+  const satGrid = useGridLayout(2)
 
   return (
     <PageTransition>
@@ -41,13 +47,20 @@ export default function MarketGapPage() {
 
       {/* 3. Retention benchmark + Ranking trend */}
       <FadeInUp className="grid grid-cols-2 gap-6 mb-8">
-        <MarketBenchmark data={mockRetention.data} />
-        <RankingTrend data={mockRankingHistory} />
+        <motion.div layout className={benchGrid.getClassName("chart-0", 0)} transition={GRID_TRANSITION}>
+          <MarketBenchmark data={mockRetention.data} expanded={benchGrid.expandedId === "chart-0"} onToggle={() => benchGrid.toggle("chart-0")} />
+        </motion.div>
+        <motion.div layout className={benchGrid.getClassName("chart-1", 1)} transition={GRID_TRANSITION}>
+          <RankingTrend data={mockRankingHistory} expanded={benchGrid.expandedId === "chart-1"} onToggle={() => benchGrid.toggle("chart-1")} />
+        </motion.div>
       </FadeInUp>
 
       {/* 4. Saturation trend + Competitor table */}
       <FadeInUp className="grid grid-cols-2 gap-6">
-        <SaturationTrendChart data={mockSaturationTrend} />
+        <motion.div layout className={satGrid.getClassName("chart-0", 0)} transition={GRID_TRANSITION}>
+          <SaturationTrendChart data={mockSaturationTrend} expanded={satGrid.expandedId === "chart-0"} onToggle={() => satGrid.toggle("chart-0")} />
+        </motion.div>
+        <motion.div layout className={satGrid.getClassName("chart-1", 1)} transition={GRID_TRANSITION}>
         <div className="rounded-2xl border border-[var(--border)] bg-gradient-to-br from-white to-slate-50/50 p-6 card-premium">
           <h3 className="text-[15px] font-bold text-[var(--text-primary)] mb-4">Top 10 Competitors</h3>
           <div className="overflow-x-auto">
@@ -75,6 +88,7 @@ export default function MarketGapPage() {
             </table>
           </div>
         </div>
+        </motion.div>
       </FadeInUp>
     </PageTransition>
   )

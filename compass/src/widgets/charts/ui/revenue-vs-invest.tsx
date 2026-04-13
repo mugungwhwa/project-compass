@@ -22,13 +22,15 @@ import {
 
 type RevenueVsInvestProps = {
   data: RevenueVsInvestPoint[]
+  expanded?: boolean
+  onToggle?: () => void
 }
 
 const C = REVENUE_VS_INVEST_COLORS
 
-export function RevenueVsInvest({ data }: RevenueVsInvestProps) {
+export function RevenueVsInvest({ data, expanded: externalExpanded, onToggle: externalToggle }: RevenueVsInvestProps) {
   const { t, locale } = useLocale()
-  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 384 })
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 384, expanded: externalExpanded, onToggle: externalToggle })
 
   // Find BEP crossing: first index where cumRevenue >= cumUaSpend
   const bepIndex = useMemo(

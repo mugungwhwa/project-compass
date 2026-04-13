@@ -14,11 +14,13 @@ const C = SATURATION_TREND_COLORS
 
 type SaturationTrendChartProps = {
   data: SaturationTrendPoint[]
+  expanded?: boolean
+  onToggle?: () => void
 }
 
-export function SaturationTrendChart({ data }: SaturationTrendChartProps) {
+export function SaturationTrendChart({ data, expanded: externalExpanded, onToggle: externalToggle }: SaturationTrendChartProps) {
   const { t } = useLocale()
-  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 240 })
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 240, expanded: externalExpanded, onToggle: externalToggle })
 
   return (
     <motion.div

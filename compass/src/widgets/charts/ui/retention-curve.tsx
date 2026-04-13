@@ -40,6 +40,8 @@ import {
 type RetentionCurveProps = {
   data: RetentionDataPoint[]
   asymptoticDay: number
+  expanded?: boolean
+  onToggle?: () => void
 }
 
 const C = RETENTION_CURVE_COLORS
@@ -114,9 +116,9 @@ function AsymptoticLabel({
   )
 }
 
-export function RetentionCurve({ data, asymptoticDay }: RetentionCurveProps) {
+export function RetentionCurve({ data, asymptoticDay, expanded: externalExpanded, onToggle: externalToggle }: RetentionCurveProps) {
   const { t, locale } = useLocale()
-  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 384 })
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 384, expanded: externalExpanded, onToggle: externalToggle })
 
   const chartData = data.map((d) => ({
     day: `D${d.day}`,

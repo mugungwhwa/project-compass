@@ -13,6 +13,10 @@ import {
   mockDecompStats,
 } from "@/shared/api"
 import { PageTransition, FadeInUp } from "@/shared/ui/page-transition"
+import { useGridLayout } from "@/shared/hooks"
+import { motion } from "framer-motion"
+
+const GRID_TRANSITION = { duration: 0.3, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }
 
 /*
   Module 1 — Executive Overview
@@ -26,6 +30,7 @@ import { PageTransition, FadeInUp } from "@/shared/ui/page-transition"
 
 export default function ExecutiveOverviewPage() {
   const { t: _t } = useLocale()
+  const overviewGrid = useGridLayout(2)
 
   return (
     <PageTransition>
@@ -60,8 +65,12 @@ export default function ExecutiveOverviewPage() {
 
       {/* 3. Revenue vs Investment + Retention curve */}
       <FadeInUp className="grid grid-cols-2 gap-6 mb-8">
-        <RevenueVsInvest data={mockRevenueVsInvest} />
-        <ExperimentRevenue data={mockRevenueDecomp} stats={mockDecompStats} />
+        <motion.div layout className={overviewGrid.getClassName("chart-0", 0)} transition={GRID_TRANSITION}>
+          <RevenueVsInvest data={mockRevenueVsInvest} expanded={overviewGrid.expandedId === "chart-0"} onToggle={() => overviewGrid.toggle("chart-0")} />
+        </motion.div>
+        <motion.div layout className={overviewGrid.getClassName("chart-1", 1)} transition={GRID_TRANSITION}>
+          <ExperimentRevenue data={mockRevenueDecomp} stats={mockDecompStats} expanded={overviewGrid.expandedId === "chart-1"} onToggle={() => overviewGrid.toggle("chart-1")} />
+        </motion.div>
       </FadeInUp>
 
       {/* 4. Revenue forecast — full width since FinancialHealth + AI box moved to app shell */}

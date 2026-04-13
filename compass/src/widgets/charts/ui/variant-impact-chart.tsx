@@ -14,6 +14,8 @@ const C = VARIANT_IMPACT_COLORS
 
 type VariantImpactChartProps = {
   variants: ExperimentVariant[]
+  expanded?: boolean
+  onToggle?: () => void
 }
 
 function colorForStatus(status: string): string {
@@ -23,9 +25,9 @@ function colorForStatus(status: string): string {
   return C.running
 }
 
-export function VariantImpactChart({ variants }: VariantImpactChartProps) {
+export function VariantImpactChart({ variants, expanded: externalExpanded, onToggle: externalToggle }: VariantImpactChartProps) {
   const { t } = useLocale()
-  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 320 })
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 320, expanded: externalExpanded, onToggle: externalToggle })
 
   const data = variants.map(v => ({
     name: v.name,

@@ -10,13 +10,13 @@ import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 import { MARKET_BENCHMARK_COLORS } from "@/shared/config/chart-colors"
 import { AreaChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts"
 
-type MarketBenchmarkProps = { data: RetentionDataPoint[] }
+type MarketBenchmarkProps = { data: RetentionDataPoint[]; expanded?: boolean; onToggle?: () => void }
 
 const C = MARKET_BENCHMARK_COLORS
 
-export function MarketBenchmark({ data }: MarketBenchmarkProps) {
+export function MarketBenchmark({ data, expanded: externalExpanded, onToggle: externalToggle }: MarketBenchmarkProps) {
   const { t } = useLocale()
-  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 280 })
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 280, expanded: externalExpanded, onToggle: externalToggle })
 
   const chartData = data.map((d) => ({ day: `D${d.day}`, p50: d.p50, p10: d.p10, p90: d.p90, genre: d.genre }))
 

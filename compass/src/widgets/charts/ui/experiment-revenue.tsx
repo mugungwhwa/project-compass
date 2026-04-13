@@ -26,6 +26,8 @@ type IsolateMode = "all" | "organic" | "experiment"
 type ExperimentRevenueProps = {
   data: RevenueDecompPoint[]
   stats: DecompStats
+  expanded?: boolean
+  onToggle?: () => void
 }
 
 /* ── Velocity / Elasticity stats bar ── */
@@ -136,9 +138,9 @@ function DeployMarker({ x, y, width, value }: { x: number; y: number; width: num
 }
 
 /* ── Main component ── */
-export function ExperimentRevenue({ data, stats }: ExperimentRevenueProps) {
+export function ExperimentRevenue({ data, stats, expanded: externalExpanded, onToggle: externalToggle }: ExperimentRevenueProps) {
   const { t, locale } = useLocale()
-  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 384 })
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 384, expanded: externalExpanded, onToggle: externalToggle })
   const [mode, setMode] = useState<IsolateMode>("all")
 
   const handleToggle = (layer: IsolateMode) => {

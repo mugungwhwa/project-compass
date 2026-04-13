@@ -7,9 +7,14 @@ import { useLocale } from "@/shared/i18n"
 import { mockExperimentKPIs, mockExperiments, mockExperimentVariants, mockRippleForecasts } from "@/shared/api"
 import { formatNumber } from "@/shared/lib"
 import { PageTransition, FadeInUp } from "@/shared/ui/page-transition"
+import { useGridLayout } from "@/shared/hooks"
+import { motion } from "framer-motion"
+
+const GRID_TRANSITION = { duration: 0.3, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }
 
 export default function ExperimentsPage() {
   const { t } = useLocale()
+  const expGrid = useGridLayout(2)
 
   return (
     <PageTransition>
@@ -31,8 +36,12 @@ export default function ExperimentsPage() {
       </FadeInUp>
 
       <FadeInUp className="grid grid-cols-2 gap-6 mb-8">
-        <VariantImpactChart variants={mockExperimentVariants} />
-        <RolloutHistoryTimeline variant={mockExperimentVariants.find(v => v.experimentId === 1) || mockExperimentVariants[0]} />
+        <motion.div layout className={expGrid.getClassName("chart-0", 0)} transition={GRID_TRANSITION}>
+          <VariantImpactChart variants={mockExperimentVariants} expanded={expGrid.expandedId === "chart-0"} onToggle={() => expGrid.toggle("chart-0")} />
+        </motion.div>
+        <motion.div layout className={expGrid.getClassName("chart-1", 1)} transition={GRID_TRANSITION}>
+          <RolloutHistoryTimeline variant={mockExperimentVariants.find(v => v.experimentId === 1) || mockExperimentVariants[0]} expanded={expGrid.expandedId === "chart-1"} onToggle={() => expGrid.toggle("chart-1")} />
+        </motion.div>
       </FadeInUp>
 
       <FadeInUp className="mb-8">

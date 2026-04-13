@@ -10,13 +10,13 @@ import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 import { REVENUE_FORECAST_COLORS } from "@/shared/config/chart-colors"
 import { AreaChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
 
-type RevenueForecastProps = { data: RevenueForecastPoint[]; title?: string }
+type RevenueForecastProps = { data: RevenueForecastPoint[]; title?: string; expanded?: boolean; onToggle?: () => void }
 
 const C = REVENUE_FORECAST_COLORS
 
-export function RevenueForecast({ data, title }: RevenueForecastProps) {
+export function RevenueForecast({ data, title, expanded: externalExpanded, onToggle: externalToggle }: RevenueForecastProps) {
   const { t, locale } = useLocale()
-  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 200 })
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 200, expanded: externalExpanded, onToggle: externalToggle })
 
   return (
     <motion.div

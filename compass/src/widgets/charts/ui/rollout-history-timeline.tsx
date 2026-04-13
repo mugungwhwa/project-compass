@@ -14,11 +14,13 @@ const C = ROLLOUT_HISTORY_COLORS
 
 type RolloutHistoryTimelineProps = {
   variant: ExperimentVariant
+  expanded?: boolean
+  onToggle?: () => void
 }
 
-export function RolloutHistoryTimeline({ variant }: RolloutHistoryTimelineProps) {
+export function RolloutHistoryTimeline({ variant, expanded: externalExpanded, onToggle: externalToggle }: RolloutHistoryTimelineProps) {
   const { t } = useLocale()
-  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 280 })
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 280, expanded: externalExpanded, onToggle: externalToggle })
 
   if (!variant.rollout_history || variant.rollout_history.length === 0) {
     return (

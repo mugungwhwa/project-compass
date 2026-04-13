@@ -11,11 +11,11 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts"
 
 const C = BUDGET_DONUT_COLORS
 
-type BudgetDonutProps = { data: BudgetSlice[] }
+type BudgetDonutProps = { data: BudgetSlice[]; expanded?: boolean; onToggle?: () => void }
 
-export function BudgetDonut({ data }: BudgetDonutProps) {
+export function BudgetDonut({ data, expanded: externalExpanded, onToggle: externalToggle }: BudgetDonutProps) {
   const { t } = useLocale()
-  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 200 })
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 200, expanded: externalExpanded, onToggle: externalToggle })
 
   return (
     <motion.div
