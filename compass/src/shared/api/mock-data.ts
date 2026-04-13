@@ -139,6 +139,26 @@ export const mockFinancialHealth = {
   runwayEndDay: 246,
 }
 
+// --- Revenue Decomposition (Experiment Investment Board) ---
+
+export type RevenueDecompPoint = {
+  month: string
+  organic: number      // baseline revenue without experiments ($K)
+  experiment: number   // revenue uplift from shipped experiments ($K)
+  total: number        // organic + experiment
+  expShipped: number   // experiments deployed this month
+}
+
+export type DecompStats = {
+  totalExp: number
+  shipRate: number
+  avgDays: number
+  cumDeltaLtv: number
+  winRate: number
+  expRoi: number
+  organicQoQ: number
+}
+
 // --- Revenue vs Investment (Executive Overview main chart) ---
 
 export type RevenueVsInvestPoint = {
@@ -151,17 +171,41 @@ export type RevenueVsInvestPoint = {
 }
 
 export const mockRevenueVsInvest: RevenueVsInvestPoint[] = [
-  { month: "Jul",  revenue: 62,  uaSpend: 85,  cumRevenue: 62,   cumUaSpend: 85,   roas: 73  },
-  { month: "Aug",  revenue: 78,  uaSpend: 82,  cumRevenue: 140,  cumUaSpend: 167,  roas: 84  },
-  { month: "Sep",  revenue: 91,  uaSpend: 78,  cumRevenue: 231,  cumUaSpend: 245,  roas: 94  },
-  { month: "Oct",  revenue: 105, uaSpend: 75,  cumRevenue: 336,  cumUaSpend: 320,  roas: 105 },
-  { month: "Nov",  revenue: 112, uaSpend: 70,  cumRevenue: 448,  cumUaSpend: 390,  roas: 115 },
-  { month: "Dec",  revenue: 118, uaSpend: 72,  cumRevenue: 566,  cumUaSpend: 462,  roas: 122 },
-  { month: "Jan",  revenue: 108, uaSpend: 68,  cumRevenue: 674,  cumUaSpend: 530,  roas: 127 },
-  { month: "Feb",  revenue: 115, uaSpend: 65,  cumRevenue: 789,  cumUaSpend: 595,  roas: 133 },
-  { month: "Mar",  revenue: 125, uaSpend: 70,  cumRevenue: 914,  cumUaSpend: 665,  roas: 137 },
-  { month: "Apr",  revenue: 132, uaSpend: 68,  cumRevenue: 1046, cumUaSpend: 733,  roas: 142 },
+  // Realistic mobile game trajectory: heavy UA → gradual monetization → BEP ~month 7-8
+  { month: "Jul",  revenue: 28,  uaSpend: 95,  cumRevenue: 28,   cumUaSpend: 95,   roas: 29  },
+  { month: "Aug",  revenue: 45,  uaSpend: 88,  cumRevenue: 73,   cumUaSpend: 183,  roas: 40  },
+  { month: "Sep",  revenue: 62,  uaSpend: 80,  cumRevenue: 135,  cumUaSpend: 263,  roas: 51  },
+  { month: "Oct",  revenue: 78,  uaSpend: 72,  cumRevenue: 213,  cumUaSpend: 335,  roas: 64  },
+  { month: "Nov",  revenue: 92,  uaSpend: 68,  cumRevenue: 305,  cumUaSpend: 403,  roas: 76  },
+  { month: "Dec",  revenue: 105, uaSpend: 65,  cumRevenue: 410,  cumUaSpend: 468,  roas: 88  },
+  { month: "Jan",  revenue: 112, uaSpend: 60,  cumRevenue: 522,  cumUaSpend: 528,  roas: 99  },
+  { month: "Feb",  revenue: 118, uaSpend: 58,  cumRevenue: 640,  cumUaSpend: 586,  roas: 109 },
+  { month: "Mar",  revenue: 125, uaSpend: 62,  cumRevenue: 765,  cumUaSpend: 648,  roas: 118 },
+  { month: "Apr",  revenue: 132, uaSpend: 60,  cumRevenue: 897,  cumUaSpend: 708,  roas: 127 },
 ]
+
+export const mockRevenueDecomp: RevenueDecompPoint[] = [
+  { month: "Jul",  organic: 28, experiment: 0,  total: 28,  expShipped: 0 },
+  { month: "Aug",  organic: 30, experiment: 15, total: 45,  expShipped: 1 },
+  { month: "Sep",  organic: 34, experiment: 28, total: 62,  expShipped: 1 },
+  { month: "Oct",  organic: 38, experiment: 40, total: 78,  expShipped: 2 },
+  { month: "Nov",  organic: 42, experiment: 50, total: 92,  expShipped: 2 },
+  { month: "Dec",  organic: 46, experiment: 59, total: 105, expShipped: 3 },
+  { month: "Jan",  organic: 48, experiment: 64, total: 112, expShipped: 2 },
+  { month: "Feb",  organic: 50, experiment: 68, total: 118, expShipped: 3 },
+  { month: "Mar",  organic: 52, experiment: 73, total: 125, expShipped: 2 },
+  { month: "Apr",  organic: 54, experiment: 78, total: 132, expShipped: 3 },
+]
+
+export const mockDecompStats: DecompStats = {
+  totalExp: 12,
+  shipRate: 68,
+  avgDays: 9,
+  cumDeltaLtv: 1.2,
+  winRate: 41,
+  expRoi: 3.8,
+  organicQoQ: 8,
+}
 
 export const mockKPIs = {
   payback:  { value: 47,   unit: "days",   trend: -12,  trendLabel: "faster" },
