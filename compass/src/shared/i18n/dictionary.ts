@@ -24,10 +24,10 @@ const dictionary = {
   "signal.hold":         { ko: "유지",     en: "HOLD" },
   "signal.reduce":       { ko: "축소",     en: "REDUCE" },
   "signal.confidence":   { ko: "신뢰도",   en: "Confidence" },
-  "kpi.payback":         { ko: "회수 기간",        en: "Payback Period" },
+  "kpi.payback":         { ko: "회수 예측",        en: "Payback Forecast" },
   "kpi.roas":            { ko: "ROAS D30",        en: "ROAS D30" },
-  "kpi.bep":             { ko: "BEP 확률",        en: "BEP Probability" },
-  "kpi.burn":            { ko: "잔여 운영 기간",    en: "Burn Tolerance" },
+  "kpi.bep":             { ko: "손익분기 확률",        en: "Break-even Probability" },
+  "kpi.burn":            { ko: "잔여 운영력",    en: "Runway Impact" },
   "kpi.capitalEff":      { ko: "자본 효율성",      en: "Capital Efficiency" },
   "kpi.irr":             { ko: "내부수익률",        en: "IRR" },
   "kpi.npv":             { ko: "순현재가치",        en: "NPV" },
@@ -55,6 +55,8 @@ const dictionary = {
   "chart.monthlySpend":  { ko: "월 UA 비용",              en: "Monthly UA Spend" },
   "chart.roasLine":      { ko: "ROAS",                   en: "ROAS" },
   "chart.breakeven":     { ko: "손익분기점",               en: "Break-even" },
+  "chart.monthlyNet":    { ko: "월 순수익",                en: "Monthly Net" },
+  "chart.cumNet":        { ko: "누적 순수익",               en: "Cumulative Net" },
   "finance.title":       { ko: "재무 건전성",              en: "Financial Health" },
   "finance.burnGross":   { ko: "소진 여력 (총)",           en: "Burn Tolerance (Gross)" },
   "finance.netRunway":   { ko: "순 런웨이 (매출 포함)",     en: "Net Runway (Revenue)" },
@@ -123,8 +125,8 @@ const dictionary = {
                            en: "The point where the retention curve stabilizes. Users retained beyond this point form the core base, making LTV projections reliable." },
   "info.retention":      { ko: "이 차트는 유저가 게임에 얼마나 오래 머무는지를 보여줍니다. 파란 밴드가 좁을수록 예측이 정확합니다.",
                            en: "Shows how long users stay in the game. Narrower blue bands mean more accurate predictions." },
-  "info.revenueVsInvest":{ ko: "월별 매출(파랑)과 UA 투자(주황)를 비교합니다. 초록 ROAS 라인이 빨간 손익분기선 위에 있으면 투자가 회수되고 있습니다.",
-                           en: "Compares monthly revenue (blue) vs UA spend (orange). Green ROAS line above the red break-even means investment is paying off." },
+  "info.revenueVsInvest":{ ko: "초록 막대 = 월 흑자, 빨간 막대 = 월 적자. 파란 선이 0선을 넘는 지점이 누적 손익분기점입니다.",
+                           en: "Green bars = monthly profit, red bars = monthly loss. The blue line crossing zero marks cumulative break-even." },
   "info.revenueForecast":{ ko: "향후 매출을 P10/P50/P90 밴드로 예측합니다. 밴드가 넓어질수록 미래의 불확실성이 큽니다.",
                            en: "Forecasts future revenue with P10/P50/P90 bands. Wider bands = greater uncertainty." },
   "info.benchmark":      { ko: "우리 게임(파랑)과 장르 평균(회색)을 비교합니다. 파란 선이 위에 있으면 장르 대비 우수합니다.",
@@ -214,6 +216,7 @@ const dictionary = {
   // --- Login page subtitle (2026-04-08, refined 2026-04-09) ---
   "login.subtitle":        { ko: "실험에서 투자 결정까지",
                              en: "Experiment-to-Investment Decision OS" },
+  "kpi.basis":             { ko: "D7 리텐션, CPI, ARPDAU 기반 추정", en: "Based on D7 retention, CPI, and ARPDAU" },
 } as const
 
 export type TranslationKey = keyof typeof dictionary

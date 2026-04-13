@@ -5,23 +5,23 @@ import { useLocale } from '@/shared/i18n/context'
 
 const copy = {
   ko: {
-    heading: '모두가 데이터를 보지만, 아무도 연결하지 않습니다',
+    heading: '모두가 데이터를 갖고 있지만, 아무도 연결하지 않습니다',
     sub: '모바일 게임 산업은 ROAS 기반으로 투자하고, 회계는 별도로 관리하며, 실험 결과는 스프레드시트에 남습니다. 이 세 영역 사이의 회색 지대에서 수백만 달러의 의사결정이 감으로 이루어집니다.',
-    conclusion: 'Compass는 이 세 팀의 데이터를 하나의 투자 판단으로 번역합니다.',
+    conclusion: 'Compass가 셋을 하나의 투자 판단으로 연결합니다.',
     gaps: [
-      { label: 'UA 팀', does: 'ROAS 기준으로 투자 결정', misses: '장기 LTV와의 연결 없음' },
-      { label: '재무 팀', does: '월간 손익·회수 기간 별도 관리', misses: '실험 결과가 재무에 미치는 영향 불명' },
-      { label: '프로덕트 팀', does: 'A/B 테스트로 기능 의사결정', misses: '"이겼다"는 알지만 투자 가치는 모름' },
+      { label: 'UA', does: '유입 효율은 안다', misses: '투자 가치는 모른다' },
+      { label: '재무', does: '소진 속도는 안다', misses: '실험 효과는 모른다' },
+      { label: '프로덕트', does: '어떤 변형이 이겼는지 안다', misses: '자본 배분 가치는 모른다' },
     ],
   },
   en: {
-    heading: 'Everyone looks at data, but nobody connects it',
+    heading: 'Every team has data. Nobody connects it.',
     sub: 'The mobile gaming industry invests based on ROAS, manages accounting separately, and leaves experiment results in spreadsheets. In the gray area between these three domains, multi-million dollar decisions are made on gut feeling.',
-    conclusion: 'Compass translates data from all three teams into a single investment decision.',
+    conclusion: 'Compass connects all three into one investment decision.',
     gaps: [
-      { label: 'UA Team', does: 'Investment decisions based on ROAS', misses: 'No connection to long-term LTV' },
-      { label: 'Finance Team', does: 'P&L and payback tracked separately', misses: 'Impact of experiments on financials unknown' },
-      { label: 'Product Team', does: 'A/B tests drive feature decisions', misses: 'Knows "it won" but not the investment value' },
+      { label: 'UA', does: 'Knows acquisition efficiency', misses: 'Not investment value' },
+      { label: 'Finance', does: 'Knows burn and runway', misses: 'Not experiment impact' },
+      { label: 'Product', does: 'Knows which variant won', misses: 'Not capital allocation value' },
     ],
   },
 }

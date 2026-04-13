@@ -65,6 +65,9 @@ export const REVENUE_VS_INVEST_COLORS = {
   uaSpend:    PALETTE.uaSpend,
   roas:       PALETTE.roas,
   breakeven:  PALETTE.breakeven,
+  profit:     PALETTE.positive,      // monthly net > 0
+  loss:       PALETTE.risk,          // monthly net < 0
+  cumLine:    PALETTE.p50,           // cumulative net trajectory
   grid:       PALETTE.grid,
   axis:       PALETTE.axis,
   border:     PALETTE.border,

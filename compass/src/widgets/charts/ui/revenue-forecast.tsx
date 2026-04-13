@@ -15,7 +15,7 @@ type RevenueForecastProps = { data: RevenueForecastPoint[]; title?: string }
 const C = REVENUE_FORECAST_COLORS
 
 export function RevenueForecast({ data, title }: RevenueForecastProps) {
-  const { t } = useLocale()
+  const { t, locale } = useLocale()
   const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 200 })
 
   return (
@@ -27,6 +27,7 @@ export function RevenueForecast({ data, title }: RevenueForecastProps) {
       <ChartHeader
         title={title || t("chart.revenue")}
         context={t("info.revenueForecast")}
+        insight={locale === "ko" ? "상승 여지는 있으나, D60 이후 불확실성이 확대됩니다." : "Upside remains positive, but uncertainty widens after D60."}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
       <ResponsiveContainer width="100%" height={chartHeight}>

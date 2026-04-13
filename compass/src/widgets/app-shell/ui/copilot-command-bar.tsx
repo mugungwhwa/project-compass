@@ -31,8 +31,8 @@ import { cn } from "@/shared/lib"
 const CARD_MAX_WIDTH = 640 // px
 
 function FloatingAnswerCard() {
-  const { isOpen, close } = useCopilot()
-  const { t } = useLocale()
+  const { isOpen, close, toggle } = useCopilot()
+  const { t, locale } = useLocale()
 
   // Esc to close
   useEffect(() => {
@@ -119,6 +119,23 @@ function FloatingAnswerCard() {
           <p className="mt-1 border-l-2 border-[var(--brand)] pl-3 text-body text-[var(--fg-1)]">
             {t("copilot.mock.followup")}
           </p>
+          <div className="flex flex-wrap gap-2 mt-3">
+            {[
+              { en: "Run scenario", ko: "시나리오 실행" },
+              { en: "Compare channels", ko: "채널 비교" },
+              { en: "Simulate lower CPI", ko: "CPI 하락 시뮬레이션" },
+            ].map((btn) => (
+              <button
+                key={btn.en}
+                type="button"
+                onClick={toggle}
+                className="inline-flex items-center gap-1.5 rounded-[var(--radius-inline)] border border-[var(--border-default)] bg-[var(--bg-2)] px-3 py-1.5 text-caption font-medium text-[var(--fg-1)] transition-colors hover:bg-[var(--bg-3)] hover:border-[var(--border-strong)] hover:text-[var(--fg-0)]"
+              >
+                <Zap className="h-3 w-3 text-[var(--brand)]" aria-hidden />
+                {locale === "ko" ? btn.ko : btn.en}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Footer hint */}

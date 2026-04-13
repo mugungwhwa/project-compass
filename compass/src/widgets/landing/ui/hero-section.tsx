@@ -10,16 +10,18 @@ const initial = { opacity: 0, y: 24 }
 
 const copy = {
   ko: {
-    headline: "실험을 투자 결정으로",
-    sub1: "ROAS로 투자하고, 회계는 따로 보고, 실험 결과는 스프레드시트에 묻힙니다.",
-    sub2: "Compass는 이 회색 영역을 하나의 의사결정 레이어로 연결합니다.",
-    cta: "대시보드 체험하기",
+    headline: "게임 데이터를 투자 결정으로",
+    sub1: "시장, UA, 실험, 재무 — 모두 따로 놉니다.",
+    sub2: "Compass가 하나의 투자 판단으로 연결합니다.",
+    cta: "라이브 데모 보기",
+    auxiliary: "분석 대시보드가 아닙니다. 자본 배분을 위한 의사결정 레이어입니다.",
   },
   en: {
-    headline: "Turn Experiments into Investment Decisions",
-    sub1: "You invest based on ROAS, track finances separately, and experiment results get buried in spreadsheets.",
-    sub2: "Compass bridges these gray areas into a single decision layer.",
-    cta: "Try the Dashboard",
+    headline: "Turn Game Data into Investment Decisions",
+    sub1: "Market, UA, experiments, and financials — each in its own silo.",
+    sub2: "Compass unifies them into one investment decision.",
+    cta: "View Live Demo",
+    auxiliary: "Not another analytics dashboard. A decision layer for capital allocation.",
   },
 }
 
@@ -56,11 +58,21 @@ export function HeroSection() {
         transition={{ duration: 0.55, delay: 0.3, ease: EASE }}
       >
         <Link
-          href="/login"
+          href="/dashboard"
           className="inline-flex h-11 items-center justify-center rounded-[var(--radius-card)] bg-[var(--brand)] px-6 text-sm font-semibold text-white transition-colors duration-[var(--duration-micro)] hover:bg-[var(--brand-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand)] focus-visible:ring-offset-2"
         >
           {t.cta}
         </Link>
+      </motion.div>
+
+      <motion.div
+        initial={initial}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, delay: 0.45, ease: EASE }}
+      >
+        <p className="text-sm text-[var(--fg-2)] mt-6">
+          {t.auxiliary}
+        </p>
       </motion.div>
     </section>
   )

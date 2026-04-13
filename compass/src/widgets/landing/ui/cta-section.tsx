@@ -5,8 +5,8 @@ import Link from "next/link"
 import { useLocale } from "@/shared/i18n/context"
 
 const copy = {
-  ko: { heading: "지금 바로 시작하세요", sub: "데모 계정으로 Compass를 체험해보세요", cta: "무료로 시작하기" },
-  en: { heading: "Get Started Now", sub: "Try Compass with a demo account", cta: "Start for Free" },
+  ko: { heading: "직접 확인하세요", sub: "샘플 데이터로 의사결정 대시보드를 탐색하세요", cta: "라이브 데모 보기" },
+  en: { heading: "See It In Action", sub: "Explore the decision dashboard with sample data", cta: "View Live Demo" },
 }
 
 export function CtaSection() {
@@ -31,7 +31,7 @@ export function CtaSection() {
         </p>
 
         <Link
-          href="/login"
+          href="/dashboard"
           className="inline-flex h-11 items-center justify-center rounded-[var(--radius-card)] bg-[var(--brand)] px-8 text-sm font-semibold text-white transition-colors duration-[var(--duration-micro)] hover:bg-[var(--brand-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand)] focus-visible:ring-offset-2"
         >
           {t.cta}

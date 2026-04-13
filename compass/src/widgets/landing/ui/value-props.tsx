@@ -11,8 +11,8 @@ const cards: Record<string, CardData[]> = {
   ko: [
     {
       icon: Layers,
-      title: '4개 데이터 사일로를 하나로',
-      description: '시장 인텔리전스, UA 어트리뷰션, 실험 결과, 재무 데이터를 단일 의사결정 레이어로 통합합니다.',
+      title: '4개 데이터 사일로를 연결',
+      description: '시장 인텔리전스, UA 어트리뷰션, 실험 결과, 재무 데이터를 하나의 투자 시그널로 연결합니다.',
     },
     {
       icon: ArrowRightLeft,
@@ -28,8 +28,8 @@ const cards: Record<string, CardData[]> = {
   en: [
     {
       icon: Layers,
-      title: 'Unify 4 Data Silos',
-      description: 'Market intelligence, UA attribution, experiment results, and financials — connected into a single decision layer.',
+      title: 'Bridge Four Data Silos',
+      description: 'Market intelligence, UA attribution, experiment results, and financials — bridged into one investment signal.',
     },
     {
       icon: ArrowRightLeft,
