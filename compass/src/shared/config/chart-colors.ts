@@ -74,6 +74,18 @@ export const REVENUE_VS_INVEST_COLORS = {
   legend:     PALETTE.legendGray,
 } as const
 
+export const REVENUE_DECOMP_COLORS = {
+  organic:    PALETTE.benchmark,    // #9CA3AF — neutral gray
+  experiment: PALETTE.p50,          // #1A7FE8 — brand blue
+  deploy:     PALETTE.positive,     // #00875A — signal green
+  grid:       PALETTE.grid,
+  axis:       PALETTE.axis,
+  border:     PALETTE.border,
+  legend:     PALETTE.legendGray,
+  fg0:        PALETTE.fg0,
+  fg2:        PALETTE.fg2,
+} as const
+
 export const REVENUE_FORECAST_COLORS = {
   line:       PALETTE.revenue,
   grid:       PALETTE.grid,
