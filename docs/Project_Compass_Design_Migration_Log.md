@@ -26,6 +26,22 @@
 | **FloatingAnswerCard (떠있는 답변 카드)** | ✅ 완료 | 2026-04-08 |
 | **⌘K 키보드 단축키 + 토글** | ✅ 완료 | 2026-04-08 |
 | **Module 1 dashboard에서 FH/AI 위젯 제거** | ✅ 완료 | 2026-04-08 |
+| **PageHeader 비작동 UI 제거 (game/period/export)** | ✅ 완료 | 2026-04-09 |
+| **한국어 네이밍 직관성 정리** | ✅ 완료 | 2026-04-09 |
+| **Noto Sans KR 한글 폰트 로드** | ✅ 완료 | 2026-04-09 |
+| **B2B Readiness Blueprint 문서** | ✅ 완료 | 2026-04-09 |
+| **DS Research (Bloomberg/Toss/Top 10)** | ✅ 완료 | 2026-04-09 |
+| **사이드바 192px 슬림화 + nav font-medium** | ✅ 완료 | 2026-04-10 |
+| **Status bar h-14 + CompassLogo lg** | ✅ 완료 | 2026-04-10 |
+| **모듈 타이틀 재정립 (투자 결정 언어)** | ✅ 완료 | 2026-04-10 |
+| **게임별 mock 데이터 (3 variants + cohort multiplier)** | ✅ 완료 | 2026-04-10 |
+| **Asymptotic Arrival 인터랙티브 툴팁** | ✅ 완료 | 2026-04-10 |
+| **Scenario Simulator 토큰 정리** | ✅ 완료 | 2026-04-10 |
+| **Status bar: MetricCell 통일 패턴 (게임+캘린더)** | ✅ 완료 | 2026-04-13 |
+| **react-day-picker date range 통합** | ✅ 완료 | 2026-04-13 |
+| **bg-0 #F7F8FA 앱 배경 (Toss DPS)** | ✅ 완료 | 2026-04-13 |
+| **글로벌 커서 표준화 정책** | ✅ 완료 | 2026-04-13 |
+| **Vercel 배포 연동 + git push** | ✅ 완료 | 2026-04-13 |
 | AI Copilot Level 2 (Vercel AI SDK + Claude) | 🔴 미착수 | — |
 | AI Copilot Level 3 (Scenario Simulator in chat) | 🔴 미착수 | — |
 | AI Copilot Level 4 (Action Executor Agent) | 🔴 미착수 | — |
@@ -119,6 +135,67 @@
 - `Project_Compass_Deck.html` — **삭제** — Deck v1 폐기 결정
 - `prototype_dashboard.html` — **삭제** — 구 프로토타입 폐기
 - `docs/Project_Compass_Design_Migration_Log.md` — **생성** — 이 문서
+
+### 2026-04-13 (Sprint 3: Status Bar UX 확정 + 배포)
+- **git push** → `mugungwhwa/project-compass` main 브랜치 (`8daab7c→4dde8dd`). Vercel 자동 배포 연동 완료.
+- `CLAUDE.md` §8.4.1 — **Vercel 배포 가이드** 추가 (Root Dir, Install Override `--legacy-peer-deps`, 빌드 워크플로우)
+
+### 2026-04-10 ~ 12 (Sprint 3: Status Bar 게임·캘린더 UX)
+
+#### 핵심 결정: "MetricCell과 같은 시각 언어로 통일"
+- 게임 셀렉터/캘린더를 테두리 없는 **라벨+값+▾** 패턴으로 교체 (좌측 재무 메트릭과 동일 형태)
+- 이전 시도: Segmented Pill → 분리 버튼 → 모두 시각적으로 메트릭과 충돌. **근본 원인**: 좌측(정적 읽기)과 우측(인터랙티브 버튼)의 시각 언어가 달랐음
+- 해결: 둘 다 `text-caption uppercase label + text-h2 value` 포맷. 유일한 차이는 ▾ chevron
+
+#### 변경 파일
+- `compass/src/widgets/app-shell/ui/runway-status-bar.tsx` — **대폭 재작성**
+  - Segmented Pill 해체 → 게임/캘린더가 `gap-1` 독립 MetricCell 스타일
+  - `react-day-picker` (DateRange mode) 통합 — 시작일~종료일 범위 선택
+  - 트리거 표시: `Mar 1–31` (en) / `3/1–31` (ko) — `font-mono` 숫자, `text-body font-medium` 텍스트
+  - DayPicker popover: `--rdp-accent-color: var(--brand)`, `--rdp-range_middle-background-color: var(--brand-tint)`
+  - framer-motion: `AnimatePresence` + `dropdownVariants` (scale 0.95→1, opacity, y -4→0)
+  - 키보드: Enter/Space/Esc/↑↓ 게임 드롭다운, Enter/Space/Esc 캘린더
+  - `getGameData(gameId, cohortMonth)` 연동 — 게임/코호트 변경 시 메트릭 실시간 전환
+  - ◀ ▶ 화살표 버튼 제거 (DayPicker가 자체 월 내비 제공)
+  - `ChevronLeft`, `ChevronRight` import 제거
+- `compass/src/shared/api/mock-data.ts` — **게임별 mock 데이터** 추가
+  - `GAME_VARIANTS` 레코드: puzzle-quest (기존), hero-saga (hold/71%), farm-empire (invest/91%)
+  - `COHORT_MULTIPLIERS`: 월별 미세 변동 (0.92~1.03)
+  - `getGameData(gameId, cohortMonth)` 함수 export
+- `compass/src/styles/globals.css` — **2가지 추가**
+  - `--bg-0: #F7F8FA` — 앱 배경 토큰 (Toss DPS 참고 연회색). `--background: var(--bg-0)`으로 변경
+  - **커서 표준화 정책** — `button:not(:disabled)`, `[role="button"]`, `a[href]` 등 모든 인터랙티브 요소에 `cursor: pointer` 자동 적용. `disabled` → `cursor: not-allowed`
+- `compass/package.json` — `react-day-picker` 의존성 추가
+
+#### 추가 수정 (04-10)
+- `compass/src/widgets/charts/ui/retention-curve.tsx` — Asymptotic Arrival 툴팁 수정
+  - Recharts `<ReferenceLine label>` 정적 텍스트 → 커스텀 `<AsymptoticLabel>` SVG 컴포넌트
+  - `foreignObject`로 HTML 카드 렌더 (hover 시 설명 표시)
+  - 투명 `<rect>` 80×20px 히트 영역 추가
+  - `info.asymptotic` 사전 키 추가 (ko/en)
+- `compass/src/shared/i18n/dictionary.ts` — 모듈 타이틀 재정립
+  - `exec.title`: "추가 투자가 가능한가?" → **"지금 투자를 늘려야 하는가?"**
+  - `actions.title`: "실제로 효과가 있는 것은?" → **"어떤 운영이 가장 효과적인가?"**
+  - `experiments.title`: "R&D가 성과를 내고 있는가?" → **"R&D 투자가 성과를 내는가?"**
+  - `capital.title`: "다음에 무엇을 해야 하는가?" → **"자본을 어디에 배분할 것인가?"**
+- `compass/src/widgets/sidebar/ui/app-sidebar.tsx`
+  - 사이드바 폭 `w-[220px]` → `w-[192px]` (13% 감소)
+  - nav 아이템 `font-semibold` → `font-medium`, 패딩 축소
+  - 한국어 라벨 `truncate` + `min-w-0` overflow 보호
+  - 게임 셀렉터 제거 (status bar로 이동)
+- `compass/src/widgets/app-shell/ui/runway-status-bar.tsx` — status bar 높이 `h-12` → `h-14`, CompassLogo `size="md"` → `size="lg"`
+- `compass/src/shared/ui/compass-logo.tsx` — `xl` 사이즈 추가 (22/30px)
+- `compass/src/widgets/charts/ui/scenario-simulator.tsx` — legacy 토큰 정리 (`bg-white` → `bg-[var(--bg-1)]` 등)
+
+### 2026-04-09 (B2B Readiness 감사 + DS Research)
+- `docs/Project_Compass_B2B_Readiness_Blueprint.md` — **생성** — 24차원 gap 분석, P0/P1/P2 분류, 4단계 로드맵
+- Migration Log §6 — B2B Blueprint 포인터 추가
+- Migration Log §7 — Design System Research 섹션 추가 (Bloomberg/Toss/Top 10 레퍼런스, 구축 옵션 4가지, 숫자 표기 규칙 draft)
+- `compass/src/widgets/sidebar/ui/page-header.tsx` — **비작동 UI 제거** (게임 셀렉터, 기간 셀렉터, 내보내기 버튼). "5분 전" → "Sample data" 배지
+- `compass/src/widgets/sidebar/ui/app-sidebar.tsx` — 게임 셀렉터 footer→상단 이동, `h-screen`→`h-full`+`pb-20`
+- `compass/src/shared/i18n/dictionary.ts` — 한국어 네이밍 정리 (외래어 음역 제거: "페이백"→"회수 시점", "코파일럿"→"질의응답" 등)
+- `compass/src/app/layout.tsx` — `Noto_Sans_KR` 폰트 추가, `--font-noto-kr` CSS 변수
+- `compass/src/styles/globals.css` — body font-family에 `var(--font-noto-kr)` 체인 추가
 
 ### 2026-04-08 — 밤 (한국어 i18n 지원 + 로케일 디폴트 일치화)
 사용자 리포트: 현재 화면이 "사이드바는 한국어 / 상단 status bar·하단 copilot은 영어"의 하이브리드 상태. 원인 진단:
