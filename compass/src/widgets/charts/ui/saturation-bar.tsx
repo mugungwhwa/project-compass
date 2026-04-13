@@ -1,27 +1,43 @@
 "use client"
 
+import { motion } from "framer-motion"
 import { useLocale } from "@/shared/i18n"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts"
+import { SATURATION_BAR_COLORS } from "@/shared/config/chart-colors"
+import { ChartHeader } from "@/shared/ui/chart-header"
+import { ChartTooltip } from "@/shared/ui/chart-tooltip"
+import { ExpandButton } from "@/shared/ui/expand-button"
+import { useChartExpand } from "@/shared/hooks/use-chart-expand"
+
+const C = SATURATION_BAR_COLORS
 
 type SaturationBarProps = { data: { metric: string; myGame: number; genreAvg: number }[] }
 
 export function SaturationBar({ data }: SaturationBarProps) {
   const { t } = useLocale()
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 220 })
+
   return (
-    <div className="rounded-xl border border-[var(--border)] bg-white p-5 h-full">
-      <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-1">{t("chart.saturation")}</h3>
-      <p className="text-xs text-[var(--text-muted)] mt-1 mb-3 leading-relaxed">{t("info.saturation")}</p>
-      <ResponsiveContainer width="100%" height={220}>
+    <motion.div
+      layout
+      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 h-full ${gridClassName}`}
+    >
+      <ChartHeader
+        title={t("chart.saturation")}
+        subtitle={t("info.saturation")}
+        actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
+      />
+      <ResponsiveContainer width="100%" height={chartHeight}>
         <BarChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="4 4" stroke="#F1F5F9" vertical={false} />
-          <XAxis dataKey="metric" tick={{ fontSize: 11, fill: "#94A3B8" }} axisLine={{ stroke: "#E2E8F0" }} tickLine={false} />
-          <YAxis tick={{ fontSize: 11, fill: "#94A3B8" }} axisLine={false} tickLine={false} />
-          <Tooltip contentStyle={{ borderRadius: 8, border: "1px solid #E2E8F0", fontSize: 12 }} />
+          <CartesianGrid strokeDasharray="4 4" stroke={C.grid} vertical={false} />
+          <XAxis dataKey="metric" tick={{ fontSize: 11, fill: C.axis }} axisLine={{ stroke: C.border }} tickLine={false} />
+          <YAxis tick={{ fontSize: 11, fill: C.axis }} axisLine={false} tickLine={false} />
+          <Tooltip content={<ChartTooltip />} />
           <Legend wrapperStyle={{ fontSize: 11 }} />
-          <Bar dataKey="myGame" fill="#5B9AFF" radius={[4, 4, 0, 0]} barSize={16} name="Puzzle Quest" animationBegin={200} animationDuration={800} animationEasing="ease-out" />
-          <Bar dataKey="genreAvg" fill="#CBD5E1" radius={[4, 4, 0, 0]} barSize={16} name={t("chart.genreAvg")} animationBegin={200} animationDuration={800} animationEasing="ease-out" />
+          <Bar dataKey="myGame" fill={C.myGame} radius={[4, 4, 0, 0]} barSize={16} name="Puzzle Quest" animationBegin={200} animationDuration={800} animationEasing="ease-out" />
+          <Bar dataKey="genreAvg" fill={C.genreAvg} radius={[4, 4, 0, 0]} barSize={16} name={t("chart.genreAvg")} animationBegin={200} animationDuration={800} animationEasing="ease-out" />
         </BarChart>
       </ResponsiveContainer>
-    </div>
+    </motion.div>
   )
 }

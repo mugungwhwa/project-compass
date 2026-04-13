@@ -10,19 +10,20 @@
   - Higher data-ink ratio: fewer decorative borders, neutral grid
   - P50 dots now solid (observed) — more honest than hollow dots
 
-  Token mapping (keep in sync with src/styles/globals.css):
-    --chart-p50            → #1A7FE8
-    --chart-band-inner     → rgba(26, 127, 232, 0.18)
-    --chart-band-outer     → rgba(26, 127, 232, 0.10)
-    --chart-benchmark      → #9CA3AF
-    --fg-2                 → #6B7280
-    --border-subtle        → #ECECE8
-    --signal-positive      → #00875A
+  Migrated 2026-04-13 to shared infrastructure:
+  - Colors from RETENTION_CURVE_COLORS (chart-colors.ts)
+  - ChartHeader, ChartTooltip, ExpandButton, useChartExpand
 */
 
 import { useState } from "react"
+import { motion } from "framer-motion"
 import { useLocale } from "@/shared/i18n"
 import type { RetentionDataPoint } from "@/shared/api/mock-data"
+import { ChartHeader } from "@/shared/ui/chart-header"
+import { ChartTooltip, TooltipDot } from "@/shared/ui/chart-tooltip"
+import { ExpandButton } from "@/shared/ui/expand-button"
+import { useChartExpand } from "@/shared/hooks/use-chart-expand"
+import { RETENTION_CURVE_COLORS } from "@/shared/config/chart-colors"
 import {
   AreaChart,
   Area,
@@ -41,18 +42,7 @@ type RetentionCurveProps = {
   asymptoticDay: number
 }
 
-// Token-mirrored colors (must match globals.css :root values)
-const C = {
-  p50: "#1A7FE8",
-  bandOuter: "rgba(26, 127, 232, 0.10)",
-  bandInner: "rgba(26, 127, 232, 0.18)",
-  benchmark: "#9CA3AF",
-  grid: "#ECECE8",
-  axis: "#6B7280",
-  border: "#E2E2DD",
-  asymptotic: "#00875A",
-  bg: "#FFFFFF",
-} as const
+const C = RETENTION_CURVE_COLORS
 
 /*
   Custom SVG label for the Asymptotic Arrival reference line.
@@ -126,6 +116,8 @@ function AsymptoticLabel({
 
 export function RetentionCurve({ data, asymptoticDay }: RetentionCurveProps) {
   const { t } = useLocale()
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 384 })
+
   const chartData = data.map((d) => ({
     day: `D${d.day}`,
     p90: d.p90,
@@ -137,19 +129,18 @@ export function RetentionCurve({ data, asymptoticDay }: RetentionCurveProps) {
   }))
 
   return (
-    <div className="rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6">
-      <div className="mb-4">
-        <h3 className="text-h2 text-[var(--fg-0)]">
-          {t("chart.retention")} — D1 to D60
-        </h3>
-        <p className="text-caption text-[var(--fg-2)]">
-          Puzzle Quest · Cohort 2026-03 · P10 / P50 / P90
-        </p>
-        <p className="mt-1 text-caption text-[var(--fg-2)] leading-relaxed">
-          {t("info.retention")}
-        </p>
-      </div>
-      <ResponsiveContainer width="100%" height={384}>
+    <motion.div
+      layout
+      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 ${gridClassName}`}
+      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <ChartHeader
+        title={`${t("chart.retention")} — D1 to D60`}
+        subtitle="Puzzle Quest · Cohort 2026-03 · P10 / P50 / P90"
+        context={t("info.retention")}
+        actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
+      />
+      <ResponsiveContainer width="100%" height={chartHeight}>
         <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
           <CartesianGrid strokeDasharray="2 4" stroke={C.grid} vertical={false} />
           <XAxis
@@ -166,14 +157,28 @@ export function RetentionCurve({ data, asymptoticDay }: RetentionCurveProps) {
             domain={[0, 50]}
           />
           <Tooltip
-            contentStyle={{
-              borderRadius: 4,
-              border: `1px solid ${C.border}`,
-              fontSize: 12,
-              backgroundColor: C.bg,
-              boxShadow: "0 1px 0 rgba(0,0,0,0.04)",
-            }}
-            formatter={(value) => [value != null ? `${value}%` : ""]}
+            content={
+              <ChartTooltip
+                render={({ payload, label }) => (
+                  <div>
+                    {label != null && (
+                      <div style={{ fontSize: 11, fontWeight: 600, color: "#0A0A0A", marginBottom: 4 }}>
+                        {label}
+                      </div>
+                    )}
+                    {payload.map((p, i) => (
+                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
+                        <TooltipDot color={p.color ?? C.p50} />
+                        <span style={{ color: "#6B7280" }}>{p.name}</span>
+                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 500, color: "#0A0A0A", fontVariantNumeric: "tabular-nums" }}>
+                          {p.value != null ? `${p.value}%` : ""}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              />
+            }
           />
 
           {/* Outer band: P10–P90 (widest, palest) */}
@@ -250,6 +255,6 @@ export function RetentionCurve({ data, asymptoticDay }: RetentionCurveProps) {
           />
         </AreaChart>
       </ResponsiveContainer>
-    </div>
+    </motion.div>
   )
 }

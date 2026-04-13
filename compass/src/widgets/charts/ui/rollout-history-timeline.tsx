@@ -1,8 +1,16 @@
 "use client"
 
+import { motion } from "framer-motion"
 import { useLocale } from "@/shared/i18n"
 import type { ExperimentVariant } from "@/shared/api/mock-data"
+import { ChartHeader } from "@/shared/ui/chart-header"
+import { ChartTooltip } from "@/shared/ui/chart-tooltip"
+import { ExpandButton } from "@/shared/ui/expand-button"
+import { useChartExpand } from "@/shared/hooks/use-chart-expand"
+import { ROLLOUT_HISTORY_COLORS } from "@/shared/config/chart-colors"
 import { ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts"
+
+const C = ROLLOUT_HISTORY_COLORS
 
 type RolloutHistoryTimelineProps = {
   variant: ExperimentVariant
@@ -10,35 +18,48 @@ type RolloutHistoryTimelineProps = {
 
 export function RolloutHistoryTimeline({ variant }: RolloutHistoryTimelineProps) {
   const { t } = useLocale()
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 280 })
 
   if (!variant.rollout_history || variant.rollout_history.length === 0) {
     return (
-      <div className="rounded-2xl border border-[var(--border)] bg-gradient-to-br from-white to-slate-50/50 p-6 card-premium">
-        <h3 className="text-[15px] font-bold text-[var(--text-primary)] mb-2">{t("exp.rolloutHistory")}</h3>
-        <p className="text-sm text-[var(--text-muted)]">No rollout history yet</p>
-      </div>
+      <motion.div
+        layout
+        className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 ${gridClassName}`}
+        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <ChartHeader
+          title={t("exp.rolloutHistory")}
+          actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
+        />
+        <p className="text-caption text-[var(--fg-2)]">No rollout history yet</p>
+      </motion.div>
     )
   }
 
   return (
-    <div className="rounded-2xl border border-[var(--border)] bg-gradient-to-br from-white to-slate-50/50 p-6 card-premium">
-      <div className="mb-4">
-        <h3 className="text-[15px] font-bold text-[var(--text-primary)]">{t("exp.rolloutHistory")}</h3>
-        <p className="text-xs text-[var(--text-muted)] mt-1">{variant.name} · {t("info.rolloutHistory")}</p>
-      </div>
-      <ResponsiveContainer width="100%" height={280}>
+    <motion.div
+      layout
+      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 ${gridClassName}`}
+      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <ChartHeader
+        title={t("exp.rolloutHistory")}
+        subtitle={`${variant.name} · ${t("info.rolloutHistory")}`}
+        actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
+      />
+      <ResponsiveContainer width="100%" height={chartHeight}>
         <ComposedChart data={variant.rollout_history} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="4 4" stroke="#F1F5F9" vertical={false} />
+          <CartesianGrid strokeDasharray="4 4" stroke={C.grid} vertical={false} />
           <XAxis
             dataKey="date"
-            tick={{ fontSize: 10, fill: "#94A3B8" }}
-            axisLine={{ stroke: "#E2E8F0" }}
+            tick={{ fontSize: 10, fill: C.axis }}
+            axisLine={{ stroke: C.border }}
             tickLine={false}
             tickFormatter={(v) => v.slice(5)}
           />
           <YAxis
             yAxisId="pct"
-            tick={{ fontSize: 11, fill: "#94A3B8" }}
+            tick={{ fontSize: 11, fill: C.axis }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v) => `${v}%`}
@@ -47,17 +68,17 @@ export function RolloutHistoryTimeline({ variant }: RolloutHistoryTimelineProps)
           <YAxis
             yAxisId="ltv"
             orientation="right"
-            tick={{ fontSize: 11, fill: "#94A3B8" }}
+            tick={{ fontSize: 11, fill: C.axis }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v) => `$${v}`}
           />
-          <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #E2E8F0", fontSize: 12 }} />
+          <Tooltip content={<ChartTooltip />} />
           <Legend wrapperStyle={{ fontSize: 11 }} />
-          <Bar yAxisId="pct" dataKey="percentage" fill="#5B9AFF" fillOpacity={0.5} radius={[4, 4, 0, 0]} barSize={20} name="% Rollout" animationBegin={200} animationDuration={800} animationEasing="ease-out" />
-          <Line yAxisId="ltv" type="monotone" dataKey="cumulative_ltv" stroke="#3EDDB5" strokeWidth={2.5} dot={{ r: 3.5, fill: "#FFFFFF", stroke: "#3EDDB5", strokeWidth: 2 }} name="Cumulative LTV ($)" animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
+          <Bar yAxisId="pct" dataKey="percentage" fill={C.bar} fillOpacity={0.5} radius={[4, 4, 0, 0]} barSize={20} name="% Rollout" animationBegin={200} animationDuration={800} animationEasing="ease-out" />
+          <Line yAxisId="ltv" type="monotone" dataKey="cumulative_ltv" stroke={C.line} strokeWidth={2.5} dot={{ r: 3.5, fill: "#FFFFFF", stroke: C.line, strokeWidth: 2 }} name="Cumulative LTV ($)" animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
         </ComposedChart>
       </ResponsiveContainer>
-    </div>
+    </motion.div>
   )
 }
