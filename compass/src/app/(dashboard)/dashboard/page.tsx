@@ -2,14 +2,15 @@
 
 import { PageHeader } from "@/widgets/sidebar"
 import { HeroVerdict, KPICards } from "@/widgets/dashboard"
-import { RevenueVsInvest, RetentionCurve, RevenueForecast } from "@/widgets/charts"
+import { RevenueVsInvest, ExperimentRevenue, RevenueForecast } from "@/widgets/charts"
 import { useLocale } from "@/shared/i18n"
 import {
   mockSignal,
   mockKPIs,
-  mockRetention,
   mockRevenueForecast,
   mockRevenueVsInvest,
+  mockRevenueDecomp,
+  mockDecompStats,
 } from "@/shared/api"
 import { PageTransition, FadeInUp } from "@/shared/ui/page-transition"
 
@@ -60,7 +61,7 @@ export default function ExecutiveOverviewPage() {
       {/* 3. Revenue vs Investment + Retention curve */}
       <FadeInUp className="grid grid-cols-2 gap-6 mb-8">
         <RevenueVsInvest data={mockRevenueVsInvest} />
-        <RetentionCurve data={mockRetention.data} asymptoticDay={mockRetention.asymptoticDay} />
+        <ExperimentRevenue data={mockRevenueDecomp} stats={mockDecompStats} />
       </FadeInUp>
 
       {/* 4. Revenue forecast — full width since FinancialHealth + AI box moved to app shell */}

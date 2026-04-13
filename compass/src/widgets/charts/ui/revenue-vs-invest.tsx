@@ -10,17 +10,14 @@ import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 import { REVENUE_VS_INVEST_COLORS } from "@/shared/config/chart-colors"
 import {
-  ComposedChart,
-  Bar,
-  Line,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
-  ReferenceLine,
   ResponsiveContainer,
   Legend,
-  Cell,
 } from "recharts"
 
 type RevenueVsInvestProps = {
@@ -29,27 +26,15 @@ type RevenueVsInvestProps = {
 
 const C = REVENUE_VS_INVEST_COLORS
 
-type DerivedPoint = RevenueVsInvestPoint & {
-  monthlyNet: number
-  cumulativeNet: number
-}
-
 export function RevenueVsInvest({ data }: RevenueVsInvestProps) {
   const { t, locale } = useLocale()
   const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 384 })
 
-  const chartData = useMemo<DerivedPoint[]>(
-    () =>
-      data.map((d) => ({
-        ...d,
-        monthlyNet: d.revenue - d.uaSpend,
-        cumulativeNet: d.cumRevenue - d.cumUaSpend,
-      })),
+  // Find BEP crossing: first index where cumRevenue >= cumUaSpend
+  const bepIndex = useMemo(
+    () => data.findIndex((d) => d.cumRevenue >= d.cumUaSpend),
     [data],
   )
-
-  // Find break-even crossing index (first month cumulative turns positive)
-  const bepIndex = chartData.findIndex((d) => d.cumulativeNet >= 0)
 
   return (
     <motion.div
@@ -61,11 +46,26 @@ export function RevenueVsInvest({ data }: RevenueVsInvestProps) {
         title={t("chart.rovsInvest")}
         subtitle="Puzzle Quest · 2025 Jul — 2026 Apr · $K"
         context={t("info.revenueVsInvest")}
-        insight={locale === "ko" ? "매출이 3개월 연속 UA 투자를 앞서고 있습니다." : "Revenue is outpacing UA spend for 3 straight months."}
+        insight={
+          locale === "ko"
+            ? "누적 매출이 1월에 UA 투자를 추월 — 손익분기 도달."
+            : "Cumulative revenue overtook UA spend in Jan — break-even reached."
+        }
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
       <ResponsiveContainer width="100%" height={chartHeight}>
-        <ComposedChart data={chartData} margin={{ top: 16, right: 16, left: 8, bottom: 0 }}>
+        <AreaChart data={data} margin={{ top: 16, right: 20, left: 8, bottom: 0 }}>
+          <defs>
+            <linearGradient id="gradRevenue" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={C.revenue} stopOpacity={0.2} />
+              <stop offset="100%" stopColor={C.revenue} stopOpacity={0.02} />
+            </linearGradient>
+            <linearGradient id="gradUaSpend" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={C.uaSpend} stopOpacity={0.15} />
+              <stop offset="100%" stopColor={C.uaSpend} stopOpacity={0.02} />
+            </linearGradient>
+          </defs>
+
           <CartesianGrid strokeDasharray="4 4" stroke={C.grid} vertical={false} />
           <XAxis
             dataKey="month"
@@ -74,14 +74,11 @@ export function RevenueVsInvest({ data }: RevenueVsInvestProps) {
             tickLine={false}
           />
           <YAxis
-            yAxisId="net"
             tick={{ fontSize: 12, fill: C.axis }}
             axisLine={false}
             tickLine={false}
-            tickFormatter={(v: number) =>
-              v === 0 ? "0" : `${v > 0 ? "+" : ""}${v}`
-            }
-            width={48}
+            tickFormatter={(v: number) => `$${v}`}
+            width={52}
             label={{
               value: "$K",
               position: "top",
@@ -94,14 +91,16 @@ export function RevenueVsInvest({ data }: RevenueVsInvestProps) {
             content={
               <ChartTooltip
                 render={({ payload, label }) => {
-                  const d = payload[0]?.payload as DerivedPoint | undefined
+                  const d = payload[0]?.payload as RevenueVsInvestPoint | undefined
                   if (!d) return null
+                  const gap = d.cumRevenue - d.cumUaSpend
+                  const isPositive = gap >= 0
                   return (
                     <div>
                       <div style={{ fontSize: 11, fontWeight: 600, color: "#0A0A0A", marginBottom: 6 }}>
                         {label}
                       </div>
-                      {/* Revenue & UA Spend detail */}
+                      {/* Monthly breakdown */}
                       <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
                         <TooltipDot color={C.revenue} />
                         <span style={{ color: "#6B7280" }}>{t("chart.monthlyRev")}</span>
@@ -118,47 +117,42 @@ export function RevenueVsInvest({ data }: RevenueVsInvestProps) {
                       </div>
                       {/* Divider */}
                       <div style={{ borderTop: "1px solid #E2E2DD", margin: "4px 0" }} />
-                      {/* Monthly Net */}
+                      {/* Cumulative */}
                       <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
-                        <TooltipDot color={d.monthlyNet >= 0 ? C.profit : C.loss} />
-                        <span style={{ color: "#6B7280" }}>{t("chart.monthlyNet")}</span>
-                        <span style={{
-                          marginLeft: "auto",
-                          paddingLeft: 12,
-                          fontWeight: 600,
-                          color: d.monthlyNet >= 0 ? C.profit : C.loss,
-                          fontVariantNumeric: "tabular-nums",
-                        }}>
-                          {d.monthlyNet >= 0 ? "+" : ""}{d.monthlyNet}K
+                        <TooltipDot color={C.revenue} />
+                        <span style={{ color: "#6B7280" }}>{t("chart.cumRevenue")}</span>
+                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 600, color: "#0A0A0A", fontVariantNumeric: "tabular-nums" }}>
+                          ${d.cumRevenue}K
                         </span>
                       </div>
-                      {/* Cumulative Net */}
                       <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
-                        <TooltipDot color={C.cumLine} />
-                        <span style={{ color: "#6B7280" }}>{t("chart.cumNet")}</span>
+                        <TooltipDot color={C.uaSpend} />
+                        <span style={{ color: "#6B7280" }}>{t("chart.cumUaSpend")}</span>
+                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 600, color: "#0A0A0A", fontVariantNumeric: "tabular-nums" }}>
+                          ${d.cumUaSpend}K
+                        </span>
+                      </div>
+                      {/* Gap */}
+                      <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6, marginTop: 2 }}>
+                        <TooltipDot color={isPositive ? C.profit : C.loss} />
+                        <span style={{ color: "#6B7280" }}>
+                          {isPositive
+                            ? (locale === "ko" ? "회수 초과" : "Surplus")
+                            : (locale === "ko" ? "미회수" : "Deficit")}
+                        </span>
                         <span style={{
                           marginLeft: "auto",
                           paddingLeft: 12,
-                          fontWeight: 500,
-                          color: d.cumulativeNet >= 0 ? C.profit : C.loss,
+                          fontWeight: 700,
+                          color: isPositive ? C.profit : C.loss,
                           fontVariantNumeric: "tabular-nums",
                         }}>
-                          {d.cumulativeNet >= 0 ? "+" : ""}{d.cumulativeNet}K
+                          {isPositive ? "+" : ""}{gap}K
                         </span>
                       </div>
                       {/* ROAS */}
-                      <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
-                        <TooltipDot color={C.roas} />
-                        <span style={{ color: "#6B7280" }}>ROAS</span>
-                        <span style={{
-                          marginLeft: "auto",
-                          paddingLeft: 12,
-                          fontWeight: 500,
-                          color: "#0A0A0A",
-                          fontVariantNumeric: "tabular-nums",
-                        }}>
-                          {d.roas}%
-                        </span>
+                      <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, lineHeight: 1.6, marginTop: 2, opacity: 0.7 }}>
+                        <span style={{ color: "#6B7280", marginLeft: 14 }}>ROAS {d.roas}%</span>
                       </div>
                     </div>
                   )
@@ -167,69 +161,67 @@ export function RevenueVsInvest({ data }: RevenueVsInvestProps) {
             }
           />
 
-          {/* ── Monthly Net bars: green/red conditional ── */}
-          <Bar
-            yAxisId="net"
-            dataKey="monthlyNet"
-            radius={[4, 4, 0, 0]}
-            barSize={28}
-            name={t("chart.monthlyNet")}
+          {/* ── Cumulative UA Spend area (orange, behind) ── */}
+          <Area
+            type="monotone"
+            dataKey="cumUaSpend"
+            stroke={C.uaSpend}
+            strokeWidth={2.5}
+            fill="url(#gradUaSpend)"
+            dot={{ r: 3, fill: "#FFFFFF", stroke: C.uaSpend, strokeWidth: 2 }}
+            name={t("chart.cumUaSpend")}
             animationBegin={200}
             animationDuration={800}
             animationEasing="ease-out"
-          >
-            {chartData.map((d, i) => (
-              <Cell
-                key={i}
-                fill={d.monthlyNet >= 0 ? C.profit : C.loss}
-                fillOpacity={0.75}
-              />
-            ))}
-          </Bar>
+          />
 
-          {/* ── Cumulative Net trajectory line ── */}
-          <Line
-            yAxisId="net"
+          {/* ── Cumulative Revenue area (blue, front) ── */}
+          <Area
             type="monotone"
-            dataKey="cumulativeNet"
-            stroke={C.cumLine}
+            dataKey="cumRevenue"
+            stroke={C.revenue}
             strokeWidth={2.5}
+            fill="url(#gradRevenue)"
             dot={(props: Record<string, unknown>) => {
               const { cx, cy, index } = props as { cx: number; cy: number; index: number }
               const isBep = index === bepIndex
+              if (isBep) {
+                return (
+                  <g key={index}>
+                    {/* Pulsing ring */}
+                    <circle cx={cx} cy={cy} r={10} fill={C.profit} fillOpacity={0.12} />
+                    {/* Solid dot */}
+                    <circle cx={cx} cy={cy} r={5} fill={C.profit} stroke="#FFFFFF" strokeWidth={2} />
+                    {/* BEP label */}
+                    <text
+                      x={cx}
+                      y={cy - 16}
+                      textAnchor="middle"
+                      fontSize={10}
+                      fontWeight={700}
+                      fill={C.profit}
+                    >
+                      BEP
+                    </text>
+                  </g>
+                )
+              }
               return (
                 <circle
                   key={index}
                   cx={cx}
                   cy={cy}
-                  r={isBep ? 6 : 3.5}
-                  fill={isBep ? C.profit : "#FFFFFF"}
-                  stroke={isBep ? C.profit : C.cumLine}
-                  strokeWidth={isBep ? 3 : 2}
+                  r={3}
+                  fill="#FFFFFF"
+                  stroke={C.revenue}
+                  strokeWidth={2}
                 />
               )
             }}
-            name={t("chart.cumNet")}
-            animationBegin={400}
-            animationDuration={1000}
+            name={t("chart.cumRevenue")}
+            animationBegin={200}
+            animationDuration={800}
             animationEasing="ease-out"
-          />
-
-          {/* ── Break-even: zero line ── */}
-          <ReferenceLine
-            yAxisId="net"
-            y={0}
-            stroke={C.axis}
-            strokeWidth={1.5}
-            strokeDasharray="6 3"
-            label={{
-              value: `── ${t("chart.breakeven")}`,
-              position: "insideTopRight",
-              fontSize: 11,
-              fontWeight: 600,
-              fill: C.axis,
-              offset: 8,
-            }}
           />
 
           <Legend
@@ -238,7 +230,7 @@ export function RevenueVsInvest({ data }: RevenueVsInvestProps) {
             iconSize={12}
             wrapperStyle={{ fontSize: 11, color: C.legend }}
           />
-        </ComposedChart>
+        </AreaChart>
       </ResponsiveContainer>
     </motion.div>
   )
