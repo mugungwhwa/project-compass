@@ -92,8 +92,8 @@ export type ScenarioResult = {
 }
 
 export const mockRetention = {
-  gameId: "puzzle-quest",
-  gameName: "Puzzle Quest",
+  gameId: "match-league",
+  gameName: "Match League",
   cohort: "2026-03",
   genre: "Puzzle",
   data: [
@@ -126,8 +126,8 @@ export const mockSignal = {
   ],
   payback: { p10: 38, p50: 47, p90: 62 },
   nextAction: {
-    ko: "Reward Calendar 실험을 50%로 확대하세요",
-    en: "Scale Reward Calendar experiment to 50%",
+    ko: "Reward Calendar 실험을 50%로 확대하세요 — 예상 효과: 연 $120K 매출 증가",
+    en: "Scale Reward Calendar experiment to 50% — Expected: +$120K annualized revenue",
   },
 }
 
@@ -194,7 +194,7 @@ export const mockMarketKPIs = {
 export const mockCompetitors: CompetitorData[] = [
   { rank: 1,  name: "Candy Crush Saga",    d1: 45.2, d7: 22.1, d30: 12.3, revenue: "$45M" },
   { rank: 2,  name: "Royal Match",         d1: 43.8, d7: 20.5, d30: 11.1, revenue: "$38M" },
-  { rank: 3,  name: "Puzzle Quest",        d1: 42.3, d7: 18.7, d30: 8.5,  revenue: "$12M" },
+  { rank: 3,  name: "Match League",        d1: 42.3, d7: 18.7, d30: 8.5,  revenue: "$12M" },
   { rank: 4,  name: "Homescapes",          d1: 40.1, d7: 17.3, d30: 7.8,  revenue: "$28M" },
   { rank: 5,  name: "Gardenscapes",        d1: 39.5, d7: 16.8, d30: 7.2,  revenue: "$25M" },
   { rank: 6,  name: "Toon Blast",          d1: 38.2, d7: 15.9, d30: 6.5,  revenue: "$20M" },
@@ -598,7 +598,7 @@ type GameVariant = {
 }
 
 const GAME_VARIANTS: Record<string, GameVariant> = {
-  "puzzle-quest": {
+  "match-league": {
     signal: {
       status: mockSignal.status,
       confidence: mockSignal.confidence,
@@ -686,7 +686,7 @@ const GAME_VARIANTS: Record<string, GameVariant> = {
 }
 
 export function getGameData(gameId: string, cohortMonth: string = "2026-03") {
-  const variant = GAME_VARIANTS[gameId] ?? GAME_VARIANTS["puzzle-quest"]
+  const variant = GAME_VARIANTS[gameId] ?? GAME_VARIANTS["match-league"]
   const m = COHORT_MULTIPLIERS[cohortMonth] ?? 1.0
 
   return {

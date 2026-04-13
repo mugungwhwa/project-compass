@@ -53,6 +53,7 @@ export default function ExecutiveOverviewPage() {
             { labelKey: "kpi.bep", value: `${mockKPIs.bep.value}%`, trend: mockKPIs.bep.trend, trendLabel: mockKPIs.bep.trendLabel },
             { labelKey: "kpi.burn", value: mockKPIs.burn.value, unit: _t("common.months"), trend: mockKPIs.burn.trend, trendLabel: mockKPIs.burn.trendLabel },
           ]}
+          basisKey="kpi.basis"
         />
       </FadeInUp>
 
