@@ -1,0 +1,6 @@
+export { NavBar } from "./ui/nav-bar"
+export { HeroSection } from "./ui/hero-section"
+export { ProblemSection } from "./ui/problem-section"
+export { ValueProps } from "./ui/value-props"
+export { CtaSection } from "./ui/cta-section"
+export { Footer } from "./ui/footer"

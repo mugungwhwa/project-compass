@@ -5,6 +5,9 @@ import { useLocale } from "@/shared/i18n"
 import { computeScenario } from "@/shared/api/mock-data"
 import { formatNumber } from "@/shared/lib"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
+import { SCENARIO_SIMULATOR_COLORS } from "@/shared/config/chart-colors"
+
+const C = SCENARIO_SIMULATOR_COLORS
 
 export function ScenarioSimulator() {
   const { t } = useLocale()
@@ -59,8 +62,8 @@ export function ScenarioSimulator() {
           <YAxis yAxisId="left" tick={{ fontSize: 10, fill: "var(--fg-3)" }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${v}d`} />
           <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 10, fill: "var(--fg-3)" }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${v}%`} />
           <Tooltip contentStyle={{ borderRadius: "var(--radius-card)", border: "1px solid var(--border-default)", fontSize: 11, background: "var(--bg-1)", color: "var(--fg-0)" }} />
-          <Line yAxisId="left" type="monotone" dataKey="payback" stroke="var(--chart-p50)" strokeWidth={2} name="Payback" dot={{ r: 2 }} animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
-          <Line yAxisId="right" type="monotone" dataKey="bep" stroke="var(--signal-positive)" strokeWidth={2} name="BEP %" dot={{ r: 2 }} animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
+          <Line yAxisId="left" type="monotone" dataKey="payback" stroke={C.payback} strokeWidth={2} name="Payback" dot={{ r: 2 }} animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
+          <Line yAxisId="right" type="monotone" dataKey="bep" stroke={C.bep} strokeWidth={2} name="BEP %" dot={{ r: 2 }} animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
         </LineChart>
       </ResponsiveContainer>
     </div>
