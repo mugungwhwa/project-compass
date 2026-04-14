@@ -746,6 +746,40 @@ type GameVariant = {
 }
 
 const GAME_VARIANTS: Record<string, GameVariant> = {
+  // Portfolio sentinel — aggregated metrics across all titles.
+  // Signal/payback mirror mockPortfolioSignal for consistency with the
+  // PortfolioVerdict card rendered on the dashboard.
+  "portfolio": {
+    signal: {
+      status: "invest",
+      confidence: 78,
+      reason: {
+        ko: "포트폴리오 전체 MOIC 1.27x, 3개 타이틀 중 2개가 투자 확대 시그널",
+        en: "Portfolio MOIC 1.27x, 2 of 3 titles signaling scale investment",
+      },
+      factors: [
+        { status: "ok" as const,   text: { ko: "Match League 성장 가속 중",          en: "Match League accelerating growth" } },
+        { status: "warn" as const, text: { ko: "Weaving Fairy 수익화 실험 필요",      en: "Weaving Fairy needs monetization work" } },
+        { status: "fail" as const, text: { ko: "Dig Infinity UA 축소 권고",           en: "Dig Infinity UA cut recommended" } },
+      ],
+      payback: { p10: 35, p50: 44, p90: 58 },
+      nextAction: {
+        ko: "UA 예산을 Match League에 집중 배분하세요 — 유일한 투자 확대 시그널",
+        en: "Focus UA budget on Match League — only scale-investment signal",
+      },
+    },
+    financialHealth: {
+      burnTolerance: { value: 8.6, max: 18, color: "#1A7FE8" },
+      netRunway: { value: 12.5, max: 18, color: "#1A7FE8" },
+      paybackDay: 65,
+    },
+    cashRunway: {
+      initialCash: 4160, // sum of 3 titles: 2400 + 1180 + 580
+    },
+    capitalKPIs: {
+      capitalEff: { value: 1.27 }, // mockPortfolioKPIs.portfolioMoic
+    },
+  },
   "match-league": {
     signal: {
       status: mockSignal.status,

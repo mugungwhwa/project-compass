@@ -25,12 +25,14 @@ import { DayPicker, type DateRange } from "react-day-picker"
 import { ko as koLocale, enUS } from "react-day-picker/locale"
 import "react-day-picker/style.css"
 import { mockCashRunway, mockFinancialHealth, mockCapitalKPIs, getGameData } from "@/shared/api"
+import { useSelectedGame } from "@/shared/store/selected-game"
 import { CompassLogo } from "@/shared/ui/compass-logo"
 import { useLocale } from "@/shared/i18n"
 import type { TranslationKey } from "@/shared/i18n/dictionary"
 import { cn } from "@/shared/lib"
 
 const GAMES = [
+  { id: "portfolio",      label: "Portfolio",      genre: "All Titles"     },
   { id: "match-league",   label: "Match League",   genre: "Puzzle"         },
   { id: "weaving-fairy",  label: "Weaving Fairy",  genre: "Casual"         },
   { id: "dig-infinity",   label: "Dig Infinity",   genre: "Arcade / Idle"  },
@@ -135,7 +137,9 @@ export function RunwayStatusBar() {
   const gameListId  = useId()
   const calListId   = useId()
 
-  const [selectedGame, setSelectedGame]     = useState(GAMES[0])
+  const gameId      = useSelectedGame((s) => s.gameId)
+  const setGameId   = useSelectedGame((s) => s.setGameId)
+  const selectedGame = GAMES.find((g) => g.id === gameId) ?? GAMES[0]
   const [dateRange, setDateRange]           = useState<DateRange>({
     from: new Date(2026, 2, 1),   // Mar 1
     to:   new Date(2026, 2, 31),  // Mar 31
@@ -214,7 +218,7 @@ export function RunwayStatusBar() {
     } else if (e.key === "Enter") {
       e.preventDefault()
       if (gameActiveIdx >= 0) {
-        setSelectedGame(GAMES[gameActiveIdx])
+        setGameId(GAMES[gameActiveIdx].id)
         setGameOpen(false)
         gameTriggerRef.current?.focus()
       }
@@ -321,7 +325,7 @@ export function RunwayStatusBar() {
                     aria-selected={game.id === selectedGame.id}
                     type="button"
                     tabIndex={-1}
-                    onClick={() => { setSelectedGame(game); setGameOpen(false); gameTriggerRef.current?.focus() }}
+                    onClick={() => { setGameId(game.id); setGameOpen(false); gameTriggerRef.current?.focus() }}
                     className={cn(
                       "flex w-full items-center justify-between px-3 py-2 text-body",
                       "transition-colors duration-[var(--duration-micro)]",

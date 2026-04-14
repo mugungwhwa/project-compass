@@ -1,7 +1,7 @@
 "use client"
 
 import { PageHeader } from "@/widgets/sidebar"
-import { PortfolioVerdict, KPICards, TitleHeatmap, MarketContextCard, DataFreshnessStrip } from "@/widgets/dashboard"
+import { PortfolioVerdict, HeroVerdict, KPICards, TitleHeatmap, MarketContextCard, DataFreshnessStrip } from "@/widgets/dashboard"
 import { RevenueVsInvest, CapitalWaterfall, RevenueForecast } from "@/widgets/charts"
 import { useLocale } from "@/shared/i18n"
 import {
@@ -14,6 +14,8 @@ import {
   mockRevenueForecast,
   mockDataFreshness,
 } from "@/shared/api"
+import { useGameData } from "@/shared/api/use-game-data"
+import { useSelectedGame, PORTFOLIO_ID } from "@/shared/store/selected-game"
 import { PageTransition, FadeInUp } from "@/shared/ui/page-transition"
 import { useGridLayout } from "@/shared/hooks"
 import { motion } from "framer-motion"
@@ -35,22 +37,37 @@ const GRID_TRANSITION = { duration: 0.3, ease: [0.16, 1, 0.3, 1] as [number, num
 
 export default function ExecutiveOverviewPage() {
   const { t: _t } = useLocale()
+  const gameId = useSelectedGame((s) => s.gameId)
+  const gameData = useGameData()
   const heatmapGrid = useGridLayout(2)
   const waterfallGrid = useGridLayout(2)
   const forecastGrid = useGridLayout(1)
 
+  const isPortfolioView = gameId === PORTFOLIO_ID
+
   return (
     <PageTransition>
-      {/* 1. Portfolio Verdict — sticky top of fold (DecisionSurface-based) */}
+      {/* 1. Verdict — Portfolio aggregate or single-title drill-down */}
       <FadeInUp>
-        <PortfolioVerdict
-          status={mockPortfolioSignal.status}
-          confidence={mockPortfolioSignal.confidence}
-          reason={mockPortfolioSignal.reason}
-          recommendation={mockPortfolioSignal.recommendation}
-          payback={mockPortfolioSignal.payback}
-          titles={mockTitleHealth.map((t) => ({ label: t.label, signal: t.signal }))}
-        />
+        {isPortfolioView ? (
+          <PortfolioVerdict
+            status={mockPortfolioSignal.status}
+            confidence={mockPortfolioSignal.confidence}
+            reason={mockPortfolioSignal.reason}
+            recommendation={mockPortfolioSignal.recommendation}
+            payback={mockPortfolioSignal.payback}
+            titles={mockTitleHealth.map((t) => ({ label: t.label, signal: t.signal }))}
+          />
+        ) : (
+          <HeroVerdict
+            status={gameData.signal.status}
+            confidence={gameData.signal.confidence}
+            factors={gameData.signal.factors as unknown as Parameters<typeof HeroVerdict>[0]["factors"]}
+            payback={gameData.signal.payback}
+            nextAction={gameData.signal.nextAction}
+            reason={gameData.signal.reason}
+          />
+        )}
       </FadeInUp>
 
       <FadeInUp>
