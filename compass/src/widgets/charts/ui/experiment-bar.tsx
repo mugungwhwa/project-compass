@@ -28,7 +28,7 @@ export function ExperimentBar({ data }: ExperimentBarProps) {
     >
       <ChartHeader
         title={t("chart.experimentRoi")}
-        context={t("info.experimentRoi")}
+        info={t("info.experimentRoi")}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
       <ResponsiveContainer width="100%" height={chartHeight}>

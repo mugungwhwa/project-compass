@@ -29,7 +29,7 @@ export function MarketBenchmark({ data, expanded: externalExpanded, onToggle: ex
       <ChartHeader
         title={t("chart.benchmark")}
         subtitle="Match League vs Puzzle Genre"
-        context={t("info.benchmark")}
+        info={t("info.benchmark")}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
       <div className="flex-1" style={{ minHeight: chartHeight }}>

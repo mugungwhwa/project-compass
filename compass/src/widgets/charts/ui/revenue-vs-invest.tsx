@@ -47,7 +47,7 @@ export function RevenueVsInvest({ data, expanded: externalExpanded, onToggle: ex
       <ChartHeader
         title={t("chart.rovsInvest")}
         subtitle="Match League · 2025 Jul — 2026 Apr · $K"
-        context={t("info.revenueVsInvest")}
+        info={t("info.revenueVsInvest")}
         insight={
           locale === "ko"
             ? "누적 매출이 1월에 UA 투자를 추월 — 손익분기 도달."

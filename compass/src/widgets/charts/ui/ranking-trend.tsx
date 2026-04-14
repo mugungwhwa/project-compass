@@ -30,7 +30,7 @@ export function RankingTrend({ data, expanded: externalExpanded, onToggle: exter
       <ChartHeader
         title={t("market.rankingTrend")}
         subtitle="Match League · 6-month trend"
-        context={t("info.rankingTrend")}
+        info={t("info.rankingTrend")}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
       <div className="flex-1" style={{ minHeight: chartHeight }}>

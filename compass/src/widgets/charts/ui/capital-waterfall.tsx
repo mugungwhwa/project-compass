@@ -135,7 +135,7 @@ export function CapitalWaterfall({ data, expanded: externalExpanded, onToggle: e
     >
       <ChartHeader
         title={t("chart.capitalWaterfall")}
-        insight={t("info.capitalWaterfall")}
+        info={t("info.capitalWaterfall")}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
       <div className="mb-2 flex flex-wrap items-center gap-x-4 gap-y-1">

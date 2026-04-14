@@ -26,7 +26,7 @@ export function RevenueForecast({ data, title, expanded: externalExpanded, onTog
     >
       <ChartHeader
         title={title || t("chart.revenue")}
-        context={t("info.revenueForecast")}
+        info={t("info.revenueForecast")}
         insight={locale === "ko" ? "상승 여지는 있으나, D60 이후 불확실성이 확대됩니다." : "Upside remains positive, but uncertainty widens after D60."}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />

@@ -30,7 +30,7 @@ export function SaturationTrendChart({ data, expanded: externalExpanded, onToggl
       <ChartHeader
         title={t("market.saturationTrend")}
         subtitle="Match League vs Top-grossing threshold"
-        context={t("info.saturationTrend")}
+        info={t("info.saturationTrend")}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
       <div className="flex-1" style={{ minHeight: chartHeight }}>

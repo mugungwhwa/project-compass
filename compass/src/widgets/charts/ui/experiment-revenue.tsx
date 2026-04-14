@@ -171,7 +171,7 @@ export function ExperimentRevenue({ data, stats, expanded: externalExpanded, onT
       <ChartHeader
         title={t("chart.revenueDecomp")}
         subtitle="Match League · 2025 Jul — 2026 Apr · $K"
-        context={t("info.revenueDecomp")}
+        info={t("info.revenueDecomp")}
         insight={
           locale === "ko"
             ? `실험이 매출의 ${expShare}%를 만들고 있습니다.`

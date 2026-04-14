@@ -47,7 +47,7 @@ export function RolloutHistoryTimeline({ variant, expanded: externalExpanded, on
       <ChartHeader
         title={t("exp.rolloutHistory")}
         subtitle={`${variant.name} · % Rollout + Cumulative LTV`}
-        context={t("info.rolloutHistory")}
+        info={t("info.rolloutHistory")}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
       <div className="flex-1" style={{ minHeight: chartHeight }}>
