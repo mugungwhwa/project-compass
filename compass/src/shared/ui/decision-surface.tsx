@@ -17,6 +17,7 @@
 
 import { useState, type ReactNode } from "react"
 import { cn } from "@/shared/lib/utils"
+import { useLocale } from "@/shared/i18n"
 
 export type DecisionStatus = "invest" | "hold" | "reduce"
 
@@ -46,31 +47,48 @@ export type DecisionSurfaceProps = {
   className?: string
 }
 
-const STATUS_META: Record<
-  DecisionStatus,
-  { label: string; borderColor: string; badgeBg: string; badgeText: string; defaultCta: string }
-> = {
+type StatusMeta = {
+  label: string
+  borderColor: string
+  badgeBg: string
+  badgeText: string
+  defaultCta: string
+}
+
+// Visual tokens (colors, borders) are locale-agnostic; only strings differ.
+const STATUS_VISUAL = {
   invest: {
-    label: "Invest More",
     borderColor: "border-t-[var(--signal-positive)]",
     badgeBg: "bg-[var(--signal-positive-bg)]",
     badgeText: "text-[var(--signal-positive)]",
-    defaultCta: "Approve & scale",
   },
   hold: {
-    label: "Hold",
     borderColor: "border-t-[var(--signal-caution)]",
     badgeBg: "bg-[var(--signal-caution-bg)]",
     badgeText: "text-[var(--signal-caution)]",
-    defaultCta: "Review in 7 days",
   },
   reduce: {
-    label: "Pull Back",
     borderColor: "border-t-[var(--signal-risk)]",
     badgeBg: "bg-[var(--signal-risk-bg)]",
     badgeText: "text-[var(--signal-risk)]",
-    defaultCta: "Reduce exposure",
   },
+} as const
+
+const STATUS_STRINGS: Record<"en" | "ko", Record<DecisionStatus, { label: string; defaultCta: string }>> = {
+  en: {
+    invest: { label: "Invest More",  defaultCta: "Approve & scale"   },
+    hold:   { label: "Hold",         defaultCta: "Review in 7 days"  },
+    reduce: { label: "Pull Back",    defaultCta: "Reduce exposure"   },
+  },
+  ko: {
+    invest: { label: "투자 확대",     defaultCta: "승인 후 집행"       },
+    hold:   { label: "유지",         defaultCta: "7일 후 재평가"      },
+    reduce: { label: "축소",         defaultCta: "노출 축소"          },
+  },
+}
+
+function getStatusMeta(status: DecisionStatus, locale: "en" | "ko"): StatusMeta {
+  return { ...STATUS_VISUAL[status], ...STATUS_STRINGS[locale][status] }
 }
 
 function formatCI(c: Confidence): string {
@@ -123,14 +141,18 @@ export function DecisionSurface({
   recommendation,
   impact,
   evidence,
-  evidenceLabel = "Why?",
+  evidenceLabel,
   onPrimaryAction,
   primaryActionLabel,
   className,
 }: DecisionSurfaceProps) {
+  const { locale } = useLocale()
   const [evidenceOpen, setEvidenceOpen] = useState(false)
-  const meta = STATUS_META[status]
+  const meta = getStatusMeta(status, locale)
   const ctaLabel = primaryActionLabel ?? meta.defaultCta
+  const defaultEvidenceLabel = locale === "ko" ? "근거 보기" : "Why?"
+  const hideEvidenceLabel = locale === "ko" ? "근거 숨기기" : "Hide evidence"
+  const resolvedEvidenceLabel = evidenceLabel ?? defaultEvidenceLabel
 
   return (
     <section
@@ -176,13 +198,14 @@ export function DecisionSurface({
       </div>
 
       {/* 2. Situation */}
-      <p className="text-body text-[var(--fg-1)]">{situation}</p>
+      <p className="text-body text-[var(--fg-1)] break-keep">{situation}</p>
 
       {/* 3. Confidence — REQUIRED. Lint rule elsewhere enforces this. */}
       <ConfidenceBar confidence={confidence} />
 
-      {/* 4. Recommendation (Display/Serif) */}
-      <p className="text-display text-[var(--fg-0)]">{recommendation}</p>
+      {/* 4. Recommendation (Display/Serif) — break-keep prevents mid-word
+          splits in Korean where word boundaries are phrase-level, not token-level. */}
+      <p className="text-display text-[var(--fg-0)] break-keep">{recommendation}</p>
 
       {/* 5. Actions */}
       <div className="flex items-center gap-3">
@@ -211,7 +234,7 @@ export function DecisionSurface({
               "hover:text-[var(--fg-0)] focus:outline-none focus:text-[var(--fg-0)]",
             )}
           >
-            <span>{evidenceOpen ? "Hide evidence" : evidenceLabel}</span>
+            <span>{evidenceOpen ? hideEvidenceLabel : resolvedEvidenceLabel}</span>
             <svg
               width="12"
               height="12"

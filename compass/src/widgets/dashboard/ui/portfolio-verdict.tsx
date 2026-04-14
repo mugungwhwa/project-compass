@@ -97,7 +97,7 @@ export function PortfolioVerdict({
           p10: payback.p10,
           p50: payback.p50,
           p90: payback.p90,
-          unit: "d",
+          unit: locale === "ko" ? "일" : "d",
           label: locale === "en" ? "Payback window (days)" : "페이백 구간 (일)",
         }}
         recommendation={recommendation[locale]}
