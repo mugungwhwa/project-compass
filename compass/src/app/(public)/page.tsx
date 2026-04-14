@@ -1,9 +1,15 @@
 import {
   NavBar,
-  HeroSection,
-  ProblemSection,
-  ValueProps,
-  CtaSection,
+  HeroV2,
+  WhyFailSection,
+  QuestionsSection,
+  ModulesSection,
+  ProductProofSection,
+  ChartStoriesSection,
+  CopilotSection,
+  ExperimentTranslationSection,
+  ComparisonSection,
+  CtaBottomSection,
   Footer,
 } from "@/widgets/landing"
 
@@ -12,10 +18,16 @@ export default function LandingPage() {
     <>
       <NavBar />
       <main className="pt-14">
-        <HeroSection />
-        <ProblemSection />
-        <ValueProps />
-        <CtaSection />
+        <HeroV2 />
+        <WhyFailSection />
+        <QuestionsSection />
+        <ModulesSection />
+        <ProductProofSection />
+        <ChartStoriesSection />
+        <CopilotSection />
+        <ExperimentTranslationSection />
+        <ComparisonSection />
+        <CtaBottomSection />
       </main>
       <Footer />
     </>
