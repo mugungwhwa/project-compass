@@ -10,8 +10,8 @@ const initial = { opacity: 0, y: 24 }
 
 const copy = {
   ko: {
-    headlineLine1: "게임 데이터를",
-    headlineLine2: "투자 결정으로",
+    headlineLine1: "실험을",
+    headlineLine2: "투자 판단으로",
     sub1: "시장, UA, 실험, 재무 — 모두 따로 놉니다.",
     sub2: "Compass가 하나의 투자 판단으로 연결합니다.",
     cta: "라이브 데모 보기",
