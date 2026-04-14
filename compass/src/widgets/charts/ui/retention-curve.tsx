@@ -138,7 +138,7 @@ export function RetentionCurve({ data, asymptoticDay, expanded: externalExpanded
     >
       <ChartHeader
         title={`${t("chart.retention")} — D1 to D60`}
-        subtitle="Puzzle Quest · Cohort 2026-03 · P10 / P50 / P90"
+        subtitle="Match League · Cohort 2026-03 · P10 / P50 / P90"
         context={t("info.retention")}
         insight={locale === "ko" ? "D14 코호트 안정화 이후 예측 구간이 좁아졌습니다." : "Prediction band tightened after D14 cohort stabilization."}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
