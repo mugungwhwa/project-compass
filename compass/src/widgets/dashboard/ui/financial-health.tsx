@@ -2,6 +2,7 @@
 
 import { useLocale } from "@/shared/i18n"
 import { motion } from "framer-motion"
+import { InfoHint } from "@/shared/ui/info-hint"
 
 type FinancialHealthProps = {
   burnTolerance: { value: number; max: number; color: string }
@@ -26,7 +27,10 @@ export function FinancialHealth({ burnTolerance, netRunway, kpis, paybackDay, ru
       {/* Burn & Runway gauges */}
       <div className="flex flex-col gap-3 mb-4">
         <div className="flex items-center gap-3">
-          <div className="text-xs text-[var(--text-secondary)] w-[140px]">{t("finance.burnGross")}</div>
+          <div className="text-xs text-[var(--text-secondary)] w-[140px] flex items-center gap-1">
+            {t("finance.burnGross")}
+            <InfoHint content={t("info.finance.burnGross")} size={12} />
+          </div>
           <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
             <motion.div
               className="h-full rounded-full"
@@ -41,7 +45,10 @@ export function FinancialHealth({ burnTolerance, netRunway, kpis, paybackDay, ru
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <div className="text-xs text-[var(--text-secondary)] w-[140px]">{t("finance.netRunway")}</div>
+          <div className="text-xs text-[var(--text-secondary)] w-[140px] flex items-center gap-1">
+            {t("finance.netRunway")}
+            <InfoHint content={t("info.finance.netRunway")} size={12} />
+          </div>
           <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
             <motion.div
               className="h-full rounded-full"
@@ -63,7 +70,10 @@ export function FinancialHealth({ burnTolerance, netRunway, kpis, paybackDay, ru
           <div className="text-lg font-bold" style={{ fontVariantNumeric: "tabular-nums", color: kpis.capEfficiency >= 1 ? "var(--signal-green)" : "var(--signal-amber)" }}>
             {kpis.capEfficiency}
           </div>
-          <div className="text-[11px] text-[var(--text-muted)]">{t("finance.capEff")}</div>
+          <div className="text-[11px] text-[var(--text-muted)] flex items-center justify-center gap-1">
+            {t("finance.capEff")}
+            <InfoHint content={t("info.finance.capEff")} size={11} />
+          </div>
           <div className="text-[10px]" style={{ color: kpis.capEfficiency >= 1 ? "var(--signal-green)" : "var(--signal-amber)" }}>
             {kpis.capEfficiency >= 1 ? t("finance.recovering") : t("finance.deficit")}
           </div>
@@ -72,21 +82,30 @@ export function FinancialHealth({ burnTolerance, netRunway, kpis, paybackDay, ru
           <div className="text-lg font-bold text-[var(--signal-green)]" style={{ fontVariantNumeric: "tabular-nums" }}>
             {kpis.revPerSpend}x
           </div>
-          <div className="text-[11px] text-[var(--text-muted)]">{t("finance.revSpend")}</div>
+          <div className="text-[11px] text-[var(--text-muted)] flex items-center justify-center gap-1">
+            {t("finance.revSpend")}
+            <InfoHint content={t("info.finance.revSpend")} size={11} />
+          </div>
           <div className="text-[10px] text-[var(--signal-green)]">{t("finance.recovering")}</div>
         </div>
         <div className="bg-slate-50 rounded-lg p-3 text-center">
           <div className="text-lg font-bold" style={{ fontVariantNumeric: "tabular-nums", color: kpis.netBurn < 0 ? "var(--signal-red)" : "var(--signal-green)" }}>
             {kpis.netBurn >= 0 ? "+" : ""}${kpis.netBurn}K
           </div>
-          <div className="text-[11px] text-[var(--text-muted)]">{t("finance.netBurn")}</div>
+          <div className="text-[11px] text-[var(--text-muted)] flex items-center justify-center gap-1">
+            {t("finance.netBurn")}
+            <InfoHint content={t("info.finance.netBurn")} size={11} />
+          </div>
           <div className="text-[10px] text-[var(--text-muted)]">{t("finance.monthly")}</div>
         </div>
       </div>
 
       {/* Payback Affordability Check */}
       <div className={`rounded-lg p-3 ${isAffordable ? "bg-[var(--signal-green-bg)]" : "bg-[var(--signal-amber-bg)]"}`}>
-        <div className="text-xs font-bold text-[var(--text-primary)] mb-2">{t("finance.affordTitle")}</div>
+        <div className="text-xs font-bold text-[var(--text-primary)] mb-2 flex items-center gap-1">
+          {t("finance.affordTitle")}
+          <InfoHint content={t("info.finance.afford")} size={12} />
+        </div>
         <div className="relative mb-1">
           <div className="h-1.5 bg-black/[0.08] rounded-full" />
           <motion.div

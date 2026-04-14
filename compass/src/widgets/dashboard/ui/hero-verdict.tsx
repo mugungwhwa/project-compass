@@ -61,8 +61,8 @@ export function HeroVerdict({
   const situationText =
     reason?.[locale] ??
     (locale === "en"
-      ? `Posterior confidence ${confidence}% on D7–D30 cohort data.`
-      : `D7-D30 코호트 기반 사후 확신도 ${confidence}%.`)
+      ? `${confidence}% confidence based on D7–D30 cohort data.`
+      : `D7-D30 코호트 데이터 기반 신뢰도 ${confidence}%.`)
 
   // Recommendation (Display/Serif). Must start with a verb — mockSignal already does.
   const recommendationText =

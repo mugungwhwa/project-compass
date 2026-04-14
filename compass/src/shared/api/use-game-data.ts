@@ -19,7 +19,7 @@
  */
 import { useMemo } from "react"
 import { useSelectedGame } from "@/shared/store/selected-game"
-import { getGameData } from "./mock-data"
+import { getGameData, getGameChartData } from "./mock-data"
 
 const DEFAULT_COHORT = "2026-03"
 
@@ -27,5 +27,9 @@ export function useGameData(cohortMonth: string = DEFAULT_COHORT) {
   const gameId = useSelectedGame((s) => s.gameId)
 
   // Memoize on (gameId, cohort) to match future TanStack Query caching semantics.
-  return useMemo(() => getGameData(gameId, cohortMonth), [gameId, cohortMonth])
+  return useMemo(() => {
+    const core = getGameData(gameId, cohortMonth)
+    const charts = getGameChartData(gameId)
+    return { ...core, charts }
+  }, [gameId, cohortMonth])
 }

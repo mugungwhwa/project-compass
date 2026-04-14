@@ -9,9 +9,6 @@ import {
   mockPortfolioKPIs,
   mockTitleHealth,
   mockMarketContext,
-  mockCapitalWaterfall,
-  mockRevenueVsInvest,
-  mockRevenueForecast,
   mockDataFreshness,
 } from "@/shared/api"
 import { useGameData } from "@/shared/api/use-game-data"
@@ -74,19 +71,31 @@ export default function ExecutiveOverviewPage() {
         <PageHeader titleKey="exec.title" subtitleKey="exec.subtitle" />
       </FadeInUp>
 
-      {/* 2. Portfolio KPI Strip (6 cards) */}
+      {/* 2. KPI Strip — Portfolio (6 blended cards) or Single-game (4 cards) */}
       <FadeInUp className="mb-8">
-        <KPICards
-          items={[
-            { labelKey: "kpi.blendedRoas", value: `${mockPortfolioKPIs.blendedRoas.value}%`, trend: mockPortfolioKPIs.blendedRoas.trend, trendLabel: mockPortfolioKPIs.blendedRoas.trendLabel },
-            { labelKey: "kpi.deployPace", value: mockPortfolioKPIs.deployPace.value, unit: mockPortfolioKPIs.deployPace.unit, trend: mockPortfolioKPIs.deployPace.trend, trendLabel: mockPortfolioKPIs.deployPace.trendLabel },
-            { labelKey: "kpi.portfolioMoic", value: mockPortfolioKPIs.portfolioMoic.value, unit: mockPortfolioKPIs.portfolioMoic.unit, trend: mockPortfolioKPIs.portfolioMoic.trend, trendLabel: mockPortfolioKPIs.portfolioMoic.trendLabel },
-            { labelKey: "kpi.fundDpi", value: mockPortfolioKPIs.fundDpi.value, unit: mockPortfolioKPIs.fundDpi.unit, trend: mockPortfolioKPIs.fundDpi.trend, trendLabel: mockPortfolioKPIs.fundDpi.trendLabel },
-            { labelKey: "kpi.expVelocity", value: mockPortfolioKPIs.expVelocity.value, unit: mockPortfolioKPIs.expVelocity.unit, trend: mockPortfolioKPIs.expVelocity.trend, trendLabel: mockPortfolioKPIs.expVelocity.trendLabel },
-            { labelKey: "kpi.marketTiming", value: mockPortfolioKPIs.marketTiming.value, unit: mockPortfolioKPIs.marketTiming.unit, trend: mockPortfolioKPIs.marketTiming.trend, trendLabel: mockPortfolioKPIs.marketTiming.trendLabel },
-          ]}
-          basisKey="kpi.basisPortfolio"
-        />
+        {isPortfolioView ? (
+          <KPICards
+            items={[
+              { labelKey: "kpi.blendedRoas", value: `${mockPortfolioKPIs.blendedRoas.value}%`, trend: mockPortfolioKPIs.blendedRoas.trend, trendLabel: mockPortfolioKPIs.blendedRoas.trendLabel },
+              { labelKey: "kpi.deployPace", value: mockPortfolioKPIs.deployPace.value, unit: mockPortfolioKPIs.deployPace.unit, trend: mockPortfolioKPIs.deployPace.trend, trendLabel: mockPortfolioKPIs.deployPace.trendLabel },
+              { labelKey: "kpi.portfolioMoic", value: mockPortfolioKPIs.portfolioMoic.value, unit: mockPortfolioKPIs.portfolioMoic.unit, trend: mockPortfolioKPIs.portfolioMoic.trend, trendLabel: mockPortfolioKPIs.portfolioMoic.trendLabel },
+              { labelKey: "kpi.fundDpi", value: mockPortfolioKPIs.fundDpi.value, unit: mockPortfolioKPIs.fundDpi.unit, trend: mockPortfolioKPIs.fundDpi.trend, trendLabel: mockPortfolioKPIs.fundDpi.trendLabel },
+              { labelKey: "kpi.expVelocity", value: mockPortfolioKPIs.expVelocity.value, unit: mockPortfolioKPIs.expVelocity.unit, trend: mockPortfolioKPIs.expVelocity.trend, trendLabel: mockPortfolioKPIs.expVelocity.trendLabel },
+              { labelKey: "kpi.marketTiming", value: mockPortfolioKPIs.marketTiming.value, unit: mockPortfolioKPIs.marketTiming.unit, trend: mockPortfolioKPIs.marketTiming.trend, trendLabel: mockPortfolioKPIs.marketTiming.trendLabel },
+            ]}
+            basisKey="kpi.basisPortfolio"
+          />
+        ) : (
+          <KPICards
+            items={[
+              { labelKey: "kpi.roas",    value: `${gameData.charts.kpis.roas.value}%`,   trend: gameData.charts.kpis.roas.trend,    trendLabel: gameData.charts.kpis.roas.trendLabel },
+              { labelKey: "kpi.payback", value: gameData.charts.kpis.payback.value,      unit: _t("common.days"),   trend: gameData.charts.kpis.payback.trend, trendLabel: gameData.charts.kpis.payback.trendLabel },
+              { labelKey: "kpi.bep",     value: `${gameData.charts.kpis.bep.value}%`,    trend: gameData.charts.kpis.bep.trend,     trendLabel: gameData.charts.kpis.bep.trendLabel },
+              { labelKey: "kpi.burn",    value: gameData.charts.kpis.burn.value,         unit: _t("common.months"), trend: gameData.charts.kpis.burn.trend,    trendLabel: gameData.charts.kpis.burn.trendLabel },
+            ]}
+            basisKey="kpi.basis"
+          />
+        )}
       </FadeInUp>
 
       {/* 3. Title Heatmap + Market Context (3:2 split) */}
@@ -123,7 +132,7 @@ export default function ExecutiveOverviewPage() {
           transition={GRID_TRANSITION}
         >
           <CapitalWaterfall
-            data={mockCapitalWaterfall}
+            data={gameData.charts.capitalWaterfall}
             expanded={waterfallGrid.expandedId === "chart-0"}
             onToggle={() => waterfallGrid.toggle("chart-0")}
           />
@@ -134,7 +143,7 @@ export default function ExecutiveOverviewPage() {
           transition={GRID_TRANSITION}
         >
           <RevenueVsInvest
-            data={mockRevenueVsInvest}
+            data={gameData.charts.revenueVsInvest}
             expanded={waterfallGrid.expandedId === "chart-1"}
             onToggle={() => waterfallGrid.toggle("chart-1")}
           />
@@ -149,7 +158,7 @@ export default function ExecutiveOverviewPage() {
           transition={GRID_TRANSITION}
         >
           <RevenueForecast
-            data={mockRevenueForecast}
+            data={gameData.charts.revenueForecast}
             expanded={forecastGrid.expandedId === "chart-0"}
             onToggle={() => forecastGrid.toggle("chart-0")}
           />

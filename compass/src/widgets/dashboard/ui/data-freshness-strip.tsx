@@ -2,6 +2,7 @@
 
 import { useLocale } from "@/shared/i18n"
 import type { DataFreshness } from "@/shared/api/mock-data"
+import { InfoHint } from "@/shared/ui/info-hint"
 
 type DataFreshnessStripProps = {
   data: DataFreshness
@@ -41,9 +42,10 @@ type RowProps = {
   color: string
   label: string
   value: string
+  info?: string
 }
 
-function Row({ color, label, value }: RowProps) {
+function Row({ color, label, value, info }: RowProps) {
   return (
     <div className="flex items-center gap-2">
       <span
@@ -51,10 +53,11 @@ function Row({ color, label, value }: RowProps) {
         style={{ background: color }}
       />
       <span
-        className="text-[11px] font-medium uppercase tracking-wide flex-1"
+        className="text-[11px] font-medium uppercase tracking-wide flex-1 flex items-center gap-1"
         style={{ color: "var(--text-muted)" }}
       >
         {label}
+        {info && <InfoHint content={info} size={11} />}
       </span>
       <span
         className="text-sm font-mono-num"
@@ -108,6 +111,7 @@ export function DataFreshnessStrip({ data }: DataFreshnessStripProps) {
           color={qualityColor}
           label={t("data.quality")}
           value={qualityLabel}
+          info={t("info.data.quality")}
         />
 
         {/* Model Convergence */}
@@ -115,6 +119,7 @@ export function DataFreshnessStrip({ data }: DataFreshnessStripProps) {
           color={convergenceColor}
           label={t("data.convergence")}
           value={`${data.modelConvergence}%`}
+          info={t("info.data.convergence")}
         />
 
         {/* Anomalies */}

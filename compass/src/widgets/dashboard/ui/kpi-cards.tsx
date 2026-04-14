@@ -1,10 +1,10 @@
 "use client"
 
-import { useLocale } from "@/shared/i18n"
-import { type TranslationKey } from "@/shared/i18n"
+import { useLocale, type TranslationKey, translate } from "@/shared/i18n"
 import { cn } from "@/shared/lib"
 import { TrendingUp, TrendingDown, Minus } from "lucide-react"
 import { AnimatedNumber } from "@/shared/ui/animated-number"
+import { InfoHint } from "@/shared/ui/info-hint"
 
 export type KPIItem = {
   labelKey: TranslationKey
@@ -12,11 +12,31 @@ export type KPIItem = {
   unit?: string
   trend: number
   trendLabel: string
+  /** Override auto-mapped infoKey. By default we try `info.{labelKey}`. */
+  infoKey?: TranslationKey
 }
 
 type KPICardsProps = {
   items: KPIItem[]
   basisKey?: TranslationKey
+}
+
+/**
+ * Given a KPI labelKey like "kpi.moic", returns "info.kpi.moic" if that key
+ * exists in the dictionary, otherwise undefined. Lets each KPI auto-opt-in to
+ * the ⓘ hint without changing every call site.
+ */
+function resolveInfoKey(labelKey: TranslationKey, override?: TranslationKey): TranslationKey | undefined {
+  if (override) return override
+  const candidate = `info.${labelKey}` as TranslationKey
+  // translate() returns undefined for missing keys when accessed via dictionary;
+  // we guard by probing with the Korean locale (string result means key exists).
+  try {
+    const probe = translate(candidate, "ko")
+    return typeof probe === "string" && probe.length > 0 ? candidate : undefined
+  } catch {
+    return undefined
+  }
 }
 
 export function KPICards({ items, basisKey }: KPICardsProps) {
@@ -31,6 +51,7 @@ export function KPICards({ items, basisKey }: KPICardsProps) {
           const TrendIcon = isPositive ? TrendingUp : isNegative ? TrendingDown : Minus
           const trendColor = isPositive ? "text-[var(--signal-green)]" : isNegative ? "text-[var(--signal-red)]" : "text-[var(--text-muted)]"
           const displayTrendColor = item.trendLabel === "faster" ? "text-[var(--signal-green)]" : trendColor
+          const infoKey = resolveInfoKey(item.labelKey, item.infoKey)
 
           return (
             <div
@@ -38,9 +59,12 @@ export function KPICards({ items, basisKey }: KPICardsProps) {
               className="rounded-xl border border-[var(--border)] p-6 card-glow card-premium"
               style={{ boxShadow: "0 4px 24px rgba(91,154,255,0.08)" }}
             >
-              <p className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
-                {t(item.labelKey)}
-              </p>
+              <div className="flex items-center gap-1">
+                <p className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
+                  {t(item.labelKey)}
+                </p>
+                {infoKey && <InfoHint content={t(infoKey)} size={12} />}
+              </div>
               <div className="flex items-baseline gap-2 mt-3">
                 <span className="text-hero font-mono-num text-[var(--text-primary)] text-glow">
                   {typeof item.value === 'number'

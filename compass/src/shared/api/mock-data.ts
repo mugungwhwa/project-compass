@@ -900,6 +900,208 @@ export function getGameData(gameId: string, cohortMonth: string = "2026-03") {
   }
 }
 
+// --- Per-game chart data ---
+// These power the per-title dashboard views (Revenue vs Invest, Forecast, etc.).
+// The "portfolio" entry provides aggregated/blended data for the portfolio mode.
+
+type GameChartData = {
+  kpis: {
+    roas:    { value: number; trend: number; trendLabel: string }
+    payback: { value: number; trend: number; trendLabel: string }
+    bep:     { value: number; trend: number; trendLabel: string }
+    burn:    { value: number; trend: number; trendLabel: string }
+  }
+  revenueVsInvest: RevenueVsInvestPoint[]
+  revenueForecast: RevenueForecastPoint[]
+  capitalWaterfall: CapitalWaterfallStep[]
+}
+
+const GAME_CHART_DATA: Record<string, GameChartData> = {
+  "match-league": {
+    kpis: {
+      roas:    { value: 142, trend: 8.3,  trendLabel: "up" },
+      payback: { value: 47,  trend: -12,  trendLabel: "faster" },
+      bep:     { value: 87,  trend: 3.1,  trendLabel: "up" },
+      burn:    { value: 8.2, trend: 0.5,  trendLabel: "up" },
+    },
+    // Reuses mockRevenueVsInvest (INVEST story — BEP in Jan, strong growth)
+    revenueVsInvest: [
+      { month: "Jul",  revenue: 28,  uaSpend: 95,  cumRevenue: 28,   cumUaSpend: 95,   roas: 29  },
+      { month: "Aug",  revenue: 45,  uaSpend: 88,  cumRevenue: 73,   cumUaSpend: 183,  roas: 40  },
+      { month: "Sep",  revenue: 62,  uaSpend: 80,  cumRevenue: 135,  cumUaSpend: 263,  roas: 51  },
+      { month: "Oct",  revenue: 78,  uaSpend: 72,  cumRevenue: 213,  cumUaSpend: 335,  roas: 64  },
+      { month: "Nov",  revenue: 92,  uaSpend: 68,  cumRevenue: 305,  cumUaSpend: 403,  roas: 76  },
+      { month: "Dec",  revenue: 105, uaSpend: 65,  cumRevenue: 410,  cumUaSpend: 468,  roas: 88  },
+      { month: "Jan",  revenue: 112, uaSpend: 60,  cumRevenue: 522,  cumUaSpend: 528,  roas: 99  },
+      { month: "Feb",  revenue: 118, uaSpend: 58,  cumRevenue: 640,  cumUaSpend: 586,  roas: 109 },
+      { month: "Mar",  revenue: 125, uaSpend: 62,  cumRevenue: 765,  cumUaSpend: 648,  roas: 118 },
+      { month: "Apr",  revenue: 132, uaSpend: 60,  cumRevenue: 897,  cumUaSpend: 708,  roas: 127 },
+    ],
+    revenueForecast: [
+      { month: "Jan", p10: 95,  p50: 105, p90: 115 },
+      { month: "Feb", p10: 90,  p50: 110, p90: 130 },
+      { month: "Mar", p10: 88,  p50: 118, p90: 148 },
+      { month: "Apr", p10: 82,  p50: 120, p90: 165 },
+      { month: "May", p10: 75,  p50: 135, p90: 200 },
+      { month: "Jun", p10: 65,  p50: 148, p90: 240 },
+      { month: "Jul", p10: 58,  p50: 155, p90: 270 },
+      { month: "Aug", p10: 50,  p50: 162, p90: 300 },
+      { month: "Sep", p10: 45,  p50: 168, p90: 325 },
+      { month: "Oct", p10: 40,  p50: 175, p90: 350 },
+      { month: "Nov", p10: 35,  p50: 180, p90: 370 },
+      { month: "Dec", p10: 32,  p50: 185, p90: 390 },
+    ],
+    capitalWaterfall: [
+      { label: { ko: "초기 자본",   en: "Initial Capital" }, value: 2400, type: "inflow"  },
+      { label: { ko: "추가 투입",   en: "Follow-on" },       value: 600,  type: "inflow"  },
+      { label: { ko: "UA 비용",    en: "UA Spend" },         value: -708, type: "outflow" },
+      { label: { ko: "개발비",     en: "Dev Cost" },          value: -240, type: "outflow" },
+      { label: { ko: "운영비",     en: "Ops Cost" },          value: -160, type: "outflow" },
+      { label: { ko: "누적 매출",   en: "Cum. Revenue" },     value: 897,  type: "inflow"  },
+      { label: { ko: "순 포지션",   en: "Net Position" },     value: 2789, type: "net"     },
+    ],
+  },
+
+  "weaving-fairy": {
+    // HOLD story — stable but not yet profitable, ARPDAU gap
+    kpis: {
+      roas:    { value: 96,  trend: 2.1,  trendLabel: "up" },
+      payback: { value: 72,  trend: -3,   trendLabel: "faster" },
+      bep:     { value: 58,  trend: 1.4,  trendLabel: "up" },
+      burn:    { value: 4.8, trend: -0.2, trendLabel: "down" },
+    },
+    revenueVsInvest: [
+      { month: "Jul",  revenue: 18, uaSpend: 48, cumRevenue: 18,  cumUaSpend: 48,  roas: 38 },
+      { month: "Aug",  revenue: 25, uaSpend: 45, cumRevenue: 43,  cumUaSpend: 93,  roas: 46 },
+      { month: "Sep",  revenue: 32, uaSpend: 42, cumRevenue: 75,  cumUaSpend: 135, roas: 56 },
+      { month: "Oct",  revenue: 40, uaSpend: 42, cumRevenue: 115, cumUaSpend: 177, roas: 65 },
+      { month: "Nov",  revenue: 45, uaSpend: 44, cumRevenue: 160, cumUaSpend: 221, roas: 72 },
+      { month: "Dec",  revenue: 48, uaSpend: 46, cumRevenue: 208, cumUaSpend: 267, roas: 78 },
+      { month: "Jan",  revenue: 50, uaSpend: 48, cumRevenue: 258, cumUaSpend: 315, roas: 82 },
+      { month: "Feb",  revenue: 52, uaSpend: 48, cumRevenue: 310, cumUaSpend: 363, roas: 85 },
+      { month: "Mar",  revenue: 55, uaSpend: 50, cumRevenue: 365, cumUaSpend: 413, roas: 88 },
+      { month: "Apr",  revenue: 58, uaSpend: 50, cumRevenue: 423, cumUaSpend: 463, roas: 91 },
+    ],
+    revenueForecast: [
+      { month: "Jan", p10: 42, p50: 50,  p90: 60 },
+      { month: "Feb", p10: 43, p50: 52,  p90: 65 },
+      { month: "Mar", p10: 44, p50: 55,  p90: 70 },
+      { month: "Apr", p10: 42, p50: 58,  p90: 78 },
+      { month: "May", p10: 40, p50: 60,  p90: 85 },
+      { month: "Jun", p10: 38, p50: 62,  p90: 92 },
+      { month: "Jul", p10: 35, p50: 65,  p90: 100 },
+      { month: "Aug", p10: 32, p50: 66,  p90: 108 },
+      { month: "Sep", p10: 30, p50: 68,  p90: 115 },
+      { month: "Oct", p10: 28, p50: 70,  p90: 122 },
+      { month: "Nov", p10: 25, p50: 70,  p90: 128 },
+      { month: "Dec", p10: 22, p50: 72,  p90: 135 },
+    ],
+    capitalWaterfall: [
+      { label: { ko: "초기 자본",   en: "Initial Capital" }, value: 1180, type: "inflow"  },
+      { label: { ko: "추가 투입",   en: "Follow-on" },       value: 200,  type: "inflow"  },
+      { label: { ko: "UA 비용",    en: "UA Spend" },         value: -463, type: "outflow" },
+      { label: { ko: "개발비",     en: "Dev Cost" },          value: -180, type: "outflow" },
+      { label: { ko: "운영비",     en: "Ops Cost" },          value: -120, type: "outflow" },
+      { label: { ko: "누적 매출",   en: "Cum. Revenue" },     value: 423,  type: "inflow"  },
+      { label: { ko: "순 포지션",   en: "Net Position" },     value: 1040, type: "net"     },
+    ],
+  },
+
+  "dig-infinity": {
+    // REDUCE story — declining revenue, CPI rising, burning cash
+    kpis: {
+      roas:    { value: 72,  trend: -6.2, trendLabel: "down" },
+      payback: { value: 104, trend: 18,   trendLabel: "slower" },
+      bep:     { value: 28,  trend: -4.3, trendLabel: "down" },
+      burn:    { value: 2.1, trend: -1.4, trendLabel: "down" },
+    },
+    revenueVsInvest: [
+      { month: "Jul",  revenue: 48, uaSpend: 55, cumRevenue: 48,  cumUaSpend: 55,  roas: 87 },
+      { month: "Aug",  revenue: 50, uaSpend: 58, cumRevenue: 98,  cumUaSpend: 113, roas: 87 },
+      { month: "Sep",  revenue: 52, uaSpend: 62, cumRevenue: 150, cumUaSpend: 175, roas: 86 },
+      { month: "Oct",  revenue: 50, uaSpend: 68, cumRevenue: 200, cumUaSpend: 243, roas: 82 },
+      { month: "Nov",  revenue: 48, uaSpend: 70, cumRevenue: 248, cumUaSpend: 313, roas: 79 },
+      { month: "Dec",  revenue: 45, uaSpend: 72, cumRevenue: 293, cumUaSpend: 385, roas: 76 },
+      { month: "Jan",  revenue: 42, uaSpend: 75, cumRevenue: 335, cumUaSpend: 460, roas: 73 },
+      { month: "Feb",  revenue: 40, uaSpend: 78, cumRevenue: 375, cumUaSpend: 538, roas: 70 },
+      { month: "Mar",  revenue: 38, uaSpend: 80, cumRevenue: 413, cumUaSpend: 618, roas: 67 },
+      { month: "Apr",  revenue: 36, uaSpend: 82, cumRevenue: 449, cumUaSpend: 700, roas: 64 },
+    ],
+    revenueForecast: [
+      { month: "Jan", p10: 32, p50: 42,  p90: 52 },
+      { month: "Feb", p10: 28, p50: 40,  p90: 55 },
+      { month: "Mar", p10: 25, p50: 38,  p90: 56 },
+      { month: "Apr", p10: 22, p50: 36,  p90: 58 },
+      { month: "May", p10: 18, p50: 34,  p90: 60 },
+      { month: "Jun", p10: 15, p50: 32,  p90: 62 },
+      { month: "Jul", p10: 12, p50: 30,  p90: 65 },
+      { month: "Aug", p10: 10, p50: 28,  p90: 68 },
+      { month: "Sep", p10: 8,  p50: 26,  p90: 70 },
+      { month: "Oct", p10: 6,  p50: 25,  p90: 72 },
+      { month: "Nov", p10: 5,  p50: 24,  p90: 75 },
+      { month: "Dec", p10: 4,  p50: 22,  p90: 78 },
+    ],
+    capitalWaterfall: [
+      { label: { ko: "초기 자본",   en: "Initial Capital" }, value: 580,  type: "inflow"  },
+      { label: { ko: "추가 투입",   en: "Follow-on" },       value: 0,    type: "inflow"  },
+      { label: { ko: "UA 비용",    en: "UA Spend" },         value: -700, type: "outflow" },
+      { label: { ko: "개발비",     en: "Dev Cost" },          value: -140, type: "outflow" },
+      { label: { ko: "운영비",     en: "Ops Cost" },          value: -95,  type: "outflow" },
+      { label: { ko: "누적 매출",   en: "Cum. Revenue" },     value: 449,  type: "inflow"  },
+      { label: { ko: "순 포지션",   en: "Net Position" },     value: 94,   type: "net"     },
+    ],
+  },
+
+  // Portfolio = aggregated blended view (reuses top-level portfolio mocks)
+  "portfolio": {
+    kpis: {
+      roas:    { value: 148, trend: 6.2,  trendLabel: "up" },
+      payback: { value: 65,  trend: -5,   trendLabel: "faster" },
+      bep:     { value: 62,  trend: 2.4,  trendLabel: "up" },
+      burn:    { value: 8.6, trend: 0.3,  trendLabel: "up" },
+    },
+    revenueVsInvest: [
+      { month: "Jul",  revenue: 94,  uaSpend: 198, cumRevenue: 94,   cumUaSpend: 198,  roas: 47  },
+      { month: "Aug",  revenue: 120, uaSpend: 191, cumRevenue: 214,  cumUaSpend: 389,  roas: 55  },
+      { month: "Sep",  revenue: 146, uaSpend: 184, cumRevenue: 360,  cumUaSpend: 573,  roas: 63  },
+      { month: "Oct",  revenue: 168, uaSpend: 182, cumRevenue: 528,  cumUaSpend: 755,  roas: 70  },
+      { month: "Nov",  revenue: 185, uaSpend: 182, cumRevenue: 713,  cumUaSpend: 937,  roas: 76  },
+      { month: "Dec",  revenue: 198, uaSpend: 183, cumRevenue: 911,  cumUaSpend: 1120, roas: 81  },
+      { month: "Jan",  revenue: 204, uaSpend: 183, cumRevenue: 1115, cumUaSpend: 1303, roas: 86  },
+      { month: "Feb",  revenue: 210, uaSpend: 184, cumRevenue: 1325, cumUaSpend: 1487, roas: 89  },
+      { month: "Mar",  revenue: 218, uaSpend: 192, cumRevenue: 1543, cumUaSpend: 1679, roas: 92  },
+      { month: "Apr",  revenue: 226, uaSpend: 192, cumRevenue: 1769, cumUaSpend: 1871, roas: 95  },
+    ],
+    revenueForecast: [
+      { month: "Jan", p10: 169, p50: 197, p90: 227 },
+      { month: "Feb", p10: 161, p50: 202, p90: 250 },
+      { month: "Mar", p10: 157, p50: 211, p90: 274 },
+      { month: "Apr", p10: 146, p50: 214, p90: 301 },
+      { month: "May", p10: 133, p50: 229, p90: 345 },
+      { month: "Jun", p10: 118, p50: 242, p90: 394 },
+      { month: "Jul", p10: 105, p50: 250, p90: 435 },
+      { month: "Aug", p10: 92,  p50: 256, p90: 476 },
+      { month: "Sep", p10: 83,  p50: 262, p90: 510 },
+      { month: "Oct", p10: 74,  p50: 270, p90: 544 },
+      { month: "Nov", p10: 65,  p50: 274, p90: 573 },
+      { month: "Dec", p10: 58,  p50: 279, p90: 603 },
+    ],
+    capitalWaterfall: [
+      { label: { ko: "초기 자본",   en: "Initial Capital" }, value: 4160, type: "inflow"  },
+      { label: { ko: "추가 투입",   en: "Follow-on" },       value: 800,  type: "inflow"  },
+      { label: { ko: "UA 비용",    en: "UA Spend" },         value: -1871, type: "outflow" },
+      { label: { ko: "개발비",     en: "Dev Cost" },          value: -560,  type: "outflow" },
+      { label: { ko: "운영비",     en: "Ops Cost" },          value: -375,  type: "outflow" },
+      { label: { ko: "누적 매출",   en: "Cum. Revenue" },     value: 1769,  type: "inflow"  },
+      { label: { ko: "순 포지션",   en: "Net Position" },     value: 3923,  type: "net"     },
+    ],
+  },
+}
+
+export function getGameChartData(gameId: string): GameChartData {
+  return GAME_CHART_DATA[gameId] ?? GAME_CHART_DATA["match-league"]
+}
+
 export function computeScenario(uaBudget: number, targetRoas: number): ScenarioResult {
   const basePayback = 47
   const baseBep = 87

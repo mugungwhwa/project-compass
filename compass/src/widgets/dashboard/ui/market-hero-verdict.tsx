@@ -101,8 +101,8 @@ export function MarketHeroVerdict({
 
   const impactValue =
     locale === "en"
-      ? `${rankChange > 0 ? "+" : ""}${rankChange} rank · ${confidence}% posterior`
-      : `${rankChange > 0 ? "+" : ""}${rankChange}단계 · 사후 ${confidence}%`
+      ? `${rankChange > 0 ? "+" : ""}${rankChange} rank · ${confidence}% confidence`
+      : `${rankChange > 0 ? "+" : ""}${rankChange}단계 · 신뢰도 ${confidence}%`
 
   const evidence = (
     <div className="flex flex-col gap-3">
@@ -133,7 +133,7 @@ export function MarketHeroVerdict({
           p50: ci.p50,
           p90: ci.p90,
           unit: "",
-          label: locale === "en" ? "Genre rank (6mo posterior)" : "장르 순위 (6개월 사후)",
+          label: locale === "en" ? "Genre rank (6mo est.)" : "장르 순위 (6개월 추정)",
         }}
         recommendation={recommendationText}
         impact={{
