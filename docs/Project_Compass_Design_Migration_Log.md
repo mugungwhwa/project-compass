@@ -42,6 +42,12 @@
 | **bg-0 #F7F8FA 앱 배경 (Toss DPS)** | ✅ 완료 | 2026-04-13 |
 | **글로벌 커서 표준화 정책** | ✅ 완료 | 2026-04-13 |
 | **Vercel 배포 연동 + git push** | ✅ 완료 | 2026-04-13 |
+| **MVP Revision (메시지·데이터 정합성·UX 폴리시)** | ✅ 완료 | 2026-04-14 |
+| **Pretendard 본문 + Noto Serif KR 결정문** | ✅ 완료 | 2026-04-14 |
+| **Dynamic chart grid (`useGridLayout`)** | ✅ 완료 | 2026-04-14 |
+| **Responsive chart heights (h-full + flex-1)** | ✅ 완료 | 2026-04-14 |
+| **Grid pair height/header 통일** | ✅ 완료 | 2026-04-14 |
+| **Overview 2.0 expand 통합** | ✅ 완료 | 2026-04-14 |
 | AI Copilot Level 2 (Vercel AI SDK + Claude) | 🔴 미착수 | — |
 | AI Copilot Level 3 (Scenario Simulator in chat) | 🔴 미착수 | — |
 | AI Copilot Level 4 (Action Executor Agent) | 🔴 미착수 | — |
@@ -135,6 +141,66 @@
 - `Project_Compass_Deck.html` — **삭제** — Deck v1 폐기 결정
 - `prototype_dashboard.html` — **삭제** — 구 프로토타입 폐기
 - `docs/Project_Compass_Design_Migration_Log.md` — **생성** — 이 문서
+
+### 2026-04-14 (Sprint 4: MVP Revision + Typography + Dynamic Grid)
+
+#### 핵심 결정
+- **메시지·데이터 정합성 재점검** — 랜딩/대시보드의 내러티브와 KPI 언어를 "투자 결정"으로 통일. 게임명 단일화, 기대효과 숫자 명시, 계산 근거 노출.
+- **타이포그래피 권위감 업그레이드** — 한글 본문 Pretendard, 한글 결정문 Noto Serif KR 폴백 추가. 한/영 모두 Bloomberg/FT급 권위감을 일관되게 전달.
+- **그리드 자율 재배치** — 차트 확대 시 컨테이너가 쌍/비대칭 레이아웃을 자동 계산. 빈 칸 제거·홀수 보정·비대칭 그리드 리플로우까지 단일 훅으로.
+- **그리드 쌍 시각 균형 완성** — CSS Grid `stretch`만으론 부족. `baseHeight` 상향 통일 + `ChartHeader` 줄 수(3줄) 통일 조합으로만 시각 균형 달성.
+
+#### 커밋
+- `25d0aa5 feat: MVP revision`
+- `2d0b156 feat: font upgrade`
+- `2a4a8ec feat: dynamic chart grid`
+- `f104a9f feat: responsive chart heights`
+- `c3c95cb fix: unify grid pair heights`
+- `6aa9eec fix: apply expand + useGridLayout to Overview 2.0`
+- `d6e3aa8 chore: untrack .next/ and revision notes`
+
+#### 변경 파일 및 근거
+
+**MVP Revision (`25d0aa5`)**
+- `compass/src/app/(public)/**` (랜딩) — 4사일로 내러티브로 통일, CTA "View Live Demo" 중심 재편 — 데모 체험이 첫 가치 전달 지점
+- 전체 mock — 게임명 `"Puzzle Quest"` → **`"Match League"`** 전면 통일 — 예창패 트랙과 제품 내 표기 일치
+- `compass/src/shared/i18n/dictionary.ts` — KPI 명칭 투자 언어화
+  - Payback Period → **Payback Forecast** / 회수 기간 → **회수 예측**
+  - BEP Probability → **Break-even Probability** / BEP 확률 → **손익분기 확률**
+  - Burn Tolerance → **Runway Impact** / 잔여 운영 기간 → **잔여 운영력**
+  - 근거: 후행 관찰이 아닌 "앞으로의 의사결정"에 쓰는 언어로 교체
+- KPICards — `basisKey` prop 추가로 계산 근거 한 줄 노출 (예: "D7 관측치 × 장르 벤치마크 슬로프")
+- 추천 액션 — 기대효과 숫자 표기 (`+$120K annualized revenue`) — 결정 가격표 명시
+- Copilot — 시나리오 액션 버튼 3개 (Run scenario / Compare channels / Simulate lower CPI) — 정적 답변 → 실행 가능 탐색
+- 차트 3개(RevenueVsInvest, RetentionCurve, RevenueForecast) — 한 줄 인사이트 삽입
+- `compass/src/app/(dashboard)/layout.tsx` — 우상단 **Demo Data** 배지
+
+**Pretendard + Noto Serif KR (`2d0b156`)**
+- `compass/src/app/layout.tsx`, `compass/src/styles/globals.css`
+  - 본문 한글: `Noto Sans KR` → **`Pretendard`** (jsdelivr CDN, Variable) — Geist와 x-height·메트릭 호환, Toss DPS 표준
+  - 결정문 한글: `Instrument Serif` 체인에 **`Noto Serif KR`** 폴백 — 영문 serif 권위감을 한글에도 일관 적용
+  - 근거: 한/영 혼용 화면에서 본문 리듬 + 결정문 무게감이 모두 한 방향으로 읽혀야 함
+
+**Dynamic chart grid (`2a4a8ec`, `f104a9f`, `c3c95cb`, `6aa9eec`)**
+- `compass/src/shared/hooks/use-grid-layout.ts` — **신규** 훅
+  - 컨테이너 레벨 확대 상태 관리: `{ expandedId, toggle, getSpan, isOrphan, getClassName }`
+  - Framer Motion `layout` prop 기반 FLIP 애니메이션으로 자동 재배치
+  - 홀수 남은 차트는 `col-span-2`로 확장되어 빈 칸 제거
+- `compass/src/shared/hooks/use-chart-expand.ts` — 선택적 외부 상태 주입 (`expanded?`, `onToggle?`) 지원
+- 그리드 내 차트 컴포넌트 — `expanded?` / `onToggle?` optional props 추가
+- 차트 카드 — `h-full flex flex-col`, body는 `flex-1` + `minHeight: chartHeight`, `ResponsiveContainer height="100%"` — CSS Grid `align-items: stretch`가 쌍의 높이 자동 동기화
+- 그리드 쌍 `baseHeight` 상향 통일 (큰 쪽 기준)
+  - market-gap §3 RankingTrend 240→**280**
+  - market-gap §4 SaturationTrend 240→**320**, CompetitorTable 헤더 3줄화
+  - experiments RolloutHistory 280→**320**
+- `ChartHeader` 3줄(title + subtitle + context) 통일 — 그리드 stretch만으론 시각 균형 미완성, 헤더 줄 수까지 맞춰야 함
+- **Overview 2.0 보완 (`6aa9eec`)**
+  - CapitalWaterfall, TitleHeatmap, MarketContextCard에 `ExpandButton` 추가 (c69a166 리디자인에서 누락된 부분)
+  - `compass/src/app/(dashboard)/dashboard/page.tsx` — §3(3:2), §5(3:1) **비대칭 그리드** 리플로우 로직 추가. 확대 시 양쪽 모두 `col-span-max`로 전환하여 스택
+  - DataFreshnessStrip은 의도적 제외 (정보 스트립)
+
+**Housekeeping (`d6e3aa8`)**
+- 루트 `.gitignore` — `.next/`, `Compass_MVP_Revision_Notes_*.md` 추가 (빌드 결과물 / 임시 리비전 노트 비추적)
 
 ### 2026-04-13 (Sprint 3: Status Bar UX 확정 + 배포)
 - **git push** → `mugungwhwa/project-compass` main 브랜치 (`8daab7c→4dde8dd`). Vercel 자동 배포 연동 완료.
@@ -622,21 +688,30 @@ Null/미정   → "—" (em dash, 절대 "N/A" 또는 "0" 아님)
 
 ## 6. 다음 세션 인계 (Handoff Notes)
 
-**현재 위치**: Sprint 1 (Foundation) 완료 → Sprint 2 (Integration) 진입 대기
+**현재 위치**: Sprint 4 (MVP Revision + Typography + Dynamic Grid) 완료 (2026-04-14, 마지막 커밋 `d6e3aa8`) → 다음 Sprint 정의 대기
 
-**Sprint 1 산출물 (2026-04-07 완료)**:
-- ✅ `globals.css` 새 토큰 시스템 (라이트 디폴트 + 다크 토글 구조)
-- ✅ `layout.tsx` Geist/Instrument Serif 스택, `lang="en"`
-- ✅ `<DecisionSurface>` 컴포넌트 (tsc 통과)
-- ✅ 마이그레이션 로그 문서 (이 파일)
+**Sprint 4 산출물 (2026-04-14 완료)**:
+- ✅ MVP Revision — 랜딩 내러티브 통일, 게임명 `Match League` 통일, KPI 투자 언어화(Payback Forecast/Break-even Probability/Runway Impact), 계산 근거 라인(`basisKey`), 추천 액션 기대효과 수치, Copilot 시나리오 버튼, 차트 인사이트 문구, Demo Data 배지
+- ✅ Pretendard 본문 + Noto Serif KR 결정문 폴백 체인
+- ✅ `useGridLayout` 훅 (FLIP 애니메이션 + 홀수 보정 + 비대칭 그리드 리플로우)
+- ✅ `useChartExpand` 외부 상태 주입 확장
+- ✅ 차트 카드 반응형 높이 (`h-full flex flex-col`, `flex-1`)
+- ✅ 그리드 쌍 `baseHeight`/`ChartHeader` 3줄 통일
+- ✅ Overview 2.0 expand 통합 (CapitalWaterfall/TitleHeatmap/MarketContextCard)
+- ✅ `.gitignore` 정비
 
-**Sprint 2에서 바로 할 일** (우선순위 순):
-1. **시각 검증** — `npm run dev`로 기존 페이지가 새 토큰으로 깨지지 않는지 확인. 깨지는 곳 있으면 alias 브릿지에 누락된 변수 추가.
-2. **`<DecisionSurface>` 데모 페이지** — `src/app/(dashboard)/dashboard/page.tsx` 상단에 1개 예시 렌더링해 픽셀 검증
-3. **`HeroVerdict` → `DecisionSurface` 리팩터** — 기존 위젯을 새 컴포넌트 기반으로 교체
-4. **`@visx/*` 설치** — `@visx/group @visx/scale @visx/shape @visx/axis @visx/curve @visx/responsive` 최소 세트
-5. **Fan Chart PoC** — Module 5 Capital Allocation Console용 Monte Carlo fan chart 1개 Visx로 구현
-6. **Base UI 단일화 시작** — 신규 컴포넌트부터 Radix 대신 Base UI 사용 원칙 세우기
+**Sprint 5 후보 (우선순위 미정)**:
+1. **AI Copilot Level 2** — Vercel AI SDK + Claude. 시나리오 액션 버튼을 실제 LLM 기반 탐색으로 승격
+2. **Module 3/4 DecisionSurface 적용** — Actions/Experiments 페이지에 Situation → Confidence → Recommendation → Evidence 리듬 정착
+3. **KPI Cards 레거시 토큰 제거** — 11개 위젯
+4. **Better Auth + Supabase Walking Skeleton** — 투자자 데모용 로그인 + 멀티테넌트 기초
+5. **영어 단일 덱 재작성 (v2 기반)**
+
+**Sprint 4에서 얻은 교훈 (다음 세션이 반복하지 말 것)**:
+- **CSS Grid `align-items: stretch`만으로는 쌍의 시각 균형이 완성되지 않는다.** 반드시 `baseHeight`를 큰 쪽 기준으로 통일 + `ChartHeader` 줄 수(3줄)를 맞춰야 한다.
+- **비대칭 그리드(3:2, 3:1)에서 expand 리플로우**는 `useGridLayout` 기본 로직으론 부족. 확대 시 양쪽 모두 `col-span-max`로 전환하는 별도 리플로우 로직이 페이지 레벨에서 필요.
+- **Pretendard는 CDN(jsdelivr Variable)** 경로 사용. `next/font/google`엔 없음.
+- **대형 리디자인(c69a166 Overview 2.0) 후엔 공통 Chart 기능(ExpandButton 등) 누락 체크 필수.**
 
 **수정하지 말 것**:
 - `compass/AGENTS.md` — Next 16 주의사항 경고, 보존
