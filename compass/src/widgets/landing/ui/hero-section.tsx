@@ -10,14 +10,16 @@ const initial = { opacity: 0, y: 24 }
 
 const copy = {
   ko: {
-    headline: "게임 데이터를 투자 결정으로",
+    headlineLine1: "게임 데이터를",
+    headlineLine2: "투자 결정으로",
     sub1: "시장, UA, 실험, 재무 — 모두 따로 놉니다.",
     sub2: "Compass가 하나의 투자 판단으로 연결합니다.",
     cta: "라이브 데모 보기",
     auxiliary: "분석 대시보드가 아닙니다. 자본 배분을 위한 의사결정 레이어입니다.",
   },
   en: {
-    headline: "Turn Game Data into Investment Decisions",
+    headlineLine1: "Turn Game Data",
+    headlineLine2: "into Investment Decisions",
     sub1: "Market, UA, experiments, and financials — each in its own silo.",
     sub2: "Compass unifies them into one investment decision.",
     cta: "View Live Demo",
@@ -42,7 +44,9 @@ export function HeroSection() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, delay: 0, ease: EASE }}
       >
-        {t.headline}
+        {t.headlineLine1}
+        <br />
+        {t.headlineLine2}
       </motion.h1>
 
       <motion.p
