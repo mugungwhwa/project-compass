@@ -176,32 +176,31 @@ export function RevenueForecast({ data, meta, title, expanded: externalExpanded,
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
 
-      {/* Control strip: uses MetricCell visual language from runway-status-bar.
-          Each chip is an inline-baseline pair: uppercase caption + value,
-          with optional color swatch anchored to the value baseline. */}
+      {/* Control strip: compact 13px scale with items-center for stable alignment.
+          All chips share: 28px height, 6px gap, same label/value type ramp. */}
       <div className="flex flex-wrap items-center gap-1 mb-4">
-        {/* As-of meta */}
-        <div className="inline-flex items-baseline gap-1.5 rounded-[var(--radius-inline)] px-2 py-1">
-          <span className="text-caption uppercase tracking-wider text-[var(--fg-2)]">{t("rfc.asOf")}</span>
-          <span className="font-mono text-h2 text-[var(--fg-0)] tabular-nums">D{meta.asOfDay}</span>
-          <span className="text-caption text-[var(--fg-3)]">· {meta.cohortCount} {t("rfc.cohorts")}</span>
+        {/* As-of meta (read-only) */}
+        <div className="inline-flex h-7 items-center gap-1.5 rounded-[var(--radius-inline)] px-2">
+          <span className="text-[11px] uppercase tracking-wider text-[var(--fg-2)]">{t("rfc.asOf")}</span>
+          <span className="font-mono text-[13px] font-medium text-[var(--fg-0)] tabular-nums leading-none">D{meta.asOfDay}</span>
+          <span className="text-[11px] text-[var(--fg-3)]">· {meta.cohortCount} {t("rfc.cohorts")}</span>
         </div>
 
-        <span className="mx-1 h-4 w-px bg-[var(--border-default)]" aria-hidden />
+        <span className="mx-0.5 h-4 w-px bg-[var(--border-default)]" aria-hidden />
 
         {/* Posterior legend — always visible, static */}
-        <div className="inline-flex items-baseline gap-1.5 rounded-[var(--radius-inline)] px-2 py-1">
+        <div className="inline-flex h-7 items-center gap-1.5 rounded-[var(--radius-inline)] px-2">
           <Swatch color={C.line} variant="solid" />
-          <span className="text-caption uppercase tracking-wider text-[var(--fg-2)]">{t("rfc.legendPosterior")}</span>
+          <span className="text-[11px] uppercase tracking-wider text-[var(--fg-2)]">{t("rfc.legendPosterior")}</span>
         </div>
 
-        {/* Prior toggle — MetricCell style button */}
+        {/* Prior toggle */}
         <button
           type="button"
           onClick={() => setShowPrior((v) => !v)}
           aria-pressed={showPrior}
           className={cn(
-            "inline-flex items-baseline gap-1.5 rounded-[var(--radius-inline)] px-2 py-1",
+            "inline-flex h-7 items-center gap-1.5 rounded-[var(--radius-inline)] px-2",
             "transition-colors hover:bg-[var(--bg-3)]",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand)]",
             "focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-1)]",
@@ -209,13 +208,16 @@ export function RevenueForecast({ data, meta, title, expanded: externalExpanded,
           )}
         >
           <Swatch color={C.prior} variant={showPrior ? "dashed-filled" : "dashed"} dim={!showPrior} />
-          <span className="text-caption uppercase tracking-wider text-[var(--fg-2)]">{t("rfc.showPrior")}</span>
-          <span className={cn("text-h2 tabular-nums", showPrior ? "text-[var(--fg-0)]" : "text-[var(--fg-3)]")}>
+          <span className="text-[11px] uppercase tracking-wider text-[var(--fg-2)]">{t("rfc.showPrior")}</span>
+          <span className={cn(
+            "text-[13px] font-medium tabular-nums leading-none",
+            showPrior ? "text-[var(--fg-0)]" : "text-[var(--fg-3)]",
+          )}>
             {showPrior ? t("rfc.showPriorOn") : t("rfc.showPriorOff")}
           </span>
         </button>
 
-        {/* Experiment selector — custom motion dropdown matching game selector */}
+        {/* Experiment selector */}
         <div ref={expMenuRef} className="relative">
           <button
             ref={expTriggerRef}
@@ -225,7 +227,7 @@ export function RevenueForecast({ data, meta, title, expanded: externalExpanded,
             aria-expanded={expOpen}
             aria-controls={expListId}
             className={cn(
-              "inline-flex items-baseline gap-1.5 rounded-[var(--radius-inline)] px-2 py-1",
+              "inline-flex h-7 items-center gap-1.5 rounded-[var(--radius-inline)] px-2",
               "transition-colors hover:bg-[var(--bg-3)]",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand)]",
               "focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-1)]",
@@ -233,11 +235,14 @@ export function RevenueForecast({ data, meta, title, expanded: externalExpanded,
             )}
           >
             <Swatch color={C.experiment} variant={selectedExp ? "dashed-filled" : "dashed"} dim={!selectedExp} />
-            <span className="text-caption uppercase tracking-wider text-[var(--fg-2)]">{t("rfc.experimentLabel")}</span>
-            <span className={cn("text-h2 whitespace-nowrap", selectedExp ? "text-[var(--fg-0)]" : "text-[var(--fg-3)]")}>
+            <span className="text-[11px] uppercase tracking-wider text-[var(--fg-2)]">{t("rfc.experimentLabel")}</span>
+            <span className={cn(
+              "text-[13px] font-medium tabular-nums leading-none whitespace-nowrap",
+              selectedExp ? "text-[var(--fg-0)]" : "text-[var(--fg-3)]",
+            )}>
               {selectedExp ? selectedExp.id : t("rfc.noExperiment")}
             </span>
-            <ChevronDown className="h-3 w-3 flex-shrink-0 self-center text-[var(--fg-3)]" aria-hidden />
+            <ChevronDown className={cn("h-3 w-3 flex-shrink-0 text-[var(--fg-3)] transition-transform", expOpen && "rotate-180")} aria-hidden />
           </button>
 
           <AnimatePresence>
@@ -257,25 +262,27 @@ export function RevenueForecast({ data, meta, title, expanded: externalExpanded,
                 exit="hidden"
                 transition={dropdownTransition}
               >
-                {/* — None — option */}
+                {/* — None — option (13px to match trigger value scale) */}
                 <button
                   type="button"
                   role="option"
                   aria-selected={selectedExpId === null}
                   onClick={() => { setSelectedExpId(null); setExpOpen(false); expTriggerRef.current?.focus() }}
                   className={cn(
-                    "flex w-full items-center justify-between px-3 py-2 text-body",
+                    "flex w-full items-center justify-between px-3 py-1.5 text-[13px]",
                     "transition-colors hover:bg-[var(--bg-3)]",
-                    selectedExpId === null ? "text-[var(--brand)] font-medium" : "text-[var(--fg-1)]",
                   )}
                 >
-                  <span className="italic text-[var(--fg-2)]">{t("rfc.noExperiment")}</span>
+                  <span className={cn(
+                    selectedExpId === null ? "text-[var(--fg-0)] font-medium" : "text-[var(--fg-2)]",
+                  )}>{t("rfc.noExperiment")}</span>
                   {selectedExpId === null && <Check className="h-3.5 w-3.5 flex-shrink-0 text-[var(--brand)]" aria-hidden />}
                 </button>
 
                 {meta.experiments.length > 0 && <div className="my-1 h-px bg-[var(--border-default)]" aria-hidden />}
 
-                {/* Experiment options — 2-line layout (id+lift / name) matching game selector pattern */}
+                {/* Experiment options — 2-line layout. Scale matches trigger:
+                    meta row 11px (caption), name 13px/500 (trigger-value equivalent). */}
                 {meta.experiments.map((exp) => {
                   const isSelected = exp.id === selectedExpId
                   return (
@@ -292,23 +299,23 @@ export function RevenueForecast({ data, meta, title, expanded: externalExpanded,
                       )}
                     >
                       <span className="flex min-w-0 flex-col items-start gap-0.5">
-                        <span className="flex items-center gap-2">
+                        <span className="flex items-center gap-2 leading-none">
                           <span className={cn(
-                            "font-mono text-caption tabular-nums",
+                            "font-mono text-[11px] tabular-nums",
                             isSelected ? "text-[var(--brand)]" : "text-[var(--fg-2)]",
                           )}>{exp.id}</span>
                           <span
-                            className="font-mono text-caption tabular-nums"
+                            className="font-mono text-[11px] font-medium tabular-nums"
                             style={{ color: C.experiment }}
                           >+${exp.annualRevenueLift}K</span>
-                          <span className="text-caption text-[var(--fg-3)]">· ship {exp.shipMonth}</span>
+                          <span className="text-[11px] text-[var(--fg-3)]">· ship {exp.shipMonth}</span>
                         </span>
                         <span className={cn(
-                          "text-body leading-tight",
+                          "text-[13px] leading-snug",
                           isSelected ? "text-[var(--fg-0)] font-medium" : "text-[var(--fg-1)]",
                         )}>{exp.name[locale]}</span>
                       </span>
-                      {isSelected && <Check className="mt-1 h-3.5 w-3.5 flex-shrink-0 text-[var(--brand)]" aria-hidden />}
+                      {isSelected && <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[var(--brand)]" aria-hidden />}
                     </button>
                   )
                 })}

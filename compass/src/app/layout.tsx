@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono, Instrument_Serif, Noto_Serif_KR } from "next/font/google"
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google"
 import "@/styles/globals.css"
 import { TooltipProvider } from "@/shared/ui/tooltip"
 import { LocaleProvider } from "@/shared/i18n"
@@ -37,13 +37,12 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 })
 
-const notoSerifKR = Noto_Serif_KR({
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  variable: "--font-noto-serif-kr",
-  display: "swap",
-  preload: false,
-})
+// NOTE: Noto Serif KR is loaded via Google Fonts CSS link in <head> below
+// (not next/font/google) because Next.js' type defs for Noto_Serif_KR
+// omit the "korean" subset, which is required for 한글 glyphs to actually
+// load. Without Korean glyphs, the browser falls back to system sans-serif
+// (Apple SD Gothic Neo), which is why Korean decision text looked "고딕".
+// Direct CDN load with subset=korean in the URL includes the 한글 glyphs.
 
 export const metadata: Metadata = {
   title: "project compass — Experiment-to-Investment Decision OS",
@@ -60,14 +59,20 @@ export default function RootLayout({
     <html
       lang="ko"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${notoSerifKR.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
     >
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
           as="style"
           crossOrigin="anonymous"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap&subset=korean"
         />
       </head>
       <body>
