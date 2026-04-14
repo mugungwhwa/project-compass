@@ -688,7 +688,7 @@ Null/미정   → "—" (em dash, 절대 "N/A" 또는 "0" 아님)
 
 ## 6. 다음 세션 인계 (Handoff Notes)
 
-**현재 위치**: Sprint 4 (MVP Revision + Typography + Dynamic Grid) 완료 (2026-04-14, 마지막 커밋 `d6e3aa8`) → 다음 Sprint 정의 대기
+**현재 위치**: Sprint 4 (MVP Revision + Typography + Dynamic Grid) + Revenue Forecast Bayesian 재설계 완료 (2026-04-14) → 다음 Sprint 정의 대기
 
 **Sprint 4 산출물 (2026-04-14 완료)**:
 - ✅ MVP Revision — 랜딩 내러티브 통일, 게임명 `Match League` 통일, KPI 투자 언어화(Payback Forecast/Break-even Probability/Runway Impact), 계산 근거 라인(`basisKey`), 추천 액션 기대효과 수치, Copilot 시나리오 버튼, 차트 인사이트 문구, Demo Data 배지
@@ -700,6 +700,25 @@ Null/미정   → "—" (em dash, 절대 "N/A" 또는 "0" 아님)
 - ✅ Overview 2.0 expand 통합 (CapitalWaterfall/TitleHeatmap/MarketContextCard)
 - ✅ `.gitignore` 정비
 
+**Revenue Forecast Bayesian 재설계 (2026-04-14, 커밋 `278142d` + `eb9c9c3`)**:
+- ✅ 단일 P밴드 → **사전 확률(Prior) + 사후 확률(Posterior) + Experiment Fork** 3-layer 구조
+- ✅ 색상 매핑 확정: Posterior 초록(`#00875A`), Prior 빨강(`#C9372C` 8% fill), Experiment Fork 파랑(`#5B9AFF`), Ship 마커 슬레이트
+- ✅ 한국어 용어 채택 — `Prior/Posterior` → **`사전 확률 / 사후 확률`** (CLAUDE.md §11.2 operator-not-analyst 원칙)
+- ✅ 커스텀 드롭다운 — `runway-status-bar` game-selector 패턴 차용, `AnimatePresence` + 외부 클릭 감지, 2-line 아이템(id/lift/ship + name), Chevron 회전
+- ✅ 그룹 구조 툴팁 — 분포별 좌측 3px 색상 바, Posterior/Prior 동일 구조(P50/범위/spread), Experiment는 별도 구조(Ship 후 P50 + baseline 대비 lift)
+- ✅ 컨트롤 바 12px→13px/500 스케일 다운(차트 카드 내부 컴팩트)
+- ✅ ⓘ 툴팁 info 가이드 — 3단계 활용법 + 의사결정 팁 구조화 (`whitespace-pre-line`)
+- ✅ 동적 insight 4-조합 (Prior on/off × Experiment selected/none) 매트릭스
+- ✅ Game별 Prior 센터링 — 장르 평균 기준으로 "outperform / underperform" 스토리 자연 노출 (Dig Infinity posterior P50 < prior P50)
+- ✅ 신규 타입: `ExperimentForkScenario`, `RevenueForecastMeta`; `RevenueForecastPoint`에 `priorP10/50/90` 추가
+- ✅ Spec 문서: `docs/superpowers/specs/2026-04-14-revenue-forecast-bayesian.md`
+
+**Revenue Forecast 재설계의 deferred 항목**:
+- As-of-day 드롭다운 (D7/D14/D30 time-travel) — DB snapshot 저장 선행 필요, Phase 2
+- Experiment 데이터 소스를 실 Experiment Board에 wire — 현재는 per-game mock
+- 커스텀 드롭다운 키보드 내비게이션 (game-selector에서 port 예정)
+- Prior 밴드 수치의 근거(GameAnalytics 2024 P10–P90 등) 툴팁 노출
+
 **Sprint 5 후보 (우선순위 미정)**:
 1. **AI Copilot Level 2** — Vercel AI SDK + Claude. 시나리오 액션 버튼을 실제 LLM 기반 탐색으로 승격
 2. **Module 3/4 DecisionSurface 적용** — Actions/Experiments 페이지에 Situation → Confidence → Recommendation → Evidence 리듬 정착
@@ -707,11 +726,15 @@ Null/미정   → "—" (em dash, 절대 "N/A" 또는 "0" 아님)
 4. **Better Auth + Supabase Walking Skeleton** — 투자자 데모용 로그인 + 멀티테넌트 기초
 5. **영어 단일 덱 재작성 (v2 기반)**
 
-**Sprint 4에서 얻은 교훈 (다음 세션이 반복하지 말 것)**:
+**Sprint 4 + Revenue Forecast에서 얻은 교훈 (다음 세션이 반복하지 말 것)**:
 - **CSS Grid `align-items: stretch`만으로는 쌍의 시각 균형이 완성되지 않는다.** 반드시 `baseHeight`를 큰 쪽 기준으로 통일 + `ChartHeader` 줄 수(3줄)를 맞춰야 한다.
 - **비대칭 그리드(3:2, 3:1)에서 expand 리플로우**는 `useGridLayout` 기본 로직으론 부족. 확대 시 양쪽 모두 `col-span-max`로 전환하는 별도 리플로우 로직이 페이지 레벨에서 필요.
 - **Pretendard는 CDN(jsdelivr Variable)** 경로 사용. `next/font/google`엔 없음.
 - **대형 리디자인(c69a166 Overview 2.0) 후엔 공통 Chart 기능(ExpandButton 등) 누락 체크 필수.**
+- **Recharts 커스텀 툴팁은 `fill="url(#pattern)"` 사용 시 default dot 렌더가 깨진다.** 해결: payload 순회 대신 `payload[0].payload`(raw row)에서 직접 읽어 그룹 구조로 재렌더. (Revenue Forecast §5 참조)
+- **차트 카드 내부 컨트롤 타입 스케일은 상단 status-bar보다 작아야 한다.** `text-h2`(18px)는 56px 헤더엔 자연스럽지만 차트 카드 내부에선 과함. 11px/13px scale 권장.
+- **한국어 네이밍은 operator 타겟이면 학술 용어를 직역하지 말고 한국어 교양어로.** Prior/Posterior → 사전 확률/사후 확률. "Bayesian Updating"처럼 업계 통용어가 없는 경우는 우리가 표준을 정해야 함.
+- **데이터 정직성 vs 데모 품질 트레이드오프**: As-of snapshot 같은 "과거 시점" 조작은 mock으로 위조 가능하지만, 심사 시 "이거 진짜야?"에서 깨진다. 진짜로 구현하기 전까진 정직한 고정 라벨로 두고, 같은 스토리를 다른 방식으로(예: Prior band 토글) 전달.
 
 **수정하지 말 것**:
 - `compass/AGENTS.md` — Next 16 주의사항 경고, 보존
