@@ -19,3 +19,12 @@ export { CtaBottomSection } from "./ui/sections/cta"
 // Shared primitives
 export { SectionShell } from "./ui/_shared/section-shell"
 export { Eyebrow } from "./ui/_shared/eyebrow"
+// Marketing showcase components
+export {
+  SignalShowcase,
+  PaybackShowcase,
+  RevenueShowcase,
+  RetentionShowcase,
+  ForecastShowcase,
+  PipelineShowcase,
+} from "./ui/showcase"

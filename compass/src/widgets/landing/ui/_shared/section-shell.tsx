@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react"
 
-type BgBand = "bg-0" | "bg-1" | "bg-2"
+type BgBand = "bg-0" | "bg-1" | "bg-2" | "dark"
 
 type SectionShellProps = {
   id?: string
@@ -16,13 +16,15 @@ type SectionShellProps = {
 export function SectionShell({
   id,
   band = "bg-0",
-  maxWidth = "max-w-6xl",
+  maxWidth = "max-w-7xl",
   className = "",
   children,
   borderY = false,
 }: SectionShellProps) {
   const bg =
-    band === "bg-0"
+    band === "dark"
+      ? "bg-[#0A0E14]"
+      : band === "bg-0"
       ? "bg-[var(--bg-0)]"
       : band === "bg-1"
       ? "bg-[var(--bg-1)]"
@@ -33,7 +35,7 @@ export function SectionShell({
   return (
     <section
       id={id}
-      className={`py-12 md:py-16 lg:py-24 ${bg} ${border} ${className}`}
+      className={`py-32 lg:py-40 ${bg} ${border} ${className}`}
     >
       <div className={`${maxWidth} mx-auto px-6`}>{children}</div>
     </section>

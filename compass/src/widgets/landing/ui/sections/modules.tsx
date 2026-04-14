@@ -45,7 +45,7 @@ export function ModulesSection() {
   const { t, locale } = useLocale()
 
   return (
-    <SectionShell band="bg-0">
+    <SectionShell band="dark" maxWidth="max-w-7xl">
       {/* Heading block */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -55,16 +55,16 @@ export function ModulesSection() {
         className="text-center"
       >
         <Eyebrow label="Platform" />
-        <h2 className="font-display text-2xl md:text-3xl lg:text-4xl leading-[1.1] tracking-[-0.02em] text-[var(--fg-0)] [word-break:keep-all] [overflow-wrap:break-word]">
+        <h2 className="font-display text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-[-0.03em] text-white [word-break:keep-all] [overflow-wrap:break-word]">
           {t("landing.v2.modules.headline")}
         </h2>
-        <p className={`mt-4 text-base md:text-lg leading-relaxed text-[var(--fg-1)] max-w-3xl mx-auto [word-break:keep-all] ${locale === "ko" ? "font-medium" : "font-normal"}`}>
+        <p className={`mt-6 text-lg md:text-xl leading-relaxed text-zinc-300 max-w-3xl mx-auto [word-break:keep-all] ${locale === "ko" ? "font-medium" : "font-normal"}`}>
           {t("landing.v2.modules.description")}
         </p>
       </motion.div>
 
       {/* 4-module card grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-14">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
         {MODULES.map((mod, i) => (
           <motion.div
             key={mod.num}
@@ -72,16 +72,16 @@ export function ModulesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.38, ease: EASE_OUT_QUART, delay: i * 0.08 }}
-            className="p-6 bg-[var(--bg-1)] border border-[var(--border-subtle)] rounded-[var(--radius-card)]"
+            className="p-7 bg-white/5 border border-white/10 rounded-[var(--radius-card)]"
           >
-            <span className="text-xs font-mono text-[var(--fg-3)]">{mod.num}</span>
-            <h3 className={`text-base font-semibold text-[var(--fg-0)] mt-2 tracking-[-0.01em] [word-break:keep-all]`}>
+            <span className="text-xs font-mono text-zinc-500">{mod.num}</span>
+            <h3 className="text-base font-semibold text-white mt-3 tracking-[-0.01em] [word-break:keep-all]">
               {t(mod.nameKey)}
             </h3>
             <p className="text-sm text-[var(--brand)] mt-1 font-medium [word-break:keep-all]">
               {locale === "ko" ? mod.question.ko : mod.question.en}
             </p>
-            <p className={`text-sm text-[var(--fg-2)] mt-3 leading-relaxed [word-break:keep-all] ${locale === "ko" ? "font-medium" : "font-normal"}`}>
+            <p className={`text-sm text-zinc-400 mt-4 leading-relaxed [word-break:keep-all] ${locale === "ko" ? "font-medium" : "font-normal"}`}>
               {t(mod.descKey)}
             </p>
           </motion.div>

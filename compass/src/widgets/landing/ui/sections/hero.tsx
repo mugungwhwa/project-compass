@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { useLocale } from "@/shared/i18n/context"
 import { Eyebrow } from "../_shared/eyebrow"
-import { SignalCrop } from "../dashboard-preview/signal-crop"
+import { SignalShowcase } from "../showcase"
 
 const EASE_OUT_QUART = [0.25, 1, 0.5, 1] as const
 
@@ -12,7 +12,7 @@ export function HeroV2() {
 
   return (
     <section className="bg-[var(--bg-0)] min-h-[92vh] flex flex-col items-center justify-center pt-20 pb-16 px-6">
-      <div className="flex flex-col items-center text-center w-full max-w-4xl mx-auto">
+      <div className="flex flex-col items-center text-center w-full max-w-5xl mx-auto">
         {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -27,7 +27,7 @@ export function HeroV2() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: "easeOut", delay: 0.08 }}
-          className="font-display text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-[-0.03em] text-[var(--fg-0)] [word-break:keep-all] [overflow-wrap:break-word]"
+          className="font-display text-6xl md:text-8xl lg:text-9xl leading-[1.05] tracking-[-0.04em] text-[var(--fg-0)] [word-break:keep-all] [overflow-wrap:break-word]"
         >
           {t("landing.v2.hero.headlineLine1")}
           <br />
@@ -39,16 +39,11 @@ export function HeroV2() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: "easeOut", delay: 0.2 }}
-          className={`text-base md:text-lg leading-relaxed text-[var(--fg-1)] max-w-2xl mt-4 [word-break:keep-all] ${
+          className={`text-lg md:text-xl leading-relaxed text-[var(--fg-1)] max-w-2xl mt-6 [word-break:keep-all] ${
             locale === "ko" ? "font-medium" : "font-normal"
           }`}
         >
           {t("landing.v2.hero.subheading")}
-          {locale === "ko" && (
-            <>
-              <br className="hidden md:block" />
-            </>
-          )}
         </motion.p>
 
         {/* CTA */}
@@ -56,11 +51,11 @@ export function HeroV2() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: "easeOut", delay: 0.32 }}
-          className="mt-8"
+          className="mt-10"
         >
           <a
             href="#demo"
-            className="inline-flex items-center h-11 px-7 bg-[var(--brand)] text-white text-sm font-semibold rounded-[var(--radius-card)] hover:opacity-90 transition-opacity"
+            className="inline-flex items-center h-12 px-8 bg-[var(--brand)] text-white text-sm font-semibold rounded-[var(--radius-card)] hover:opacity-90 transition-opacity"
           >
             {t("landing.v2.cta.primaryButton")}
           </a>
@@ -71,7 +66,7 @@ export function HeroV2() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: "easeOut", delay: 0.42 }}
-          className="flex flex-wrap justify-center gap-3 mt-4"
+          className="flex flex-wrap justify-center gap-3 mt-5"
         >
           {(
             [
@@ -89,24 +84,18 @@ export function HeroV2() {
           ))}
         </motion.div>
 
-        {/* SignalCrop preview */}
+        {/* SignalShowcase — full width hero visual */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 48 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
-            duration: 0.6,
+            duration: 0.65,
             ease: EASE_OUT_QUART,
-            delay: 0.5,
+            delay: 0.52,
           }}
-          className="mt-16 w-full"
+          className="mt-20 w-full"
         >
-          <div className="mx-auto max-w-4xl md:max-w-3xl">
-            <div className="rounded-[var(--radius-card)] border border-[var(--border-default)] shadow-[0_2px_12px_0_rgba(0,0,0,0.06)]">
-              <div className="overflow-x-auto">
-                <SignalCrop />
-              </div>
-            </div>
-          </div>
+          <SignalShowcase size="hero" />
         </motion.div>
       </div>
     </section>

@@ -46,10 +46,10 @@ export function ComparisonSection() {
 
   return (
     <section
-      className="bg-[var(--bg-1)] py-12 md:py-16 lg:py-24"
+      className="bg-[var(--bg-1)] py-32 lg:py-40"
       aria-label="Category — Built for decisions"
     >
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6">
 
         {/* Heading block */}
         <motion.div
@@ -57,19 +57,19 @@ export function ComparisonSection() {
           initial="hidden"
           whileInView="visible"
           viewport={VIEWPORT}
-          className="text-center mb-14"
+          className="text-center mb-16"
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--fg-2)] mb-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--fg-2)] mb-4">
             Category
           </p>
           <h2
-            className="font-display text-4xl md:text-3xl text-2xl leading-[1.1] tracking-[-0.02em] text-[var(--fg-0)] mb-4"
+            className="font-display text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-[-0.03em] text-[var(--fg-0)] mb-6"
             style={{ wordBreak: "keep-all", overflowWrap: "break-word" }}
           >
             {t("landing.v2.compare.headline")}
           </h2>
           <p
-            className={`text-base text-[var(--fg-2)] max-w-2xl mx-auto ${locale === "ko" ? "font-medium" : "font-normal"}`}
+            className={`text-lg text-[var(--fg-2)] max-w-2xl mx-auto ${locale === "ko" ? "font-medium" : "font-normal"}`}
             style={{ wordBreak: "keep-all" }}
           >
             {t("landing.v2.compare.subhead")}
@@ -77,7 +77,7 @@ export function ComparisonSection() {
         </motion.div>
 
         {/* Comparison cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {/* Competitor cards */}
           {competitors.map((c, i) => (
             <motion.div
@@ -87,12 +87,12 @@ export function ComparisonSection() {
               initial="hidden"
               whileInView="visible"
               viewport={VIEWPORT}
-              className="p-6 bg-[var(--bg-0)] border border-[var(--border-subtle)] rounded-[var(--radius-card)]"
+              className="p-7 bg-[var(--bg-0)] border border-[var(--border-subtle)] rounded-[var(--radius-card)]"
             >
               <p className="text-xs uppercase tracking-wide text-[var(--fg-3)]">
                 {c.category}
               </p>
-              <p className="text-sm font-semibold text-[var(--fg-0)] mt-2">
+              <p className="text-base font-semibold text-[var(--fg-0)] mt-3">
                 {locale === "ko" ? c.toolTypeKo : c.toolTypeEn}
               </p>
               <p
@@ -111,16 +111,16 @@ export function ComparisonSection() {
             initial="hidden"
             whileInView="visible"
             viewport={VIEWPORT}
-            className="p-6 bg-[var(--bg-1)] border border-[var(--brand)] rounded-[var(--radius-card)]"
+            className="p-7 bg-[var(--bg-1)] border border-[var(--brand)] rounded-[var(--radius-card)]"
           >
             <p className="text-xs uppercase tracking-wide text-[var(--brand)]">
               Compass
             </p>
-            <p className="text-sm font-semibold text-[var(--fg-0)] mt-2">
+            <p className="text-base font-semibold text-[var(--fg-0)] mt-3">
               Decision Layer
             </p>
             <p
-              className={`text-sm text-[var(--fg-1)] mt-3 leading-relaxed font-medium`}
+              className="text-sm text-[var(--fg-1)] mt-3 leading-relaxed font-medium"
               style={{ wordBreak: "keep-all" }}
             >
               {t("landing.v2.compare.compass")}

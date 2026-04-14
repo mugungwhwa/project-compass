@@ -3,10 +3,10 @@
 import { motion } from "framer-motion"
 import { useLocale } from "@/shared/i18n/context"
 import {
-  RevenueVsInvestmentCrop,
-  RetentionFanCrop,
-  RevenueForecastCrop,
-} from "../dashboard-preview"
+  RevenueShowcase,
+  RetentionShowcase,
+  ForecastShowcase,
+} from "../showcase"
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
@@ -15,8 +15,8 @@ const textVariant = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE } },
 }
 
-const previewVariant = {
-  hidden: { opacity: 0, y: 32 },
+const showcaseVariant = {
+  hidden: { opacity: 0, y: 40 },
   visible: (delay: number) => ({
     opacity: 1,
     y: 0,
@@ -26,188 +26,166 @@ const previewVariant = {
 
 const VIEWPORT = { once: true, margin: "-80px" } as const
 
-// ─── Shared framing wrapper ────────────────────────────────────────────────
-function CropFrame({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="overflow-x-auto">
-      <div className="rounded-[var(--radius-card)] border border-[var(--border-default)] shadow-[0_2px_12px_0_rgba(0,0,0,0.06)] inline-block">
-        {children}
-      </div>
-    </div>
-  )
-}
-
-// ─── Chart Story A — Revenue vs Investment (text left, preview right) ──────
+// ─── Chart Story A — Revenue vs Investment (light bg-2) ─────────────────────
 function ChartStoryA() {
   const { t, locale } = useLocale()
 
   return (
     <section
-      className="bg-[var(--bg-2)] py-12 md:py-16 lg:py-24"
+      className="bg-[var(--bg-2)] py-32 lg:py-40"
       aria-label="Evidence — Revenue vs Investment"
     >
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Text col */}
-          <motion.div
-            variants={textVariant}
-            initial="hidden"
-            whileInView="visible"
-            viewport={VIEWPORT}
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Text above showcase */}
+        <motion.div
+          variants={textVariant}
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT}
+          className="max-w-3xl mb-14"
+        >
+          <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--fg-2)] mb-4">
+            Evidence
+          </p>
+          <h2
+            className="font-display text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-[-0.03em] text-[var(--fg-0)] mb-6"
+            style={{ wordBreak: "keep-all", overflowWrap: "break-word" }}
           >
-            <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--fg-2)] mb-3">
-              Evidence
-            </p>
-            <h2
-              className="font-display text-4xl md:text-3xl text-2xl leading-[1.1] tracking-[-0.02em] text-[var(--fg-0)] mb-4"
-              style={{ wordBreak: "keep-all", overflowWrap: "break-word" }}
-            >
-              {t("landing.v2.chart1.headline")}
-            </h2>
-            <p
-              className={`text-lg leading-relaxed text-[var(--fg-1)] mb-6 ${locale === "ko" ? "font-medium" : "font-normal"}`}
-              style={{ wordBreak: "keep-all" }}
-            >
-              {t("landing.v2.chart1.description")}
-            </p>
-            <p className="text-sm font-mono text-[var(--fg-1)]">
-              {t("landing.v2.chart1.callout")}
-            </p>
-          </motion.div>
+            {t("landing.v2.chart1.headline")}
+          </h2>
+          <p
+            className={`text-lg md:text-xl leading-relaxed text-[var(--fg-1)] mb-4 ${locale === "ko" ? "font-medium" : "font-normal"}`}
+            style={{ wordBreak: "keep-all" }}
+          >
+            {t("landing.v2.chart1.description")}
+          </p>
+          <p className="text-sm font-mono text-[var(--fg-1)]">
+            {t("landing.v2.chart1.callout")}
+          </p>
+        </motion.div>
 
-          {/* Preview col */}
-          <motion.div
-            custom={0.12}
-            variants={previewVariant}
-            initial="hidden"
-            whileInView="visible"
-            viewport={VIEWPORT}
-          >
-            <CropFrame>
-              <RevenueVsInvestmentCrop />
-            </CropFrame>
-          </motion.div>
-        </div>
+        {/* Full-width showcase */}
+        <motion.div
+          custom={0.1}
+          variants={showcaseVariant}
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT}
+        >
+          <RevenueShowcase />
+        </motion.div>
       </div>
     </section>
   )
 }
 
-// ─── Chart Story B — Retention Forecast (preview left, text right) ─────────
+// ─── Chart Story B — Retention Forecast (dark band) ─────────────────────────
 function ChartStoryB() {
   const { t, locale } = useLocale()
 
   return (
     <section
-      className="bg-[var(--bg-0)] py-12 md:py-16 lg:py-24"
+      className="bg-[#0A0E14] py-32 lg:py-40"
       aria-label="Evidence — Retention Forecast"
     >
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Preview col (left on lg) */}
-          <motion.div
-            custom={0.12}
-            variants={previewVariant}
-            initial="hidden"
-            whileInView="visible"
-            viewport={VIEWPORT}
-            className="order-2 lg:order-1"
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Text above showcase */}
+        <motion.div
+          variants={textVariant}
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT}
+          className="max-w-3xl mb-14"
+        >
+          <p className="text-xs font-semibold uppercase tracking-[0.08em] text-zinc-500 mb-4">
+            Evidence
+          </p>
+          <h2
+            className="font-display text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-[-0.03em] text-white mb-6"
+            style={{ wordBreak: "keep-all", overflowWrap: "break-word" }}
           >
-            <CropFrame>
-              <RetentionFanCrop />
-            </CropFrame>
-          </motion.div>
+            {t("landing.v2.chart2.headline")}
+          </h2>
+          <p
+            className={`text-lg md:text-xl leading-relaxed text-zinc-300 mb-4 ${locale === "ko" ? "font-medium" : "font-normal"}`}
+            style={{ wordBreak: "keep-all" }}
+          >
+            {t("landing.v2.chart2.description")}
+          </p>
+          <p className="text-sm font-mono text-[var(--signal-positive)]">
+            {t("landing.v2.chart2.callout")}
+          </p>
+        </motion.div>
 
-          {/* Text col (right on lg) */}
-          <motion.div
-            variants={textVariant}
-            initial="hidden"
-            whileInView="visible"
-            viewport={VIEWPORT}
-            className="order-1 lg:order-2"
-          >
-            <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--fg-2)] mb-3">
-              Evidence
-            </p>
-            <h2
-              className="font-display text-4xl md:text-3xl text-2xl leading-[1.1] tracking-[-0.02em] text-[var(--fg-0)] mb-4"
-              style={{ wordBreak: "keep-all", overflowWrap: "break-word" }}
-            >
-              {t("landing.v2.chart2.headline")}
-            </h2>
-            <p
-              className={`text-lg leading-relaxed text-[var(--fg-1)] mb-6 ${locale === "ko" ? "font-medium" : "font-normal"}`}
-              style={{ wordBreak: "keep-all" }}
-            >
-              {t("landing.v2.chart2.description")}
-            </p>
-            <p className="text-sm font-mono text-[var(--signal-positive)]">
-              {t("landing.v2.chart2.callout")}
-            </p>
-          </motion.div>
-        </div>
+        {/* Full-width showcase */}
+        <motion.div
+          custom={0.1}
+          variants={showcaseVariant}
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT}
+        >
+          <RetentionShowcase />
+        </motion.div>
       </div>
     </section>
   )
 }
 
-// ─── Chart Story C — Revenue Forecast (text left, preview right) ──────────
+// ─── Chart Story C — Revenue Forecast (light bg-1) ──────────────────────────
 function ChartStoryC() {
   const { t, locale } = useLocale()
 
   return (
     <section
-      className="bg-[var(--bg-1)] py-12 md:py-16 lg:py-24"
+      className="bg-[var(--bg-1)] py-32 lg:py-40"
       aria-label="Evidence — Revenue Forecast"
     >
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Text col */}
-          <motion.div
-            variants={textVariant}
-            initial="hidden"
-            whileInView="visible"
-            viewport={VIEWPORT}
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Text above showcase */}
+        <motion.div
+          variants={textVariant}
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT}
+          className="max-w-3xl mb-14"
+        >
+          <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--fg-2)] mb-4">
+            Evidence
+          </p>
+          <h2
+            className="font-display text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-[-0.03em] text-[var(--fg-0)] mb-6"
+            style={{ wordBreak: "keep-all", overflowWrap: "break-word" }}
           >
-            <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--fg-2)] mb-3">
-              Evidence
-            </p>
-            <h2
-              className="font-display text-4xl md:text-3xl text-2xl leading-[1.1] tracking-[-0.02em] text-[var(--fg-0)] mb-4"
-              style={{ wordBreak: "keep-all", overflowWrap: "break-word" }}
-            >
-              {t("landing.v2.chart3.headline")}
-            </h2>
-            <p
-              className={`text-lg leading-relaxed text-[var(--fg-1)] mb-6 ${locale === "ko" ? "font-medium" : "font-normal"}`}
-              style={{ wordBreak: "keep-all" }}
-            >
-              {t("landing.v2.chart3.description")}
-            </p>
-            <p className="text-sm font-mono text-[var(--fg-1)]">
-              {t("landing.v2.chart3.callout")}
-            </p>
-          </motion.div>
+            {t("landing.v2.chart3.headline")}
+          </h2>
+          <p
+            className={`text-lg md:text-xl leading-relaxed text-[var(--fg-1)] mb-4 ${locale === "ko" ? "font-medium" : "font-normal"}`}
+            style={{ wordBreak: "keep-all" }}
+          >
+            {t("landing.v2.chart3.description")}
+          </p>
+          <p className="text-sm font-mono text-[var(--fg-1)]">
+            {t("landing.v2.chart3.callout")}
+          </p>
+        </motion.div>
 
-          {/* Preview col */}
-          <motion.div
-            custom={0.12}
-            variants={previewVariant}
-            initial="hidden"
-            whileInView="visible"
-            viewport={VIEWPORT}
-          >
-            <CropFrame>
-              <RevenueForecastCrop />
-            </CropFrame>
-          </motion.div>
-        </div>
+        {/* Full-width showcase */}
+        <motion.div
+          custom={0.1}
+          variants={showcaseVariant}
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT}
+        >
+          <ForecastShowcase />
+        </motion.div>
       </div>
     </section>
   )
 }
 
-// ─── Public export: all three stories as one unit ─────────────────────────
+// ─── Public export: all three stories as one unit ────────────────────────────
 export function ChartStoriesSection() {
   return (
     <>

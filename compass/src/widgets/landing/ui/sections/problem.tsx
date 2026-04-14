@@ -45,7 +45,7 @@ export function WhyFailSection() {
   const { t, locale } = useLocale()
 
   return (
-    <SectionShell band="bg-1" borderY>
+    <SectionShell band="bg-1" maxWidth="max-w-7xl" borderY>
       {/* Heading block */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -55,12 +55,10 @@ export function WhyFailSection() {
         className="text-center"
       >
         <Eyebrow label="The Problem" />
-        <h2
-          className="font-display text-2xl md:text-3xl lg:text-4xl leading-[1.1] tracking-[-0.02em] text-[var(--fg-0)] [word-break:keep-all] [overflow-wrap:break-word]"
-        >
+        <h2 className="font-display text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-[-0.03em] text-[var(--fg-0)] [word-break:keep-all] [overflow-wrap:break-word]">
           {t("landing.v2.whyFail.headline")}
         </h2>
-        <p className={`mt-4 text-base md:text-lg leading-relaxed text-[var(--fg-1)] max-w-3xl mx-auto [word-break:keep-all] ${locale === "ko" ? "font-medium" : "font-normal"}`}>
+        <p className={`mt-6 text-lg md:text-xl leading-relaxed text-[var(--fg-1)] max-w-3xl mx-auto [word-break:keep-all] ${locale === "ko" ? "font-medium" : "font-normal"}`}>
           {locale === "ko"
             ? "시장, UA, 프로덕트, 재무 — 각자 좁은 질문에만 답합니다. 진짜 중요한 질문엔 아무도 답하지 않습니다."
             : "Market, UA, product, and finance each answer a narrow question. None answers the one that matters."}
@@ -68,7 +66,7 @@ export function WhyFailSection() {
       </motion.div>
 
       {/* 4-card grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-16">
         {SILO_CARDS.map((card, i) => (
           <motion.div
             key={card.labelKey}
@@ -76,18 +74,18 @@ export function WhyFailSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.38, ease: EASE_OUT_QUART, delay: i * 0.09 }}
-            className="p-6 bg-[var(--bg-0)] border border-[var(--border-subtle)] rounded-[var(--radius-card)]"
+            className="p-7 bg-[var(--bg-0)] border border-[var(--border-subtle)] rounded-[var(--radius-card)]"
           >
             <span className="text-xs font-semibold uppercase tracking-wide text-[var(--brand)]">
               {t(card.labelKey)}
             </span>
-            <p className={`text-sm font-medium text-[var(--fg-1)] mt-3 [word-break:keep-all] ${locale === "ko" ? "font-medium" : ""}`}>
+            <p className={`text-sm font-medium text-[var(--fg-1)] mt-4 [word-break:keep-all] ${locale === "ko" ? "font-medium" : ""}`}>
               {t(card.doesKey)}
             </p>
             <p className="text-sm text-[var(--signal-caution)] mt-1 [word-break:keep-all]">
               {locale === "ko" ? card.misses.ko : card.misses.en}
             </p>
-            <div className="border-t border-[var(--border-subtle)] mt-4 pt-4">
+            <div className="border-t border-[var(--border-subtle)] mt-5 pt-4">
               <p className={`text-xs text-[var(--fg-3)] italic [word-break:keep-all] ${locale === "ko" ? "font-medium" : ""}`}>
                 {locale === "ko" ? card.missing.ko : card.missing.en}
               </p>
@@ -102,7 +100,7 @@ export function WhyFailSection() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.45, ease: EASE_OUT_QUART, delay: 0.36 }}
-        className={`mt-10 text-center text-base font-medium text-[var(--fg-0)] [word-break:keep-all]`}
+        className="mt-12 text-center text-lg font-medium text-[var(--fg-0)] [word-break:keep-all]"
       >
         {t("landing.v2.whyFail.conclusion")}
       </motion.p>

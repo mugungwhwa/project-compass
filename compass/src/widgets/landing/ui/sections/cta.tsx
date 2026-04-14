@@ -17,7 +17,7 @@ export function CtaBottomSection() {
 
   return (
     <section
-      className="bg-[var(--bg-0)] border-t border-[var(--border-subtle)] py-28 px-6"
+      className="bg-[var(--bg-0)] border-t border-[var(--border-subtle)] py-40 px-6"
       aria-label="Get Started — See the decision"
     >
       <motion.div
@@ -28,14 +28,14 @@ export function CtaBottomSection() {
         className="max-w-2xl mx-auto flex flex-col items-center text-center"
       >
         <h2
-          className="font-display text-4xl md:text-3xl leading-[1.1] tracking-[-0.02em] text-[var(--fg-0)]"
+          className="font-display text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-[-0.03em] text-[var(--fg-0)]"
           style={{ wordBreak: "keep-all", overflowWrap: "break-word" }}
         >
           {t("landing.v2.cta.heading")}
         </h2>
 
         <p
-          className={`text-base text-[var(--fg-2)] mt-4 max-w-sm ${locale === "ko" ? "font-medium" : "font-normal"}`}
+          className={`text-lg text-[var(--fg-2)] mt-6 max-w-sm ${locale === "ko" ? "font-medium" : "font-normal"}`}
           style={{ wordBreak: "keep-all" }}
         >
           {t("landing.v2.cta.description")}
@@ -43,14 +43,14 @@ export function CtaBottomSection() {
 
         <Link
           href="/contact"
-          className="inline-flex h-12 items-center justify-center rounded-[var(--radius-card)] bg-[var(--brand)] px-8 text-sm font-semibold text-white mt-8 transition-colors duration-[var(--duration-micro)] hover:bg-[var(--brand-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand)] focus-visible:ring-offset-2"
+          className="inline-flex h-14 items-center justify-center rounded-[var(--radius-card)] bg-[var(--brand)] px-10 text-base font-semibold text-white mt-10 transition-colors duration-[var(--duration-micro)] hover:bg-[var(--brand-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand)] focus-visible:ring-offset-2"
         >
           {t("landing.v2.cta.primaryButton")}
         </Link>
 
         <Link
           href="/dashboard"
-          className="text-sm text-[var(--fg-2)] underline underline-offset-2 mt-4 hover:text-[var(--fg-1)] transition-colors duration-[var(--duration-micro)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand)] focus-visible:ring-offset-2"
+          className="text-sm text-[var(--fg-2)] underline underline-offset-2 mt-5 hover:text-[var(--fg-1)] transition-colors duration-[var(--duration-micro)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand)] focus-visible:ring-offset-2"
         >
           {t("landing.v2.cta.secondary")}
         </Link>
