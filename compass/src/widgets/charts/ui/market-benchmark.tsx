@@ -23,7 +23,7 @@ export function MarketBenchmark({ data, expanded: externalExpanded, onToggle: ex
   return (
     <motion.div
       layout
-      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 ${gridClassName}`}
+      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 h-full flex flex-col ${gridClassName}`}
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
       <ChartHeader
@@ -32,7 +32,8 @@ export function MarketBenchmark({ data, expanded: externalExpanded, onToggle: ex
         context={t("info.benchmark")}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
-      <ResponsiveContainer width="100%" height={chartHeight}>
+      <div className="flex-1" style={{ minHeight: chartHeight }}>
+      <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id="genreBand" x1="0" y1="0" x2="0" y2="1">
@@ -74,6 +75,7 @@ export function MarketBenchmark({ data, expanded: externalExpanded, onToggle: ex
           <Legend verticalAlign="bottom" height={36} iconSize={12} wrapperStyle={{ fontSize: 11 }} />
         </AreaChart>
       </ResponsiveContainer>
+      </div>
     </motion.div>
   )
 }

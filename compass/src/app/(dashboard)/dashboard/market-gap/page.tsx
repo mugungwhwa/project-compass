@@ -47,21 +47,21 @@ export default function MarketGapPage() {
 
       {/* 3. Retention benchmark + Ranking trend */}
       <FadeInUp className="grid grid-cols-2 gap-6 mb-8">
-        <motion.div layout className={benchGrid.getClassName("chart-0", 0)} transition={GRID_TRANSITION}>
+        <motion.div layout className={`${benchGrid.getClassName("chart-0", 0)} h-full`} transition={GRID_TRANSITION}>
           <MarketBenchmark data={mockRetention.data} expanded={benchGrid.expandedId === "chart-0"} onToggle={() => benchGrid.toggle("chart-0")} />
         </motion.div>
-        <motion.div layout className={benchGrid.getClassName("chart-1", 1)} transition={GRID_TRANSITION}>
+        <motion.div layout className={`${benchGrid.getClassName("chart-1", 1)} h-full`} transition={GRID_TRANSITION}>
           <RankingTrend data={mockRankingHistory} expanded={benchGrid.expandedId === "chart-1"} onToggle={() => benchGrid.toggle("chart-1")} />
         </motion.div>
       </FadeInUp>
 
       {/* 4. Saturation trend + Competitor table */}
       <FadeInUp className="grid grid-cols-2 gap-6">
-        <motion.div layout className={satGrid.getClassName("chart-0", 0)} transition={GRID_TRANSITION}>
+        <motion.div layout className={`${satGrid.getClassName("chart-0", 0)} h-full`} transition={GRID_TRANSITION}>
           <SaturationTrendChart data={mockSaturationTrend} expanded={satGrid.expandedId === "chart-0"} onToggle={() => satGrid.toggle("chart-0")} />
         </motion.div>
-        <motion.div layout className={satGrid.getClassName("chart-1", 1)} transition={GRID_TRANSITION}>
-        <div className="rounded-2xl border border-[var(--border)] bg-gradient-to-br from-white to-slate-50/50 p-6 card-premium">
+        <motion.div layout className={`${satGrid.getClassName("chart-1", 1)} h-full`} transition={GRID_TRANSITION}>
+        <div className="rounded-2xl border border-[var(--border)] bg-gradient-to-br from-white to-slate-50/50 p-6 card-premium h-full">
           <h3 className="text-[15px] font-bold text-[var(--text-primary)] mb-4">Top 10 Competitors</h3>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">

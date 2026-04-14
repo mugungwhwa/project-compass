@@ -25,14 +25,15 @@ export function SaturationTrendChart({ data, expanded: externalExpanded, onToggl
   return (
     <motion.div
       layout
-      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 ${gridClassName}`}
+      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 h-full flex flex-col ${gridClassName}`}
     >
       <ChartHeader
         title={t("market.saturationTrend")}
         subtitle={t("info.saturationTrend")}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
-      <ResponsiveContainer width="100%" height={chartHeight}>
+      <div className="flex-1" style={{ minHeight: chartHeight }}>
+      <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id="thresholdGrad" x1="0" y1="0" x2="0" y2="1">
@@ -76,6 +77,7 @@ export function SaturationTrendChart({ data, expanded: externalExpanded, onToggl
           <Area type="monotone" dataKey="myRevenue" stroke={C.myRevenue} strokeWidth={2.5} fill="url(#myRevGrad)" name={t("market.myRevenue")} animationBegin={400} animationDuration={1200} />
         </AreaChart>
       </ResponsiveContainer>
+      </div>
     </motion.div>
   )
 }

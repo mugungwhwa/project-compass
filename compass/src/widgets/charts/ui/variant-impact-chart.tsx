@@ -40,14 +40,15 @@ export function VariantImpactChart({ variants, expanded: externalExpanded, onTog
   return (
     <motion.div
       layout
-      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 ${gridClassName}`}
+      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 h-full flex flex-col ${gridClassName}`}
     >
       <ChartHeader
         title={t("exp.variantImpact")}
         subtitle={t("info.variantImpact")}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
-      <ResponsiveContainer width="100%" height={chartHeight}>
+      <div className="flex-1" style={{ minHeight: chartHeight }}>
+      <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} layout="vertical" margin={{ top: 10, right: 30, left: 120, bottom: 10 }}>
           <CartesianGrid strokeDasharray="4 4" stroke={C.grid} horizontal={false} />
           <XAxis
@@ -100,6 +101,7 @@ export function VariantImpactChart({ variants, expanded: externalExpanded, onTog
           </Bar>
         </BarChart>
       </ResponsiveContainer>
+      </div>
     </motion.div>
   )
 }

@@ -40,10 +40,10 @@ export default function CapitalConsolePage() {
       </FadeInUp>
 
       <FadeInUp className="grid grid-cols-2 gap-4">
-        <motion.div layout className={capGrid.getClassName("chart-0", 0)} transition={GRID_TRANSITION}>
+        <motion.div layout className={`${capGrid.getClassName("chart-0", 0)} h-full`} transition={GRID_TRANSITION}>
           <BudgetDonut data={mockBudgetAllocation} expanded={capGrid.expandedId === "chart-0"} onToggle={() => capGrid.toggle("chart-0")} />
         </motion.div>
-        <motion.div layout className={capGrid.getClassName("chart-1", 1)} transition={GRID_TRANSITION}>
+        <motion.div layout className={`${capGrid.getClassName("chart-1", 1)} h-full`} transition={GRID_TRANSITION}>
           <RevenueForecast data={mockRevenueProjection} title={t("chart.revenueProj")} expanded={capGrid.expandedId === "chart-1"} onToggle={() => capGrid.toggle("chart-1")} />
         </motion.div>
       </FadeInUp>

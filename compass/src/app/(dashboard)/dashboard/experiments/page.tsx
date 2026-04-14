@@ -36,10 +36,10 @@ export default function ExperimentsPage() {
       </FadeInUp>
 
       <FadeInUp className="grid grid-cols-2 gap-6 mb-8">
-        <motion.div layout className={expGrid.getClassName("chart-0", 0)} transition={GRID_TRANSITION}>
+        <motion.div layout className={`${expGrid.getClassName("chart-0", 0)} h-full`} transition={GRID_TRANSITION}>
           <VariantImpactChart variants={mockExperimentVariants} expanded={expGrid.expandedId === "chart-0"} onToggle={() => expGrid.toggle("chart-0")} />
         </motion.div>
-        <motion.div layout className={expGrid.getClassName("chart-1", 1)} transition={GRID_TRANSITION}>
+        <motion.div layout className={`${expGrid.getClassName("chart-1", 1)} h-full`} transition={GRID_TRANSITION}>
           <RolloutHistoryTimeline variant={mockExperimentVariants.find(v => v.experimentId === 1) || mockExperimentVariants[0]} expanded={expGrid.expandedId === "chart-1"} onToggle={() => expGrid.toggle("chart-1")} />
         </motion.div>
       </FadeInUp>

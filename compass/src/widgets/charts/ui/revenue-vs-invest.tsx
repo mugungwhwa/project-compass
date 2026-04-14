@@ -41,7 +41,7 @@ export function RevenueVsInvest({ data, expanded: externalExpanded, onToggle: ex
   return (
     <motion.div
       layout
-      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 ${gridClassName}`}
+      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 h-full flex flex-col ${gridClassName}`}
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
       <ChartHeader
@@ -55,7 +55,8 @@ export function RevenueVsInvest({ data, expanded: externalExpanded, onToggle: ex
         }
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
-      <ResponsiveContainer width="100%" height={chartHeight}>
+      <div className="flex-1" style={{ minHeight: chartHeight }}>
+      <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{ top: 16, right: 20, left: 8, bottom: 0 }}>
           <defs>
             <linearGradient id="gradRevenue" x1="0" y1="0" x2="0" y2="1">
@@ -234,6 +235,7 @@ export function RevenueVsInvest({ data, expanded: externalExpanded, onToggle: ex
           />
         </AreaChart>
       </ResponsiveContainer>
+      </div>
     </motion.div>
   )
 }

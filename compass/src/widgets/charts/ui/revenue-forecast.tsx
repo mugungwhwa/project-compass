@@ -21,7 +21,7 @@ export function RevenueForecast({ data, title, expanded: externalExpanded, onTog
   return (
     <motion.div
       layout
-      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 h-full ${gridClassName}`}
+      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 h-full flex flex-col ${gridClassName}`}
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
       <ChartHeader
@@ -30,7 +30,8 @@ export function RevenueForecast({ data, title, expanded: externalExpanded, onTog
         insight={locale === "ko" ? "상승 여지는 있으나, D60 이후 불확실성이 확대됩니다." : "Upside remains positive, but uncertainty widens after D60."}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
-      <ResponsiveContainer width="100%" height={chartHeight}>
+      <div className="flex-1" style={{ minHeight: chartHeight }}>
+      <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id="revenueBand" x1="0" y1="0" x2="0" y2="1">
@@ -72,6 +73,7 @@ export function RevenueForecast({ data, title, expanded: externalExpanded, onTog
           <Line type="monotone" dataKey="p10" stroke={C.line} strokeWidth={1} strokeDasharray="4 3" strokeOpacity={0.3} dot={false} animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
         </AreaChart>
       </ResponsiveContainer>
+      </div>
     </motion.div>
   )
 }

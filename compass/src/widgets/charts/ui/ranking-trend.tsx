@@ -25,14 +25,15 @@ export function RankingTrend({ data, expanded: externalExpanded, onToggle: exter
   return (
     <motion.div
       layout
-      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 ${gridClassName}`}
+      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 h-full flex flex-col ${gridClassName}`}
     >
       <ChartHeader
         title={t("market.rankingTrend")}
         subtitle={t("info.rankingTrend")}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
-      <ResponsiveContainer width="100%" height={chartHeight}>
+      <div className="flex-1" style={{ minHeight: chartHeight }}>
+      <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
           <CartesianGrid strokeDasharray="4 4" stroke={C.grid} vertical={false} />
           <XAxis dataKey="date" tick={{ fontSize: 11, fill: C.axis }} axisLine={{ stroke: C.border }} tickLine={false} />
@@ -67,6 +68,7 @@ export function RankingTrend({ data, expanded: externalExpanded, onToggle: exter
           <Line type="monotone" dataKey="myRank" stroke={C.line} strokeWidth={3} dot={{ r: 4, fill: "#FFFFFF", stroke: C.line, strokeWidth: 2 }} animationBegin={400} animationDuration={1200} animationEasing="ease-out" />
         </LineChart>
       </ResponsiveContainer>
+      </div>
     </motion.div>
   )
 }

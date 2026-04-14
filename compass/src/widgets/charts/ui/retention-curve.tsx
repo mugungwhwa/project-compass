@@ -133,7 +133,7 @@ export function RetentionCurve({ data, asymptoticDay, expanded: externalExpanded
   return (
     <motion.div
       layout
-      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 ${gridClassName}`}
+      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 h-full flex flex-col ${gridClassName}`}
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
       <ChartHeader
@@ -143,7 +143,8 @@ export function RetentionCurve({ data, asymptoticDay, expanded: externalExpanded
         insight={locale === "ko" ? "D14 코호트 안정화 이후 예측 구간이 좁아졌습니다." : "Prediction band tightened after D14 cohort stabilization."}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
-      <ResponsiveContainer width="100%" height={chartHeight}>
+      <div className="flex-1" style={{ minHeight: chartHeight }}>
+      <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
           <CartesianGrid strokeDasharray="2 4" stroke={C.grid} vertical={false} />
           <XAxis
@@ -258,6 +259,7 @@ export function RetentionCurve({ data, asymptoticDay, expanded: externalExpanded
           />
         </AreaChart>
       </ResponsiveContainer>
+      </div>
     </motion.div>
   )
 }

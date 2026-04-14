@@ -165,7 +165,7 @@ export function ExperimentRevenue({ data, stats, expanded: externalExpanded, onT
   return (
     <motion.div
       layout
-      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 ${gridClassName}`}
+      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 h-full flex flex-col ${gridClassName}`}
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
       <ChartHeader
@@ -182,7 +182,8 @@ export function ExperimentRevenue({ data, stats, expanded: externalExpanded, onT
 
       <StatsBar mode={mode} stats={stats} locale={locale} />
 
-      <ResponsiveContainer width="100%" height={chartHeight}>
+      <div className="flex-1" style={{ minHeight: chartHeight }}>
+      <ResponsiveContainer width="100%" height="100%">
         <ComposedChart data={data} margin={{ top: 20, right: 16, left: 8, bottom: 0 }}>
           <CartesianGrid strokeDasharray="4 4" stroke={C.grid} vertical={false} />
           <XAxis
@@ -308,6 +309,7 @@ export function ExperimentRevenue({ data, stats, expanded: externalExpanded, onT
           )}
         </ComposedChart>
       </ResponsiveContainer>
+      </div>
 
       <DecompLegend
         mode={mode}

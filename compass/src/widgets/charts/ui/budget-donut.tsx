@@ -20,7 +20,7 @@ export function BudgetDonut({ data, expanded: externalExpanded, onToggle: extern
   return (
     <motion.div
       layout
-      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 h-full ${gridClassName}`}
+      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 h-full flex flex-col ${gridClassName}`}
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
       <ChartHeader
@@ -28,7 +28,8 @@ export function BudgetDonut({ data, expanded: externalExpanded, onToggle: extern
         subtitle={t("info.budgetDonut")}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
-      <ResponsiveContainer width="100%" height={chartHeight}>
+      <div className="flex-1" style={{ minHeight: chartHeight }}>
+      <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie data={data} cx="50%" cy="50%" innerRadius={55} outerRadius={80} dataKey="value" paddingAngle={3} strokeWidth={0} animationBegin={200} animationDuration={1000}>
             {data.map((entry) => (<Cell key={entry.name} fill={entry.color} />))}
@@ -43,6 +44,7 @@ export function BudgetDonut({ data, expanded: externalExpanded, onToggle: extern
           />
         </PieChart>
       </ResponsiveContainer>
+      </div>
     </motion.div>
   )
 }
