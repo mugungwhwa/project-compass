@@ -33,7 +33,11 @@ export function HeroSection() {
     <section className="flex min-h-[80vh] w-full flex-col items-center justify-center bg-[var(--bg-0)] px-6 text-center">
       <motion.h1
         className="mb-8 max-w-4xl text-6xl font-bold leading-[1.1] tracking-tight text-[var(--fg-0)] md:text-7xl lg:text-8xl"
-        style={{ fontFamily: 'var(--font-instrument-serif), "Noto Serif KR", Georgia, serif' }}
+        style={{
+          fontFamily: 'var(--font-instrument-serif), "Noto Serif KR", Georgia, serif',
+          wordBreak: "keep-all",
+          overflowWrap: "break-word",
+        }}
         initial={initial}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, delay: 0, ease: EASE }}
@@ -42,7 +46,7 @@ export function HeroSection() {
       </motion.h1>
 
       <motion.p
-        className="mb-12 max-w-2xl text-lg leading-relaxed text-[var(--fg-2)] md:text-xl"
+        className="mb-12 max-w-2xl text-lg leading-relaxed text-[var(--fg-2)] md:text-xl [word-break:keep-all] [overflow-wrap:break-word]"
         initial={initial}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, delay: 0.15, ease: EASE }}
