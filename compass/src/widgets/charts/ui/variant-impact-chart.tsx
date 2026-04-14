@@ -44,7 +44,8 @@ export function VariantImpactChart({ variants, expanded: externalExpanded, onTog
     >
       <ChartHeader
         title={t("exp.variantImpact")}
-        subtitle={t("info.variantImpact")}
+        subtitle="ΔLTV per variant · 95% CI"
+        context={t("info.variantImpact")}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
       <div className="flex-1" style={{ minHeight: chartHeight }}>

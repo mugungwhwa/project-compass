@@ -20,7 +20,7 @@ type SaturationTrendChartProps = {
 
 export function SaturationTrendChart({ data, expanded: externalExpanded, onToggle: externalToggle }: SaturationTrendChartProps) {
   const { t } = useLocale()
-  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 240, expanded: externalExpanded, onToggle: externalToggle })
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 320, expanded: externalExpanded, onToggle: externalToggle })
 
   return (
     <motion.div
@@ -29,7 +29,8 @@ export function SaturationTrendChart({ data, expanded: externalExpanded, onToggl
     >
       <ChartHeader
         title={t("market.saturationTrend")}
-        subtitle={t("info.saturationTrend")}
+        subtitle="Match League vs Top-grossing threshold"
+        context={t("info.saturationTrend")}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
       <div className="flex-1" style={{ minHeight: chartHeight }}>

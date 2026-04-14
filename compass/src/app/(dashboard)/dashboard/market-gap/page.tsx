@@ -62,7 +62,11 @@ export default function MarketGapPage() {
         </motion.div>
         <motion.div layout className={`${satGrid.getClassName("chart-1", 1)} h-full`} transition={GRID_TRANSITION}>
         <div className="rounded-2xl border border-[var(--border)] bg-gradient-to-br from-white to-slate-50/50 p-6 card-premium h-full">
-          <h3 className="text-[15px] font-bold text-[var(--text-primary)] mb-4">Top 10 Competitors</h3>
+          <div className="mb-4">
+            <h3 className="text-[15px] font-bold text-[var(--text-primary)]">Top 10 Competitors</h3>
+            <p className="text-xs text-[var(--text-muted)] mt-0.5">Puzzle genre · Revenue ranked</p>
+            <p className="text-xs text-[var(--text-muted)] mt-0.5 italic">Match League highlighted in blue</p>
+          </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
@@ -76,7 +80,7 @@ export default function MarketGapPage() {
               </thead>
               <tbody>
                 {mockCompetitors.map((c) => (
-                  <tr key={c.rank} className={`border-b border-slate-50 ${c.name === "Puzzle Quest" ? "bg-[var(--brand-light)]" : ""}`}>
+                  <tr key={c.rank} className={`border-b border-slate-50 ${c.name === "Match League" ? "bg-[var(--brand-light)]" : ""}`}>
                     <td className="px-3 py-2.5 text-xs text-[var(--text-secondary)] font-mono-num">#{c.rank}</td>
                     <td className="px-3 py-2.5 text-xs font-medium text-[var(--text-primary)]">{c.name}</td>
                     <td className="px-3 py-2.5 text-xs text-right text-[var(--text-secondary)] font-mono-num">{c.d7}%</td>

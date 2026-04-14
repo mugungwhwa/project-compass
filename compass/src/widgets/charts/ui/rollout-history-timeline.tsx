@@ -20,7 +20,7 @@ type RolloutHistoryTimelineProps = {
 
 export function RolloutHistoryTimeline({ variant, expanded: externalExpanded, onToggle: externalToggle }: RolloutHistoryTimelineProps) {
   const { t } = useLocale()
-  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 280, expanded: externalExpanded, onToggle: externalToggle })
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 320, expanded: externalExpanded, onToggle: externalToggle })
 
   if (!variant.rollout_history || variant.rollout_history.length === 0) {
     return (
@@ -46,7 +46,8 @@ export function RolloutHistoryTimeline({ variant, expanded: externalExpanded, on
     >
       <ChartHeader
         title={t("exp.rolloutHistory")}
-        subtitle={`${variant.name} · ${t("info.rolloutHistory")}`}
+        subtitle={`${variant.name} · % Rollout + Cumulative LTV`}
+        context={t("info.rolloutHistory")}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
       <div className="flex-1" style={{ minHeight: chartHeight }}>

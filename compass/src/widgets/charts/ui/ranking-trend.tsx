@@ -20,7 +20,7 @@ type RankingTrendProps = {
 
 export function RankingTrend({ data, expanded: externalExpanded, onToggle: externalToggle }: RankingTrendProps) {
   const { t } = useLocale()
-  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 240, expanded: externalExpanded, onToggle: externalToggle })
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 280, expanded: externalExpanded, onToggle: externalToggle })
 
   return (
     <motion.div
@@ -29,7 +29,8 @@ export function RankingTrend({ data, expanded: externalExpanded, onToggle: exter
     >
       <ChartHeader
         title={t("market.rankingTrend")}
-        subtitle={t("info.rankingTrend")}
+        subtitle="Match League · 6-month trend"
+        context={t("info.rankingTrend")}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
       <div className="flex-1" style={{ minHeight: chartHeight }}>
