@@ -366,6 +366,115 @@ const dictionary = {
   // --- Summary Card Infomarks: MarketHeroVerdict ---
   "info.marketHero.confidence":{ ko: "현재 시장 신호(투자/유지/축소)를 모델이 얼마나 확신하는가. 70% 이상이면 실행 근거 충분. Bayesian posterior 기반 추정치.",
                                  en: "How confident the model is in the current market signal. 70%+ = sufficient basis to act. Bayesian posterior estimate." },
+
+  // --- Landing Page v2: Section 1 (Hero) ---
+  "landing.v2.hero.headlineLine1":    { ko: "게임 포트폴리오를",          en: "Run your game portfolio" },
+  "landing.v2.hero.headlineLine2":    { ko: "근거로 운영하세요.",          en: "at the speed of evidence." },
+  "landing.v2.hero.subheading":       { ko: "또 하나의 대시보드가 아닙니다. 투자 판단을 위한 의사결정 레이어입니다.",
+                                        en: "Not another dashboard. Your investment decision layer." },
+  "landing.v2.hero.description":      { ko: "Compass는 시장, 실험, UA, 재무 데이터를 하나로 연결해 게임 운영자를 위한 투자 의사결정 기반을 제공합니다.",
+                                        en: "Compass turns market, experiment, UA, and financial data into one investment decision layer for game operators." },
+  "landing.v2.hero.point1":           { ko: "신뢰도를 갖춘 투자 예측",      en: "Forecast investment outcomes with confidence" },
+  "landing.v2.hero.point2":           { ko: "시장 격차를 명확히 파악",      en: "See your market gap clearly" },
+  "landing.v2.hero.point3":           { ko: "실험 성과를 자본 가치로 전환",  en: "Translate experiment wins into capital decisions" },
+
+  // --- Landing Page v2: Section 2 (Why Current Tools Fail) ---
+  "landing.v2.whyFail.headline":      { ko: "모든 팀이 데이터를 가지고 있습니다. 아무도 그것을 연결하지 않습니다.",
+                                        en: "Every team has data. Nobody connects it." },
+  "landing.v2.whyFail.card1Title":    { ko: "시장",        en: "Market" },
+  "landing.v2.whyFail.card1Desc":     { ko: "외부 벤치마크를 압니다",  en: "knows external benchmarks" },
+  "landing.v2.whyFail.card2Title":    { ko: "UA",         en: "UA" },
+  "landing.v2.whyFail.card2Desc":     { ko: "획득 효율성을 압니다",      en: "knows acquisition efficiency" },
+  "landing.v2.whyFail.card3Title":    { ko: "제품",        en: "Product" },
+  "landing.v2.whyFail.card3Desc":     { ko: "어떤 변형이 이겼는지 압니다",  en: "knows which variant won" },
+  "landing.v2.whyFail.card4Title":    { ko: "재무",        en: "Finance" },
+  "landing.v2.whyFail.card4Desc":     { ko: "소진과 런웨이를 압니다",  en: "knows burn and runway" },
+  "landing.v2.whyFail.conclusion":    { ko: "Compass는 네 가지를 모두 하나의 투자 의사결정으로 연결합니다.",
+                                        en: "Compass connects all four into one investment decision." },
+
+  // --- Landing Page v2: Section 3 (What Compass Answers) ---
+  "landing.v2.answers.headline":      { ko: "Compass가 실제로 답하는 질문들",  en: "What Compass actually answers" },
+  "landing.v2.answers.q1":            { ko: "지금 투자를 늘려야 하는가?",       en: "Should we invest more right now?" },
+  "landing.v2.answers.q2":            { ko: "페이백이 왜 이동했는가?",         en: "Why did payback drift?" },
+  "landing.v2.answers.q3":            { ko: "우리는 시장의 어디에 있는가?",     en: "Where are we below market?" },
+  "landing.v2.answers.q4":            { ko: "어떤 실험이 투자 가치를 만들었는가?",  en: "Which experiment created investment value?" },
+
+  // --- Landing Page v2: Section 4 (Product Modules) ---
+  "landing.v2.modules.headline":      { ko: "게임 포트폴리오를 운영하는 더 똑똑한 방법이 있습니다.",
+                                        en: "There's a smarter way to run a game portfolio." },
+  "landing.v2.modules.description":   { ko: "Compass는 시장 인텔리전스, UA, 실험, 재무에 걸친 통합 의사결정 레이어를 제공합니다.",
+                                        en: "Compass gives operators a unified decision layer across market intelligence, UA, experiments, and financials." },
+  "landing.v2.modules.m1Name":        { ko: "투자 신호",       en: "Investment Signal" },
+  "landing.v2.modules.m1Desc":        { ko: "투자를 늘릴 수 있는가? 신뢰도, 페이백, 현재 자본 효율성을 보여줍니다.",
+                                        en: "Can we invest more? Shows confidence, payback, and current capital efficiency." },
+  "landing.v2.modules.m2Name":        { ko: "시장 격차",       en: "Market Gap" },
+  "landing.v2.modules.m2Desc":        { ko: "우리는 장르 벤치마크 대비 어디에 있는가? 미달 성과와 성장 여력을 강조합니다.",
+                                        en: "Where do we stand versus genre benchmarks? Highlights underperformance and headroom." },
+  "landing.v2.modules.m3Name":        { ko: "실험 가치",       en: "Experiment Value" },
+  "landing.v2.modules.m3Desc":        { ko: "어떤 테스트가 실제로 LTV를 움직였는가? A/B 결과를 투자 가치로 전환합니다.",
+                                        en: "Which tests actually moved LTV? Translates A/B results into investment value." },
+  "landing.v2.modules.m4Name":        { ko: "판단 코파일럿",   en: "Decision Copilot" },
+  "landing.v2.modules.m4Desc":        { ko: "메트릭이 왜 이동했는가? 변화의 원인을 설명하고 다음 액션을 권고합니다.",
+                                        en: "Why did the metric move? Explains what changed and recommends the next action." },
+
+  // --- Landing Page v2: Section 5 (Product Proof) ---
+  "landing.v2.proof.headline":        { ko: "가장 중요한 의사결정, 한 화면에.",
+                                        en: "One screen for the decision that matters most." },
+  "landing.v2.proof.description":     { ko: "Compass는 게임 운영자에게 하나의 투자 신호, 그 근거, 그리고 취할 다음 액션을 제공합니다.",
+                                        en: "Compass gives game operators one investment signal, the evidence behind it, and the next action to take." },
+
+  // --- Landing Page v2: Section 6A (Chart Story: Revenue vs Investment) ---
+  "landing.v2.chart1.headline":       { ko: "성장이 회수되고 있는지 확인하세요.",
+                                        en: "See whether growth is paying back." },
+  "landing.v2.chart1.description":    { ko: "매출, UA 지출, 손익분기점 역학을 한 화면에서 비교하세요. 그래야 자본 판단이 실제 효율성에 기반합니다.",
+                                        en: "Compare revenue, UA spend, and break-even dynamics in one view — so capital decisions are grounded in actual efficiency." },
+
+  // --- Landing Page v2: Section 6B (Chart Story: Retention Forecast) ---
+  "landing.v2.chart2.headline":       { ko: "리텐션, 진정한 신뢰도와 함께.",
+                                        en: "Retention, with real confidence." },
+  "landing.v2.chart2.description":    { ko: "D1–D60 리텐션을 P10/P50/P90 밴드로 예측하세요. 기대 경로와 그 주변 불확실성을 모두 봅니다.",
+                                        en: "Forecast D1–D60 retention with P10/P50/P90 bands, so you see both the expected path and the uncertainty around it." },
+
+  // --- Landing Page v2: Section 6C (Chart Story: Revenue Forecast) ---
+  "landing.v2.chart3.headline":       { ko: "예측은 희망이 아닙니다.",
+                                        en: "Forecast outcomes, not hopes." },
+  "landing.v2.chart3.description":    { ko: "하향, 기본, 상향 시나리오를 하나의 취약한 숫자가 아닌 확률 범위로 보세요.",
+                                        en: "See downside, base case, and upside scenarios as probability ranges instead of a single fragile number." },
+
+  // --- Landing Page v2: Section 7 (Explainability) ---
+  "landing.v2.explain.headline":      { ko: "예산을 바꾸기 전에 무엇이 변했는지 알아야 합니다.",
+                                        en: "Know what changed — before you change the budget." },
+  "landing.v2.explain.description":   { ko: "Compass는 페이백이 왜 이동했는지, 리텐션이나 CPI에서 무엇이 변했는지, 그 변화가 얼마나 중요한지 설명합니다.",
+                                        en: "Compass explains why payback moved, what changed in retention or CPI, and how much those changes matter." },
+
+  // --- Landing Page v2: Section 8 (Experiment-to-Investment) ---
+  "landing.v2.experiment.headline":   { ko: "실험은 단순히 출시되지 않습니다. 자본을 움직입니다.",
+                                        en: "Experiments don't just ship. They move capital." },
+  "landing.v2.experiment.description":{ ko: "Compass는 실험 결과를 ΔLTV, 페이백 이동, 자본 효율성으로 전환합니다. 따라서 성공한 테스트는 자금 배분 의사결정이 됩니다.",
+                                        en: "Compass translates experiment results into ΔLTV, payback movement, and capital efficiency — so winning tests become funding decisions." },
+  "landing.v2.experiment.pipelineStep1":  { ko: "실험 결과",  en: "Experiment Result" },
+  "landing.v2.experiment.pipelineStep2":  { ko: "ΔLTV",      en: "ΔLTV" },
+  "landing.v2.experiment.pipelineStep3":  { ko: "페이백",     en: "Payback" },
+  "landing.v2.experiment.pipelineStep4":  { ko: "권고",       en: "Recommendation" },
+
+  // --- Landing Page v2: Section 9 (Comparison) ---
+  "landing.v2.compare.headline":      { ko: "측정이 아닌 의사결정을 위해 설계되었습니다.",
+                                        en: "Built for decisions, not just measurement." },
+  "landing.v2.compare.analytics":     { ko: "분석 도구는 무엇이 일어났는지 말해줍니다",
+                                        en: "Analytics tells you what happened" },
+  "landing.v2.compare.experimentation":{ ko: "실험 도구는 어떤 변형이 이겼는지 말해줍니다",
+                                        en: "Experimentation tells you which variant won" },
+  "landing.v2.compare.finance":       { ko: "재무 도구는 무엇을 썼는지 말해줍니다",
+                                        en: "Finance tells you what was spent" },
+  "landing.v2.compare.compass":       { ko: "Compass는 더 투자해야 하는지 말해줍니다",
+                                        en: "Compass tells you whether to invest more" },
+
+  // --- Landing Page v2: Section 10 (CTA) ---
+  "landing.v2.cta.primaryButton":     { ko: "데모 예약하기",  en: "Book a demo" },
+  "landing.v2.cta.secondaryButton":   { ko: "제품 둘러보기",  en: "See the product" },
+  "landing.v2.cta.description":       { ko: "Compass가 게임 데이터를 투자 판단으로 어떻게 전환하는지 보세요.",
+                                        en: "See how Compass turns game data into investment decisions." },
+
 } as const
 
 export type TranslationKey = keyof typeof dictionary
