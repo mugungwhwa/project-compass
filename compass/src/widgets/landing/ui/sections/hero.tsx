@@ -101,7 +101,7 @@ export function HeroV2() {
           className="mt-16 w-full"
         >
           <div className="mx-auto max-w-4xl md:max-w-3xl">
-            <div className="rounded-[var(--radius-card)] border border-[var(--border-default)] overflow-hidden shadow-[0_2px_12px_0_rgba(0,0,0,0.06)]">
+            <div className="rounded-[var(--radius-card)] border border-[var(--border-default)] shadow-[0_2px_12px_0_rgba(0,0,0,0.06)]">
               <div className="overflow-x-auto">
                 <SignalCrop />
               </div>

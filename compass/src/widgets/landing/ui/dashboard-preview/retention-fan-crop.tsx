@@ -3,47 +3,31 @@
 /**
  * retention-fan-crop.tsx
  * Landing page preview: Retention forecast fan chart (P10/P50/P90 bands).
- * Wraps <RetentionCurve> in a scale-shrunk, interaction-disabled container.
+ * Wraps <RetentionCurve> in a layout-aware, interaction-disabled container.
  * Source widget: @/widgets/charts/ui/retention-curve
  */
 
 import { RetentionCurve } from "@/widgets/charts/ui/retention-curve"
+import { PreviewFrame } from "./_frame"
 import { previewRetention, previewAsymptoticDay } from "./preview-fixtures"
 
 type RetentionFanCropProps = {
-  /** CSS transform scale applied to the inner widget. Default: 0.65 */
+  /** CSS zoom applied to the child tree. Default: 0.65 */
   scale?: number
-  /** Rendered width of the container in px. Default: 560 */
-  width?: number
-  /** Rendered height of the container in px. Default: 340 */
-  height?: number
+  /** Natural pixel width of the child tree (before zoom). Default: 860 */
+  naturalWidth?: number
 }
 
 export function RetentionFanCrop({
   scale = 0.65,
-  width = 560,
-  height = 340,
+  naturalWidth = 860,
 }: RetentionFanCropProps) {
   return (
-    <div
-      aria-hidden="true"
-      className="overflow-hidden rounded-[var(--radius-card)]"
-      style={{ width, height }}
-    >
-      <div
-        className="pointer-events-none select-none"
-        style={{
-          transform: `scale(${scale})`,
-          transformOrigin: "top left",
-          width: `${Math.round(width / scale)}px`,
-          height: `${Math.round(height / scale)}px`,
-        }}
-      >
-        <RetentionCurve
-          data={previewRetention}
-          asymptoticDay={previewAsymptoticDay}
-        />
-      </div>
-    </div>
+    <PreviewFrame scale={scale} naturalWidth={naturalWidth}>
+      <RetentionCurve
+        data={previewRetention}
+        asymptoticDay={previewAsymptoticDay}
+      />
+    </PreviewFrame>
   )
 }

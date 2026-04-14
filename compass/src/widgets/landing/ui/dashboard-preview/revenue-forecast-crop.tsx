@@ -3,47 +3,31 @@
 /**
  * revenue-forecast-crop.tsx
  * Landing page preview: Revenue forecast with downside/base/upside bands.
- * Wraps <RevenueForecast> in a scale-shrunk, interaction-disabled container.
+ * Wraps <RevenueForecast> in a layout-aware, interaction-disabled container.
  * Source widget: @/widgets/charts/ui/revenue-forecast
  */
 
 import { RevenueForecast } from "@/widgets/charts/ui/revenue-forecast"
+import { PreviewFrame } from "./_frame"
 import { previewRevenueForecast, previewRevenueForecastMeta } from "./preview-fixtures"
 
 type RevenueForecastCropProps = {
-  /** CSS transform scale applied to the inner widget. Default: 0.65 */
+  /** CSS zoom applied to the child tree. Default: 0.65 */
   scale?: number
-  /** Rendered width of the container in px. Default: 560 */
-  width?: number
-  /** Rendered height of the container in px. Default: 300 */
-  height?: number
+  /** Natural pixel width of the child tree (before zoom). Default: 860 */
+  naturalWidth?: number
 }
 
 export function RevenueForecastCrop({
   scale = 0.65,
-  width = 560,
-  height = 300,
+  naturalWidth = 860,
 }: RevenueForecastCropProps) {
   return (
-    <div
-      aria-hidden="true"
-      className="overflow-hidden rounded-[var(--radius-card)]"
-      style={{ width, height }}
-    >
-      <div
-        className="pointer-events-none select-none"
-        style={{
-          transform: `scale(${scale})`,
-          transformOrigin: "top left",
-          width: `${Math.round(width / scale)}px`,
-          height: `${Math.round(height / scale)}px`,
-        }}
-      >
-        <RevenueForecast
-          data={previewRevenueForecast}
-          meta={previewRevenueForecastMeta}
-        />
-      </div>
-    </div>
+    <PreviewFrame scale={scale} naturalWidth={naturalWidth}>
+      <RevenueForecast
+        data={previewRevenueForecast}
+        meta={previewRevenueForecastMeta}
+      />
+    </PreviewFrame>
   )
 }

@@ -30,7 +30,7 @@ const VIEWPORT = { once: true, margin: "-80px" } as const
 function CropFrame({ children }: { children: React.ReactNode }) {
   return (
     <div className="overflow-x-auto">
-      <div className="rounded-[var(--radius-card)] border border-[var(--border-default)] overflow-hidden shadow-[0_2px_12px_0_rgba(0,0,0,0.06)] inline-block">
+      <div className="rounded-[var(--radius-card)] border border-[var(--border-default)] shadow-[0_2px_12px_0_rgba(0,0,0,0.06)] inline-block">
         {children}
       </div>
     </div>

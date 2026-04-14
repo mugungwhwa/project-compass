@@ -78,7 +78,7 @@ export function ProductProofSection() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6, ease: EASE_OUT_QUART, delay: 0.15 }}
         >
-          <div className="rounded-[var(--radius-card)] border border-[var(--border-default)] overflow-hidden shadow-[0_2px_12px_0_rgba(0,0,0,0.06)]">
+          <div className="rounded-[var(--radius-card)] border border-[var(--border-default)] shadow-[0_2px_12px_0_rgba(0,0,0,0.06)]">
             <div className="overflow-x-auto">
               <PaybackCrop />
             </div>
