@@ -530,9 +530,9 @@ export const mockMarketContext: MarketContext = {
 }
 
 export const mockTitleHealth: TitleHealthRow[] = [
-  { gameId: "match-league", label: "Match League", genre: "Puzzle",   signal: "invest", confidence: 82, paybackD: 47,  roas: 142, retentionTrend: "improving" },
-  { gameId: "hero-saga",    label: "Hero Saga",    genre: "RPG",      signal: "hold",   confidence: 71, paybackD: 68,  roas: 108, retentionTrend: "stable"    },
-  { gameId: "farm-empire",  label: "Farm Empire",  genre: "Casual",   signal: "invest", confidence: 91, paybackD: 32,  roas: 185, retentionTrend: "improving" },
+  { gameId: "match-league",  label: "Match League",  genre: "Puzzle",        signal: "invest", confidence: 82, paybackD: 47,  roas: 142, retentionTrend: "improving" },
+  { gameId: "weaving-fairy", label: "Weaving Fairy", genre: "Casual",        signal: "hold",   confidence: 65, paybackD: 72,  roas: 96,  retentionTrend: "stable"    },
+  { gameId: "dig-infinity",  label: "Dig Infinity",  genre: "Arcade / Idle", signal: "reduce", confidence: 58, paybackD: 104, roas: 72,  retentionTrend: "declining" },
 ]
 
 export const mockCapitalWaterfall: CapitalWaterfallStep[] = [
@@ -562,8 +562,8 @@ export const mockPortfolioSignal = {
     en: "Portfolio MOIC 1.27x, 2 of 3 titles signaling scale investment",
   },
   recommendation: {
-    ko: "UA 예산 20% 증액 후 Farm Empire에 집중 배분하세요 — 가장 높은 자본 효율",
-    en: "Increase UA budget 20% and focus on Farm Empire — highest capital efficiency",
+    ko: "UA 예산을 Match League에 집중 배분하세요 — 3개 타이틀 중 유일하게 투자 확대 시그널",
+    en: "Focus UA budget on Match League — only title signaling scale investment",
   },
   payback: { p10: 35, p50: 44, p90: 58 },
 }
@@ -728,7 +728,7 @@ type GameVariant = {
     status: SignalStatus
     confidence: number
     reason: { ko: string; en: string }
-    factors: typeof mockSignal.factors
+    factors: ReadonlyArray<{ status: "ok" | "warn" | "fail"; text: { ko: string; en: string } }>
     payback: { p10: number; p50: number; p90: number }
     nextAction: { ko: string; en: string }
   }
@@ -767,68 +767,68 @@ const GAME_VARIANTS: Record<string, GameVariant> = {
       capitalEff: { value: mockCapitalKPIs.capitalEff.value },
     },
   },
-  "hero-saga": {
+  "weaving-fairy": {
     signal: {
       status: "hold",
-      confidence: 71,
+      confidence: 65,
       reason: {
-        ko: "D7 리텐션 장르 평균 수준, CPI 상승 추세 지속",
-        en: "D7 retention at genre average, CPI trend rising",
+        ko: "D1 리텐션 안정적이나 ARPDAU 목표 미달, 수익화 실험 필요",
+        en: "D1 retention stable but ARPDAU below target — monetization work needed",
       },
       factors: [
-        { status: "warn" as const, text: { ko: "리텐션 장르 벤치마크 P50 수준", en: "Retention at P50 genre benchmark" } },
-        { status: "warn" as const, text: { ko: "페이백 D68 예상 (목표: D60)", en: "Payback projected D68 (target: D60)" } },
-        { status: "warn" as const, text: { ko: "CPI 지속 상승 추세", en: "CPI continuously rising trend" } },
-        { status: "ok" as const, text: { ko: "실험 속도: 월 2.1건 성공", en: "Experiment velocity: 2.1 wins/month" } },
+        { status: "ok" as const,   text: { ko: "D1 리텐션 안정적 (36%)",          en: "D1 retention stable (36%)" } },
+        { status: "warn" as const, text: { ko: "ARPDAU 목표 대비 -15%",            en: "ARPDAU 15% below target" } },
+        { status: "warn" as const, text: { ko: "페이백 D72 예상 (목표: D60)",      en: "Payback projected D72 (target: D60)" } },
+        { status: "ok" as const,   text: { ko: "실험 속도: 월 2.3건",              en: "Experiment velocity: 2.3/month" } },
       ],
-      payback: { p10: 55, p50: 68, p90: 95 },
+      payback: { p10: 58, p50: 72, p90: 98 },
       nextAction: {
-        ko: "CPI 최적화 캠페인을 우선 실행하세요",
-        en: "Prioritize CPI optimization campaign",
+        ko: "수익화 실험을 우선 진행하고, 결과 후 UA 증액 여부를 재평가하세요",
+        en: "Run monetization experiments first; reassess UA scale after results",
       },
     },
     financialHealth: {
-      burnTolerance: { value: 5.8, max: 18, color: "#D97706" },
-      netRunway: { value: 9.2, max: 18, color: "#D97706" },
-      paybackDay: 68,
+      burnTolerance: { value: 8.4, max: 18, color: "#D97706" },
+      netRunway: { value: 11.8, max: 18, color: "#D97706" },
+      paybackDay: 72,
     },
     cashRunway: {
-      initialCash: 920,
+      initialCash: 1180,
     },
     capitalKPIs: {
-      capitalEff: { value: 0.88 },
+      capitalEff: { value: 0.92 },
     },
   },
-  "farm-empire": {
+  "dig-infinity": {
     signal: {
-      status: "invest",
-      confidence: 91,
+      status: "reduce",
+      confidence: 58,
       reason: {
-        ko: "D7 리텐션 장르 상위 10%, 페이백 빠르게 단축 중",
-        en: "D7 retention in genre top 10%, payback rapidly decreasing",
+        ko: "CPI 급등, 리텐션 장르 하위 25%, 페이백 회수 경로 불투명",
+        en: "CPI spike, retention bottom 25%, payback recovery unclear",
       },
       factors: [
-        { status: "ok" as const, text: { ko: "리텐션 장르 벤치마크 P90 이상", en: "Retention above P90 genre benchmark" } },
-        { status: "ok" as const, text: { ko: "페이백 D34 예상 (목표: D60)", en: "Payback projected D34 (target: D60)" } },
-        { status: "ok" as const, text: { ko: "CPI 전월 대비 -5% 하락", en: "CPI down -5% MoM" } },
-        { status: "ok" as const, text: { ko: "실험 속도: 월 5.1건 성공", en: "Experiment velocity: 5.1 wins/month" } },
+        { status: "fail" as const, text: { ko: "D7 리텐션 장르 P10 수준",          en: "D7 retention at P10 benchmark" } },
+        { status: "fail" as const, text: { ko: "페이백 D104 예상 (목표: D60)",     en: "Payback projected D104 (target: D60)" } },
+        { status: "warn" as const, text: { ko: "CPI 전월 대비 +18% 급등",           en: "CPI +18% MoM spike" } },
+        { status: "warn" as const, text: { ko: "ARPDAU 하락 추세 지속",             en: "ARPDAU continuously declining" } },
       ],
-      payback: { p10: 28, p50: 34, p90: 45 },
+      payback: { p10: 85, p50: 104, p90: 145 },
       nextAction: {
-        ko: "UA 예산을 30% 증액하여 성장을 가속하세요",
-        en: "Increase UA budget by 30% to accelerate growth",
+        ko: "UA 예산을 50% 축소하고 리텐션 개선 실험에 자본을 재배분하세요",
+        en: "Cut UA spend 50% and reallocate to retention improvement experiments",
       },
     },
     financialHealth: {
-      burnTolerance: { value: 14.1, max: 18, color: "#16A34A" },
-      netRunway: { value: 22.3, max: 24, color: "#16A34A" },
-      paybackDay: 34,
+      burnTolerance: { value: 3.2, max: 18, color: "#DC2626" },
+      netRunway: { value: 4.8, max: 18, color: "#DC2626" },
+      paybackDay: 104,
     },
     cashRunway: {
-      initialCash: 3200,
+      initialCash: 580,
     },
     capitalKPIs: {
-      capitalEff: { value: 1.87 },
+      capitalEff: { value: 0.54 },
     },
   },
 }

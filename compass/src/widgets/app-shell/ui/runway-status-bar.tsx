@@ -31,9 +31,9 @@ import type { TranslationKey } from "@/shared/i18n/dictionary"
 import { cn } from "@/shared/lib"
 
 const GAMES = [
-  { id: "puzzle-quest",   label: "Match League",   genre: "Puzzle" },
-  { id: "hero-saga",      label: "Hero Saga",      genre: "RPG"    },
-  { id: "farm-empire",    label: "Farm Empire",    genre: "Casual" },
+  { id: "match-league",   label: "Match League",   genre: "Puzzle"         },
+  { id: "weaving-fairy",  label: "Weaving Fairy",  genre: "Casual"         },
+  { id: "dig-infinity",   label: "Dig Infinity",   genre: "Arcade / Idle"  },
 ]
 
 const COHORT_MONTHS = ["2026-01", "2026-02", "2026-03", "2026-04"]
