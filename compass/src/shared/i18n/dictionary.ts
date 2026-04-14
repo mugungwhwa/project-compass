@@ -469,9 +469,33 @@ const dictionary = {
   "landing.v2.compare.compass":       { ko: "Compass는 더 투자해야 하는지 말해줍니다",
                                         en: "Compass tells you whether to invest more" },
 
+  // --- Landing Page v2: Section 6 callouts ---
+  "landing.v2.chart1.callout":        { ko: "매출 CAGR: +34% · ROAS(D30): 1.14×",
+                                        en: "Revenue CAGR: +34% · ROAS(D30): 1.14×" },
+  "landing.v2.chart2.callout":        { ko: "D7: 5.8% · 장르 P50: 4.2% · 상위 25%",
+                                        en: "D7: 5.8% · Genre P50: 4.2% · Top 25% in genre" },
+  "landing.v2.chart3.callout":        { ko: "기본: $2.1M · 상향: $2.8M · 하향: $1.5M",
+                                        en: "Base: $2.1M · Upside: $2.8M · Downside: $1.5M" },
+
+  // --- Landing Page v2: Section 7 (Copilot) blockquote ---
+  "landing.v2.explain.blockquote":    { ko: "페이백이 왜 D42에서 D47로 이동했나요?",
+                                        en: "Why did payback drift from D42 to D47?" },
+
+  // --- Landing Page v2: Section 8 subhead ---
+  "landing.v2.experiment.subhead":    { ko: "Compass는 실험 결과를 ΔLTV, 회수 기간 변동, 자본 효율성으로 번역합니다.",
+                                        en: "Compass translates experiment results into ΔLTV, payback movement, and capital efficiency — so winning tests become funding decisions." },
+
+  // --- Landing Page v2: Section 9 subhead ---
+  "landing.v2.compare.subhead":       { ko: "분석 도구는 무슨 일이 있었는지 말해줍니다. Compass는 다음에 무엇을 해야 할지 말해줍니다.",
+                                        en: "Analytics tells you what happened. Compass tells you what to do next." },
+
   // --- Landing Page v2: Section 10 (CTA) ---
+  "landing.v2.cta.heading":          { ko: "데이터가 아닌 판단을 확인하세요.",
+                                        en: "See the decision, not just the data." },
   "landing.v2.cta.primaryButton":     { ko: "데모 예약하기",  en: "Book a demo" },
   "landing.v2.cta.secondaryButton":   { ko: "제품 둘러보기",  en: "See the product" },
+  "landing.v2.cta.secondary":         { ko: "또는 라이브 데모 탐색하기 →",
+                                        en: "Or explore the live demo →" },
   "landing.v2.cta.description":       { ko: "Compass가 게임 데이터를 투자 판단으로 어떻게 전환하는지 보세요.",
                                         en: "See how Compass turns game data into investment decisions." },
 
