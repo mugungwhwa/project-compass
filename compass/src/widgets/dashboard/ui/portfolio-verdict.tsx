@@ -25,13 +25,19 @@ type TitleSignal = {
   signal: SignalStatus
 }
 
+type BilingualText = { ko: string; en: string }
+
 type PortfolioVerdictProps = {
   status: SignalStatus
   confidence: number
-  reason: { ko: string; en: string }
-  recommendation: { ko: string; en: string }
+  reason: BilingualText
+  recommendation: BilingualText
+  /** Short rationale shown below the recommendation. */
+  rationale?: BilingualText
   payback: { p10: number; p50: number; p90: number }
   titles: TitleSignal[]
+  /** Monetary impact badge — e.g. +$1.2M ARR. Shown on the right of the status row. */
+  impact?: { value: BilingualText; direction: "positive" | "negative" | "neutral" }
 }
 
 const SIGNAL_DOT_COLOR: Record<SignalStatus, string> = {
@@ -51,13 +57,31 @@ export function PortfolioVerdict({
   confidence,
   reason,
   recommendation,
+  rationale,
   payback,
   titles,
+  impact,
 }: PortfolioVerdictProps) {
   const { locale } = useLocale()
 
-  const impactDirection: "positive" | "negative" | "neutral" =
-    status === "invest" ? "positive" : status === "reduce" ? "negative" : "neutral"
+  // Impact badge: prefer monetary delta (ΔARR/ΔLTV) over scalar confidence.
+  // Fallback keeps backward-compat rendering when no monetary impact is supplied.
+  const resolvedImpact = impact
+    ? { value: impact.value[locale], direction: impact.direction }
+    : {
+        value: `${confidence}% ${locale === "en" ? "confidence" : "신뢰도"}`,
+        direction: (status === "invest"
+          ? "positive"
+          : status === "reduce"
+          ? "negative"
+          : "neutral") as "positive" | "negative" | "neutral",
+      }
+
+  // When monetary impact is shown on the badge, push confidence% into the
+  // ConfidenceBar label so the certainty signal is never lost.
+  const confidenceNote = impact
+    ? `${locale === "en" ? "Certainty" : "신뢰도"} ${confidence}%`
+    : undefined
 
   const evidence = (
     <div className="flex flex-col gap-3">
@@ -99,12 +123,16 @@ export function PortfolioVerdict({
           p90: payback.p90,
           unit: locale === "ko" ? "일" : "d",
           label: locale === "en" ? "Payback window (days)" : "페이백 구간 (일)",
+          note: confidenceNote,
+          target: 60,
+          contextLine:
+            locale === "en"
+              ? `${Math.max(60 - payback.p50, 0)}d faster than target · within runway`
+              : `목표보다 ${Math.max(60 - payback.p50, 0)}일 빠름 · 런웨이 내`,
         }}
         recommendation={recommendation[locale]}
-        impact={{
-          value: `${confidence}% ${locale === "en" ? "confidence" : "신뢰도"}`,
-          direction: impactDirection,
-        }}
+        rationale={rationale?.[locale]}
+        impact={resolvedImpact}
         evidence={evidence}
         evidenceLabel={locale === "en" ? "Show titles" : "타이틀 보기"}
       />

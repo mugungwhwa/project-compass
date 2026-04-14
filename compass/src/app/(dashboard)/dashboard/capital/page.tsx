@@ -4,7 +4,7 @@ import { PageHeader } from "@/widgets/sidebar"
 import { KPICards } from "@/widgets/dashboard"
 import { ScenarioSimulator, BudgetDonut, RevenueForecast, RunwayFanChart } from "@/widgets/charts"
 import { useLocale } from "@/shared/i18n"
-import { mockCapitalKPIs, mockBudgetAllocation, mockRevenueProjection, mockCashRunway } from "@/shared/api"
+import { mockCapitalKPIs, mockBudgetAllocation, mockRevenueProjection, mockRevenueProjectionMeta, mockCashRunway } from "@/shared/api"
 import { PageTransition, FadeInUp } from "@/shared/ui/page-transition"
 import { useGridLayout } from "@/shared/hooks"
 import { motion } from "framer-motion"
@@ -44,7 +44,7 @@ export default function CapitalConsolePage() {
           <BudgetDonut data={mockBudgetAllocation} expanded={capGrid.expandedId === "chart-0"} onToggle={() => capGrid.toggle("chart-0")} />
         </motion.div>
         <motion.div layout className={`${capGrid.getClassName("chart-1", 1)} h-full`} transition={GRID_TRANSITION}>
-          <RevenueForecast data={mockRevenueProjection} title={t("chart.revenueProj")} expanded={capGrid.expandedId === "chart-1"} onToggle={() => capGrid.toggle("chart-1")} />
+          <RevenueForecast data={mockRevenueProjection} meta={mockRevenueProjectionMeta} title={t("chart.revenueProj")} expanded={capGrid.expandedId === "chart-1"} onToggle={() => capGrid.toggle("chart-1")} />
         </motion.div>
       </FadeInUp>
     </PageTransition>

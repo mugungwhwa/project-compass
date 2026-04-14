@@ -42,9 +42,22 @@ function resolveInfoKey(labelKey: TranslationKey, override?: TranslationKey): Tr
 export function KPICards({ items, basisKey }: KPICardsProps) {
   const { t } = useLocale()
 
+  // Responsive grid rules (static strings so Tailwind JIT picks them up):
+  //   ≤4 items  → one row at md+ (single-game view: unchanged)
+  //   5–6 items → 2 cols on sm, 3 cols on md, 6 cols only at xl (portfolio view)
+  // Prevents digit crunch in the "hero number" on mid-width screens where a
+  // 6-way split collapses to <160px per card.
+  const n = items.length
+  const gridClass =
+    n <= 2 ? "grid-cols-2" :
+    n === 3 ? "grid-cols-2 md:grid-cols-3" :
+    n === 4 ? "grid-cols-2 md:grid-cols-4" :
+    n === 5 ? "grid-cols-2 md:grid-cols-3 xl:grid-cols-5" :
+              "grid-cols-2 md:grid-cols-3 xl:grid-cols-6" // 6+
+
   return (
     <div>
-      <div className="grid gap-5" style={{ gridTemplateColumns: `repeat(${items.length}, 1fr)` }}>
+      <div className={cn("grid gap-5", gridClass)}>
         {items.map((item) => {
           const isPositive = item.trend > 0
           const isNegative = item.trend < 0

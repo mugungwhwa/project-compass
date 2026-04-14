@@ -52,8 +52,10 @@ export default function ExecutiveOverviewPage() {
             confidence={mockPortfolioSignal.confidence}
             reason={mockPortfolioSignal.reason}
             recommendation={mockPortfolioSignal.recommendation}
+            rationale={mockPortfolioSignal.rationale}
             payback={mockPortfolioSignal.payback}
             titles={mockTitleHealth.map((t) => ({ label: t.label, signal: t.signal }))}
+            impact={mockPortfolioSignal.impact}
           />
         ) : (
           <HeroVerdict
@@ -63,6 +65,7 @@ export default function ExecutiveOverviewPage() {
             payback={gameData.signal.payback}
             nextAction={gameData.signal.nextAction}
             reason={gameData.signal.reason}
+            impact={gameData.signal.impact}
           />
         )}
       </FadeInUp>
@@ -159,6 +162,7 @@ export default function ExecutiveOverviewPage() {
         >
           <RevenueForecast
             data={gameData.charts.revenueForecast}
+            meta={gameData.charts.revenueForecastMeta}
             expanded={forecastGrid.expandedId === "chart-0"}
             onToggle={() => forecastGrid.toggle("chart-0")}
           />

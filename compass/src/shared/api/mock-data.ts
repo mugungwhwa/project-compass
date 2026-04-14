@@ -79,9 +79,31 @@ export type BudgetSlice = {
 
 export type RevenueForecastPoint = {
   month: string
+  // Posterior (현재 기준선) — D{asOf} 관측치가 반영된 사후분포
   p10: number
   p50: number
   p90: number
+  // Prior (장르 벤치마크만으로 만든 사전분포) — 내부 데이터 없을 때의 불확실성
+  priorP10: number
+  priorP50: number
+  priorP90: number
+}
+
+export type ExperimentForkScenario = {
+  id: string                           // e.g. "E-247"
+  name: { ko: string; en: string }
+  deltaLtvPerUser: number              // $ per user
+  annualRevenueLift: number            // $K annualized lift on P50
+  shipMonth: string                    // month label at which fork begins
+  // Per-month P50 override starting at shipMonth. Pre-ship months are null.
+  forkP50: Array<number | null>
+}
+
+export type RevenueForecastMeta = {
+  asOfDay: number                      // observation day (e.g. 14)
+  cohortCount: number                  // number of cohorts informing posterior
+  priorNarrowingPct: number            // how much posterior band narrowed vs prior (e.g. 42 → 42%)
+  experiments: ExperimentForkScenario[]
 }
 
 export type ScenarioResult = {
@@ -126,8 +148,12 @@ export const mockSignal = {
   ],
   payback: { p10: 38, p50: 47, p90: 62 },
   nextAction: {
-    ko: "Reward Calendar 실험을 50%로 확대하세요 — 예상 효과: 연 $120K 매출 증가",
-    en: "Scale Reward Calendar experiment to 50% — Expected: +$120K annualized revenue",
+    ko: "Reward Calendar 실험을 50% 트래픽으로 확대 — 예상 효과: 연 +$120K 매출",
+    en: "Scale Reward Calendar experiment to 50% traffic — Expected: +$120K annualized revenue",
+  },
+  impact: {
+    value: { ko: "+$120K ARR", en: "+$120K ARR" },
+    direction: "positive" as const,
   },
 }
 
@@ -215,18 +241,19 @@ export const mockKPIs = {
 }
 
 export const mockRevenueForecast: RevenueForecastPoint[] = [
-  { month: "Jan", p10: 95,  p50: 105, p90: 115 },
-  { month: "Feb", p10: 90,  p50: 110, p90: 130 },
-  { month: "Mar", p10: 88,  p50: 118, p90: 148 },
-  { month: "Apr", p10: 82,  p50: 120, p90: 165 },
-  { month: "May", p10: 75,  p50: 135, p90: 200 },
-  { month: "Jun", p10: 65,  p50: 148, p90: 240 },
-  { month: "Jul", p10: 58,  p50: 155, p90: 270 },
-  { month: "Aug", p10: 50,  p50: 162, p90: 300 },
-  { month: "Sep", p10: 45,  p50: 168, p90: 325 },
-  { month: "Oct", p10: 40,  p50: 175, p90: 350 },
-  { month: "Nov", p10: 35,  p50: 180, p90: 370 },
-  { month: "Dec", p10: 32,  p50: 185, p90: 390 },
+  // Posterior (D14 관측 반영) + Prior (장르 벤치마크, ~1.8x 더 넓음, 약간 아래 센터)
+  { month: "Jan", p10: 95,  p50: 105, p90: 115,  priorP10: 70,  priorP50: 100, priorP90: 135 },
+  { month: "Feb", p10: 90,  p50: 110, p90: 130,  priorP10: 60,  priorP50: 102, priorP90: 160 },
+  { month: "Mar", p10: 88,  p50: 118, p90: 148,  priorP10: 52,  priorP50: 105, priorP90: 185 },
+  { month: "Apr", p10: 82,  p50: 120, p90: 165,  priorP10: 45,  priorP50: 108, priorP90: 215 },
+  { month: "May", p10: 75,  p50: 135, p90: 200,  priorP10: 38,  priorP50: 112, priorP90: 260 },
+  { month: "Jun", p10: 65,  p50: 148, p90: 240,  priorP10: 32,  priorP50: 118, priorP90: 310 },
+  { month: "Jul", p10: 58,  p50: 155, p90: 270,  priorP10: 26,  priorP50: 122, priorP90: 360 },
+  { month: "Aug", p10: 50,  p50: 162, p90: 300,  priorP10: 22,  priorP50: 128, priorP90: 410 },
+  { month: "Sep", p10: 45,  p50: 168, p90: 325,  priorP10: 18,  priorP50: 132, priorP90: 455 },
+  { month: "Oct", p10: 40,  p50: 175, p90: 350,  priorP10: 15,  priorP50: 138, priorP90: 495 },
+  { month: "Nov", p10: 35,  p50: 180, p90: 370,  priorP10: 12,  priorP50: 142, priorP90: 525 },
+  { month: "Dec", p10: 32,  p50: 185, p90: 390,  priorP10: 10,  priorP50: 145, priorP90: 555 },
 ]
 
 export const mockMarketKPIs = {
@@ -558,14 +585,22 @@ export const mockPortfolioSignal = {
   status: "invest" as SignalStatus,
   confidence: 78,
   reason: {
-    ko: "포트폴리오 전체 MOIC 1.27x, 3개 타이틀 중 2개가 투자 확대 시그널",
-    en: "Portfolio MOIC 1.27x, 2 of 3 titles signaling scale investment",
+    ko: "포트폴리오 MOIC 1.27x — Match League 1개 타이틀이 투자 시그널을 견인 (나머지 2개는 유지·축소)",
+    en: "Portfolio MOIC 1.27x — driven by Match League (1 of 3 titles signaling scale; 2 others hold/reduce)",
   },
   recommendation: {
-    ko: "UA 예산을 Match League에 집중 배분하세요 — 3개 타이틀 중 유일하게 투자 확대 시그널",
-    en: "Focus UA budget on Match League — only title signaling scale investment",
+    ko: "Match League에 UA 예산 60%를 재배분하세요 (+$45K/월)",
+    en: "Reallocate 60% of UA budget (+$45K/mo) to Match League",
+  },
+  rationale: {
+    ko: "포트폴리오 유일의 투자 확대 시그널",
+    en: "Only title signaling scale investment",
   },
   payback: { p10: 35, p50: 44, p90: 58 },
+  impact: {
+    value: { ko: "+$1.2M ARR 예상", en: "+$1.2M ARR projected" },
+    direction: "positive" as const,
+  },
 }
 
 export const mockDataFreshness: DataFreshness = {
@@ -592,10 +627,17 @@ export const mockBudgetAllocation: BudgetSlice[] = [
 ]
 
 export const mockRevenueProjection: RevenueForecastPoint[] = [
-  { month: "2026",  p10: 800,  p50: 1200, p90: 1600 },
-  { month: "2027",  p10: 1200, p50: 2200, p90: 3400 },
-  { month: "2028",  p10: 1800, p50: 3800, p90: 6200 },
+  { month: "2026",  p10: 800,  p50: 1200, p90: 1600,  priorP10: 500,  priorP50: 1100, priorP90: 2000 },
+  { month: "2027",  p10: 1200, p50: 2200, p90: 3400,  priorP10: 700,  priorP50: 2000, priorP90: 4400 },
+  { month: "2028",  p10: 1800, p50: 3800, p90: 6200,  priorP10: 900,  priorP50: 3500, priorP90: 8800 },
 ]
+
+export const mockRevenueProjectionMeta: RevenueForecastMeta = {
+  asOfDay: 14,
+  cohortCount: 15,
+  priorNarrowingPct: 45,
+  experiments: [],   // 3-year strategic view — no single experiment fork
+}
 
 // --- Capital Runway Monte Carlo Fan (Module 5 signature chart) ---
 
@@ -731,6 +773,7 @@ type GameVariant = {
     factors: ReadonlyArray<{ status: "ok" | "warn" | "fail"; text: { ko: string; en: string } }>
     payback: { p10: number; p50: number; p90: number }
     nextAction: { ko: string; en: string }
+    impact: { value: { ko: string; en: string }; direction: "positive" | "negative" | "neutral" }
   }
   financialHealth: {
     burnTolerance: typeof mockFinancialHealth.burnTolerance
@@ -754,8 +797,8 @@ const GAME_VARIANTS: Record<string, GameVariant> = {
       status: "invest",
       confidence: 78,
       reason: {
-        ko: "포트폴리오 전체 MOIC 1.27x, 3개 타이틀 중 2개가 투자 확대 시그널",
-        en: "Portfolio MOIC 1.27x, 2 of 3 titles signaling scale investment",
+        ko: "포트폴리오 MOIC 1.27x — Match League 1개 타이틀이 투자 시그널을 견인 (나머지 2개는 유지·축소)",
+        en: "Portfolio MOIC 1.27x — driven by Match League (1 of 3 titles signaling scale; 2 others hold/reduce)",
       },
       factors: [
         { status: "ok" as const,   text: { ko: "Match League 성장 가속 중",          en: "Match League accelerating growth" } },
@@ -764,8 +807,12 @@ const GAME_VARIANTS: Record<string, GameVariant> = {
       ],
       payback: { p10: 35, p50: 44, p90: 58 },
       nextAction: {
-        ko: "UA 예산을 Match League에 집중 배분하세요 — 유일한 투자 확대 시그널",
-        en: "Focus UA budget on Match League — only scale-investment signal",
+        ko: "Match League에 UA 예산 60%를 재배분하세요 (+$45K/월) — 포트폴리오 유일의 투자 확대 시그널",
+        en: "Reallocate 60% of UA budget (+$45K/mo) to Match League — the only title signaling scale",
+      },
+      impact: {
+        value: { ko: "+$1.2M ARR 예상", en: "+$1.2M ARR projected" },
+        direction: "positive" as const,
       },
     },
     financialHealth: {
@@ -788,6 +835,7 @@ const GAME_VARIANTS: Record<string, GameVariant> = {
       factors: mockSignal.factors,
       payback: mockSignal.payback,
       nextAction: mockSignal.nextAction,
+      impact: mockSignal.impact,
     },
     financialHealth: {
       burnTolerance: mockFinancialHealth.burnTolerance,
@@ -817,8 +865,12 @@ const GAME_VARIANTS: Record<string, GameVariant> = {
       ],
       payback: { p10: 58, p50: 72, p90: 98 },
       nextAction: {
-        ko: "수익화 실험을 우선 진행하고, 결과 후 UA 증액 여부를 재평가하세요",
-        en: "Run monetization experiments first; reassess UA scale after results",
+        ko: "ARPDAU 실험 3건을 4주 내 집행 후 UA 증액 재평가 — 현 예산 동결",
+        en: "Run 3 ARPDAU experiments within 4 weeks before reassessing UA scale — budget frozen",
+      },
+      impact: {
+        value: { ko: "실험 결과 대기", en: "Awaiting exp. results" },
+        direction: "neutral" as const,
       },
     },
     financialHealth: {
@@ -849,8 +901,12 @@ const GAME_VARIANTS: Record<string, GameVariant> = {
       ],
       payback: { p10: 85, p50: 104, p90: 145 },
       nextAction: {
-        ko: "UA 예산을 50% 축소하고 리텐션 개선 실험에 자본을 재배분하세요",
-        en: "Cut UA spend 50% and reallocate to retention improvement experiments",
+        ko: "UA 예산 50%(월 $30K) 축소 → 리텐션 실험에 재배분, 분기 말 축소 유지/해제 재평가",
+        en: "Cut UA spend 50% (-$30K/mo) → reallocate to retention experiments, reassess at quarter-end",
+      },
+      impact: {
+        value: { ko: "+$180K 자본 보존", en: "+$180K capital preserved" },
+        direction: "positive" as const,
       },
     },
     financialHealth: {
@@ -913,6 +969,7 @@ type GameChartData = {
   }
   revenueVsInvest: RevenueVsInvestPoint[]
   revenueForecast: RevenueForecastPoint[]
+  revenueForecastMeta: RevenueForecastMeta
   capitalWaterfall: CapitalWaterfallStep[]
 }
 
@@ -938,19 +995,43 @@ const GAME_CHART_DATA: Record<string, GameChartData> = {
       { month: "Apr",  revenue: 132, uaSpend: 60,  cumRevenue: 897,  cumUaSpend: 708,  roas: 127 },
     ],
     revenueForecast: [
-      { month: "Jan", p10: 95,  p50: 105, p90: 115 },
-      { month: "Feb", p10: 90,  p50: 110, p90: 130 },
-      { month: "Mar", p10: 88,  p50: 118, p90: 148 },
-      { month: "Apr", p10: 82,  p50: 120, p90: 165 },
-      { month: "May", p10: 75,  p50: 135, p90: 200 },
-      { month: "Jun", p10: 65,  p50: 148, p90: 240 },
-      { month: "Jul", p10: 58,  p50: 155, p90: 270 },
-      { month: "Aug", p10: 50,  p50: 162, p90: 300 },
-      { month: "Sep", p10: 45,  p50: 168, p90: 325 },
-      { month: "Oct", p10: 40,  p50: 175, p90: 350 },
-      { month: "Nov", p10: 35,  p50: 180, p90: 370 },
-      { month: "Dec", p10: 32,  p50: 185, p90: 390 },
+      { month: "Jan", p10: 95,  p50: 105, p90: 115,  priorP10: 70,  priorP50: 100, priorP90: 135 },
+      { month: "Feb", p10: 90,  p50: 110, p90: 130,  priorP10: 60,  priorP50: 102, priorP90: 160 },
+      { month: "Mar", p10: 88,  p50: 118, p90: 148,  priorP10: 52,  priorP50: 105, priorP90: 185 },
+      { month: "Apr", p10: 82,  p50: 120, p90: 165,  priorP10: 45,  priorP50: 108, priorP90: 215 },
+      { month: "May", p10: 75,  p50: 135, p90: 200,  priorP10: 38,  priorP50: 112, priorP90: 260 },
+      { month: "Jun", p10: 65,  p50: 148, p90: 240,  priorP10: 32,  priorP50: 118, priorP90: 310 },
+      { month: "Jul", p10: 58,  p50: 155, p90: 270,  priorP10: 26,  priorP50: 122, priorP90: 360 },
+      { month: "Aug", p10: 50,  p50: 162, p90: 300,  priorP10: 22,  priorP50: 128, priorP90: 410 },
+      { month: "Sep", p10: 45,  p50: 168, p90: 325,  priorP10: 18,  priorP50: 132, priorP90: 455 },
+      { month: "Oct", p10: 40,  p50: 175, p90: 350,  priorP10: 15,  priorP50: 138, priorP90: 495 },
+      { month: "Nov", p10: 35,  p50: 180, p90: 370,  priorP10: 12,  priorP50: 142, priorP90: 525 },
+      { month: "Dec", p10: 32,  p50: 185, p90: 390,  priorP10: 10,  priorP50: 145, priorP90: 555 },
     ],
+    revenueForecastMeta: {
+      asOfDay: 14,
+      cohortCount: 6,
+      priorNarrowingPct: 42,
+      experiments: [
+        {
+          id: "E-247",
+          name: { ko: "리워드 캘린더 50% 확대", en: "Reward Calendar — scale to 50%" },
+          deltaLtvPerUser: 1.8,
+          annualRevenueLift: 180,
+          shipMonth: "Jun",
+          // Baseline P50: Jun 148 → Dec 185. Fork lifts by ~$180K annualized.
+          forkP50: [null, null, null, null, null, 168, 182, 195, 208, 218, 225, 232],
+        },
+        {
+          id: "E-301",
+          name: { ko: "온보딩 튜토리얼 v4", en: "Onboarding Tutorial v4" },
+          deltaLtvPerUser: 1.2,
+          annualRevenueLift: 110,
+          shipMonth: "Aug",
+          forkP50: [null, null, null, null, null, null, null, 178, 190, 202, 212, 220],
+        },
+      ],
+    },
     capitalWaterfall: [
       { label: { ko: "초기 자본",   en: "Initial Capital" }, value: 2400, type: "inflow"  },
       { label: { ko: "추가 투입",   en: "Follow-on" },       value: 600,  type: "inflow"  },
@@ -983,19 +1064,42 @@ const GAME_CHART_DATA: Record<string, GameChartData> = {
       { month: "Apr",  revenue: 58, uaSpend: 50, cumRevenue: 423, cumUaSpend: 463, roas: 91 },
     ],
     revenueForecast: [
-      { month: "Jan", p10: 42, p50: 50,  p90: 60 },
-      { month: "Feb", p10: 43, p50: 52,  p90: 65 },
-      { month: "Mar", p10: 44, p50: 55,  p90: 70 },
-      { month: "Apr", p10: 42, p50: 58,  p90: 78 },
-      { month: "May", p10: 40, p50: 60,  p90: 85 },
-      { month: "Jun", p10: 38, p50: 62,  p90: 92 },
-      { month: "Jul", p10: 35, p50: 65,  p90: 100 },
-      { month: "Aug", p10: 32, p50: 66,  p90: 108 },
-      { month: "Sep", p10: 30, p50: 68,  p90: 115 },
-      { month: "Oct", p10: 28, p50: 70,  p90: 122 },
-      { month: "Nov", p10: 25, p50: 70,  p90: 128 },
-      { month: "Dec", p10: 22, p50: 72,  p90: 135 },
+      { month: "Jan", p10: 42, p50: 50,  p90: 60,  priorP10: 30, priorP50: 52, priorP90: 78  },
+      { month: "Feb", p10: 43, p50: 52,  p90: 65,  priorP10: 28, priorP50: 54, priorP90: 88  },
+      { month: "Mar", p10: 44, p50: 55,  p90: 70,  priorP10: 26, priorP50: 56, priorP90: 98  },
+      { month: "Apr", p10: 42, p50: 58,  p90: 78,  priorP10: 24, priorP50: 58, priorP90: 110 },
+      { month: "May", p10: 40, p50: 60,  p90: 85,  priorP10: 22, priorP50: 60, priorP90: 122 },
+      { month: "Jun", p10: 38, p50: 62,  p90: 92,  priorP10: 20, priorP50: 62, priorP90: 135 },
+      { month: "Jul", p10: 35, p50: 65,  p90: 100, priorP10: 18, priorP50: 65, priorP90: 148 },
+      { month: "Aug", p10: 32, p50: 66,  p90: 108, priorP10: 15, priorP50: 67, priorP90: 162 },
+      { month: "Sep", p10: 30, p50: 68,  p90: 115, priorP10: 13, priorP50: 68, priorP90: 175 },
+      { month: "Oct", p10: 28, p50: 70,  p90: 122, priorP10: 11, priorP50: 70, priorP90: 188 },
+      { month: "Nov", p10: 25, p50: 70,  p90: 128, priorP10: 9,  priorP50: 72, priorP90: 200 },
+      { month: "Dec", p10: 22, p50: 72,  p90: 135, priorP10: 7,  priorP50: 74, priorP90: 215 },
     ],
+    revenueForecastMeta: {
+      asOfDay: 14,
+      cohortCount: 4,
+      priorNarrowingPct: 38,
+      experiments: [
+        {
+          id: "W-104",
+          name: { ko: "길드 채팅 베타", en: "Guild Chat Beta" },
+          deltaLtvPerUser: 0.9,
+          annualRevenueLift: 68,
+          shipMonth: "Jul",
+          forkP50: [null, null, null, null, null, null, 72, 76, 80, 83, 86, 88],
+        },
+        {
+          id: "W-152",
+          name: { ko: "시즌 패스 도입", en: "Season Pass Launch" },
+          deltaLtvPerUser: 1.4,
+          annualRevenueLift: 92,
+          shipMonth: "Sep",
+          forkP50: [null, null, null, null, null, null, null, null, 82, 92, 100, 108],
+        },
+      ],
+    },
     capitalWaterfall: [
       { label: { ko: "초기 자본",   en: "Initial Capital" }, value: 1180, type: "inflow"  },
       { label: { ko: "추가 투입",   en: "Follow-on" },       value: 200,  type: "inflow"  },
@@ -1028,19 +1132,43 @@ const GAME_CHART_DATA: Record<string, GameChartData> = {
       { month: "Apr",  revenue: 36, uaSpend: 82, cumRevenue: 449, cumUaSpend: 700, roas: 64 },
     ],
     revenueForecast: [
-      { month: "Jan", p10: 32, p50: 42,  p90: 52 },
-      { month: "Feb", p10: 28, p50: 40,  p90: 55 },
-      { month: "Mar", p10: 25, p50: 38,  p90: 56 },
-      { month: "Apr", p10: 22, p50: 36,  p90: 58 },
-      { month: "May", p10: 18, p50: 34,  p90: 60 },
-      { month: "Jun", p10: 15, p50: 32,  p90: 62 },
-      { month: "Jul", p10: 12, p50: 30,  p90: 65 },
-      { month: "Aug", p10: 10, p50: 28,  p90: 68 },
-      { month: "Sep", p10: 8,  p50: 26,  p90: 70 },
-      { month: "Oct", p10: 6,  p50: 25,  p90: 72 },
-      { month: "Nov", p10: 5,  p50: 24,  p90: 75 },
-      { month: "Dec", p10: 4,  p50: 22,  p90: 78 },
+      { month: "Jan", p10: 32, p50: 42,  p90: 52, priorP10: 22, priorP50: 48, priorP90: 72  },
+      { month: "Feb", p10: 28, p50: 40,  p90: 55, priorP10: 18, priorP50: 48, priorP90: 82  },
+      { month: "Mar", p10: 25, p50: 38,  p90: 56, priorP10: 15, priorP50: 48, priorP90: 90  },
+      { month: "Apr", p10: 22, p50: 36,  p90: 58, priorP10: 12, priorP50: 48, priorP90: 100 },
+      { month: "May", p10: 18, p50: 34,  p90: 60, priorP10: 10, priorP50: 48, priorP90: 110 },
+      { month: "Jun", p10: 15, p50: 32,  p90: 62, priorP10: 8,  priorP50: 48, priorP90: 118 },
+      { month: "Jul", p10: 12, p50: 30,  p90: 65, priorP10: 6,  priorP50: 48, priorP90: 128 },
+      { month: "Aug", p10: 10, p50: 28,  p90: 68, priorP10: 5,  priorP50: 48, priorP90: 138 },
+      { month: "Sep", p10: 8,  p50: 26,  p90: 70, priorP10: 4,  priorP50: 48, priorP90: 148 },
+      { month: "Oct", p10: 6,  p50: 25,  p90: 72, priorP10: 3,  priorP50: 48, priorP90: 158 },
+      { month: "Nov", p10: 5,  p50: 24,  p90: 75, priorP10: 3,  priorP50: 48, priorP90: 168 },
+      { month: "Dec", p10: 4,  p50: 22,  p90: 78, priorP10: 2,  priorP50: 48, priorP90: 178 },
     ],
+    revenueForecastMeta: {
+      asOfDay: 14,
+      cohortCount: 5,
+      priorNarrowingPct: 56,
+      experiments: [
+        {
+          id: "D-089",
+          name: { ko: "수익화 패치 v2", en: "Monetization Patch v2" },
+          deltaLtvPerUser: 1.1,
+          annualRevenueLift: 55,
+          shipMonth: "May",
+          // Fork attempts to arrest the decline — lift grows modestly
+          forkP50: [null, null, null, null, 38, 40, 41, 42, 42, 43, 44, 45],
+        },
+        {
+          id: "D-112",
+          name: { ko: "CPI 최적화 캠페인", en: "CPI Optimization Campaign" },
+          deltaLtvPerUser: 0.6,
+          annualRevenueLift: 32,
+          shipMonth: "Jul",
+          forkP50: [null, null, null, null, null, null, 34, 36, 37, 38, 39, 40],
+        },
+      ],
+    },
     capitalWaterfall: [
       { label: { ko: "초기 자본",   en: "Initial Capital" }, value: 580,  type: "inflow"  },
       { label: { ko: "추가 투입",   en: "Follow-on" },       value: 0,    type: "inflow"  },
@@ -1073,19 +1201,42 @@ const GAME_CHART_DATA: Record<string, GameChartData> = {
       { month: "Apr",  revenue: 226, uaSpend: 192, cumRevenue: 1769, cumUaSpend: 1871, roas: 95  },
     ],
     revenueForecast: [
-      { month: "Jan", p10: 169, p50: 197, p90: 227 },
-      { month: "Feb", p10: 161, p50: 202, p90: 250 },
-      { month: "Mar", p10: 157, p50: 211, p90: 274 },
-      { month: "Apr", p10: 146, p50: 214, p90: 301 },
-      { month: "May", p10: 133, p50: 229, p90: 345 },
-      { month: "Jun", p10: 118, p50: 242, p90: 394 },
-      { month: "Jul", p10: 105, p50: 250, p90: 435 },
-      { month: "Aug", p10: 92,  p50: 256, p90: 476 },
-      { month: "Sep", p10: 83,  p50: 262, p90: 510 },
-      { month: "Oct", p10: 74,  p50: 270, p90: 544 },
-      { month: "Nov", p10: 65,  p50: 274, p90: 573 },
-      { month: "Dec", p10: 58,  p50: 279, p90: 603 },
+      { month: "Jan", p10: 169, p50: 197, p90: 227, priorP10: 122, priorP50: 200, priorP90: 285 },
+      { month: "Feb", p10: 161, p50: 202, p90: 250, priorP10: 106, priorP50: 204, priorP90: 330 },
+      { month: "Mar", p10: 157, p50: 211, p90: 274, priorP10: 93,  priorP50: 209, priorP90: 373 },
+      { month: "Apr", p10: 146, p50: 214, p90: 301, priorP10: 81,  priorP50: 214, priorP90: 425 },
+      { month: "May", p10: 133, p50: 229, p90: 345, priorP10: 70,  priorP50: 220, priorP90: 492 },
+      { month: "Jun", p10: 118, p50: 242, p90: 394, priorP10: 60,  priorP50: 228, priorP90: 563 },
+      { month: "Jul", p10: 105, p50: 250, p90: 435, priorP10: 50,  priorP50: 235, priorP90: 636 },
+      { month: "Aug", p10: 92,  p50: 256, p90: 476, priorP10: 42,  priorP50: 243, priorP90: 710 },
+      { month: "Sep", p10: 83,  p50: 262, p90: 510, priorP10: 35,  priorP50: 248, priorP90: 778 },
+      { month: "Oct", p10: 74,  p50: 270, p90: 544, priorP10: 29,  priorP50: 256, priorP90: 841 },
+      { month: "Nov", p10: 65,  p50: 274, p90: 573, priorP10: 24,  priorP50: 262, priorP90: 893 },
+      { month: "Dec", p10: 58,  p50: 279, p90: 603, priorP10: 19,  priorP50: 267, priorP90: 948 },
     ],
+    revenueForecastMeta: {
+      asOfDay: 14,
+      cohortCount: 15,
+      priorNarrowingPct: 48,
+      experiments: [
+        {
+          id: "P-001",
+          name: { ko: "포트폴리오 전체: 상위 3개 실험", en: "Portfolio: top 3 experiments combined" },
+          deltaLtvPerUser: 1.4,
+          annualRevenueLift: 303,
+          shipMonth: "Jun",
+          forkP50: [null, null, null, null, null, 265, 282, 302, 320, 335, 348, 360],
+        },
+        {
+          id: "E-247",
+          name: { ko: "Match League — 리워드 캘린더", en: "Match League — Reward Calendar" },
+          deltaLtvPerUser: 1.8,
+          annualRevenueLift: 180,
+          shipMonth: "Jun",
+          forkP50: [null, null, null, null, null, 255, 270, 285, 300, 312, 322, 330],
+        },
+      ],
+    },
     capitalWaterfall: [
       { label: { ko: "초기 자본",   en: "Initial Capital" }, value: 4160, type: "inflow"  },
       { label: { ko: "추가 투입",   en: "Follow-on" },       value: 800,  type: "inflow"  },

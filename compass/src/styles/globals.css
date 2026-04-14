@@ -177,9 +177,9 @@ button:disabled,
 /* ---------- Base body ---------- */
 /*
   Font fallback chain:
-  Geist Sans (Latin) → Noto Sans KR (Korean) → system-ui → default sans
+  Geist Sans (Latin) → Pretendard (Korean, via CDN) → system-ui → default sans
   Browsers pick glyphs per-character from this list, so Latin characters
-  render in Geist while Korean characters automatically use Noto Sans KR.
+  render in Geist while Korean characters automatically use Pretendard.
 */
 body {
   font-family:

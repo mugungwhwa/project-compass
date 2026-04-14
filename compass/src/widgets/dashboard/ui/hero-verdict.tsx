@@ -39,6 +39,8 @@ type HeroVerdictProps = {
   nextAction?: BilingualText
   /** Optional one-line situation summary. Falls back to a generic sentence if omitted. */
   reason?: BilingualText
+  /** Monetary impact badge — e.g. +$120K ARR. Moves confidence% into the ConfidenceBar label. */
+  impact?: { value: BilingualText; direction: "positive" | "negative" | "neutral" }
 }
 
 const factorIcon = {
@@ -54,6 +56,7 @@ export function HeroVerdict({
   payback,
   nextAction,
   reason,
+  impact,
 }: HeroVerdictProps) {
   const { locale } = useLocale()
 
@@ -69,9 +72,24 @@ export function HeroVerdict({
     nextAction?.[locale] ??
     (locale === "en" ? "Review posture and confirm next action." : "현재 포지션을 검토하고 다음 액션을 확정하세요.")
 
-  // Impact: the scalar posterior certainty, shown as a mono badge on the right.
-  const impactDirection: "positive" | "negative" | "neutral" =
-    status === "invest" ? "positive" : status === "reduce" ? "negative" : "neutral"
+  // Impact: prefer monetary delta (ΔARR/ΔLTV). Fallback to scalar confidence
+  // for backward compatibility when no impact is supplied by the caller.
+  const resolvedImpact = impact
+    ? { value: impact.value[locale], direction: impact.direction }
+    : {
+        value: `${confidence}% ${locale === "en" ? "confidence" : "신뢰도"}`,
+        direction: (status === "invest"
+          ? "positive"
+          : status === "reduce"
+          ? "negative"
+          : "neutral") as "positive" | "negative" | "neutral",
+      }
+
+  // When monetary impact is shown on the badge, put certainty% into the
+  // ConfidenceBar label so the posterior signal is never hidden.
+  const confidenceNote = impact
+    ? `${locale === "en" ? "Certainty" : "신뢰도"} ${confidence}%`
+    : undefined
 
   const evidence = (
     <div className="flex flex-col gap-3">
@@ -103,12 +121,10 @@ export function HeroVerdict({
           p90: payback.p90,
           unit: locale === "ko" ? "일" : "d",
           label: locale === "en" ? "Payback window (days)" : "페이백 구간 (일)",
+          note: confidenceNote,
         }}
         recommendation={recommendationText}
-        impact={{
-          value: `${confidence}% ${locale === "en" ? "confidence" : "신뢰도"}`,
-          direction: impactDirection,
-        }}
+        impact={resolvedImpact}
         evidence={evidence}
         evidenceLabel={locale === "en" ? "Show factors" : "요인 보기"}
       />

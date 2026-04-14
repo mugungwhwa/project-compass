@@ -87,7 +87,18 @@ export const REVENUE_DECOMP_COLORS = {
 } as const
 
 export const REVENUE_FORECAST_COLORS = {
-  line:       PALETTE.revenue,
+  // Posterior (사후 확률 — 데이터 반영된 현재 예측) — green
+  line:       PALETTE.positive,           // #00875A
+  postFill:   "rgba(0, 135, 90, 0.14)",
+  postLine:   PALETTE.positive,
+  // Prior (사전 확률 — 장르 벤치마크, 넓은 불확실성) — red
+  prior:      PALETTE.risk,               // #C9372C
+  priorFill:  "rgba(201, 55, 44, 0.08)",
+  priorLine:  "rgba(201, 55, 44, 0.55)",
+  // Experiment fork — blue dashed (Compass brand blue for "if we ship this")
+  experiment: PALETTE.revenue,            // #5B9AFF
+  forkMark:   PALETTE.legendGray,         // #64748B, vertical ship-line
+  // Shared neutrals
   grid:       PALETTE.grid,
   axis:       PALETTE.axis,
   border:     PALETTE.border,

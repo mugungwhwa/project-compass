@@ -40,7 +40,7 @@ export function InfoHint({ content, ariaLabel, size = 14, side = "top" }: InfoHi
             side={side}
             sideOffset={6}
             collisionPadding={12}
-            className="z-50 max-w-xs rounded-md border border-[var(--border)] bg-[var(--bg-0)] px-3 py-2 text-[12px] leading-relaxed text-[var(--fg-1)] shadow-lg"
+            className="z-50 max-w-sm whitespace-pre-line rounded-md border border-[var(--border)] bg-[var(--bg-0)] px-3 py-2 text-[12px] leading-relaxed text-[var(--fg-1)] shadow-lg"
             style={{ animationDuration: "160ms" }}
           >
             {content}
