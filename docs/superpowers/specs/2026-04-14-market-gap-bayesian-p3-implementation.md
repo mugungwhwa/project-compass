@@ -19,16 +19,77 @@
 
 ---
 
-## 2. Layer 1 — Operator UI 변경 (즉시 가시 부분)
+## 2. 비즈니스 언어 오버레이 — Alpha/Beta 프레임
 
-### 2.1 용어 치환표
+**핵심 재정의**: Market Gap 페이지는 통계 페이지가 아니라 **hedge-fund 스타일의 edge(Alpha) 시각화**.
 
-| 현재 | 변경 후 (ko) | 변경 후 (en) |
+이 프레임이 P3 전체에 관통하는 의미 레이어이며, Layer 1의 operator 언어가 Alpha 모델로 정제될 때 비로소 operator가 "무엇을 위해 이걸 보는지"가 명료해짐.
+
+### 2.1 3-layer 용어 매핑
+
+| 통계 레이어 (원전) | 금융 Alpha 모델 | Compass operator 언어 (Layer 1) | 의사결정 의미 |
+|---|---|---|---|
+| **Prior (사전 확률)** | Benchmark / Consensus / Beta | **시장 컨센서스** (장르 median) | "시장이 이 장르에 매기는 최소 기대치" |
+| **Posterior (사후 확률)** | Actuals / Realized Return | **우리 실적** (코호트 실측) | "우리가 증명한 실제 성과" |
+| **Gap** | **Alpha / Outperformance / Beat** | **Alpha** (초과 성과) | **시장이 우리에게 매기는 edge — 추가 자본 투입 정당화 신호** |
+| **Cyclic Update (loop)** | Alpha Persistence | **Alpha 지속성 검증** | "우리 edge가 시간 지나도 유지되는가" |
+
+### 2.2 Compass 제품 포지셔닝에의 함의
+
+이 프레임이 CLAUDE.md §12 "Capital Allocation Intelligence" 카테고리 정의와 정확히 정합:
+
+- Sensor Tower / AppMagic → **시장 데이터** 제공자
+- AppsFlyer / Adjust → **Attribution** 제공자
+- Statsig / Firebase → **실험 데이터** 제공자
+- **Compass → Alpha 측정 + 지속성 검증 인프라** ← 이 포지션이 P3에서 드러남
+
+Market Gap 페이지는 Compass의 "alpha 측정 인프라" 정체성을 **한 화면으로 증명**하는 역할.
+
+### 2.3 Signal-type별 Alpha 해석
+
+| 게임 / 판정 | Statistical 표현 | Alpha 해석 | 의사결정 |
+|---|---|---|---|
+| Match League (INVEST) | Posterior > Prior (+31%) | **Positive Alpha** 생성 | 자본 투입 정당화 — "edge가 있으므로 확대" |
+| Weaving Fairy (HOLD) | Posterior ≈ Prior | **Alpha ≈ 0** (at-market) | 유지 관찰 — "시장 평균 수준, 새 edge 신호 대기" |
+| Dig Infinity (REDUCE) | Posterior < Prior (-19%) | **Negative Alpha** | 포지션 축소 — "시장 기대치도 미달, 자본 회수" |
+
+→ 현재 페이지의 `MarketHeroVerdict`가 보여주는 Invest/Hold/Reduce 판정이 Alpha의 부호와 정확히 대응. Alpha 프레임을 드러내면 판정 로직이 자명해짐.
+
+### 2.4 Cyclic Update의 비즈니스 의미
+
+Round 4에서 확정된 "순환 구조" 진단이 Alpha 프레임에서는 **Alpha Persistence Check**로 재정의:
+
+```
+초기 Beta (장르 prior)
+  ↓ + 첫 cohort 데이터
+첫 Alpha 측정 (posterior 1)
+  ↓ posterior 1이 다음 Beta로 흡수 (시장이 우리 증명을 반영)
+두 번째 Alpha 측정 (posterior 2)
+  ↓ posterior 2가 다음 Beta로 흡수
+...
+Alpha가 시간 지나도 생성되면 → Persistent Alpha (진짜 edge)
+Alpha가 소멸하면 → Transient Alpha (운/노이즈)
+```
+
+Layer 2 Methodology 패널은 따라서 "베이지안 belief update"가 아니라 **"Alpha Persistence 검증 — 베이지안 모델 기반"** 으로 포지셔닝. 분석가 audience에게 훨씬 설득력 있음.
+
+---
+
+## 3. Layer 1 — Operator UI 변경 (즉시 가시 부분)
+
+§2 Alpha 프레임이 아래 용어·색상·인사이트 결정에 일관 적용됨.
+
+### 3.1 용어 치환표 (Alpha 프레임 통합)
+
+| 현재 (통계 용어) | 변경 후 (ko, operator + Alpha) | 변경 후 (en) |
 |---|---|---|
-| Prior vs Posterior · 베이지안 추론 (차트 제목) | **장르의 기대치 vs 우리의 증명** | Genre Expectation vs Our Evidence |
-| Prior (장르 벤치마크) | **장르의 기대치 (D{n} cohort 평균)** | Genre Expectation (D{n} cohort avg) |
-| Posterior (우리 데이터) | **우리 프로덕트의 증명 (관측 ±CI)** | Our Product's Evidence (observed ±CI) |
-| (없음) | "장르는 X를 기대했고, 우리는 Y를 증명했다 — 장르 +Z%" 인사이트 한 줄 | "Genre expected X, we proved Y — outperforming by Z%" |
+| Prior vs Posterior · 베이지안 추론 (차트 제목) | **시장 컨센서스 vs 우리 실적 — Alpha 측정** | Market Consensus vs Our Actuals — Alpha Check |
+| Prior (장르 벤치마크) | **시장 컨센서스 (장르 median, D{n})** | Market Consensus (genre median, D{n}) |
+| Posterior (우리 데이터) | **우리 실적 (코호트 관측 ±CI)** | Our Actuals (cohort observed ±CI) |
+| (없음) | 인사이트 한 줄: "시장 컨센서스 X, 우리 실적 Y — **Alpha +Z%** (edge 생성 중)" | "Consensus X, Actuals Y — **Alpha +Z%** (edge generating)" |
+| Gap 화살표 | **+Alpha / −Alpha 표시** (부호별 색상) | +Alpha / −Alpha badge |
+
+**참고**: "시장 컨센서스 / 우리 실적" 은 operator가 즉시 이해 가능한 한국어 비즈니스 용어. "Alpha"는 업계 표준 영문 표기 그대로 유지 (한국어 "초과 성과"보다 투자 세계에서 더 정확하고 짧음 — Mike의 다국어 operator target).
 
 ### 2.2 색상 (Revenue Forecast와 정합)
 
@@ -41,23 +102,28 @@
 | 격차 (gap indicator) | **파랑 `#5B9AFF`** | "+31% 우월 / -8% 부족" 화살표 |
 | Operator-friendly arrow | 슬레이트 → 격차 방향에 따라 양/음 | 의사결정 신호 |
 
-### 2.3 Insight 텍스트 (operator 언어)
+### 3.3 Insight 텍스트 (Alpha 프레임)
 
-기존 정적 차트 제목 → 동적 상황 문장으로 변환. 예시:
+기존 정적 차트 제목 → 동적 Alpha 측정 문장으로 변환. Signal-type별(§2.3 표) 어조 차별화:
 
 ```
-Match League (INVEST):
-"D7 retention — 장르는 14.2를 기대했고, 우리는 18.7을 증명했습니다.
- 장르 평균 +31% 우월 — 시장 prior를 넘어서 자체 공급(supply)을 만들어가는 단계."
+Match League (INVEST / Positive Alpha):
+"D7 retention — 시장 컨센서스 14.2, 우리 실적 18.7.
+ Alpha +31% (edge 생성 중) — 시장 평균을 초과하는 자체 성과,
+ 추가 자본 투입 정당화 신호."
 
-Dig Infinity (REDUCE):
-"D7 retention — 장르는 14.2를 기대했고, 우리는 11.5를 측정했습니다.
- 장르 평균 -19% 부족 — 시장이 기대한 minimum도 충족 못함, 출시 가설 재검토 필요."
+Weaving Fairy (HOLD / Alpha ≈ 0):
+"D7 retention — 시장 컨센서스 14.2, 우리 실적 14.8.
+ Alpha +4% (at-market) — 시장 평균 수준, 새 edge 신호 대기."
+
+Dig Infinity (REDUCE / Negative Alpha):
+"D7 retention — 시장 컨센서스 14.2, 우리 실적 11.5.
+ Alpha −19% (edge 부재) — 시장 기대치도 미달, 포지션 축소 신호."
 ```
 
-→ "사전 확률"이 단순 비교가 아닌 **시장이 우리에게 부여한 최소 기대치**라는 의사결정 의미를 부여.
+→ Alpha 부호가 곧 Module 1 HeroVerdict의 Invest/Hold/Reduce 판정과 1:1 대응. 페이지가 자체 정당화되고, 다른 모듈과도 의미 연결.
 
-### 2.4 Layer 1 컴포넌트 변경
+### 3.4 Layer 1 컴포넌트 변경
 
 | 파일 | 변경 |
 |---|---|
@@ -75,18 +141,22 @@ Dig Infinity (REDUCE):
 `info-hint.tsx` 패턴 확장 — ⓘ 클릭 시 단순 텍스트가 아닌 **인터랙티브 패널** 오픈:
 
 ```
-[ⓘ Methodology — 베이지안 추론 보기]
+[ⓘ Methodology — Alpha Persistence 검증 보기]
        ↓ click
 ┌─────────────────────────────────────────────────────────┐
-│  방법론: 베이지안 belief update                           │
+│  방법론: Alpha Persistence (베이지안 모델 기반)           │
 │  ─────────────────────────────────────                   │
 │  [Cyclic Update Timeline Component]                      │
 │  D0 → D7 → D14 → D30 → D60 (slider/scrubber)            │
-│  각 step에서 Prior 밴드가 좁아지며 Posterior로 수렴      │
+│  각 step에서 우리 실적이 시장 컨센서스를 업데이트하며     │
+│  Alpha가 지속되는지 측정. 밴드가 좁아질수록 Alpha 신뢰도↑ │
 │  ─────────────────────────────────────                   │
-│  📚 Compass는 매 cohort 데이터 도착 시 Bayesian          │
-│     posterior update 수행 — 시장 prior가 우리 데이터로   │
-│     누적 학습되는 자산 (CLAUDE.md §4)                    │
+│  📚 Compass는 매 cohort 도착 시 Bayesian posterior       │
+│     update를 수행해 시장 컨센서스(prior)가 우리 실적     │
+│     (posterior)으로 재학습되는 구조. 시간이 지나도 Alpha │
+│     가 지속된다면 = Persistent Alpha (진짜 edge).         │
+│     사라지면 = Transient Alpha (운/노이즈).              │
+│     (CLAUDE.md §4 Bayesian Decision Framework)           │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -191,16 +261,19 @@ Layer 2 (Methodology 패널):
 
 ## 6. 수용 기준 (Acceptance Criteria)
 
-Layer 1:
-- [ ] PriorPosteriorChart 제목·범례·데이터 라벨에 학술 용어 잔존 0
-- [ ] 색상 매핑이 Revenue Forecast의 `REVENUE_FORECAST_COLORS`와 일관 (초록/빨강/파랑)
-- [ ] MarketHero 또는 차트 인사이트에 동적 한 줄 문장 ("장르는 X 기대, 우리 Y 증명, 격차 Z%")
+Layer 1 (Alpha 프레임):
+- [ ] PriorPosteriorChart 제목·범례·데이터 라벨에 학술 용어(Prior/Posterior/베이지안) 잔존 0
+- [ ] 차트 제목과 범례가 "시장 컨센서스 / 우리 실적 / Alpha" 용어 채택
+- [ ] 색상 매핑이 Revenue Forecast의 `REVENUE_FORECAST_COLORS`와 일관 (초록=우리 실적, 빨강=시장 컨센서스, 파랑=Alpha 표시)
+- [ ] MarketHero 또는 차트 인사이트에 동적 Alpha 문장 ("시장 컨센서스 X, 우리 실적 Y — Alpha ±Z%")
+- [ ] Alpha 부호(+/−)가 Module 1 HeroVerdict의 Invest/Hold/Reduce와 1:1 대응 (Positive → Invest, ~0 → Hold, Negative → Reduce)
 - [ ] Operator가 '베이지안'/'Prior'/'Posterior' 단어를 한 번도 보지 않고 페이지 사용 가능
 
-Layer 2:
-- [ ] Methodology 토글 trigger가 페이지에 1개 존재 (ⓘ 또는 "방법론 보기")
-- [ ] Cyclic Update Timeline에서 시간 step 변경 시 Prior 밴드 폭과 Posterior 등장이 시각적으로 명확
-- [ ] D0 → D7 → ... 진행 시 "이전 posterior가 다음 prior에 흡수"되는 화살표/transition 가시화
+Layer 2 (Alpha Persistence 프레임):
+- [ ] Methodology 토글 trigger 텍스트가 "Alpha Persistence 검증 보기" (또는 동등한 Alpha 지속성 표현)
+- [ ] Cyclic Update Timeline에서 시간 step 변경 시 우리 실적 band 폭과 Alpha 재측정이 시각적으로 명확
+- [ ] D0 → D7 → ... 진행 시 "이전 실적이 다음 시장 컨센서스로 흡수"되는 화살표/transition 가시화
+- [ ] 패널 콘텐츠에 "Persistent Alpha vs Transient Alpha" 개념 설명 포함
 - [ ] 패널 콘텐츠가 한국어/영어 모두 작동 (i18n 완비)
 
 통합:
