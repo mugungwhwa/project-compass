@@ -1,15 +1,22 @@
 "use client"
 
+import { motion } from "framer-motion"
 import { useLocale } from "@/shared/i18n"
 import type { MarketContext } from "@/shared/api/mock-data"
 import { TrendingUp, TrendingDown, Minus } from "lucide-react"
+import { ChartHeader } from "@/shared/ui/chart-header"
+import { ExpandButton } from "@/shared/ui/expand-button"
+import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 
 type MarketContextCardProps = {
   data: MarketContext
+  expanded?: boolean
+  onToggle?: () => void
 }
 
-export function MarketContextCard({ data }: MarketContextCardProps) {
+export function MarketContextCard({ data, expanded: externalExpanded, onToggle: externalToggle }: MarketContextCardProps) {
   const { t, locale } = useLocale()
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 280, expanded: externalExpanded, onToggle: externalToggle })
 
   const trendIcon = {
     up:     <TrendingUp  className="h-3.5 w-3.5" style={{ color: "var(--signal-positive)" }} />,
@@ -30,13 +37,19 @@ export function MarketContextCard({ data }: MarketContextCardProps) {
   }
 
   return (
-    <div
-      className="rounded-xl border border-[var(--border)] p-6 card-glow card-premium"
+    <motion.div
+      layout
+      className={`rounded-xl border border-[var(--border)] p-6 card-glow card-premium h-full flex flex-col ${gridClassName}`}
       style={{ boxShadow: "0 4px 24px rgba(91,154,255,0.08)" }}
+      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
       {/* Header */}
-      <h3 className="text-h2 mb-4">{t("market.context")}</h3>
+      <ChartHeader
+        title={t("market.context")}
+        actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
+      />
 
+      <div className="flex-1 flex flex-col" style={{ minHeight: chartHeight }}>
       {/* Rows */}
       <div className="flex flex-col gap-3">
 
@@ -111,6 +124,7 @@ export function MarketContextCard({ data }: MarketContextCardProps) {
           {data.aiSummary[locale]}
         </p>
       </div>
-    </div>
+      </div>
+    </motion.div>
   )
 }

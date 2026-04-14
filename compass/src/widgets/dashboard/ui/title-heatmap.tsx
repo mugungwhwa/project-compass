@@ -1,11 +1,17 @@
 "use client"
 
+import { motion } from "framer-motion"
 import { useLocale } from "@/shared/i18n"
 import type { TitleHealthRow } from "@/shared/api/mock-data"
 import { TrendingUp, TrendingDown, Minus } from "lucide-react"
+import { ChartHeader } from "@/shared/ui/chart-header"
+import { ExpandButton } from "@/shared/ui/expand-button"
+import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 
 type TitleHeatmapProps = {
   titles: TitleHealthRow[]
+  expanded?: boolean
+  onToggle?: () => void
 }
 
 const SIGNAL_BG: Record<TitleHealthRow["signal"], string> = {
@@ -38,18 +44,23 @@ const TREND_COLOR: Record<TitleHealthRow["retentionTrend"], string> = {
   declining: "text-[var(--signal-risk)]",
 }
 
-export function TitleHeatmap({ titles }: TitleHeatmapProps) {
+export function TitleHeatmap({ titles, expanded: externalExpanded, onToggle: externalToggle }: TitleHeatmapProps) {
   const { t } = useLocale()
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 300, expanded: externalExpanded, onToggle: externalToggle })
 
   return (
-    <div
-      className="rounded-xl border border-[var(--border)] p-6 card-glow card-premium"
+    <motion.div
+      layout
+      className={`rounded-xl border border-[var(--border)] p-6 card-glow card-premium h-full flex flex-col ${gridClassName}`}
       style={{ boxShadow: "0 4px 24px rgba(91,154,255,0.08)" }}
+      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
-      <h2 className="text-h2 text-[var(--text-primary)] mb-5">
-        {t("portfolio.titles")}
-      </h2>
+      <ChartHeader
+        title={t("portfolio.titles")}
+        actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
+      />
 
+      <div className="flex-1" style={{ minHeight: chartHeight }}>
       {/* Header row */}
       <div className="grid grid-cols-[1fr_auto_auto_auto_auto_auto] gap-x-6 px-1 mb-2">
         <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
@@ -124,6 +135,7 @@ export function TitleHeatmap({ titles }: TitleHeatmapProps) {
           )
         })}
       </div>
-    </div>
+      </div>
+    </motion.div>
   )
 }

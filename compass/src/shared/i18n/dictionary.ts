@@ -260,9 +260,13 @@ const dictionary = {
 
   // --- Overview 2.0: Capital Waterfall ---
   "chart.capitalWaterfall":{ ko: "자본 흐름",                 en: "Capital Waterfall" },
-  "chart.jcurvePosition":  { ko: "J-curve 현재 위치",         en: "J-curve Position" },
-  "info.capitalWaterfall": { ko: "VC J-curve 관점: 초기 자본 투입부터 누적 회수까지의 자본 흐름을 보여줍니다.",
-                             en: "VC J-curve view: capital flow from initial investment through cumulative recovery." },
+  "info.capitalWaterfall": { ko: "자본 흐름 분해: 단계별 유입·지출과 누적 포지션을 함께 보여줍니다.",
+                             en: "Capital flow breakdown: per-step inflow/outflow and cumulative position." },
+  "chart.legend.inflow":   { ko: "획득",                      en: "Inflow" },
+  "chart.legend.outflow":  { ko: "사용",                      en: "Outflow" },
+  "chart.legend.netPos":   { ko: "순 포지션(+)",              en: "Net (+)" },
+  "chart.legend.netNeg":   { ko: "순 포지션(−)",              en: "Net (−)" },
+  "chart.legend.running":  { ko: "누적 추이",                 en: "Cumulative" },
 
   // --- Overview 2.0: Data Freshness ---
   "data.freshness":        { ko: "데이터 품질",               en: "Data Quality" },

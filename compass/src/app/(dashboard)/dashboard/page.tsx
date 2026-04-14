@@ -15,6 +15,10 @@ import {
   mockDataFreshness,
 } from "@/shared/api"
 import { PageTransition, FadeInUp } from "@/shared/ui/page-transition"
+import { useGridLayout } from "@/shared/hooks"
+import { motion } from "framer-motion"
+
+const GRID_TRANSITION = { duration: 0.3, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }
 
 /*
   Module 1 — Executive Overview 2.0
@@ -31,6 +35,9 @@ import { PageTransition, FadeInUp } from "@/shared/ui/page-transition"
 
 export default function ExecutiveOverviewPage() {
   const { t: _t } = useLocale()
+  const heatmapGrid = useGridLayout(2)
+  const waterfallGrid = useGridLayout(2)
+  const forecastGrid = useGridLayout(1)
 
   return (
     <PageTransition>
@@ -67,28 +74,76 @@ export default function ExecutiveOverviewPage() {
 
       {/* 3. Title Heatmap + Market Context (3:2 split) */}
       <FadeInUp className="grid grid-cols-5 gap-6 mb-8">
-        <div className="col-span-3">
-          <TitleHeatmap titles={mockTitleHealth} />
-        </div>
-        <div className="col-span-2">
-          <MarketContextCard data={mockMarketContext} />
-        </div>
+        <motion.div
+          layout
+          className={heatmapGrid.expandedId ? "col-span-5" : "col-span-3"}
+          transition={GRID_TRANSITION}
+        >
+          <TitleHeatmap
+            titles={mockTitleHealth}
+            expanded={heatmapGrid.expandedId === "chart-0"}
+            onToggle={() => heatmapGrid.toggle("chart-0")}
+          />
+        </motion.div>
+        <motion.div
+          layout
+          className={heatmapGrid.expandedId ? "col-span-5" : "col-span-2"}
+          transition={GRID_TRANSITION}
+        >
+          <MarketContextCard
+            data={mockMarketContext}
+            expanded={heatmapGrid.expandedId === "chart-1"}
+            onToggle={() => heatmapGrid.toggle("chart-1")}
+          />
+        </motion.div>
       </FadeInUp>
 
       {/* 4. Capital Waterfall + Revenue vs Investment (2-col) */}
       <FadeInUp className="grid grid-cols-2 gap-6 mb-8">
-        <CapitalWaterfall data={mockCapitalWaterfall} />
-        <RevenueVsInvest data={mockRevenueVsInvest} />
+        <motion.div
+          layout
+          className={`${waterfallGrid.getClassName("chart-0", 0)} h-full`}
+          transition={GRID_TRANSITION}
+        >
+          <CapitalWaterfall
+            data={mockCapitalWaterfall}
+            expanded={waterfallGrid.expandedId === "chart-0"}
+            onToggle={() => waterfallGrid.toggle("chart-0")}
+          />
+        </motion.div>
+        <motion.div
+          layout
+          className={`${waterfallGrid.getClassName("chart-1", 1)} h-full`}
+          transition={GRID_TRANSITION}
+        >
+          <RevenueVsInvest
+            data={mockRevenueVsInvest}
+            expanded={waterfallGrid.expandedId === "chart-1"}
+            onToggle={() => waterfallGrid.toggle("chart-1")}
+          />
+        </motion.div>
       </FadeInUp>
 
       {/* 5. Revenue Forecast + Data Freshness (3:1 split) */}
       <FadeInUp className="grid grid-cols-4 gap-6">
-        <div className="col-span-3">
-          <RevenueForecast data={mockRevenueForecast} />
-        </div>
-        <div className="col-span-1">
+        <motion.div
+          layout
+          className={forecastGrid.expandedId === "chart-0" ? "col-span-4" : "col-span-3"}
+          transition={GRID_TRANSITION}
+        >
+          <RevenueForecast
+            data={mockRevenueForecast}
+            expanded={forecastGrid.expandedId === "chart-0"}
+            onToggle={() => forecastGrid.toggle("chart-0")}
+          />
+        </motion.div>
+        <motion.div
+          layout
+          className={forecastGrid.expandedId === "chart-0" ? "col-span-4" : "col-span-1"}
+          transition={GRID_TRANSITION}
+        >
           <DataFreshnessStrip data={mockDataFreshness} />
-        </div>
+        </motion.div>
       </FadeInUp>
     </PageTransition>
   )
