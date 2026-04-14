@@ -474,6 +474,110 @@ export const mockRippleForecasts: RippleForecast[] = [
   },
 ]
 
+// --- Overview 2.0: Portfolio-level types & data ---
+
+export type MarketContext = {
+  genreGrowth: { value: number; unit: string; trend: "up" | "down" | "stable" }
+  competitiveIntensity: { level: "rising" | "stable" | "falling"; newEntrants: number }
+  cpiEnvironment: { channels: { name: string; momChange: number }[] }
+  seasonality: { phase: string; description: { ko: string; en: string } }
+  aiSummary: { ko: string; en: string }
+}
+
+export type CapitalWaterfallStep = {
+  label: { ko: string; en: string }
+  value: number
+  type: "inflow" | "outflow" | "net"
+}
+
+export type TitleHealthRow = {
+  gameId: string
+  label: string
+  genre: string
+  signal: SignalStatus
+  confidence: number
+  paybackD: number
+  roas: number
+  retentionTrend: "improving" | "stable" | "declining"
+}
+
+export type DataFreshness = {
+  lastSync: { minutesAgo: number }
+  sourceCoverage: { connected: number; total: number; sources: string[] }
+  signalQuality: "high" | "medium" | "low"
+  anomalies: { message: { ko: string; en: string }; severity: "info" | "warn" | "critical" }[]
+  modelConvergence: number
+}
+
+export const mockMarketContext: MarketContext = {
+  genreGrowth: { value: 12, unit: "% YoY", trend: "up" },
+  competitiveIntensity: { level: "rising", newEntrants: 2 },
+  cpiEnvironment: {
+    channels: [
+      { name: "Meta", momChange: 8 },
+      { name: "Google", momChange: 5 },
+      { name: "TikTok", momChange: -2 },
+    ],
+  },
+  seasonality: {
+    phase: "Q2",
+    description: { ko: "Q2 피크 진입 중", en: "Q2 peak entering" },
+  },
+  aiSummary: {
+    ko: "시장은 성장 중이나 UA 비용 상승 주의",
+    en: "Market growing but rising UA costs need attention",
+  },
+}
+
+export const mockTitleHealth: TitleHealthRow[] = [
+  { gameId: "match-league", label: "Match League", genre: "Puzzle",   signal: "invest", confidence: 82, paybackD: 47,  roas: 142, retentionTrend: "improving" },
+  { gameId: "hero-saga",    label: "Hero Saga",    genre: "RPG",      signal: "hold",   confidence: 71, paybackD: 68,  roas: 108, retentionTrend: "stable"    },
+  { gameId: "farm-empire",  label: "Farm Empire",  genre: "Casual",   signal: "invest", confidence: 91, paybackD: 32,  roas: 185, retentionTrend: "improving" },
+]
+
+export const mockCapitalWaterfall: CapitalWaterfallStep[] = [
+  { label: { ko: "초기 자본",   en: "Initial Capital" },   value: 2400, type: "inflow"  },
+  { label: { ko: "추가 투입",   en: "Follow-on" },         value: 600,  type: "inflow"  },
+  { label: { ko: "UA 비용",    en: "UA Spend" },           value: -1420, type: "outflow" },
+  { label: { ko: "개발비",     en: "Dev Cost" },            value: -480,  type: "outflow" },
+  { label: { ko: "운영비",     en: "Ops Cost" },            value: -320,  type: "outflow" },
+  { label: { ko: "누적 매출",   en: "Cum. Revenue" },       value: 1860, type: "inflow"  },
+  { label: { ko: "순 포지션",   en: "Net Position" },       value: 640,  type: "net"     },
+]
+
+export const mockPortfolioKPIs = {
+  blendedRoas:    { value: 148,  unit: "%",   trend: 6.2,  trendLabel: "up" },
+  deployPace:     { value: 82,   unit: "$K/mo", trend: -5, trendLabel: "down" },
+  portfolioMoic:  { value: 1.27, unit: "x",   trend: 0.08, trendLabel: "up" },
+  fundDpi:        { value: 0.62, unit: "x",   trend: 0.05, trendLabel: "up" },
+  expVelocity:    { value: 4.2,  unit: "/mo", trend: 0.8,  trendLabel: "up" },
+  marketTiming:   { value: 72,   unit: "pts", trend: 3,    trendLabel: "up" },
+}
+
+export const mockPortfolioSignal = {
+  status: "invest" as SignalStatus,
+  confidence: 78,
+  reason: {
+    ko: "포트폴리오 전체 MOIC 1.27x, 3개 타이틀 중 2개가 투자 확대 시그널",
+    en: "Portfolio MOIC 1.27x, 2 of 3 titles signaling scale investment",
+  },
+  recommendation: {
+    ko: "UA 예산 20% 증액 후 Farm Empire에 집중 배분하세요 — 가장 높은 자본 효율",
+    en: "Increase UA budget 20% and focus on Farm Empire — highest capital efficiency",
+  },
+  payback: { p10: 35, p50: 44, p90: 58 },
+}
+
+export const mockDataFreshness: DataFreshness = {
+  lastSync: { minutesAgo: 12 },
+  sourceCoverage: { connected: 4, total: 5, sources: ["MMP", "A/B Platform", "Revenue", "Market"] },
+  signalQuality: "high",
+  anomalies: [
+    { message: { ko: "MMP 데이터 24h 지연", en: "MMP data delayed 24h" }, severity: "warn" },
+  ],
+  modelConvergence: 82,
+}
+
 export const mockCapitalKPIs = {
   capitalEff: { value: 1.42, unit: "x",   trend: 0.12, trendLabel: "up" },
   burnMonths: { value: 8.2,  unit: "mo",  trend: 0.5,  trendLabel: "up" },

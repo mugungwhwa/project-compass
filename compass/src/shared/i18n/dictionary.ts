@@ -227,6 +227,52 @@ const dictionary = {
   "login.subtitle":        { ko: "실험에서 투자 결정까지",
                              en: "Experiment-to-Investment Decision OS" },
   "kpi.basis":             { ko: "D7 리텐션, CPI, ARPDAU 기반 추정", en: "Based on D7 retention, CPI, and ARPDAU" },
+  "kpi.basisPortfolio":    { ko: "3개 타이틀 가중평균 기준",         en: "Weighted avg across 3 titles" },
+
+  // --- Overview 2.0: Portfolio KPIs ---
+  "kpi.blendedRoas":       { ko: "통합 ROAS",          en: "Blended ROAS" },
+  "kpi.deployPace":        { ko: "배치 속도",           en: "Deploy Pace" },
+  "kpi.portfolioMoic":     { ko: "포트폴리오 MOIC",     en: "Portfolio MOIC" },
+  "kpi.fundDpi":           { ko: "펀드 DPI",           en: "Fund DPI" },
+  "kpi.expVelocity":       { ko: "실험 속도",           en: "Exp. Velocity" },
+  "kpi.marketTiming":      { ko: "시장 타이밍",         en: "Market Timing" },
+
+  // --- Overview 2.0: Market Context ---
+  "market.context":        { ko: "시장 환경",                en: "Market Context" },
+  "market.genreGrowth":    { ko: "장르 성장률",              en: "Genre Growth" },
+  "market.competitive":    { ko: "경쟁 강도",                en: "Competitive Intensity" },
+  "market.cpiEnv":         { ko: "CPI 환경",                en: "CPI Environment" },
+  "market.season":         { ko: "시즌성",                   en: "Seasonality" },
+  "market.rising":         { ko: "상승",                     en: "Rising" },
+  "market.stable":         { ko: "안정",                     en: "Stable" },
+  "market.falling":        { ko: "하락",                     en: "Falling" },
+  "market.newEntrants":    { ko: "신규 진입",                 en: "new entrants" },
+
+  // --- Overview 2.0: Title Heatmap ---
+  "portfolio.titles":      { ko: "타이틀별 건강도",            en: "Title Health Matrix" },
+  "portfolio.signal":      { ko: "시그널",                    en: "Signal" },
+  "portfolio.paybackCol":  { ko: "회수",                      en: "Payback" },
+  "portfolio.roasCol":     { ko: "ROAS",                     en: "ROAS" },
+  "portfolio.trend":       { ko: "추세",                      en: "Trend" },
+  "portfolio.improving":   { ko: "개선 중",                   en: "Improving" },
+  "portfolio.stableTrend": { ko: "안정",                      en: "Stable" },
+  "portfolio.declining":   { ko: "하락 중",                   en: "Declining" },
+
+  // --- Overview 2.0: Capital Waterfall ---
+  "chart.capitalWaterfall":{ ko: "자본 흐름",                 en: "Capital Waterfall" },
+  "chart.jcurvePosition":  { ko: "J-curve 현재 위치",         en: "J-curve Position" },
+  "info.capitalWaterfall": { ko: "VC J-curve 관점: 초기 자본 투입부터 누적 회수까지의 자본 흐름을 보여줍니다.",
+                             en: "VC J-curve view: capital flow from initial investment through cumulative recovery." },
+
+  // --- Overview 2.0: Data Freshness ---
+  "data.freshness":        { ko: "데이터 품질",               en: "Data Quality" },
+  "data.lastSync":         { ko: "최근 동기화",               en: "Last Sync" },
+  "data.sources":          { ko: "소스 연결",                 en: "Sources" },
+  "data.quality":          { ko: "시그널 품질",               en: "Signal Quality" },
+  "data.convergence":      { ko: "모델 수렴도",               en: "Model Conv." },
+  "data.high":             { ko: "높음",                      en: "High" },
+  "data.medium":           { ko: "보통",                      en: "Medium" },
+  "data.low":              { ko: "낮음",                       en: "Low" },
 } as const
 
 export type TranslationKey = keyof typeof dictionary

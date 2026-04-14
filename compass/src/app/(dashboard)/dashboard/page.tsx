@@ -1,48 +1,48 @@
 "use client"
 
 import { PageHeader } from "@/widgets/sidebar"
-import { HeroVerdict, KPICards } from "@/widgets/dashboard"
-import { RevenueVsInvest, ExperimentRevenue, RevenueForecast } from "@/widgets/charts"
+import { PortfolioVerdict, KPICards, TitleHeatmap, MarketContextCard, DataFreshnessStrip } from "@/widgets/dashboard"
+import { RevenueVsInvest, CapitalWaterfall, RevenueForecast } from "@/widgets/charts"
 import { useLocale } from "@/shared/i18n"
 import {
-  mockSignal,
-  mockKPIs,
-  mockRevenueForecast,
+  mockPortfolioSignal,
+  mockPortfolioKPIs,
+  mockTitleHealth,
+  mockMarketContext,
+  mockCapitalWaterfall,
   mockRevenueVsInvest,
-  mockRevenueDecomp,
-  mockDecompStats,
+  mockRevenueForecast,
+  mockDataFreshness,
 } from "@/shared/api"
 import { PageTransition, FadeInUp } from "@/shared/ui/page-transition"
-import { useGridLayout } from "@/shared/hooks"
-import { motion } from "framer-motion"
-
-const GRID_TRANSITION = { duration: 0.3, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }
 
 /*
-  Module 1 — Executive Overview
-  ------------------------------
-  2026-04-08 refactor: Financial Health and the inline AI Recommendation
-  box have been promoted to app-shell components (RunwayStatusBar +
-  CopilotPanel) and removed from this page. See:
-    docs/Project_Compass_Design_Migration_Log.md §5
-    .omc/specs/2026-04-08-dashboard-shell-refactor.md
+  Module 1 — Executive Overview 2.0
+  -----------------------------------
+  2026-04-13 redesign: Portfolio-level view with 4 agent perspectives:
+    1. Portfolio Verdict (VC/Financial)
+    2. Title Heatmap + Market Context (Market Intelligence)
+    3. Capital Waterfall + Revenue vs Investment (Financial)
+    4. Revenue Forecast + Data Freshness (Supervisory)
+
+  Predecessor: single-game HeroVerdict + 4 KPIs + 2 charts + forecast.
+  See ultraplan session_01BK44doLpw4i9WUEQmBYesc for architecture.
 */
 
 export default function ExecutiveOverviewPage() {
   const { t: _t } = useLocale()
-  const overviewGrid = useGridLayout(2)
 
   return (
     <PageTransition>
-      {/* 1. Hero Verdict — sticky top of fold (DecisionSurface-based) */}
+      {/* 1. Portfolio Verdict — sticky top of fold (DecisionSurface-based) */}
       <FadeInUp>
-        <HeroVerdict
-          status={mockSignal.status}
-          confidence={mockSignal.confidence}
-          factors={mockSignal.factors}
-          payback={mockSignal.payback}
-          nextAction={mockSignal.nextAction}
-          reason={mockSignal.reason}
+        <PortfolioVerdict
+          status={mockPortfolioSignal.status}
+          confidence={mockPortfolioSignal.confidence}
+          reason={mockPortfolioSignal.reason}
+          recommendation={mockPortfolioSignal.recommendation}
+          payback={mockPortfolioSignal.payback}
+          titles={mockTitleHealth.map((t) => ({ label: t.label, signal: t.signal }))}
         />
       </FadeInUp>
 
@@ -50,32 +50,45 @@ export default function ExecutiveOverviewPage() {
         <PageHeader titleKey="exec.title" subtitleKey="exec.subtitle" />
       </FadeInUp>
 
-      {/* 2. KPI Cards */}
+      {/* 2. Portfolio KPI Strip (6 cards) */}
       <FadeInUp className="mb-8">
         <KPICards
           items={[
-            { labelKey: "kpi.roas", value: `${mockKPIs.roas.value}%`, trend: mockKPIs.roas.trend, trendLabel: mockKPIs.roas.trendLabel },
-            { labelKey: "kpi.payback", value: mockKPIs.payback.value, unit: _t("common.days"), trend: mockKPIs.payback.trend, trendLabel: mockKPIs.payback.trendLabel },
-            { labelKey: "kpi.bep", value: `${mockKPIs.bep.value}%`, trend: mockKPIs.bep.trend, trendLabel: mockKPIs.bep.trendLabel },
-            { labelKey: "kpi.burn", value: mockKPIs.burn.value, unit: _t("common.months"), trend: mockKPIs.burn.trend, trendLabel: mockKPIs.burn.trendLabel },
+            { labelKey: "kpi.blendedRoas", value: `${mockPortfolioKPIs.blendedRoas.value}%`, trend: mockPortfolioKPIs.blendedRoas.trend, trendLabel: mockPortfolioKPIs.blendedRoas.trendLabel },
+            { labelKey: "kpi.deployPace", value: mockPortfolioKPIs.deployPace.value, unit: mockPortfolioKPIs.deployPace.unit, trend: mockPortfolioKPIs.deployPace.trend, trendLabel: mockPortfolioKPIs.deployPace.trendLabel },
+            { labelKey: "kpi.portfolioMoic", value: mockPortfolioKPIs.portfolioMoic.value, unit: mockPortfolioKPIs.portfolioMoic.unit, trend: mockPortfolioKPIs.portfolioMoic.trend, trendLabel: mockPortfolioKPIs.portfolioMoic.trendLabel },
+            { labelKey: "kpi.fundDpi", value: mockPortfolioKPIs.fundDpi.value, unit: mockPortfolioKPIs.fundDpi.unit, trend: mockPortfolioKPIs.fundDpi.trend, trendLabel: mockPortfolioKPIs.fundDpi.trendLabel },
+            { labelKey: "kpi.expVelocity", value: mockPortfolioKPIs.expVelocity.value, unit: mockPortfolioKPIs.expVelocity.unit, trend: mockPortfolioKPIs.expVelocity.trend, trendLabel: mockPortfolioKPIs.expVelocity.trendLabel },
+            { labelKey: "kpi.marketTiming", value: mockPortfolioKPIs.marketTiming.value, unit: mockPortfolioKPIs.marketTiming.unit, trend: mockPortfolioKPIs.marketTiming.trend, trendLabel: mockPortfolioKPIs.marketTiming.trendLabel },
           ]}
-          basisKey="kpi.basis"
+          basisKey="kpi.basisPortfolio"
         />
       </FadeInUp>
 
-      {/* 3. Revenue vs Investment + Retention curve */}
-      <FadeInUp className="grid grid-cols-2 gap-6 mb-8">
-        <motion.div layout className={overviewGrid.getClassName("chart-0", 0)} transition={GRID_TRANSITION}>
-          <RevenueVsInvest data={mockRevenueVsInvest} expanded={overviewGrid.expandedId === "chart-0"} onToggle={() => overviewGrid.toggle("chart-0")} />
-        </motion.div>
-        <motion.div layout className={overviewGrid.getClassName("chart-1", 1)} transition={GRID_TRANSITION}>
-          <ExperimentRevenue data={mockRevenueDecomp} stats={mockDecompStats} expanded={overviewGrid.expandedId === "chart-1"} onToggle={() => overviewGrid.toggle("chart-1")} />
-        </motion.div>
+      {/* 3. Title Heatmap + Market Context (3:2 split) */}
+      <FadeInUp className="grid grid-cols-5 gap-6 mb-8">
+        <div className="col-span-3">
+          <TitleHeatmap titles={mockTitleHealth} />
+        </div>
+        <div className="col-span-2">
+          <MarketContextCard data={mockMarketContext} />
+        </div>
       </FadeInUp>
 
-      {/* 4. Revenue forecast — full width since FinancialHealth + AI box moved to app shell */}
-      <FadeInUp>
-        <RevenueForecast data={mockRevenueForecast} />
+      {/* 4. Capital Waterfall + Revenue vs Investment (2-col) */}
+      <FadeInUp className="grid grid-cols-2 gap-6 mb-8">
+        <CapitalWaterfall data={mockCapitalWaterfall} />
+        <RevenueVsInvest data={mockRevenueVsInvest} />
+      </FadeInUp>
+
+      {/* 5. Revenue Forecast + Data Freshness (3:1 split) */}
+      <FadeInUp className="grid grid-cols-4 gap-6">
+        <div className="col-span-3">
+          <RevenueForecast data={mockRevenueForecast} />
+        </div>
+        <div className="col-span-1">
+          <DataFreshnessStrip data={mockDataFreshness} />
+        </div>
       </FadeInUp>
     </PageTransition>
   )
