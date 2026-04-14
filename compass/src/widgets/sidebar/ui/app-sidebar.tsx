@@ -25,7 +25,6 @@ import {
   User,
   Globe,
 } from "lucide-react"
-import { CompassLogo } from "@/shared/ui/compass-logo"
 import { Separator } from "@/shared/ui/separator"
 
 const navItems = [
@@ -47,16 +46,9 @@ export function AppSidebar() {
 
   return (
     <aside className="flex h-full w-[192px] flex-col border-l border-[var(--border-default)] bg-[var(--bg-1)] flex-shrink-0 pb-20">
-      {/* Logo */}
-      <div className="px-3 pt-3 pb-2">
-        <CompassLogo size="sm" />
-      </div>
-
-      <Separator className="mb-2" />
-
-      {/* Decision nav */}
-      <nav className="flex-1 px-2.5">
-        <p className="mb-1 px-2 text-caption uppercase tracking-widest text-[var(--fg-3)]">
+      {/* Decision nav — logo lives in top status bar only */}
+      <nav className="flex-1 px-2.5 pt-4">
+        <p className="mb-1.5 px-2 text-[13px] font-semibold uppercase tracking-wider text-[var(--fg-2)]">
           {t("nav.decision")}
         </p>
         {navItems.map((item) => {
@@ -92,7 +84,7 @@ export function AppSidebar() {
 
         <Separator className="my-2.5" />
 
-        <p className="mb-1 px-2 text-caption uppercase tracking-widest text-[var(--fg-3)]">
+        <p className="mb-1.5 px-2 text-[13px] font-semibold uppercase tracking-wider text-[var(--fg-2)]">
           {t("nav.settings")}
         </p>
         {settingsItems.map((item) => (
