@@ -6,14 +6,22 @@ import type { PriorPosterior } from "@/shared/api/mock-data"
 import { ChartHeader } from "@/shared/ui/chart-header"
 import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
-import { PRIOR_POSTERIOR_COLORS } from "@/shared/config/chart-colors"
+import { MARKET_GAP_PROOF_COLORS } from "@/shared/config/chart-colors"
+import { computeMarketSignal } from "@/shared/lib"
 
-const C = PRIOR_POSTERIOR_COLORS
+const C = MARKET_GAP_PROOF_COLORS
 
 type PriorPosteriorChartProps = {
   data: PriorPosterior[]
 }
 
+/**
+ * Market Gap — Layer 1 "장르 기대치 vs 우리 실적" 차트.
+ *
+ * L0/L1/L2 언어 레이어링 정책(docs/superpowers/specs/2026-04-15-compass-positioning-language-layering-design.md)에 따라
+ * L1(operator UI)에는 Prior/Posterior/Bayesian/Alpha 용어 사용 금지. 장르 기대치 / 우리 실적 /
+ * Invest·Hold·Reduce 신호 언어로 통일. 색상은 Revenue Forecast와 정합 (빨강=장르, 초록=우리, 파랑=격차 accent).
+ */
 export function PriorPosteriorChart({ data }: PriorPosteriorChartProps) {
   const { t } = useLocale()
   const { expanded, toggle, gridClassName } = useChartExpand()
@@ -25,77 +33,93 @@ export function PriorPosteriorChart({ data }: PriorPosteriorChartProps) {
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
       <ChartHeader
-        title={`${t("market.priorPosterior")} · ${t("market.bayesian")}`}
-        subtitle={t("info.priorPosterior")}
+        title={t("market.proof.title")}
+        subtitle={t("market.proof.subtitle")}
+        info={t("market.proof.info")}
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
 
       <div className="space-y-6">
-        {data.map((item, i) => {
-          // Normalize ranges to 0-100% for visualization
+        {data.map((item) => {
+          const { signal, deltaPct, direction } = computeMarketSignal(item.prior.mean, item.posterior.mean)
+          const signalColor =
+            signal === "invest" ? C.signalInvest : signal === "reduce" ? C.signalReduce : C.signalHold
+          const signalLabel = t(
+            signal === "invest" ? "market.signal.invest" : signal === "reduce" ? "market.signal.reduce" : "market.signal.hold",
+          )
+          const gapLabel = t(direction === "above" ? "market.proof.gapAbove" : "market.proof.gapBelow")
+          const deltaDisplay = `${deltaPct > 0 ? "+" : ""}${deltaPct.toFixed(1)}%`
+
           const allValues = [item.prior.ci_low, item.prior.ci_high, item.posterior.ci_low, item.posterior.ci_high]
           const min = Math.min(...allValues) * 0.8
           const max = Math.max(...allValues) * 1.2
           const range = max - min
 
-          const priorLeft = ((item.prior.ci_low - min) / range) * 100
-          const priorWidth = ((item.prior.ci_high - item.prior.ci_low) / range) * 100
-          const priorMean = ((item.prior.mean - min) / range) * 100
+          const genreLeft = ((item.prior.ci_low - min) / range) * 100
+          const genreWidth = ((item.prior.ci_high - item.prior.ci_low) / range) * 100
+          const genreMean = ((item.prior.mean - min) / range) * 100
 
-          const postLeft = ((item.posterior.ci_low - min) / range) * 100
-          const postWidth = ((item.posterior.ci_high - item.posterior.ci_low) / range) * 100
-          const postMean = ((item.posterior.mean - min) / range) * 100
+          const ourLeft = ((item.posterior.ci_low - min) / range) * 100
+          const ourWidth = ((item.posterior.ci_high - item.posterior.ci_low) / range) * 100
+          const ourMean = ((item.posterior.mean - min) / range) * 100
 
           return (
-            <div key={i}>
-              <div className="flex items-baseline justify-between mb-2">
+            <div key={item.metric}>
+              <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
                 <span className="text-sm font-bold text-[var(--fg-0)]">{item.metric}</span>
-                <div className="flex items-center gap-3 text-xs">
-                  <span className="text-[var(--fg-2)] font-mono-num">
-                    Prior: {item.prior.mean.toFixed(2)}
+                <div className="flex items-center gap-3 text-xs font-mono-num">
+                  <span className="text-[var(--fg-2)]">
+                    {t("market.proof.genreLabel")}: {item.prior.mean.toFixed(2)}
                   </span>
-                  <span className="font-bold font-mono-num" style={{ color: C.posterior }}>
-                    → Posterior: {item.posterior.mean.toFixed(2)}
+                  <span className="text-[var(--fg-3)]">→</span>
+                  <span className="font-bold" style={{ color: C.our }}>
+                    {t("market.proof.ourLabel")}: {item.posterior.mean.toFixed(2)}
+                  </span>
+                  <span className="font-bold" style={{ color: C.gapAccent }}>
+                    {gapLabel} {deltaDisplay}
+                  </span>
+                  <span
+                    className="rounded-full px-2 py-0.5 text-[10px] font-bold tracking-wide"
+                    style={{ background: `${signalColor}15`, color: signalColor }}
+                  >
+                    {signalLabel}
                   </span>
                 </div>
               </div>
 
-              {/* Distribution bar visualization */}
               <div className="relative h-12">
-                {/* Prior band (gray, wide) */}
                 <div
                   className="absolute top-1 h-4 rounded-full"
                   style={{
-                    left: `${priorLeft}%`,
-                    width: `${priorWidth}%`,
-                    background: `linear-gradient(90deg, transparent 0%, ${C.priorFill} 50%, transparent 100%)`,
-                    border: `1px solid ${C.priorBorder}`,
+                    left: `${genreLeft}%`,
+                    width: `${genreWidth}%`,
+                    background: C.genreFill,
+                    border: `1px dashed ${C.genreLine}`,
                   }}
                 />
                 <div
                   className="absolute top-0 w-0.5 h-6"
-                  style={{ left: `${priorMean}%`, background: C.prior }}
+                  style={{ left: `${genreMean}%`, background: C.genre }}
                 />
                 <span
                   className="absolute top-7 text-[10px] text-[var(--fg-2)] font-mono-num"
-                  style={{ left: `${priorMean}%`, transform: "translateX(-50%)" }}
+                  style={{ left: `${genreMean}%`, transform: "translateX(-50%)" }}
                 >
-                  Prior
+                  {t("market.proof.genreLabel")}
                 </span>
 
-                {/* Posterior band (blue, narrow) */}
                 <div
                   className="absolute top-1 h-4 rounded-full"
                   style={{
-                    left: `${postLeft}%`,
-                    width: `${postWidth}%`,
-                    background: `linear-gradient(90deg, transparent 0%, ${C.postFill} 50%, transparent 100%)`,
-                    border: `1px solid ${C.postBorder}`,
+                    left: `${ourLeft}%`,
+                    width: `${ourWidth}%`,
+                    background: C.ourFill,
+                    border: `1px solid ${C.our}`,
                   }}
                 />
                 <div
                   className="absolute top-0 w-0.5 h-6"
-                  style={{ left: `${postMean}%`, background: C.posterior }}
+                  style={{ left: `${ourMean}%`, background: C.our }}
                 />
               </div>
 
@@ -110,12 +134,15 @@ export function PriorPosteriorChart({ data }: PriorPosteriorChartProps) {
 
       <div className="mt-4 pt-4 border-t border-[var(--border-default)] flex items-center gap-4 text-xs">
         <div className="flex items-center gap-2">
-          <div className="w-4 h-2 rounded" style={{ background: C.priorFill, border: `1px solid ${C.prior}` }} />
-          <span className="text-[var(--fg-2)]">{t("market.priorLabel")}</span>
+          <div
+            className="w-4 h-2 rounded"
+            style={{ background: C.genreFill, border: `1px dashed ${C.genre}` }}
+          />
+          <span className="text-[var(--fg-2)]">{t("market.proof.genreLabel")}</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-2 rounded" style={{ background: C.postFill, border: `1px solid ${C.postBorder}` }} />
-          <span className="text-[var(--fg-2)]">{t("market.posteriorLabel")}</span>
+          <div className="w-4 h-2 rounded" style={{ background: C.ourFill, border: `1px solid ${C.our}` }} />
+          <span className="text-[var(--fg-2)]">{t("market.proof.ourLabel")}</span>
         </div>
       </div>
     </motion.div>
