@@ -4,3 +4,6 @@
 .superpowers/
 .next/
 Compass_MVP_Revision_Notes_*.md
+
+# Git worktrees (superpowers)
+.worktrees/
