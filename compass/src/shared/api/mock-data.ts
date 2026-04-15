@@ -60,6 +60,10 @@ export type ActionData = {
   description: string
   deltaLtv: number
   confidence: number
+  /** 투입비용 (USD, 천 단위). UA=매체비, Live Ops=제작/운영비, Release=개발비 */
+  cost?: number
+  /** ΔRetention by cohort day (pp) — 액션이 리텐션 곡선의 어느 구간을 움직였는지 */
+  retentionShift?: { d1: number; d3: number; d7: number; d14: number; d30: number }
 }
 
 export type CompetitorData = {
@@ -284,25 +288,70 @@ export const mockSaturation = [
 ]
 
 export const mockActionKPIs = {
-  totalActions: { value: 12,   unit: "",     trend: 3,    trendLabel: "up" },
-  avgImpact:    { value: 1.88, unit: "ΔLTV", trend: 0.32, trendLabel: "up" },
-  bestAction:   { value: 3.4,  unit: "ΔLTV", trend: 0,    trendLabel: "v2.3 Release" },
+  totalActions:      { value: 12,   unit: "",     trend: 3,    trendLabel: "up" },
+  cumulativeDeltaLtv:{ value: 19.1, unit: "ΔLTV", trend: 4.2,  trendLabel: "up" },
+  avgRoi:            { value: 3.2,  unit: "x",    trend: 0.4,  trendLabel: "up" },
+  velocity:          { value: 3.0,  unit: "/mo",  trend: 0.5,  trendLabel: "up" },
+  // legacy fields kept for back-compat
+  avgImpact:         { value: 1.88, unit: "ΔLTV", trend: 0.32, trendLabel: "up" },
+  bestAction:        { value: 3.4,  unit: "ΔLTV", trend: 0,    trendLabel: "v2.3 Release" },
 }
 
 export const mockActions: ActionData[] = [
-  { date: "2026-01-10", type: "ua",       description: "Facebook Lookalike v2",       deltaLtv: 0.9,  confidence: 72 },
-  { date: "2026-01-25", type: "liveops",   description: "Lunar New Year event",        deltaLtv: 1.8,  confidence: 80 },
-  { date: "2026-02-05", type: "release",   description: "v2.1 — UI refresh",           deltaLtv: 1.2,  confidence: 68 },
-  { date: "2026-02-14", type: "ua",       description: "Valentine's push campaign",   deltaLtv: 0.5,  confidence: 55 },
-  { date: "2026-02-28", type: "liveops",   description: "Weekend bonus event",         deltaLtv: 1.5,  confidence: 82 },
-  { date: "2026-03-01", type: "ua",       description: "TikTok campaign launch",      deltaLtv: 1.2,  confidence: 78 },
-  { date: "2026-03-08", type: "liveops",   description: "Spring event start",          deltaLtv: 2.1,  confidence: 85 },
-  { date: "2026-03-15", type: "release",   description: "v2.3 — new dungeon system",   deltaLtv: 3.4,  confidence: 72 },
-  { date: "2026-03-22", type: "ua",       description: "Meta Advantage+ scaling",     deltaLtv: 0.8,  confidence: 65 },
-  { date: "2026-03-28", type: "liveops",   description: "Cherry blossom mini-event",   deltaLtv: 1.6,  confidence: 77 },
-  { date: "2026-04-01", type: "release",   description: "v2.4 — guild system",         deltaLtv: 2.8,  confidence: 60 },
-  { date: "2026-04-05", type: "ua",       description: "Google UAC re-optimization",  deltaLtv: 1.1,  confidence: 70 },
+  { date: "2026-01-10", type: "ua",       description: "Facebook Lookalike v2",       deltaLtv: 0.9,  confidence: 72, cost: 32,  retentionShift: { d1: 0.4, d3: 0.3, d7: 0.3, d14: 0.2, d30: 0.1 } },
+  { date: "2026-01-25", type: "liveops",  description: "Lunar New Year event",        deltaLtv: 1.8,  confidence: 80, cost: 18,  retentionShift: { d1: 2.1, d3: 1.8, d7: 1.1, d14: 0.4, d30: 0.1 } },
+  { date: "2026-02-05", type: "release",  description: "v2.1 — UI refresh",           deltaLtv: 1.2,  confidence: 68, cost: 85,  retentionShift: { d1: 0.3, d3: 0.6, d7: 0.9, d14: 1.0, d30: 0.8 } },
+  { date: "2026-02-14", type: "ua",       description: "Valentine's push campaign",   deltaLtv: 0.5,  confidence: 55, cost: 28,  retentionShift: { d1: 0.2, d3: 0.2, d7: 0.1, d14: 0.1, d30: 0.0 } },
+  { date: "2026-02-28", type: "liveops",  description: "Weekend bonus event",         deltaLtv: 1.5,  confidence: 82, cost: 12,  retentionShift: { d1: 1.8, d3: 1.4, d7: 0.7, d14: 0.2, d30: 0.0 } },
+  { date: "2026-03-01", type: "ua",       description: "TikTok campaign launch",      deltaLtv: 1.2,  confidence: 78, cost: 45,  retentionShift: { d1: 0.5, d3: 0.4, d7: 0.3, d14: 0.2, d30: 0.1 } },
+  { date: "2026-03-08", type: "liveops",  description: "Spring event start",          deltaLtv: 2.1,  confidence: 85, cost: 22,  retentionShift: { d1: 2.4, d3: 2.0, d7: 1.3, d14: 0.5, d30: 0.1 } },
+  { date: "2026-03-15", type: "release",  description: "v2.3 — new dungeon system",   deltaLtv: 3.4,  confidence: 72, cost: 140, retentionShift: { d1: 0.6, d3: 1.2, d7: 2.1, d14: 2.4, d30: 2.2 } },
+  { date: "2026-03-22", type: "ua",       description: "Meta Advantage+ scaling",     deltaLtv: 0.8,  confidence: 65, cost: 38,  retentionShift: { d1: 0.3, d3: 0.3, d7: 0.2, d14: 0.1, d30: 0.1 } },
+  { date: "2026-03-28", type: "liveops",  description: "Cherry blossom mini-event",   deltaLtv: 1.6,  confidence: 77, cost: 14,  retentionShift: { d1: 1.9, d3: 1.5, d7: 0.8, d14: 0.3, d30: 0.0 } },
+  { date: "2026-04-01", type: "release",  description: "v2.4 — guild system",         deltaLtv: 2.8,  confidence: 60, cost: 165, retentionShift: { d1: 0.4, d3: 0.8, d7: 1.6, d14: 2.2, d30: 2.0 } },
+  { date: "2026-04-05", type: "ua",       description: "Google UAC re-optimization",  deltaLtv: 1.1,  confidence: 70, cost: 35,  retentionShift: { d1: 0.4, d3: 0.3, d7: 0.3, d14: 0.2, d30: 0.1 } },
 ]
+
+/** 누적 ΔLTV 곡선용 — 실제 누적 vs 운영 없었을 때 반사실 baseline */
+export const mockCumulativeImpact = [
+  { date: "2026-01-01", actual: 0,    baseline: 0 },
+  { date: "2026-01-10", actual: 0.9,  baseline: 0 },
+  { date: "2026-01-25", actual: 2.7,  baseline: 0.1 },
+  { date: "2026-02-05", actual: 3.9,  baseline: 0.2 },
+  { date: "2026-02-14", actual: 4.4,  baseline: 0.3 },
+  { date: "2026-02-28", actual: 5.9,  baseline: 0.5 },
+  { date: "2026-03-01", actual: 7.1,  baseline: 0.6 },
+  { date: "2026-03-08", actual: 9.2,  baseline: 0.7 },
+  { date: "2026-03-15", actual: 12.6, baseline: 0.9 },
+  { date: "2026-03-22", actual: 13.4, baseline: 1.0 },
+  { date: "2026-03-28", actual: 15.0, baseline: 1.2 },
+  { date: "2026-04-01", actual: 17.8, baseline: 1.4 },
+  { date: "2026-04-05", actual: 19.1, baseline: 1.5 },
+]
+
+/** Causal Impact 패널용 — 대표 액션(v2.3 Release) Pre/Post + 반사실 band */
+export const mockCausalImpact = {
+  actionLabel: "v2.3 — new dungeon system",
+  actionDate: "2026-03-15",
+  metric: "D7 Retention (%)",
+  series: [
+    { date: "2026-03-01", observed: 18.7, counterfactual: 18.7, cfLow: 18.2, cfHigh: 19.2 },
+    { date: "2026-03-04", observed: 18.9, counterfactual: 18.8, cfLow: 18.2, cfHigh: 19.3 },
+    { date: "2026-03-08", observed: 19.2, counterfactual: 18.9, cfLow: 18.3, cfHigh: 19.4 },
+    { date: "2026-03-11", observed: 19.1, counterfactual: 18.9, cfLow: 18.3, cfHigh: 19.5 },
+    { date: "2026-03-15", observed: 19.3, counterfactual: 19.0, cfLow: 18.3, cfHigh: 19.6 },
+    { date: "2026-03-18", observed: 20.1, counterfactual: 19.0, cfLow: 18.3, cfHigh: 19.6 },
+    { date: "2026-03-22", observed: 20.8, counterfactual: 19.1, cfLow: 18.3, cfHigh: 19.7 },
+    { date: "2026-03-25", observed: 21.0, counterfactual: 19.1, cfLow: 18.2, cfHigh: 19.8 },
+    { date: "2026-03-28", observed: 21.2, counterfactual: 19.1, cfLow: 18.2, cfHigh: 19.9 },
+    { date: "2026-04-01", observed: 22.0, counterfactual: 19.2, cfLow: 18.2, cfHigh: 20.0 },
+    { date: "2026-04-05", observed: 22.3, counterfactual: 19.2, cfLow: 18.1, cfHigh: 20.1 },
+  ],
+  ate: 2.8,
+  ateLow: 1.9,
+  ateHigh: 3.7,
+  probability: 0.98,
+}
 
 export const mockRetentionTrend = [
   { date: "2026-01-01", retention: 16.2 },
