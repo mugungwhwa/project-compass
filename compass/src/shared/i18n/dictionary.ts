@@ -369,7 +369,7 @@ const dictionary = {
 
   // --- Landing Page v2: Section 1 (Hero) ---
   "landing.v2.hero.headlineLine1":    { ko: "게임 포트폴리오를",          en: "Run your game portfolio" },
-  "landing.v2.hero.headlineLine2":    { ko: "근거로 운영하세요.",          en: "at the speed of evidence." },
+  "landing.v2.hero.headlineLine2":    { ko: "감이 아닌 근거로.",           en: "at the speed of evidence." },
   "landing.v2.hero.subheading":       { ko: "또 하나의 대시보드가 아닙니다. 투자 판단을 위한 의사결정 레이어입니다.",
                                         en: "Not another dashboard. Your investment decision layer." },
   "landing.v2.hero.description":      { ko: "Compass는 시장, 실험, UA, 재무 데이터를 하나로 연결해 게임 운영자를 위한 투자 의사결정 기반을 제공합니다.",
