@@ -81,7 +81,7 @@ export function ProductProofSection() {
         className="mt-16 w-full max-w-[1100px] mx-auto"
         aria-hidden="true"
       >
-        <div className="overflow-x-auto [&_.sticky]:!static [&_.sticky]:!z-auto [&_.sticky]:!mb-0" style={{ pointerEvents: "none" }}>
+        <div className="overflow-x-auto [&_.sticky]:static! [&_.sticky]:z-auto! [&_.sticky]:mb-0!" style={{ pointerEvents: "none" }}>
           <div className="min-w-[600px]">
             <SignalCard
               status={FIXTURE_SIGNAL.status}
