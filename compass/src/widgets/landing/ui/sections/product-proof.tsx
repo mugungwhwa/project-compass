@@ -4,7 +4,8 @@ import { motion } from "framer-motion"
 import { useLocale } from "@/shared/i18n/context"
 import { SectionShell } from "../_shared/section-shell"
 import { Eyebrow } from "../_shared/eyebrow"
-import { PaybackShowcase } from "../showcase"
+import { SignalCard } from "@/widgets/dashboard/ui/signal-card"
+import { FIXTURE_SIGNAL } from "../_shared/widget-fixtures"
 
 const EASE_OUT_QUART = [0.25, 1, 0.5, 1] as const
 
@@ -32,7 +33,7 @@ export function ProductProofSection() {
 
   return (
     <SectionShell band="bg-1" maxWidth="max-w-7xl">
-      {/* Heading — stacked above full-width showcase */}
+      {/* Heading — stacked above full-width widget */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -71,15 +72,25 @@ export function ProductProofSection() {
         </a>
       </motion.div>
 
-      {/* Full-width PaybackShowcase */}
+      {/* Full-width SignalCard — real dashboard widget at natural size */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.6, ease: EASE_OUT_QUART, delay: 0.15 }}
-        className="mt-16"
+        className="mt-16 w-full max-w-[1100px]"
+        aria-hidden="true"
       >
-        <PaybackShowcase />
+        <div className="overflow-x-auto" style={{ pointerEvents: "none" }}>
+          <div className="min-w-[600px]">
+            <SignalCard
+              status={FIXTURE_SIGNAL.status}
+              confidence={FIXTURE_SIGNAL.confidence}
+              factors={FIXTURE_SIGNAL.factors}
+              payback={FIXTURE_SIGNAL.payback}
+            />
+          </div>
+        </div>
       </motion.div>
     </SectionShell>
   )

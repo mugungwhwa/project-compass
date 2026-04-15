@@ -2,11 +2,16 @@
 
 import { motion } from "framer-motion"
 import { useLocale } from "@/shared/i18n/context"
+import { RevenueVsInvest } from "@/widgets/charts/ui/revenue-vs-invest"
+import { RetentionCurve } from "@/widgets/charts/ui/retention-curve"
+import { RevenueForecast } from "@/widgets/charts/ui/revenue-forecast"
 import {
-  RevenueShowcase,
-  RetentionShowcase,
-  ForecastShowcase,
-} from "../showcase"
+  FIXTURE_REVENUE_VS_INVEST,
+  FIXTURE_RETENTION_DATA,
+  FIXTURE_ASYMPTOTIC_DAY,
+  FIXTURE_REVENUE_FORECAST,
+  FIXTURE_REVENUE_FORECAST_META,
+} from "../_shared/widget-fixtures"
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
@@ -15,7 +20,7 @@ const textVariant = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE } },
 }
 
-const showcaseVariant = {
+const widgetVariant = {
   hidden: { opacity: 0, y: 40 },
   visible: (delay: number) => ({
     opacity: 1,
@@ -36,7 +41,7 @@ function ChartStoryA() {
       aria-label="Evidence — Revenue vs Investment"
     >
       <div className="max-w-7xl mx-auto px-6">
-        {/* Text above showcase */}
+        {/* Text above widget */}
         <motion.div
           variants={textVariant}
           initial="hidden"
@@ -64,15 +69,22 @@ function ChartStoryA() {
           </p>
         </motion.div>
 
-        {/* Full-width showcase */}
+        {/* RevenueVsInvest — real dashboard widget at natural size */}
         <motion.div
           custom={0.1}
-          variants={showcaseVariant}
+          variants={widgetVariant}
           initial="hidden"
           whileInView="visible"
           viewport={VIEWPORT}
+          className="w-full max-w-[1100px]"
+          aria-hidden="true"
+          style={{ pointerEvents: "none" }}
         >
-          <RevenueShowcase />
+          <div className="overflow-x-auto">
+            <div className="min-w-[600px]" style={{ height: 420 }}>
+              <RevenueVsInvest data={FIXTURE_REVENUE_VS_INVEST} />
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
@@ -89,7 +101,7 @@ function ChartStoryB() {
       aria-label="Evidence — Retention Forecast"
     >
       <div className="max-w-7xl mx-auto px-6">
-        {/* Text above showcase */}
+        {/* Text above widget */}
         <motion.div
           variants={textVariant}
           initial="hidden"
@@ -117,15 +129,25 @@ function ChartStoryB() {
           </p>
         </motion.div>
 
-        {/* Full-width showcase */}
+        {/* RetentionCurve — real dashboard widget at natural size */}
         <motion.div
           custom={0.1}
-          variants={showcaseVariant}
+          variants={widgetVariant}
           initial="hidden"
           whileInView="visible"
           viewport={VIEWPORT}
+          className="w-full max-w-[1100px]"
+          aria-hidden="true"
+          style={{ pointerEvents: "none" }}
         >
-          <RetentionShowcase />
+          <div className="overflow-x-auto">
+            <div className="min-w-[600px]" style={{ height: 440 }}>
+              <RetentionCurve
+                data={FIXTURE_RETENTION_DATA}
+                asymptoticDay={FIXTURE_ASYMPTOTIC_DAY}
+              />
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
@@ -142,7 +164,7 @@ function ChartStoryC() {
       aria-label="Evidence — Revenue Forecast"
     >
       <div className="max-w-7xl mx-auto px-6">
-        {/* Text above showcase */}
+        {/* Text above widget */}
         <motion.div
           variants={textVariant}
           initial="hidden"
@@ -170,15 +192,25 @@ function ChartStoryC() {
           </p>
         </motion.div>
 
-        {/* Full-width showcase */}
+        {/* RevenueForecast — real dashboard widget at natural size */}
         <motion.div
           custom={0.1}
-          variants={showcaseVariant}
+          variants={widgetVariant}
           initial="hidden"
           whileInView="visible"
           viewport={VIEWPORT}
+          className="w-full max-w-[1100px]"
+          aria-hidden="true"
+          style={{ pointerEvents: "none" }}
         >
-          <ForecastShowcase />
+          <div className="overflow-x-auto">
+            <div className="min-w-[600px]" style={{ height: 420 }}>
+              <RevenueForecast
+                data={FIXTURE_REVENUE_FORECAST}
+                meta={FIXTURE_REVENUE_FORECAST_META}
+              />
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

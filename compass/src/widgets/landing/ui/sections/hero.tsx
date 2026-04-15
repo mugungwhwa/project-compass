@@ -3,7 +3,10 @@
 import { motion } from "framer-motion"
 import { useLocale } from "@/shared/i18n/context"
 import { Eyebrow } from "../_shared/eyebrow"
-import { SignalShowcase } from "../showcase"
+import { HeroVerdict } from "@/widgets/dashboard/ui/hero-verdict"
+import {
+  FIXTURE_SIGNAL,
+} from "../_shared/widget-fixtures"
 
 const EASE_OUT_QUART = [0.25, 1, 0.5, 1] as const
 
@@ -84,7 +87,7 @@ export function HeroV2() {
           ))}
         </motion.div>
 
-        {/* SignalShowcase — full width hero visual */}
+        {/* HeroVerdict — real dashboard widget at natural size */}
         <motion.div
           initial={{ opacity: 0, y: 48 }}
           animate={{ opacity: 1, y: 0 }}
@@ -93,9 +96,25 @@ export function HeroV2() {
             ease: EASE_OUT_QUART,
             delay: 0.52,
           }}
-          className="mt-20 w-full"
+          className="mt-20 w-full max-w-[1100px] mx-auto"
+          aria-hidden="true"
         >
-          <SignalShowcase size="hero" />
+          <div
+            className="overflow-x-auto"
+            style={{ pointerEvents: "none" }}
+          >
+            <div className="min-w-[600px]">
+              <HeroVerdict
+                status={FIXTURE_SIGNAL.status}
+                confidence={FIXTURE_SIGNAL.confidence}
+                factors={FIXTURE_SIGNAL.factors}
+                payback={FIXTURE_SIGNAL.payback}
+                nextAction={FIXTURE_SIGNAL.nextAction}
+                reason={FIXTURE_SIGNAL.reason}
+                impact={FIXTURE_SIGNAL.impact}
+              />
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
