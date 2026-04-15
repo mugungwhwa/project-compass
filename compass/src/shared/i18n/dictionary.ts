@@ -240,6 +240,21 @@ const dictionary = {
   "market.myRevenue":      { ko: "우리 매출",                    en: "Our Revenue" },
   "market.priorLabel":     { ko: "Prior (장르 벤치마크)",        en: "Prior (Genre Benchmark)" },
   "market.posteriorLabel": { ko: "Posterior (우리 데이터)",      en: "Posterior (Our Data)" },
+  // ─── Market Gap Layer 1 (operator 의사결정 언어) — 2026-04-15 L0/L1/L2 레이어링 ─────
+  // 기존 market.priorPosterior / bayesian / priorLabel / posteriorLabel / info.priorPosterior
+  // 는 L2 methodology 패널 향후 작업용으로 유지. L1 UI에서는 아래 market.proof.* 사용.
+  "market.proof.title":    { ko: "장르 기대치 vs 우리 실적",          en: "Genre Expectation vs Our Actuals" },
+  "market.proof.subtitle": { ko: "장르 평균(median) 대비 우리 코호트 관측 결과",
+                             en: "Our cohort observations vs genre median" },
+  "market.proof.info":     { ko: "빨간 분포(장르 기대치)와 초록 분포(우리 실적)의 차이가 격차입니다. 격차가 양(+)이면 장르를 상회, 음(−)이면 미달. 신호 뱃지로 투자 판단이 즉시 드러납니다.",
+                             en: "The gap between the red distribution (genre expectation) and green distribution (our actuals) reveals outperformance. Positive = above genre, negative = below. The signal badge surfaces the investment judgment." },
+  "market.proof.genreLabel": { ko: "장르 기대치",                   en: "Genre Expectation" },
+  "market.proof.ourLabel":   { ko: "우리 실적",                     en: "Our Actuals" },
+  "market.proof.gapAbove":   { ko: "우리 우월",                     en: "Our lead" },
+  "market.proof.gapBelow":   { ko: "우리 부족",                     en: "Our shortfall" },
+  "market.signal.invest":    { ko: "Invest 신호",                   en: "Invest signal" },
+  "market.signal.hold":      { ko: "Hold 신호",                    en: "Hold signal" },
+  "market.signal.reduce":    { ko: "Reduce 신호",                   en: "Reduce signal" },
   "info.priorPosterior":   { ko: "회색 분포(Prior)는 장르 전체의 사전 지식, 파란 분포(Posterior)는 우리 데이터로 업데이트된 사후 추정입니다. 좁아질수록 확신이 큽니다.",
                              en: "Gray distribution (Prior) is genre-wide prior knowledge. Blue distribution (Posterior) is updated estimate from our data. Narrower = more confident." },
   "info.rankingTrend":     { ko: "장르 내 매출 순위 변화입니다. 위로 올라갈수록 시장 점유율이 상승하고 있습니다.",
