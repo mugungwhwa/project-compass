@@ -470,7 +470,19 @@ const dictionary = {
   "landing.v2.chart3.description":    { ko: "하향, 기본, 상향 시나리오를 하나의 취약한 숫자가 아닌 확률 범위로 보세요.",
                                         en: "See downside, base case, and upside scenarios as probability ranges instead of a single fragile number." },
 
-  // --- Landing Page v2: Section 7 (Explainability) ---
+  // --- Landing Page v2: Section 7 (Experiment Impact — replaces former Copilot/Explain) ---
+  "landing.v2.expImpact.headline":      { ko: "실험은 설명으로 그치지 않습니다. 자본을 움직입니다.",
+                                          en: "Experiments don't explain — they move capital." },
+  "landing.v2.expImpact.description":   { ko: "배포된 모든 실험은 측정 가능한 자본 이벤트입니다. ΔLTV · Δ페이백 · Δ런웨이. Compass는 A/B 결과를 투자 판단으로 번역해, 이긴 실험이 다음 자본 결정으로 이어지게 합니다.",
+                                          en: "Every shipped test becomes a measurable capital event: ΔLTV, ΔPayback, ΔRunway. Compass links A/B results to investment outcomes so winning tests translate to next funding decisions." },
+  "landing.v2.expImpact.experimentName":{ ko: "리워드 캘린더 A/B",                   en: "Reward Calendar A/B" },
+  "landing.v2.expImpact.experimentMeta":{ ko: "14일 테스트 · 50% 배포 완료",          en: "14-day test · Shipped to 50%" },
+  "landing.v2.expImpact.paybackLabel":  { ko: "페이백",                              en: "Payback" },
+  "landing.v2.expImpact.retentionLabel":{ ko: "D7 리텐션",                           en: "D7 Retention" },
+  "landing.v2.expImpact.ltvLabel":      { ko: "ΔLTV / 유저",                         en: "ΔLTV / user" },
+  "landing.v2.expImpact.capitalLabel":  { ko: "자본 여력",                           en: "Capital unlocked" },
+  "landing.v2.expImpact.recommendation":{ ko: "100%로 확장 — 신뢰도 88%",            en: "Scale to 100% — 88% confidence" },
+  // Deprecated (retained for rollback); prefer landing.v2.expImpact.*
   "landing.v2.explain.headline":      { ko: "예산을 바꾸기 전에 무엇이 변했는지 알아야 합니다.",
                                         en: "Know what changed — before you change the budget." },
   "landing.v2.explain.description":   { ko: "Compass는 페이백이 왜 이동했는지, 리텐션이나 CPI에서 무엇이 변했는지, 그 변화가 얼마나 중요한지 설명합니다.",
