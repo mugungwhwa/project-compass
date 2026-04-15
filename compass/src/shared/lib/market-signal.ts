@@ -30,7 +30,10 @@ export function computeMarketSignal(
   prior: number,
   posterior: number,
 ): MarketSignalResult {
-  if (prior === 0) {
+  // Guard: non-finite inputs or non-positive prior cannot yield a meaningful
+  // ±% change. Return a safe hold/at fallback rather than silently mislabel.
+  // (Retention/KPI priors are domain-constrained to prior > 0.)
+  if (!Number.isFinite(prior) || !Number.isFinite(posterior) || prior <= 0) {
     return { signal: "hold", deltaPct: 0, direction: "at" }
   }
 

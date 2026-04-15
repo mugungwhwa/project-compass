@@ -67,4 +67,22 @@ function assert(condition: boolean, message: string): void {
   assert(r.signal === "hold", `both=0 safe fallback to hold (got ${r.signal})`)
 }
 
-console.log(`\nAll ${7} assertion blocks passed. MARKET_SIGNAL_HOLD_THRESHOLD = ±${MARKET_SIGNAL_HOLD_THRESHOLD}%`)
+// Guard: non-finite inputs → hold fallback
+{
+  const r1 = computeMarketSignal(NaN, 18.7)
+  const r2 = computeMarketSignal(14.2, NaN)
+  const r3 = computeMarketSignal(Infinity, 18.7)
+  assert(r1.signal === "hold", `NaN prior → hold (got ${r1.signal})`)
+  assert(r2.signal === "hold", `NaN posterior → hold (got ${r2.signal})`)
+  assert(r3.signal === "hold", `Infinity prior → hold (got ${r3.signal})`)
+  assert(r1.deltaPct === 0 && r2.deltaPct === 0 && r3.deltaPct === 0, `non-finite deltaPct=0`)
+}
+
+// Guard: negative prior → hold fallback (retention domain rejects negative)
+{
+  const r = computeMarketSignal(-10, -5)
+  assert(r.signal === "hold", `negative prior → hold (got ${r.signal})`)
+  assert(r.direction === "at", `negative prior direction=at (got ${r.direction})`)
+}
+
+console.log(`\nAll assertion blocks passed. MARKET_SIGNAL_HOLD_THRESHOLD = ±${MARKET_SIGNAL_HOLD_THRESHOLD}%`)
