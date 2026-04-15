@@ -100,7 +100,7 @@ export function HeroV2() {
           aria-hidden="true"
         >
           <div
-            className="overflow-x-auto"
+            className="overflow-x-auto [&_.sticky]:!static [&_.sticky]:!z-auto [&_.sticky]:!mb-0"
             style={{ pointerEvents: "none" }}
           >
             <div className="min-w-[600px]">
