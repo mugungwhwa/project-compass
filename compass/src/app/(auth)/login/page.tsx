@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { CompassLogo } from "@/shared/ui/compass-logo"
 import { useLocale } from "@/shared/i18n"
@@ -7,6 +8,11 @@ import { useLocale } from "@/shared/i18n"
 export default function LoginPage() {
   const router = useRouter()
   const { t } = useLocale()
+
+  useEffect(() => {
+    const timer = setTimeout(() => router.push("/dashboard"), 700)
+    return () => clearTimeout(timer)
+  }, [router])
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[var(--background)]">
