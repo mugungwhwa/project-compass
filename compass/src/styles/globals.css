@@ -324,3 +324,19 @@ body {
 .signal-bg-reduce {
   background: var(--signal-risk-bg);
 }
+
+/*
+  Landing page widget override — 2026-04-14 Sprint 5
+  ---------------------------------------------------
+  Dashboard widgets (HeroVerdict, SignalCard) use `position: sticky`
+  so they pin to the top of the dashboard viewport on scroll. In the
+  landing page they must NOT stick — any element inside a
+  `.landing-static-widget` wrapper gets sticky neutralized.
+*/
+.landing-static-widget .sticky,
+.landing-static-widget [class*="sticky"] {
+  position: static !important;
+  top: auto !important;
+  z-index: auto !important;
+  margin-bottom: 0 !important;
+}
