@@ -181,6 +181,13 @@
 #### 커밋 체인 (feature/onboarding_page → main)
 `e099f3d` (Phase 2 10 섹션) → `7c64686` (i18n 키 누락 수정) → `d3e2ad0` (zoom) → `795d730` (ResizeObserver) → `d2f5f78/adb0a6d` (Path A 쇼케이스) → `7284558` (Path B 실제 위젯) → `cf98396` (Nanum 실험) → `0049243` (Nanum 철회, 크기 축소 유지). main fast-forward merge.
 
+#### Post-merge 수정 (main 직접)
+- `034261d` — Chart/Proof 섹션에서 텍스트·위젯 수평 중심 정렬 (`mx-auto`) → 시각 비대칭 해소.
+- `7f21477` → `c030334` → `91a1453` — 대시보드 위젯의 `sticky top-0 z-10` 해제 3단계 시도: Tailwind v3 prefix `!important` → v4 suffix → 최종 globals.css `.landing-static-widget` 명시적 CSS 규칙으로 확정 해결.
+- `13c8c60` — `HeroVerdict`에 `compactScrollThreshold` prop 추가, 랜딩에서 `Number.MAX_SAFE_INTEGER` 전달해 `DecisionSurface`의 스크롤 기반 compact 전환 비활성화. 위젯이 스크롤 중 "접히는" 현상 제거.
+- `c08c640` — §7 Copilot(Explainer) 삭제, Experiment Impact 카드로 교체. Compass 포지셔닝("decision layer, not analytics")과 정합. §8 파이프라인과 역할 분담 (§7 = one-scene case, §8 = schema). 새 i18n 키 `landing.v2.expImpact.*` 추가.
+- `c0b1491` — 랜딩 내 모든 CTA(`#demo`, `/contact`, `/dashboard`)를 `/login`으로 통일 라우팅. NavBar 로고만 `/` 유지.
+
 ---
 
 ### 2026-04-14 (Sprint 4: MVP Revision + Typography + Dynamic Grid)
