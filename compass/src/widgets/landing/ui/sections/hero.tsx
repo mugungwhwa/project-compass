@@ -57,7 +57,7 @@ export function HeroV2() {
           className="mt-10"
         >
           <a
-            href="#demo"
+            href="/login"
             className="inline-flex items-center h-12 px-8 bg-[var(--brand)] text-white text-sm font-semibold rounded-[var(--radius-card)] hover:opacity-90 transition-opacity"
           >
             {t("landing.v2.cta.primaryButton")}

@@ -65,7 +65,7 @@ export function ProductProofSection() {
         </ul>
 
         <a
-          href="#demo"
+          href="/login"
           className="inline-flex items-center mt-8 text-sm font-medium text-[var(--brand)] hover:opacity-80 transition-opacity"
         >
           {locale === "ko" ? "라이브 데모 탐색 →" : "Explore live demo →"}

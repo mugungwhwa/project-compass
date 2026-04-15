@@ -42,14 +42,14 @@ export function CtaBottomSection() {
         </p>
 
         <Link
-          href="/contact"
+          href="/login"
           className="inline-flex h-14 items-center justify-center rounded-[var(--radius-card)] bg-[var(--brand)] px-10 text-base font-semibold text-white mt-10 transition-colors duration-[var(--duration-micro)] hover:bg-[var(--brand-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand)] focus-visible:ring-offset-2"
         >
           {t("landing.v2.cta.primaryButton")}
         </Link>
 
         <Link
-          href="/dashboard"
+          href="/login"
           className="text-sm text-[var(--fg-2)] underline underline-offset-2 mt-5 hover:text-[var(--fg-1)] transition-colors duration-[var(--duration-micro)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand)] focus-visible:ring-offset-2"
         >
           {t("landing.v2.cta.secondary")}
