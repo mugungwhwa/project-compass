@@ -11,11 +11,19 @@ import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 
 type Row = { date: string; actual: number; baseline: number }
 
-type Props = { data: Row[] }
+type Props = {
+  data: Row[]
+  expanded?: boolean
+  onToggle?: () => void
+}
 
-export function CumulativeImpactCurve({ data }: Props) {
+export function CumulativeImpactCurve({ data, expanded: extExpanded, onToggle }: Props) {
   const { t } = useLocale()
-  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 240 })
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({
+    baseHeight: 240,
+    expanded: extExpanded,
+    onToggle,
+  })
 
   const last = data[data.length - 1]
   const gap = last ? (last.actual - last.baseline).toFixed(1) : "0"

@@ -18,9 +18,14 @@ import {
   mockCausalImpact,
 } from "@/shared/api"
 import { PageTransition, FadeInUp } from "@/shared/ui/page-transition"
+import { useGridLayout } from "@/shared/hooks"
+import { motion } from "framer-motion"
+
+const GRID_TRANSITION = { duration: 0.3, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }
 
 export default function ActionsPage() {
   const { t } = useLocale()
+  const impactGrid = useGridLayout(2)
 
   return (
     <PageTransition>
@@ -37,11 +42,21 @@ export default function ActionsPage() {
         ]} />
       </FadeInUp>
 
-      <FadeInUp className="mb-6">
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <CumulativeImpactCurve data={mockCumulativeImpact} />
-          <ActionRoiQuadrant actions={mockActions} />
-        </div>
+      <FadeInUp className="grid grid-cols-2 gap-6 mb-6">
+        <motion.div layout className={`${impactGrid.getClassName("chart-0", 0)} h-full`} transition={GRID_TRANSITION}>
+          <CumulativeImpactCurve
+            data={mockCumulativeImpact}
+            expanded={impactGrid.expandedId === "chart-0"}
+            onToggle={() => impactGrid.toggle("chart-0")}
+          />
+        </motion.div>
+        <motion.div layout className={`${impactGrid.getClassName("chart-1", 1)} h-full`} transition={GRID_TRANSITION}>
+          <ActionRoiQuadrant
+            actions={mockActions}
+            expanded={impactGrid.expandedId === "chart-1"}
+            onToggle={() => impactGrid.toggle("chart-1")}
+          />
+        </motion.div>
       </FadeInUp>
 
       <FadeInUp className="mb-6">

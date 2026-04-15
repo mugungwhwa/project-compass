@@ -13,7 +13,11 @@ import { ChartTooltip } from "@/shared/ui/chart-tooltip"
 import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 
-type Props = { actions: ActionData[] }
+type Props = {
+  actions: ActionData[]
+  expanded?: boolean
+  onToggle?: () => void
+}
 
 const typeColor: Record<ActionData["type"], string> = {
   ua: ACTION_TIMELINE_COLORS.ua,
@@ -21,9 +25,13 @@ const typeColor: Record<ActionData["type"], string> = {
   release: ACTION_TIMELINE_COLORS.release,
 }
 
-export function ActionRoiQuadrant({ actions }: Props) {
+export function ActionRoiQuadrant({ actions, expanded: extExpanded, onToggle }: Props) {
   const { t } = useLocale()
-  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({ baseHeight: 260 })
+  const { expanded, toggle, gridClassName, chartHeight } = useChartExpand({
+    baseHeight: 260,
+    expanded: extExpanded,
+    onToggle,
+  })
 
   const rows = actions
     .filter((a) => typeof a.cost === "number" && a.cost! > 0)
