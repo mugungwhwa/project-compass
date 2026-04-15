@@ -142,6 +142,47 @@
 - `prototype_dashboard.html` — **삭제** — 구 프로토타입 폐기
 - `docs/Project_Compass_Design_Migration_Log.md` — **생성** — 이 문서
 
+### 2026-04-14 (Sprint 5: Statsig-style Landing v2 Rebuild)
+
+#### 핵심 결정
+- **랜딩 구조 4섹션 → 10섹션 확장** — Statsig 리듬(Decision → Why → Modules → Proof → Explanation → CTA) 차용, Compass 포지셔닝으로 변형. `Compass_Statsig_Style_Landing_Strategy.md`가 source of truth.
+- **대시보드 위젯 재사용 접근법 3번 피벗** → 최종 **실제 위젯을 자연 크기 그대로 임베드**. 축소·변형 금지. 마케팅 SVG 재창조는 제품과 랜딩 간 시각 언어 불일치를 낳아 폐기.
+- **언어별 Hero 폰트 패밀리** — Instrument Serif + Noto Serif KR(한글 폴백) 유지. Nanum Square Round 실험 후 철회 — 디자인 시스템 일관성 우선.
+
+#### 변경된 파일
+- `compass/src/widgets/landing/ui/sections/*.tsx` — 10개 섹션 컴포넌트 신규 (hero/problem/questions/modules/product-proof/chart-stories/copilot/translation/comparison/cta)
+- `compass/src/widgets/landing/ui/_shared/*.tsx` — `SectionShell`(4개 band variant: canvas/surface/inset/dark), `Eyebrow`, `widget-fixtures.ts`(랜딩 전용 고정 스냅샷)
+- `compass/src/widgets/landing/ui/showcase/pipeline-showcase.tsx` — 대시보드에 대응 위젯 없는 Experiment→ΔLTV→Payback 다이어그램만 bespoke 유지
+- `compass/src/widgets/landing/index.ts` — barrel 재구성
+- `compass/src/shared/i18n/dictionary.ts` — `landing.v2.*` 56+키 추가 (EN 기본, KO 병행, `headlineLine1/2` 분할)
+- `compass/src/app/(public)/page.tsx` — 10섹션 재조립
+- `compass/src/app/layout.tsx` — Noto Serif KR CDN 로드(한글 글리프용, `next/font/google` 타입 한계 우회)
+- `docs/design/landing-v2-spec.md`, `docs/design/statsig-reference.md` — 신규 설계 문서
+
+#### 중간 기착지 (폐기된 시도)
+- **Phase 1 try A — `transform: scale` + 고정 컨테이너**: 레이아웃 미참여로 크롭 클리핑 발생
+- **try B — CSS `zoom`**: 레이아웃 참여는 되지만 framer-motion 컴포지팅·Recharts `ResponsiveContainer` 측정·IntersectionObserver와 충돌
+- **try C — `transform: scale` + ResizeObserver 높이 측정**: 기술적으로 동작하나 축소된 위젯은 랜딩 맥락에서 판독성 부족
+- **try D (Path A) — 마케팅 전용 SVG 재창조**: 제품과 랜딩 시각 언어 분리 → 허위 표시 위험으로 폐기
+- **try E (Path B, 최종) — 실제 위젯 100% 네이티브**: `max-w-[1100px]` + 프레임(border/shadow), 모바일 `overflow-x-auto`. 대시보드와 1:1 동기화.
+
+#### 결정 사항
+- **FSD 예외 수용**: `widgets/landing → widgets/dashboard·charts` 크로스 임포트는 arch-guard Critical 표기되지만 Path B의 의도적 선택. 향후 `shared/ui` 브릿지 승격은 별도 이슈.
+- **band 알터네이션**: Hero(canvas) → WhyFail(surface) → Questions(inset) → Modules(dark) → Proof(surface) → ChartA(canvas) → ChartB(dark) → ChartC(surface) → Copilot(inset) → Translation(surface) → Comparison(canvas) → CTA(inset). light→dark→light 리듬.
+- **Hero 타이포**: 한글 3줄 잘림 방지를 위해 `lg:text-9xl`(128px) → `lg:text-8xl`(96px) 하향. `word-break: keep-all` + `headlineLine1/2` 분할 유지.
+
+#### 교훈 (다음 세션이 반복하지 말 것)
+- **"대시보드를 랜딩에 넣는다"는 요구의 올바른 해석은 "실물을 그대로" 가 1순위**. 축소·재작성은 맥락 설명 후에 제안할 것.
+- **`transform: scale`은 레이아웃 미참여** — 크롭용으로 쓸 땐 반드시 컨테이너 크기를 명시 예약하거나 ResizeObserver 측정. `zoom`은 framer-motion/Recharts와 충돌하니 회피.
+- **Vercel 빌드 실패 = `git status` 확인이 먼저**. 이번 회차에 `dictionary.ts`가 unstaged라 로컬 tsc는 통과하고 Vercel만 실패한 사례 발생. `git add <dir>` 단위보다 `git add -A` 또는 명시적 파일 확인을 루틴화.
+- **에이전트 디스패치 시 "커밋/푸시까지 포함" 명시**해야 중간 중단 방지. 이번에 4개 에이전트 중 2개가 커밋 직전 "Waiting for build" 상태로 멈춰 오케스트레이터가 마무리해야 했음.
+- **폰트 CDN 경로**: `Nanum Square Round`는 Google Fonts에 **없음** — Naver `hangeul.pstatic.net` 사용. `Noto Serif KR`는 `next/font/google` 타입에 `"korean"` subset 누락 → 직접 CSS `<link>` 필수.
+
+#### 커밋 체인 (feature/onboarding_page → main)
+`e099f3d` (Phase 2 10 섹션) → `7c64686` (i18n 키 누락 수정) → `d3e2ad0` (zoom) → `795d730` (ResizeObserver) → `d2f5f78/adb0a6d` (Path A 쇼케이스) → `7284558` (Path B 실제 위젯) → `cf98396` (Nanum 실험) → `0049243` (Nanum 철회, 크기 축소 유지). main fast-forward merge.
+
+---
+
 ### 2026-04-14 (Sprint 4: MVP Revision + Typography + Dynamic Grid)
 
 #### 핵심 결정
