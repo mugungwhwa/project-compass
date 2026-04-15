@@ -74,10 +74,6 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap&subset=korean"
         />
-        <link
-          rel="stylesheet"
-          href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-round.css"
-        />
       </head>
       <body>
         <LocaleProvider>

@@ -30,14 +30,7 @@ export function HeroV2() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: "easeOut", delay: 0.08 }}
-          className={`text-5xl md:text-7xl lg:text-8xl leading-[1.05] tracking-[-0.03em] text-[var(--fg-0)] [word-break:keep-all] [overflow-wrap:break-word] ${
-            locale === "ko" ? "font-extrabold" : "font-display"
-          }`}
-          style={
-            locale === "ko"
-              ? { fontFamily: '"NanumSquareRound", "Nanum Square Round", "Apple SD Gothic Neo", sans-serif' }
-              : undefined
-          }
+          className="font-display text-5xl md:text-7xl lg:text-8xl leading-[1.05] tracking-[-0.03em] text-[var(--fg-0)] [word-break:keep-all] [overflow-wrap:break-word]"
         >
           {t("landing.v2.hero.headlineLine1")}
           <br />
