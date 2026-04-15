@@ -41,6 +41,8 @@ type HeroVerdictProps = {
   reason?: BilingualText
   /** Monetary impact badge — e.g. +$120K ARR. Moves confidence% into the ConfidenceBar label. */
   impact?: { value: BilingualText; direction: "positive" | "negative" | "neutral" }
+  /** Forward to DecisionSurface. Set very high (e.g. Number.MAX_SAFE_INTEGER) in landing page use to disable scroll-triggered compact mode. */
+  compactScrollThreshold?: number
 }
 
 const factorIcon = {
@@ -57,6 +59,7 @@ export function HeroVerdict({
   nextAction,
   reason,
   impact,
+  compactScrollThreshold,
 }: HeroVerdictProps) {
   const { locale } = useLocale()
 
@@ -127,6 +130,7 @@ export function HeroVerdict({
         impact={resolvedImpact}
         evidence={evidence}
         evidenceLabel={locale === "en" ? "Show factors" : "요인 보기"}
+        compactScrollThreshold={compactScrollThreshold}
       />
     </div>
   )

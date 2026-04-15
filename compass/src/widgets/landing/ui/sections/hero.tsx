@@ -112,6 +112,7 @@ export function HeroV2() {
                 nextAction={FIXTURE_SIGNAL.nextAction}
                 reason={FIXTURE_SIGNAL.reason}
                 impact={FIXTURE_SIGNAL.impact}
+                compactScrollThreshold={Number.MAX_SAFE_INTEGER}
               />
             </div>
           </div>
