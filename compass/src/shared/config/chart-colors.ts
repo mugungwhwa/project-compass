@@ -194,6 +194,28 @@ export const PRIOR_POSTERIOR_COLORS = {
   postBorder: PALETTE.revenue,
 } as const
 
+export const MARKET_GAP_PROOF_COLORS = {
+  // Operator 시각 언어: 빨강=장르 기대치, 초록=우리 실적, 파랑=격차 accent
+  // Revenue Forecast(REVENUE_FORECAST_COLORS)와 정합 — 같은 palette 재사용
+  genre:           PALETTE.risk,                   // #C9372C — 장르 기대치(prior)
+  genreFill:       "rgba(201, 55, 44, 0.08)",      // 8% 투명도 dashed hatched
+  genreLine:       "rgba(201, 55, 44, 0.55)",      // hatched line 농도
+
+  our:             PALETTE.positive,               // #00875A — 우리 실적(posterior)
+  ourFill:         "rgba(0, 135, 90, 0.14)",       // 14% 투명도 solid
+
+  gapAccent:       PALETTE.revenue,                // #5B9AFF — 격차 표시
+
+  // Invest/Hold/Reduce 판정 신호 (HeroVerdict 팔레트와 동일)
+  signalInvest:    PALETTE.positive,               // #00875A
+  signalHold:      PALETTE.legendGray,             // #64748B
+  signalReduce:    PALETTE.risk,                   // #C9372C
+
+  axis:            PALETTE.axis,
+  grid:            PALETTE.grid,
+  border:          PALETTE.border,
+} as const
+
 export const RUNWAY_FAN_COLORS = {
   p50:        PALETTE.p50,
   bandOuter:  PALETTE.bandOuter,
