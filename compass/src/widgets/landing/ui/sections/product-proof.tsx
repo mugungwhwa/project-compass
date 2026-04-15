@@ -39,7 +39,7 @@ export function ProductProofSection() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.45, ease: EASE_OUT_QUART }}
-        className="max-w-3xl"
+        className="max-w-3xl mx-auto"
       >
         <Eyebrow label="Proof" />
         <h2 className="font-display text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-[-0.03em] text-[var(--fg-0)] [word-break:keep-all] [overflow-wrap:break-word]">
@@ -78,7 +78,7 @@ export function ProductProofSection() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.6, ease: EASE_OUT_QUART, delay: 0.15 }}
-        className="mt-16 w-full max-w-[1100px]"
+        className="mt-16 w-full max-w-[1100px] mx-auto"
         aria-hidden="true"
       >
         <div className="overflow-x-auto" style={{ pointerEvents: "none" }}>

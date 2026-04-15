@@ -47,7 +47,7 @@ function ChartStoryA() {
           initial="hidden"
           whileInView="visible"
           viewport={VIEWPORT}
-          className="max-w-3xl mb-14"
+          className="max-w-3xl mb-14 mx-auto"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--fg-2)] mb-4">
             Evidence
@@ -76,7 +76,7 @@ function ChartStoryA() {
           initial="hidden"
           whileInView="visible"
           viewport={VIEWPORT}
-          className="w-full max-w-[1100px]"
+          className="w-full max-w-[1100px] mx-auto"
           aria-hidden="true"
           style={{ pointerEvents: "none" }}
         >
@@ -107,7 +107,7 @@ function ChartStoryB() {
           initial="hidden"
           whileInView="visible"
           viewport={VIEWPORT}
-          className="max-w-3xl mb-14"
+          className="max-w-3xl mb-14 mx-auto"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.08em] text-zinc-500 mb-4">
             Evidence
@@ -136,7 +136,7 @@ function ChartStoryB() {
           initial="hidden"
           whileInView="visible"
           viewport={VIEWPORT}
-          className="w-full max-w-[1100px]"
+          className="w-full max-w-[1100px] mx-auto"
           aria-hidden="true"
           style={{ pointerEvents: "none" }}
         >
@@ -170,7 +170,7 @@ function ChartStoryC() {
           initial="hidden"
           whileInView="visible"
           viewport={VIEWPORT}
-          className="max-w-3xl mb-14"
+          className="max-w-3xl mb-14 mx-auto"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--fg-2)] mb-4">
             Evidence
@@ -199,7 +199,7 @@ function ChartStoryC() {
           initial="hidden"
           whileInView="visible"
           viewport={VIEWPORT}
-          className="w-full max-w-[1100px]"
+          className="w-full max-w-[1100px] mx-auto"
           aria-hidden="true"
           style={{ pointerEvents: "none" }}
         >
