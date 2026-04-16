@@ -163,20 +163,20 @@ Frame 사이 "이전 우리 실적 → 다음 장르 기대치로 흡수" 시각
 
 | Step | 시작 | 내용 | 체류 |
 |---|---|---|---|
-| D0 | 0.0s | 장르 밴드 fade-in | 1.2s |
-| →D7 | 1.2s | 화살표 pulse 0.4s | — |
-| D7 | 1.6s | 장르 shrink 0.6s + 우리 appear 0.4s + × fade 0.3s | 1.2s |
-| →D14 | 3.2s | 화살표 pulse | — |
-| D14 | 3.6s | 밴드 전환 | 1.0s |
-| →D30 | 5.0s | 화살표 | — |
-| D30 | 5.4s | 밴드 전환 | 1.0s |
-| →D60 | 6.8s | 화살표 | — |
-| D60 | 7.2s | 밴드 전환 | 0.8s |
-| →D90 | 8.4s | 화살표 | — |
-| D90 | 8.8s | 밴드 전환 + "안정" 라벨 | 1.5s |
-| 완료 | ~10.7s | 전체 밝아짐, 버튼 "다시 재생" | — |
+| D0 | 0.0s | 장르 밴드 fade-in | 0.6s |
+| →D7 | 0.6s | 화살표 pulse 0.2s | — |
+| D7 | 0.8s | 장르 shrink 0.4s + 우리 appear 0.3s + × fade 0.2s | 0.6s |
+| →D14 | 1.8s | 화살표 pulse | — |
+| D14 | 2.0s | 밴드 전환 | 0.5s |
+| →D30 | 2.9s | 화살표 | — |
+| D30 | 3.1s | 밴드 전환 | 0.5s |
+| →D60 | 4.0s | 화살표 | — |
+| D60 | 4.2s | 밴드 전환 | 0.5s |
+| →D90 | 5.1s | 화살표 | — |
+| D90 | 5.3s | 밴드 전환 + "안정" 라벨 | 0.8s |
+| 완료 | ~6.3s | 전체 밝아짐, 버튼 "다시 재생" | — |
 
-총 ~11초 cycle.
+총 ~6초 cycle.
 
 ### 컨트롤 상태
 
@@ -190,10 +190,10 @@ Frame 사이 "이전 우리 실적 → 다음 장르 기대치로 흡수" 시각
 
 | 요소 | Duration | Easing |
 |---|---|---|
-| 장르 밴드 shrink | 600ms | `[0.16, 1, 0.3, 1]` |
-| 우리 밴드 appear | 400ms (200ms delay) | ease-out |
-| 관측값 fade-in | 300ms (400ms delay) | ease-out |
-| 화살표 pulse | 400ms | linear (`stroke-dashoffset`) |
+| 장르 밴드 shrink | 400ms | `[0.16, 1, 0.3, 1]` |
+| 우리 밴드 appear | 300ms (150ms delay) | ease-out |
+| 관측값 fade-in | 200ms (250ms delay) | ease-out |
+| 화살표 pulse | 200ms | linear (`stroke-dashoffset`) |
 | Dim 전환 | 200ms | ease-in-out |
 
 ### 구현
@@ -313,7 +313,7 @@ Recharts/visx 미사용. 근거:
 - Interactive scrubber (Play 버튼만)
 - 실시간 데이터 연결 (mock only)
 - 다른 게임(Weaving Fairy, Dig Infinity) mock 데이터 (match-league D7만)
-- 모바일 반응형 (max-w-4xl 고정, 차후)
+- 모바일 반응형 — PC 기준 고정. 전체 기획 완료 후 리팩토링 단계에서 일괄 대응 예정
 
 ---
 
