@@ -1315,3 +1315,88 @@ export function computeScenario(uaBudget: number, targetRoas: number): ScenarioR
     monthlyRevenue: Math.round(120000 * budgetRatio * roasRatio * 0.8),
   }
 }
+
+// --- Cyclic Update Timeline (Market Gap L2 Methodology) ---
+
+export type CyclicUpdateStep = {
+  day: number
+  label: string
+  updateRound: number
+  prior: { p10: number; p50: number; p90: number }
+  posterior: { p10: number; p50: number; p90: number } | null
+  observed: number | null
+  narrative: { ko: string; en: string }
+}
+
+export type CyclicUpdateData = {
+  metric: string
+  gameId: string
+  steps: CyclicUpdateStep[]
+}
+
+export const mockCyclicUpdate_matchLeague_d7: CyclicUpdateData = {
+  metric: "D7 Retention",
+  gameId: "match-league",
+  steps: [
+    {
+      day: 0, label: "D0", updateRound: 0,
+      prior: { p10: 9.5, p50: 14.2, p90: 21.0 },
+      posterior: null,
+      observed: null,
+      narrative: {
+        ko: "장르 기대치만 있는 상태 — 아직 우리 데이터 없음",
+        en: "Genre expectation only — no internal data yet",
+      },
+    },
+    {
+      day: 7, label: "D7", updateRound: 1,
+      prior: { p10: 10.8, p50: 14.5, p90: 19.2 },
+      posterior: { p10: 16.5, p50: 18.7, p90: 21.2 },
+      observed: 18.7,
+      narrative: {
+        ko: "첫 코호트 관측 → 장르 기대치가 좁아지고, 우리 실적 등장",
+        en: "First cohort observed → genre narrows, our actuals appear",
+      },
+    },
+    {
+      day: 14, label: "D14", updateRound: 2,
+      prior: { p10: 12.2, p50: 14.8, p90: 17.8 },
+      posterior: { p10: 16.0, p50: 17.5, p90: 19.5 },
+      observed: 17.5,
+      narrative: {
+        ko: "D7 실적이 기대치에 흡수 → 2차 update, 밴드 더 좁아짐",
+        en: "D7 actuals absorbed → 2nd update, bands narrower",
+      },
+    },
+    {
+      day: 30, label: "D30", updateRound: 3,
+      prior: { p10: 13.5, p50: 15.2, p90: 17.0 },
+      posterior: { p10: 15.8, p50: 17.2, p90: 18.5 },
+      observed: 17.2,
+      narrative: {
+        ko: "누적 update 3회 → 수렴 진행 중",
+        en: "3 updates accumulated → converging",
+      },
+    },
+    {
+      day: 60, label: "D60", updateRound: 4,
+      prior: { p10: 14.2, p50: 15.5, p90: 16.8 },
+      posterior: { p10: 15.5, p50: 17.0, p90: 18.2 },
+      observed: 17.0,
+      narrative: {
+        ko: "거의 수렴 — 판정 신뢰도 높아짐",
+        en: "Near convergence — judgment confidence increasing",
+      },
+    },
+    {
+      day: 90, label: "D90", updateRound: 5,
+      prior: { p10: 14.8, p50: 15.8, p90: 16.5 },
+      posterior: { p10: 15.2, p50: 16.8, p90: 17.8 },
+      observed: 16.8,
+      narrative: {
+        ko: "안정 — 판정 확정 가능",
+        en: "Stabilized — judgment finalized",
+      },
+    },
+  ],
+}
