@@ -36,7 +36,7 @@ const navItems = [
 ]
 
 const settingsItems = [
-  { key: "nav.integrations" as const, href: "#", icon: Settings },
+  { key: "nav.integrations" as const, href: "/dashboard/settings", icon: Settings },
   { key: "nav.account" as const,      href: "#", icon: User },
 ]
 
@@ -87,16 +87,33 @@ export function AppSidebar() {
         <p className="mb-1.5 px-2 text-[13px] font-semibold uppercase tracking-wider text-[var(--fg-2)]">
           {t("nav.settings")}
         </p>
-        {settingsItems.map((item) => (
-          <Link
-            key={item.key}
-            href={item.href}
-            className="mb-0.5 flex items-center gap-2 rounded-[var(--radius-card)] px-2 py-2 text-body font-medium text-[var(--fg-1)] hover:bg-[var(--bg-3)] hover:text-[var(--fg-0)] transition-all duration-[var(--duration-micro)] cursor-pointer"
-          >
-            <item.icon className="h-4 w-4 flex-shrink-0" />
-            <span className="truncate">{t(item.key)}</span>
-          </Link>
-        ))}
+        {settingsItems.map((item) => {
+          const isActive = item.href !== "#" && pathname.startsWith(item.href)
+          return (
+            <Link
+              key={item.key}
+              href={item.href}
+              className={cn(
+                "relative mb-0.5 flex items-center gap-2 rounded-[var(--radius-card)] px-2 py-2 text-body font-medium transition-all duration-[var(--duration-micro)] cursor-pointer",
+                isActive
+                  ? "text-[var(--brand)]"
+                  : "text-[var(--fg-1)] hover:bg-[var(--bg-3)] hover:text-[var(--fg-0)]"
+              )}
+            >
+              {isActive && (
+                <motion.div
+                  layoutId="sidebar-active-indicator"
+                  className="absolute inset-0 rounded-[var(--radius-card)] bg-[var(--brand-tint)]"
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                />
+              )}
+              <span className="relative z-10 flex min-w-0 items-center gap-2">
+                <item.icon className="h-4 w-4 flex-shrink-0" />
+                <span className="truncate">{t(item.key)}</span>
+              </span>
+            </Link>
+          )
+        })}
       </nav>
 
       {/* Footer: Language toggle only (game selector moved to top) */}
