@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
 import { useLocale } from "@/shared/i18n"
 import type { PriorPosterior } from "@/shared/api/mock-data"
@@ -8,6 +9,9 @@ import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 import { MARKET_GAP_PROOF_COLORS } from "@/shared/config/chart-colors"
 import { computeMarketSignal } from "@/shared/lib"
+import { MethodologyModal } from "@/shared/ui/methodology-modal"
+import { CyclicUpdateTimeline } from "./cyclic-update-timeline"
+import { mockCyclicUpdate_matchLeague_d7 } from "@/shared/api/mock-data"
 
 const C = MARKET_GAP_PROOF_COLORS
 
@@ -24,6 +28,7 @@ type PriorPosteriorChartProps = {
  */
 export function PriorPosteriorChart({ data }: PriorPosteriorChartProps) {
   const { t } = useLocale()
+  const [methodologyOpen, setMethodologyOpen] = useState(false)
   const { expanded, toggle, gridClassName } = useChartExpand()
 
   return (
@@ -145,6 +150,33 @@ export function PriorPosteriorChart({ data }: PriorPosteriorChartProps) {
           <span className="text-[var(--fg-2)]">{t("market.proof.ourLabel")}</span>
         </div>
       </div>
+
+      {/* L2 Methodology CTA */}
+      <div className="mt-3 text-center">
+        <button
+          type="button"
+          onClick={() => setMethodologyOpen(true)}
+          className="text-caption text-[var(--fg-3)] hover:text-[var(--fg-1)] transition-colors"
+        >
+          📊 {t("methodology.ctaLabel")}
+        </button>
+      </div>
+
+      {/* L2 Methodology Modal */}
+      <MethodologyModal
+        open={methodologyOpen}
+        onOpenChange={setMethodologyOpen}
+        title={t("methodology.title").replace("{metric}", data[0]?.metric ?? "D7 Retention")}
+        subtitle={t("methodology.subtitle")}
+        footer={
+          <div className="text-caption text-[var(--fg-2)] leading-relaxed">
+            <p>{t("methodology.footer")}</p>
+            <p className="mt-1 italic text-[var(--fg-3)]">{t("methodology.footerL2")}</p>
+          </div>
+        }
+      >
+        <CyclicUpdateTimeline data={mockCyclicUpdate_matchLeague_d7} />
+      </MethodologyModal>
     </motion.div>
   )
 }
