@@ -1,19 +1,18 @@
 "use client"
 
 import { useState } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { Play } from "lucide-react"
 import { type CyclicUpdateData, type CyclicUpdateStep } from "@/shared/api/mock-data"
 import { MARKET_GAP_PROOF_COLORS as C } from "@/shared/config/chart-colors"
-import { computeMarketSignal } from "@/shared/lib"
+import { computeMarketSignal, cn } from "@/shared/lib"
 import { useLocale } from "@/shared/i18n"
+import { type TranslationKey } from "@/shared/i18n/dictionary"
 
 // ─── Y-axis normalization ─────────────────────────────────────────────────────
-// All frames share the same Y scale derived from D0 (widest prior band).
 function makeToY(globalMin: number, globalMax: number, height: number) {
   return (value: number) => {
     const pct = (value - globalMin) / (globalMax - globalMin)
-    // Invert: high value → low pixel (top of container)
     return height - pct * height
   }
 }
@@ -25,11 +24,23 @@ type StepFrameProps = {
   bandHeight: number
   isFirst: boolean
   locale: "ko" | "en"
+  isHovered: boolean
+  isDimmed: boolean
+  onMouseEnter: () => void
+  onMouseLeave: () => void
 }
 
-function StepFrame({ step, toY, bandHeight, isFirst, locale }: StepFrameProps) {
-  const [hovered, setHovered] = useState(false)
-
+function StepFrame({
+  step,
+  toY,
+  bandHeight,
+  isFirst,
+  locale,
+  isHovered,
+  isDimmed,
+  onMouseEnter,
+  onMouseLeave,
+}: StepFrameProps) {
   const priorTop = toY(step.prior.p90)
   const priorBottom = toY(step.prior.p10)
   const priorMid = toY(step.prior.p50)
@@ -51,13 +62,42 @@ function StepFrame({ step, toY, bandHeight, isFirst, locale }: StepFrameProps) {
 
   return (
     <motion.div
-      className="flex flex-col items-center gap-1 cursor-default"
+      className="flex flex-col items-center gap-1 cursor-default relative"
       style={{ width: 120 }}
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
-      whileHover={{ scale: 1.04 }}
-      transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
+      animate={{
+        opacity: isDimmed ? 0.45 : 1,
+        filter: isDimmed ? "blur(0.5px)" : "blur(0px)",
+        scale: isHovered ? 1.04 : 1,
+        zIndex: isHovered ? 10 : 1,
+      }}
+      transition={{ duration: 0.2 }}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
+      {/* Tooltip */}
+      <AnimatePresence>
+        {isHovered && step.posterior && (
+          <motion.div
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 4 }}
+            transition={{ duration: 0.15 }}
+            className="absolute -top-12 left-1/2 -translate-x-1/2 z-20 whitespace-nowrap rounded-md border border-[var(--border-default)] bg-[var(--bg-1)] px-2.5 py-1.5 shadow-lg text-[10px]"
+          >
+            <span className="text-[var(--fg-2)]">{step.label}: </span>
+            <span style={{ color: C.genre }}>{step.prior.p50.toFixed(1)}</span>
+            <span className="text-[var(--fg-3)]"> → </span>
+            <span className="font-bold" style={{ color: C.our }}>{step.posterior.p50.toFixed(1)}</span>
+            {signal && (
+              <span className="ml-1.5 font-bold" style={{ color: C.gapAccent }}>
+                {signal.deltaPct > 0 ? "+" : ""}
+                {signal.deltaPct.toFixed(1)}%
+              </span>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Top label */}
       <span
         className="text-[11px] font-mono font-semibold"
@@ -68,17 +108,19 @@ function StepFrame({ step, toY, bandHeight, isFirst, locale }: StepFrameProps) {
 
       {/* Band visualization area */}
       <div
-        className="relative w-full rounded-sm border transition-colors"
+        className={cn(
+          "relative w-full rounded-sm border transition-colors",
+          isHovered && "ring-2 ring-[var(--brand)]/20"
+        )}
         style={{
           height: bandHeight,
-          borderColor: hovered ? "var(--brand)" : "var(--border-default)",
-          borderWidth: hovered ? 2 : 1,
-          boxShadow: hovered ? "0 0 0 3px rgba(26,127,232,0.15)" : undefined,
+          borderColor: isHovered ? "var(--brand)" : "var(--border-default)",
+          borderWidth: isHovered ? 2 : 1,
           backgroundColor: "var(--bg-2)",
-          overflow: "hidden",
+          overflow: "visible",
         }}
       >
-        {/* Prior band (genre expectation) — dashed border, red fill */}
+        {/* Prior band (genre expectation) */}
         <div
           className="absolute left-1 right-1"
           style={{
@@ -99,7 +141,7 @@ function StepFrame({ step, toY, bandHeight, isFirst, locale }: StepFrameProps) {
           }}
         />
 
-        {/* Posterior band (our performance) — solid border, green fill */}
+        {/* Posterior band (our performance) */}
         {step.posterior && (
           <>
             <div
@@ -136,7 +178,7 @@ function StepFrame({ step, toY, bandHeight, isFirst, locale }: StepFrameProps) {
             >
               ×
             </span>
-            {hovered && step.observed !== null && (
+            {isHovered && step.observed !== null && (
               <span
                 className="text-[9px] font-mono font-bold leading-none mt-0.5"
                 style={{ color: C.our }}
@@ -159,28 +201,16 @@ function StepFrame({ step, toY, bandHeight, isFirst, locale }: StepFrameProps) {
           </span>
         ) : (
           <>
-            {/* Prior P50 */}
-            <span
-              className="text-[10px] font-mono"
-              style={{ color: C.genre }}
-            >
+            <span className="text-[10px] font-mono" style={{ color: C.genre }}>
               {step.prior.p50.toFixed(1)}
             </span>
-            {/* Posterior P50 */}
             {step.posterior && (
-              <span
-                className="text-[11px] font-mono font-bold"
-                style={{ color: C.our }}
-              >
+              <span className="text-[11px] font-mono font-bold" style={{ color: C.our }}>
                 →{step.posterior.p50.toFixed(1)}
               </span>
             )}
-            {/* Gap */}
             {signal && (
-              <span
-                className="text-[10px] font-mono font-semibold"
-                style={{ color: gapColor }}
-              >
+              <span className="text-[10px] font-mono font-semibold" style={{ color: gapColor }}>
                 {gapSign}{signal.deltaPct.toFixed(1)}%
               </span>
             )}
@@ -192,28 +222,42 @@ function StepFrame({ step, toY, bandHeight, isFirst, locale }: StepFrameProps) {
 }
 
 // ─── AbsorptionArrow ──────────────────────────────────────────────────────────
-function AbsorptionArrow({ locale }: { locale: "ko" | "en" }) {
+type AbsorptionArrowProps = {
+  locale: "ko" | "en"
+  isAdjacentHovered: boolean
+  t: (key: TranslationKey) => string
+}
+
+function AbsorptionArrow({ locale, isAdjacentHovered, t }: AbsorptionArrowProps) {
   return (
     <div className="flex flex-col items-center justify-center gap-0.5" style={{ marginTop: 16 }}>
       <svg width="28" height="20" viewBox="0 0 28 20" fill="none">
         <line
           x1="2" y1="10" x2="22" y2="10"
-          stroke="var(--fg-3)"
-          strokeWidth="1"
-          strokeDasharray="3 3"
-          opacity="0.5"
+          stroke={isAdjacentHovered ? "var(--brand)" : "var(--fg-3)"}
+          strokeWidth={isAdjacentHovered ? 2 : 1}
+          strokeDasharray={isAdjacentHovered ? undefined : "3 3"}
+          opacity={isAdjacentHovered ? 1 : 0.5}
+          style={{ transition: "stroke 0.2s, opacity 0.2s, stroke-width 0.2s" }}
         />
         <polygon
           points="22,5 28,10 22,15"
-          fill="var(--fg-3)"
-          opacity="0.5"
+          fill={isAdjacentHovered ? "var(--brand)" : "var(--fg-3)"}
+          opacity={isAdjacentHovered ? 1 : 0.5}
+          style={{ transition: "fill 0.2s, opacity 0.2s" }}
         />
       </svg>
       <span
-        className="text-[9px]"
-        style={{ color: "var(--fg-3)" }}
+        className="text-[9px] text-center leading-tight"
+        style={{
+          color: isAdjacentHovered ? "var(--brand)" : "var(--fg-3)",
+          transition: "color 0.2s",
+          maxWidth: isAdjacentHovered ? 80 : undefined,
+        }}
       >
-        {locale === "ko" ? "흡수" : "absorbed"}
+        {isAdjacentHovered
+          ? t("methodology.absorptionFull")
+          : t("methodology.absorption")}
       </span>
     </div>
   )
@@ -227,9 +271,8 @@ type CyclicUpdateTimelineProps = {
 export function CyclicUpdateTimeline({ data }: CyclicUpdateTimelineProps) {
   const { locale, t } = useLocale()
   const bandHeight = 120
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null)
 
-  // Compute global Y scale from D0 prior (widest band)
-  const d0 = data.steps[0]
   const allValues = data.steps.flatMap((s) => {
     const vals = [s.prior.p10, s.prior.p50, s.prior.p90]
     if (s.posterior) vals.push(s.posterior.p10, s.posterior.p50, s.posterior.p90)
@@ -257,21 +300,39 @@ export function CyclicUpdateTimeline({ data }: CyclicUpdateTimelineProps) {
       </div>
 
       {/* 6-frame horizontal step grid */}
-      <div className="flex items-start gap-0 overflow-x-auto pb-2">
-        {data.steps.map((step, i) => (
-          <div key={step.label} className="flex items-start">
-            <StepFrame
-              step={step}
-              toY={toY}
-              bandHeight={bandHeight}
-              isFirst={i === 0}
-              locale={locale}
-            />
-            {i < data.steps.length - 1 && (
-              <AbsorptionArrow locale={locale} />
-            )}
-          </div>
-        ))}
+      <div
+        className="flex items-start gap-0 overflow-x-auto pb-2"
+        onMouseLeave={() => setHoveredIdx(null)}
+      >
+        {data.steps.map((step, i) => {
+          const isHovered = hoveredIdx === i
+          const isDimmed = hoveredIdx !== null && !isHovered
+          // Arrow between frames i and i+1 is adjacent-hovered if frame i or i+1 is hovered
+          const arrowAdjacentHovered = hoveredIdx === i || hoveredIdx === i + 1
+
+          return (
+            <div key={step.label} className="flex items-start">
+              <StepFrame
+                step={step}
+                toY={toY}
+                bandHeight={bandHeight}
+                isFirst={i === 0}
+                locale={locale}
+                isHovered={isHovered}
+                isDimmed={isDimmed}
+                onMouseEnter={() => setHoveredIdx(i)}
+                onMouseLeave={() => {}}
+              />
+              {i < data.steps.length - 1 && (
+                <AbsorptionArrow
+                  locale={locale}
+                  isAdjacentHovered={arrowAdjacentHovered}
+                  t={t}
+                />
+              )}
+            </div>
+          )
+        })}
       </div>
     </div>
   )
