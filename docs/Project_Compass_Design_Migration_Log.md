@@ -736,7 +736,7 @@ Null/미정   → "—" (em dash, 절대 "N/A" 또는 "0" 아님)
 
 ## 6. 다음 세션 인계 (Handoff Notes)
 
-**현재 위치**: Sprint 4 (MVP Revision + Typography + Dynamic Grid) + Revenue Forecast Bayesian 재설계 완료 (2026-04-14) → 다음 Sprint 정의 대기
+**현재 위치**: Sprint 4 + Revenue Forecast Bayesian + Market Gap L1/L2 + Positioning L0/L1/L2 완료 (2026-04-17) → 다음 Sprint 정의 대기
 
 **Sprint 4 산출물 (2026-04-14 완료)**:
 - ✅ MVP Revision — 랜딩 내러티브 통일, 게임명 `Match League` 통일, KPI 투자 언어화(Payback Forecast/Break-even Probability/Runway Impact), 계산 근거 라인(`basisKey`), 추천 액션 기대효과 수치, Copilot 시나리오 버튼, 차트 인사이트 문구, Demo Data 배지
@@ -766,6 +766,41 @@ Null/미정   → "—" (em dash, 절대 "N/A" 또는 "0" 아님)
 - Experiment 데이터 소스를 실 Experiment Board에 wire — 현재는 per-game mock
 - 커스텀 드롭다운 키보드 내비게이션 (game-selector에서 port 예정)
 - Prior 밴드 수치의 근거(GameAnalytics 2024 P10–P90 등) 툴팁 노출
+
+**Market Gap L1/L2 재설계 (2026-04-15~17, 커밋 `9008664..f6909ce` L1 + `d1e3e10..1cec2e1` L2)**:
+
+L1 (Operator UI, 2026-04-15):
+- ✅ PriorPosteriorChart 전면 리라이트 — "Prior/Posterior/베이지안" → **"장르 기대치 vs 우리 실적"**
+- ✅ `computeMarketSignal` helper — ±5% threshold → Invest/Hold/Reduce 판정 (NaN/음수 guard 포함)
+- ✅ `MARKET_GAP_PROOF_COLORS` 토큰 — Revenue Forecast와 정합 (빨강=장르, 초록=우리, 파랑=격차)
+- ✅ 동적 신호 뱃지 — 지표별 "우리 우월 +31% · Invest 신호" L1 언어 (Alpha 단어 미노출)
+- ✅ L1 compliance 검증 통과 (grep 금지어 0, 한/영 locale)
+
+L2 (Methodology Modal, 2026-04-16~17):
+- ✅ `MethodologyModal` — @base-ui/react/dialog 기반 centered overlay (framer-motion 애니메이션)
+- ✅ `CyclicUpdateTimeline` — 6-frame 수평 step grid (D0→D90), div+Tailwind+framer-motion (Recharts 미사용)
+  - 장르 기대치 밴드(빨강 dashed) 점차 좁아짐 + 우리 실적 밴드(초록 solid) 등장/수렴
+  - SVG 흡수 화살표 5개 ("이전 실적 → 다음 기대치로 흡수")
+  - Hover: scale 1.04 + brand ring + 비hover dim(0.45) + 관측값 수치 라벨 + tooltip
+  - Play 애니메이션: useReducer state machine, ~6초 sequential (D0→D90), 화살표 pulse
+  - Play 중 hover → auto-pause, leave → auto-resume
+- ✅ L1 차트 하단 CTA "📊 이 판정의 방법론 보기" → modal 연결
+- ✅ Mock 데이터: `CyclicUpdateStep`/`CyclicUpdateData` 타입, match-league D7 6-step
+- ✅ i18n: `methodology.*` 13개 키 (modal header/footer/play/CTA/absorption/narrative)
+- ✅ L1/L2 compliance 검증 통과 — L1 금지어 0, L2에서만 Bayesian/Alpha (footer 힌트)
+
+**Positioning & Language Layering (2026-04-15, 커밋 `ed1dfca`)**:
+- ✅ A+B 하이브리드 확정: Top-line = Decision OS (CLAUDE.md §1 유지), Alpha = L2 signature mechanism
+- ✅ L0/L1/L2 언어 레이어링 정책 — Marketing(L0) / Operator UI(L1, 기술 용어 0) / Methodology(L2, Alpha·Bayesian 허용)
+- ✅ Alpha 단어 외부 검증 대기 (operator 3+/VC 2+/analyst 1-2 인터뷰 — 코드 아님)
+- ✅ Spec: `2026-04-15-compass-positioning-language-layering-design.md`
+
+**Market Gap deferred 항목**:
+- Cyclic Timeline 다른 게임/지표 mock 확장 (동일 구조, ~30min per game)
+- Alpha 이름 외부 검증 (operator/투자자 인터뷰)
+- Revenue Forecast L1 용어 정합 점검 (사전/사후 확률 → L1 정책과 불일치 가능성)
+- Cyclic Timeline 모바일 반응형 — 전체 기획 완료 후 리팩토링
+- Interactive scrubber (현재 Play만) — 필요성 검증 후
 
 **Sprint 5 후보 (우선순위 미정)**:
 1. **AI Copilot Level 2** — Vercel AI SDK + Claude. 시나리오 액션 버튼을 실제 LLM 기반 탐색으로 승격
