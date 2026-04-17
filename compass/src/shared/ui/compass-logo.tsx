@@ -57,15 +57,17 @@ export function CompassLogo({
       </svg>
       {variant === "full" && (
         <span
-          className="font-semibold text-[var(--fg-0)]"
+          className="text-[var(--fg-0)]"
           style={{
-            fontFamily: "var(--font-geist-sans)",
+            fontFamily: "var(--font-rocko-ultra)",
             fontSize: s.text,
-            letterSpacing: "-0.015em",
+            letterSpacing: "0.02em",
             lineHeight: 1,
+            WebkitTextStroke: `${s.text * 0.02}px currentColor`,
+            paintOrder: "stroke fill",
           }}
         >
-          project compass
+          PROJECT COMPASS
         </span>
       )}
     </span>

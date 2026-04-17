@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google"
+import localFont from "next/font/local"
 import "@/styles/globals.css"
 import { TooltipProvider } from "@/shared/ui/tooltip"
 import { LocaleProvider } from "@/shared/i18n"
@@ -26,6 +27,12 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-geist-mono",
+  display: "swap",
+})
+
+const rockoUltra = localFont({
+  src: "../../public/fonts/rocko-ultra-flf.otf",
+  variable: "--font-rocko-ultra",
   display: "swap",
 })
 
@@ -59,7 +66,7 @@ export default function RootLayout({
     <html
       lang="ko"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${rockoUltra.variable}`}
     >
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
