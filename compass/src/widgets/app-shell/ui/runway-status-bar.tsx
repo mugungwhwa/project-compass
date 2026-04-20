@@ -298,7 +298,7 @@ export function RunwayStatusBar() {
             <span className="text-caption uppercase tracking-wider text-[var(--fg-2)]">
               {locale === "ko" ? "게임" : "TITLE"}
             </span>
-            <span className="text-h2 text-[var(--fg-0)]">{selectedGame.label}</span>
+            <span className="text-body font-medium text-[var(--fg-0)]">{selectedGame.label}</span>
             <ChevronDown className="h-3 w-3 flex-shrink-0 self-center text-[var(--fg-3)]" aria-hidden />
           </button>
 
@@ -371,7 +371,7 @@ export function RunwayStatusBar() {
             <span className="text-caption uppercase tracking-wider text-[var(--fg-2)]">
               {locale === "ko" ? "기간" : "PERIOD"}
             </span>
-            <span className="font-mono text-h2 text-[var(--fg-0)] whitespace-nowrap">
+            <span className="font-mono text-body font-medium text-[var(--fg-0)] whitespace-nowrap">
               {dateRange.from && dateRange.to
                 ? locale === "ko"
                   ? `${dateRange.from.getMonth() + 1}/${dateRange.from.getDate()}–${dateRange.to.getMonth() + 1}/${dateRange.to.getDate()}`
