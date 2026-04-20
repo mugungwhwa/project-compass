@@ -59,12 +59,11 @@ export function CompassLogo({
         <span
           className="text-[var(--fg-0)]"
           style={{
-            fontFamily: "var(--font-rocko-ultra)",
+            fontFamily: 'var(--font-instrument-serif), "Noto Serif KR", Georgia, serif',
             fontSize: s.text,
-            letterSpacing: "0.02em",
+            letterSpacing: "-0.01em",
             lineHeight: 1,
-            WebkitTextStroke: `${s.text * 0.02}px currentColor`,
-            paintOrder: "stroke fill",
+            fontStyle: "italic",
           }}
         >
           PROJECT COMPASS
