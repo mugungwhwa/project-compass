@@ -9,6 +9,7 @@ import { ChartHeader } from "@/shared/ui/chart-header"
 import { ChartTooltip } from "@/shared/ui/chart-tooltip"
 import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
+import { CHART_TYPO } from "@/shared/config/chart-typography"
 
 const C = ACTION_TIMELINE_COLORS
 
@@ -48,8 +49,8 @@ export function ActionTimeline({ retentionTrend, actions }: ActionTimelineProps)
       <ResponsiveContainer width="100%" height={chartHeight}>
         <ComposedChart data={retentionTrend} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
           <CartesianGrid strokeDasharray="4 4" stroke={C.grid} vertical={false} />
-          <XAxis dataKey="date" tick={{ fontSize: 10, fill: C.axis }} axisLine={{ stroke: C.border }} tickLine={false} tickFormatter={(v: string) => v.slice(5)} />
-          <YAxis tick={{ fontSize: 11, fill: C.axis }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${v}%`} domain={["dataMin - 1", "dataMax + 1"]} />
+          <XAxis dataKey="date" tick={{ ...CHART_TYPO.axisTick, fill: C.axis }} axisLine={{ stroke: C.border }} tickLine={false} tickFormatter={(v: string) => v.slice(5)} />
+          <YAxis tick={{ ...CHART_TYPO.axisTick, fill: C.axis }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${v}%`} domain={["dataMin - 1", "dataMax + 1"]} />
           <Tooltip content={<ChartTooltip />} />
           <Line type="monotone" dataKey="retention" stroke={C.retention} strokeWidth={2} dot={{ r: 2.5, fill: C.retention }} name="D7 Retention" animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
           {actions.map((action) => (

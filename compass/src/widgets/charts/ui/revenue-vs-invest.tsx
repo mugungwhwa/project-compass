@@ -9,6 +9,7 @@ import { ChartTooltip, TooltipDot } from "@/shared/ui/chart-tooltip"
 import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 import { REVENUE_VS_INVEST_COLORS } from "@/shared/config/chart-colors"
+import { CHART_TYPO } from "@/shared/config/chart-typography"
 import {
   AreaChart,
   Area,
@@ -72,12 +73,12 @@ export function RevenueVsInvest({ data, expanded: externalExpanded, onToggle: ex
           <CartesianGrid strokeDasharray="4 4" stroke={C.grid} vertical={false} />
           <XAxis
             dataKey="month"
-            tick={{ fontSize: 12, fill: C.axis }}
+            tick={{ ...CHART_TYPO.axisTick, fill: C.axis }}
             axisLine={{ stroke: C.border }}
             tickLine={false}
           />
           <YAxis
-            tick={{ fontSize: 12, fill: C.axis }}
+            tick={{ ...CHART_TYPO.axisTick, fill: C.axis }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v: number) => `$${v}`}
@@ -86,7 +87,7 @@ export function RevenueVsInvest({ data, expanded: externalExpanded, onToggle: ex
               value: "$K",
               position: "top",
               offset: 4,
-              style: { fontSize: 10, fill: C.axis, textAnchor: "middle" },
+              style: { ...CHART_TYPO.axisLabel, fill: C.axis, textAnchor: "middle" },
             }}
           />
 
@@ -107,14 +108,14 @@ export function RevenueVsInvest({ data, expanded: externalExpanded, onToggle: ex
                       <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
                         <TooltipDot color={C.revenue} />
                         <span style={{ color: "#6B7280" }}>{t("chart.monthlyRev")}</span>
-                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 500, color: "#0A0A0A", fontVariantNumeric: "tabular-nums" }}>
+                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 500, color: "#0A0A0A", fontVariantNumeric: CHART_TYPO.tooltipValue.fontVariantNumeric, fontFamily: CHART_TYPO.tooltipValue.fontFamily }}>
                           ${d.revenue}K
                         </span>
                       </div>
                       <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
                         <TooltipDot color={C.uaSpend} />
                         <span style={{ color: "#6B7280" }}>{t("chart.monthlySpend")}</span>
-                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 500, color: "#0A0A0A", fontVariantNumeric: "tabular-nums" }}>
+                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 500, color: "#0A0A0A", fontVariantNumeric: CHART_TYPO.tooltipValue.fontVariantNumeric, fontFamily: CHART_TYPO.tooltipValue.fontFamily }}>
                           ${d.uaSpend}K
                         </span>
                       </div>
@@ -124,14 +125,14 @@ export function RevenueVsInvest({ data, expanded: externalExpanded, onToggle: ex
                       <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
                         <TooltipDot color={C.revenue} />
                         <span style={{ color: "#6B7280" }}>{t("chart.cumRevenue")}</span>
-                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 600, color: "#0A0A0A", fontVariantNumeric: "tabular-nums" }}>
+                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 600, color: "#0A0A0A", fontVariantNumeric: CHART_TYPO.tooltipValue.fontVariantNumeric, fontFamily: CHART_TYPO.tooltipValue.fontFamily }}>
                           ${d.cumRevenue}K
                         </span>
                       </div>
                       <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
                         <TooltipDot color={C.uaSpend} />
                         <span style={{ color: "#6B7280" }}>{t("chart.cumUaSpend")}</span>
-                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 600, color: "#0A0A0A", fontVariantNumeric: "tabular-nums" }}>
+                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 600, color: "#0A0A0A", fontVariantNumeric: CHART_TYPO.tooltipValue.fontVariantNumeric, fontFamily: CHART_TYPO.tooltipValue.fontFamily }}>
                           ${d.cumUaSpend}K
                         </span>
                       </div>
@@ -148,7 +149,8 @@ export function RevenueVsInvest({ data, expanded: externalExpanded, onToggle: ex
                           paddingLeft: 12,
                           fontWeight: 700,
                           color: isPositive ? C.profit : C.loss,
-                          fontVariantNumeric: "tabular-nums",
+                          fontVariantNumeric: CHART_TYPO.tooltipValue.fontVariantNumeric,
+                          fontFamily: CHART_TYPO.tooltipValue.fontFamily,
                         }}>
                           {isPositive ? "+" : ""}{gap}K
                         </span>
@@ -200,8 +202,7 @@ export function RevenueVsInvest({ data, expanded: externalExpanded, onToggle: ex
                       x={cx}
                       y={cy - 16}
                       textAnchor="middle"
-                      fontSize={10}
-                      fontWeight={700}
+                      {...CHART_TYPO.annotation}
                       fill={C.profit}
                     >
                       BEP
@@ -231,7 +232,7 @@ export function RevenueVsInvest({ data, expanded: externalExpanded, onToggle: ex
             verticalAlign="bottom"
             height={36}
             iconSize={12}
-            wrapperStyle={{ fontSize: 11, color: C.legend }}
+            wrapperStyle={{ ...CHART_TYPO.legend, color: C.legend }}
           />
         </AreaChart>
       </ResponsiveContainer>

@@ -10,6 +10,7 @@ import { ChartTooltip } from "@/shared/ui/chart-tooltip"
 import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 import { REVENUE_FORECAST_COLORS } from "@/shared/config/chart-colors"
+import { CHART_TYPO } from "@/shared/config/chart-typography"
 import { cn } from "@/shared/lib"
 import { AreaChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts"
 
@@ -96,7 +97,8 @@ function TooltipRow({ label, value, emphasized, muted, accentColor }: { label: s
           paddingLeft: 12,
           fontWeight: emphasized ? 600 : 500,
           color: accentColor ?? (muted ? "#9CA3AF" : "#0A0A0A"),
-          fontVariantNumeric: "tabular-nums",
+          fontVariantNumeric: CHART_TYPO.tooltipValue.fontVariantNumeric,
+          fontFamily: CHART_TYPO.tooltipValue.fontFamily,
         }}
       >
         {value}
@@ -341,8 +343,8 @@ export function RevenueForecast({ data, meta, title, expanded: externalExpanded,
               </pattern>
             </defs>
             <CartesianGrid strokeDasharray="4 4" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="month" tick={{ fontSize: 11, fill: C.axis }} axisLine={{ stroke: C.border }} tickLine={false} />
-            <YAxis tick={{ fontSize: 11, fill: C.axis }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `$${v}K`} />
+            <XAxis dataKey="month" tick={{ ...CHART_TYPO.axisTick, fill: C.axis }} axisLine={{ stroke: C.border }} tickLine={false} />
+            <YAxis tick={{ ...CHART_TYPO.axisTick, fill: C.axis }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `$${v}K`} />
             <Tooltip
               content={
                 <ChartTooltip
@@ -452,7 +454,7 @@ export function RevenueForecast({ data, meta, title, expanded: externalExpanded,
                 label={{
                   value: `${selectedExp.id} ${t("rfc.shipMarker")}`,
                   position: "insideTopLeft",
-                  fontSize: 10,
+                  ...CHART_TYPO.axisLabel,
                   fill: C.forkMark,
                   offset: 8,
                 }}

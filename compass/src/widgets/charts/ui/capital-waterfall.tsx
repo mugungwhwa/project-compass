@@ -8,6 +8,7 @@ import { ChartHeader } from "@/shared/ui/chart-header"
 import { ChartTooltip, TooltipDot } from "@/shared/ui/chart-tooltip"
 import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
+import { CHART_TYPO } from "@/shared/config/chart-typography"
 import {
   ComposedChart,
   Bar,
@@ -151,12 +152,12 @@ export function CapitalWaterfall({ data, expanded: externalExpanded, onToggle: e
           <CartesianGrid strokeDasharray="3 3" stroke={PALETTE.grid} vertical={false} />
           <XAxis
             dataKey="label"
-            tick={{ fontSize: 11, fill: PALETTE.axis }}
+            tick={{ ...CHART_TYPO.axisTick, fill: PALETTE.axis }}
             axisLine={{ stroke: PALETTE.border }}
             tickLine={false}
           />
           <YAxis
-            tick={{ fontSize: 11, fill: PALETTE.axis }}
+            tick={{ ...CHART_TYPO.axisTick, fill: PALETTE.axis }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v: number) => `$${(v / 1000).toFixed(0)}K`}
@@ -190,7 +191,8 @@ export function CapitalWaterfall({ data, expanded: externalExpanded, onToggle: e
                           paddingLeft: 12,
                           fontWeight: 600,
                           color,
-                          fontVariantNumeric: "tabular-nums",
+                          fontVariantNumeric: CHART_TYPO.tooltipValue.fontVariantNumeric,
+                          fontFamily: CHART_TYPO.tooltipValue.fontFamily,
                         }}>
                           {sign}${(Math.abs(row.value) / 1000).toFixed(1)}K
                         </span>
@@ -205,7 +207,8 @@ export function CapitalWaterfall({ data, expanded: externalExpanded, onToggle: e
                           paddingLeft: 12,
                           fontWeight: 500,
                           color: "#374151",
-                          fontVariantNumeric: "tabular-nums",
+                          fontVariantNumeric: CHART_TYPO.tooltipValue.fontVariantNumeric,
+                          fontFamily: CHART_TYPO.tooltipValue.fontFamily,
                         }}>
                           {runningSign}${(Math.abs(row.runningTotal) / 1000).toFixed(1)}K
                         </span>

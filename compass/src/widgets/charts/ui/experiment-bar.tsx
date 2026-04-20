@@ -8,6 +8,7 @@ import { ChartTooltip, TooltipDot } from "@/shared/ui/chart-tooltip"
 import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 import { EXPERIMENT_BAR_COLORS } from "@/shared/config/chart-colors"
+import { CHART_TYPO } from "@/shared/config/chart-typography"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Cell, ResponsiveContainer } from "recharts"
 
 type ExperimentBarProps = { data: ExperimentData[] }
@@ -34,8 +35,8 @@ export function ExperimentBar({ data }: ExperimentBarProps) {
       <ResponsiveContainer width="100%" height={chartHeight}>
         <BarChart data={sorted} layout="vertical" margin={{ top: 5, right: 20, left: 100, bottom: 5 }}>
           <CartesianGrid strokeDasharray="4 4" stroke={C.grid} horizontal={false} />
-          <XAxis type="number" tick={{ fontSize: 11, fill: C.axis }} axisLine={{ stroke: C.border }} tickLine={false} tickFormatter={(v: number) => `$${v}`} />
-          <YAxis type="category" dataKey="name" tick={{ fontSize: 12, fill: C.label }} axisLine={false} tickLine={false} width={95} />
+          <XAxis type="number" tick={{ ...CHART_TYPO.axisTick, fill: C.axis }} axisLine={{ stroke: C.border }} tickLine={false} tickFormatter={(v: number) => `$${v}`} />
+          <YAxis type="category" dataKey="name" tick={{ ...CHART_TYPO.axisTick, fill: C.label }} axisLine={false} tickLine={false} width={95} />
           <Tooltip
             content={
               <ChartTooltip
@@ -50,7 +51,7 @@ export function ExperimentBar({ data }: ExperimentBarProps) {
                       <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
                         <TooltipDot color={p.color ?? C.positive} />
                         <span style={{ color: "#6B7280" }}>ΔLTV</span>
-                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 500, color: "#0A0A0A", fontVariantNumeric: "tabular-nums" }}>
+                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 500, color: "#0A0A0A", fontVariantNumeric: CHART_TYPO.tooltipValue.fontVariantNumeric, fontFamily: CHART_TYPO.tooltipValue.fontFamily }}>
                           {p.value != null ? `$${p.value}` : ""}
                         </span>
                       </div>

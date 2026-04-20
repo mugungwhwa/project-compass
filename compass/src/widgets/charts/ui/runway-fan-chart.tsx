@@ -29,6 +29,7 @@ import { ChartHeader } from "@/shared/ui/chart-header"
 import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 import { RUNWAY_FAN_COLORS as C } from "@/shared/config/chart-colors"
+import { CHART_TYPO } from "@/shared/config/chart-typography"
 
 const MARGIN = { top: 24, right: 32, bottom: 40, left: 56 }
 
@@ -207,9 +208,8 @@ function InnerChart({
           tickStroke={C.border}
           tickLabelProps={() => ({
             fill: C.axis,
-            fontSize: 10,
+            ...CHART_TYPO.axisTick,
             textAnchor: "middle",
-            fontFamily: "var(--font-geist-mono)",
           })}
         />
         <AxisLeft
@@ -220,11 +220,10 @@ function InnerChart({
           tickStroke="transparent"
           tickLabelProps={() => ({
             fill: C.axis,
-            fontSize: 10,
+            ...CHART_TYPO.axisTick,
             textAnchor: "end",
             dx: "-0.25em",
             dy: "0.25em",
-            fontFamily: "var(--font-geist-mono)",
           })}
         />
 
@@ -235,8 +234,7 @@ function InnerChart({
             y={0}
             textAnchor="end"
             fill={C.cashOutBorder}
-            fontSize={11}
-            fontFamily="var(--font-geist-mono)"
+            {...CHART_TYPO.annotation}
             fontWeight={600}
           >
             {locale === "en"

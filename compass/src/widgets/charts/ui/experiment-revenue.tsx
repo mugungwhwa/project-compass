@@ -9,6 +9,7 @@ import { ChartTooltip, TooltipDot } from "@/shared/ui/chart-tooltip"
 import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 import { REVENUE_DECOMP_COLORS } from "@/shared/config/chart-colors"
+import { CHART_TYPO } from "@/shared/config/chart-typography"
 import {
   ComposedChart,
   Bar,
@@ -130,7 +131,7 @@ function DeployMarker({ x, y, width, value }: { x: number; y: number; width: num
         points={`${cx},${y - 14} ${cx - 4},${y - 6} ${cx + 4},${y - 6}`}
         fill={C.deploy}
       />
-      <text x={cx} y={y - 17} textAnchor="middle" fontSize={9} fontWeight={600} fill={C.deploy}>
+      <text x={cx} y={y - 17} textAnchor="middle" {...CHART_TYPO.annotation} fill={C.deploy}>
         {value}
       </text>
     </g>
@@ -188,12 +189,12 @@ export function ExperimentRevenue({ data, stats, expanded: externalExpanded, onT
           <CartesianGrid strokeDasharray="4 4" stroke={C.grid} vertical={false} />
           <XAxis
             dataKey="month"
-            tick={{ fontSize: 12, fill: C.axis }}
+            tick={{ ...CHART_TYPO.axisTick, fill: C.axis }}
             axisLine={{ stroke: C.border }}
             tickLine={false}
           />
           <YAxis
-            tick={{ fontSize: 12, fill: C.axis }}
+            tick={{ ...CHART_TYPO.axisTick, fill: C.axis }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v: number) => `$${v}`}
@@ -203,7 +204,7 @@ export function ExperimentRevenue({ data, stats, expanded: externalExpanded, onT
               value: "$K",
               position: "top",
               offset: 4,
-              style: { fontSize: 10, fill: C.axis, textAnchor: "middle" },
+              style: { ...CHART_TYPO.axisLabel, fill: C.axis, textAnchor: "middle" },
             }}
           />
 
@@ -223,7 +224,7 @@ export function ExperimentRevenue({ data, stats, expanded: externalExpanded, onT
                         <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
                           <TooltipDot color={C.organic} />
                           <span style={{ color: C.fg2 }}>{t("chart.organic")}</span>
-                          <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 500, color: C.fg0, fontVariantNumeric: "tabular-nums" }}>
+                          <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 500, color: C.fg0, fontVariantNumeric: CHART_TYPO.tooltipValue.fontVariantNumeric, fontFamily: CHART_TYPO.tooltipValue.fontFamily }}>
                             ${d.organic}K
                           </span>
                         </div>
@@ -232,7 +233,7 @@ export function ExperimentRevenue({ data, stats, expanded: externalExpanded, onT
                         <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
                           <TooltipDot color={C.experiment} />
                           <span style={{ color: C.fg2 }}>{t("chart.expLift")}</span>
-                          <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 500, color: C.fg0, fontVariantNumeric: "tabular-nums" }}>
+                          <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 500, color: C.fg0, fontVariantNumeric: CHART_TYPO.tooltipValue.fontVariantNumeric, fontFamily: CHART_TYPO.tooltipValue.fontFamily }}>
                             ${d.experiment}K
                           </span>
                         </div>
@@ -242,7 +243,7 @@ export function ExperimentRevenue({ data, stats, expanded: externalExpanded, onT
                           <div style={{ borderTop: "1px solid #E2E2DD", margin: "4px 0" }} />
                           <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
                             <span style={{ color: C.fg2 }}>{locale === "ko" ? "총 매출" : "Total"}</span>
-                            <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 700, color: C.fg0, fontVariantNumeric: "tabular-nums" }}>
+                            <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 700, color: C.fg0, fontVariantNumeric: CHART_TYPO.tooltipValue.fontVariantNumeric, fontFamily: CHART_TYPO.tooltipValue.fontFamily }}>
                               ${d.total}K
                             </span>
                           </div>

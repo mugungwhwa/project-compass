@@ -6,6 +6,7 @@ import { computeScenario } from "@/shared/api/mock-data"
 import { formatNumber } from "@/shared/lib"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
 import { SCENARIO_SIMULATOR_COLORS } from "@/shared/config/chart-colors"
+import { CHART_TYPO } from "@/shared/config/chart-typography"
 
 const C = SCENARIO_SIMULATOR_COLORS
 
@@ -58,10 +59,10 @@ export function ScenarioSimulator() {
       <ResponsiveContainer width="100%" height={160}>
         <LineChart data={scenarioData} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
           <CartesianGrid strokeDasharray="4 4" stroke="var(--chart-grid)" vertical={false} />
-          <XAxis dataKey="budget" tick={{ fontSize: 10, fill: "var(--fg-3)" }} axisLine={{ stroke: "var(--border-default)" }} tickLine={false} />
-          <YAxis yAxisId="left" tick={{ fontSize: 10, fill: "var(--fg-3)" }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${v}d`} />
-          <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 10, fill: "var(--fg-3)" }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${v}%`} />
-          <Tooltip contentStyle={{ borderRadius: "var(--radius-card)", border: "1px solid var(--border-default)", fontSize: 11, background: "var(--bg-1)", color: "var(--fg-0)" }} />
+          <XAxis dataKey="budget" tick={{ ...CHART_TYPO.axisTick, fill: "var(--fg-3)" }} axisLine={{ stroke: "var(--border-default)" }} tickLine={false} />
+          <YAxis yAxisId="left" tick={{ ...CHART_TYPO.axisTick, fill: "var(--fg-3)" }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${v}d`} />
+          <YAxis yAxisId="right" orientation="right" tick={{ ...CHART_TYPO.axisTick, fill: "var(--fg-3)" }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${v}%`} />
+          <Tooltip contentStyle={{ borderRadius: "var(--radius-card)", border: "1px solid var(--border-default)", fontSize: CHART_TYPO.tooltipLabel.fontSize, background: "var(--bg-1)", color: "var(--fg-0)" }} />
           <Line yAxisId="left" type="monotone" dataKey="payback" stroke={C.payback} strokeWidth={2} name="Payback" dot={{ r: 2 }} animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
           <Line yAxisId="right" type="monotone" dataKey="bep" stroke={C.bep} strokeWidth={2} name="BEP %" dot={{ r: 2 }} animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
         </LineChart>

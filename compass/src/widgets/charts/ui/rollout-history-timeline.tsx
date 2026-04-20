@@ -9,6 +9,7 @@ import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 import { ROLLOUT_HISTORY_COLORS } from "@/shared/config/chart-colors"
 import { ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts"
+import { CHART_TYPO } from "@/shared/config/chart-typography"
 
 const C = ROLLOUT_HISTORY_COLORS
 
@@ -56,14 +57,14 @@ export function RolloutHistoryTimeline({ variant, expanded: externalExpanded, on
           <CartesianGrid strokeDasharray="4 4" stroke={C.grid} vertical={false} />
           <XAxis
             dataKey="date"
-            tick={{ fontSize: 10, fill: C.axis }}
+            tick={{ ...CHART_TYPO.axisLabel, fill: C.axis }}
             axisLine={{ stroke: C.border }}
             tickLine={false}
             tickFormatter={(v) => v.slice(5)}
           />
           <YAxis
             yAxisId="pct"
-            tick={{ fontSize: 11, fill: C.axis }}
+            tick={{ ...CHART_TYPO.axisTick, fill: C.axis }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v) => `${v}%`}
@@ -72,13 +73,13 @@ export function RolloutHistoryTimeline({ variant, expanded: externalExpanded, on
           <YAxis
             yAxisId="ltv"
             orientation="right"
-            tick={{ fontSize: 11, fill: C.axis }}
+            tick={{ ...CHART_TYPO.axisTick, fill: C.axis }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v) => `$${v}`}
           />
           <Tooltip content={<ChartTooltip />} />
-          <Legend wrapperStyle={{ fontSize: 11 }} />
+          <Legend wrapperStyle={{ ...CHART_TYPO.legend }} />
           <Bar yAxisId="pct" dataKey="percentage" fill={C.bar} fillOpacity={0.5} radius={[4, 4, 0, 0]} barSize={20} name="% Rollout" animationBegin={200} animationDuration={800} animationEasing="ease-out" />
           <Line yAxisId="ltv" type="monotone" dataKey="cumulative_ltv" stroke={C.line} strokeWidth={2.5} dot={{ r: 3.5, fill: "#FFFFFF", stroke: C.line, strokeWidth: 2 }} name="Cumulative LTV ($)" animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
         </ComposedChart>

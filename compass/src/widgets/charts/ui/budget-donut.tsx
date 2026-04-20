@@ -8,6 +8,7 @@ import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 import { BUDGET_DONUT_COLORS } from "@/shared/config/chart-colors"
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts"
+import { CHART_TYPO } from "@/shared/config/chart-typography"
 
 const C = BUDGET_DONUT_COLORS
 
@@ -37,7 +38,7 @@ export function BudgetDonut({ data, expanded: externalExpanded, onToggle: extern
           <Legend
             verticalAlign="bottom"
             iconSize={10}
-            wrapperStyle={{ fontSize: 12, color: C.legend }}
+            wrapperStyle={{ ...CHART_TYPO.legend, color: C.legend }}
             formatter={(value: string, entry: { payload?: { value?: number } }) =>
               `${value} (${entry.payload?.value ?? 0}%)`
             }

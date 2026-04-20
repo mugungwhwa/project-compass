@@ -9,6 +9,7 @@ import { ChartHeader } from "@/shared/ui/chart-header"
 import { ChartTooltip } from "@/shared/ui/chart-tooltip"
 import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
+import { CHART_TYPO } from "@/shared/config/chart-typography"
 
 const C = SATURATION_TREND_COLORS
 
@@ -47,15 +48,15 @@ export function SaturationTrendChart({ data, expanded: externalExpanded, onToggl
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="4 4" stroke={C.grid} vertical={false} />
-          <XAxis dataKey="month" tick={{ fontSize: 11, fill: C.axis }} axisLine={{ stroke: C.border }} tickLine={false} />
-          <YAxis tick={{ fontSize: 11, fill: C.axis }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}K`} />
+          <XAxis dataKey="month" tick={{ ...CHART_TYPO.axisTick, fill: C.axis }} axisLine={{ stroke: C.border }} tickLine={false} />
+          <YAxis tick={{ ...CHART_TYPO.axisTick, fill: C.axis }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}K`} />
           <Tooltip
             content={
               <ChartTooltip
                 render={({ payload, label }) => (
                   <>
                     {label != null && (
-                      <div style={{ fontSize: 11, fontWeight: 600, color: "#0A0A0A", marginBottom: 4 }}>{label}</div>
+                      <div style={{ ...CHART_TYPO.tooltipTitle, color: "#0A0A0A", marginBottom: 4 }}>{label}</div>
                     )}
                     {payload.map((item, i) => (
                       <div key={i} style={{ display: "flex", alignItems: "center", fontSize: 12, lineHeight: 1.6 }}>
@@ -63,7 +64,7 @@ export function SaturationTrendChart({ data, expanded: externalExpanded, onToggl
                           <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "50%", backgroundColor: item.color, marginRight: 6, flexShrink: 0 }} />
                         )}
                         <span style={{ color: "#6B7280" }}>{item.name}</span>
-                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 500, color: "#0A0A0A", fontVariantNumeric: "tabular-nums" }}>
+                        <span style={{ marginLeft: "auto", paddingLeft: 12, ...CHART_TYPO.tooltipValue, color: "#0A0A0A" }}>
                           ${item.value}K
                         </span>
                       </div>
@@ -73,7 +74,7 @@ export function SaturationTrendChart({ data, expanded: externalExpanded, onToggl
               />
             }
           />
-          <Legend wrapperStyle={{ fontSize: 11 }} />
+          <Legend wrapperStyle={{ ...CHART_TYPO.legend }} />
           <Area type="monotone" dataKey="topGrossingThreshold" stroke={C.threshold} strokeWidth={2} fill="url(#thresholdGrad)" name={t("market.entryThreshold")} animationBegin={200} animationDuration={1200} />
           <Area type="monotone" dataKey="myRevenue" stroke={C.myRevenue} strokeWidth={2.5} fill="url(#myRevGrad)" name={t("market.myRevenue")} animationBegin={400} animationDuration={1200} />
         </AreaChart>

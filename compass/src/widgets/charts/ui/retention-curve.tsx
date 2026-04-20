@@ -24,6 +24,7 @@ import { ChartTooltip, TooltipDot } from "@/shared/ui/chart-tooltip"
 import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 import { RETENTION_CURVE_COLORS } from "@/shared/config/chart-colors"
+import { CHART_TYPO } from "@/shared/config/chart-typography"
 import {
   AreaChart,
   Area,
@@ -84,8 +85,9 @@ function AsymptoticLabel({
         x={x}
         y={y}
         textAnchor="middle"
-        fontSize={10}
+        fontSize={CHART_TYPO.axisLabel.fontSize}
         fontWeight={500}
+        fontFamily={CHART_TYPO.annotation.fontFamily}
         fill={C.asymptotic}
       >
         {text}
@@ -149,12 +151,12 @@ export function RetentionCurve({ data, asymptoticDay, expanded: externalExpanded
           <CartesianGrid strokeDasharray="2 4" stroke={C.grid} vertical={false} />
           <XAxis
             dataKey="day"
-            tick={{ fontSize: 11, fill: C.axis }}
+            tick={{ ...CHART_TYPO.axisTick, fill: C.axis }}
             axisLine={{ stroke: C.border }}
             tickLine={false}
           />
           <YAxis
-            tick={{ fontSize: 11, fill: C.axis }}
+            tick={{ ...CHART_TYPO.axisTick, fill: C.axis }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v: number) => `${v}%`}
@@ -166,15 +168,15 @@ export function RetentionCurve({ data, asymptoticDay, expanded: externalExpanded
                 render={({ payload, label }) => (
                   <div>
                     {label != null && (
-                      <div style={{ fontSize: 11, fontWeight: 600, color: "#0A0A0A", marginBottom: 4 }}>
+                      <div style={{ ...CHART_TYPO.tooltipTitle, color: "#0A0A0A", marginBottom: 4 }}>
                         {label}
                       </div>
                     )}
                     {payload.map((p, i) => (
-                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
+                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, ...CHART_TYPO.tooltipLabel, lineHeight: 1.6 }}>
                         <TooltipDot color={p.color ?? C.p50} />
                         <span style={{ color: "#6B7280" }}>{p.name}</span>
-                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 500, color: "#0A0A0A", fontVariantNumeric: "tabular-nums" }}>
+                        <span style={{ marginLeft: "auto", paddingLeft: 12, ...CHART_TYPO.tooltipValue, color: "#0A0A0A" }}>
                           {p.value != null ? `${p.value}%` : ""}
                         </span>
                       </div>
@@ -255,7 +257,7 @@ export function RetentionCurve({ data, asymptoticDay, expanded: externalExpanded
             verticalAlign="bottom"
             height={32}
             iconSize={10}
-            wrapperStyle={{ fontSize: 11, color: C.axis }}
+            wrapperStyle={{ ...CHART_TYPO.legend, color: C.axis }}
           />
         </AreaChart>
       </ResponsiveContainer>

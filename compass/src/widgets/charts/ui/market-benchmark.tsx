@@ -8,6 +8,7 @@ import { ChartTooltip, TooltipDot } from "@/shared/ui/chart-tooltip"
 import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 import { MARKET_BENCHMARK_COLORS } from "@/shared/config/chart-colors"
+import { CHART_TYPO } from "@/shared/config/chart-typography"
 import { AreaChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts"
 
 type MarketBenchmarkProps = { data: RetentionDataPoint[]; expanded?: boolean; onToggle?: () => void }
@@ -42,23 +43,23 @@ export function MarketBenchmark({ data, expanded: externalExpanded, onToggle: ex
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="4 4" stroke={C.grid} vertical={false} />
-          <XAxis dataKey="day" tick={{ fontSize: 12, fill: C.axis }} axisLine={{ stroke: C.border }} tickLine={false} />
-          <YAxis tick={{ fontSize: 12, fill: C.axis }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${v}%`} domain={[0, 50]} />
+          <XAxis dataKey="day" tick={{ ...CHART_TYPO.axisTick, fill: C.axis }} axisLine={{ stroke: C.border }} tickLine={false} />
+          <YAxis tick={{ ...CHART_TYPO.axisTick, fill: C.axis }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${v}%`} domain={[0, 50]} />
           <Tooltip
             content={
               <ChartTooltip
                 render={({ payload, label }) => (
                   <div>
                     {label != null && (
-                      <div style={{ fontSize: 11, fontWeight: 600, color: "#0A0A0A", marginBottom: 4 }}>
+                      <div style={{ ...CHART_TYPO.tooltipTitle, color: "#0A0A0A", marginBottom: 4 }}>
                         {label}
                       </div>
                     )}
                     {payload.map((p, i) => (
-                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
+                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, ...CHART_TYPO.tooltipLabel, lineHeight: 1.6 }}>
                         <TooltipDot color={p.color ?? C.p50} />
                         <span style={{ color: "#6B7280" }}>{p.name}</span>
-                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 500, color: "#0A0A0A", fontVariantNumeric: "tabular-nums" }}>
+                        <span style={{ marginLeft: "auto", paddingLeft: 12, ...CHART_TYPO.tooltipValue, color: "#0A0A0A" }}>
                           {p.value != null ? `${p.value}%` : ""}
                         </span>
                       </div>
@@ -72,7 +73,7 @@ export function MarketBenchmark({ data, expanded: externalExpanded, onToggle: ex
           <Area type="monotone" dataKey="p10" stroke="none" fill="none" animationBegin={200} animationDuration={1200} animationEasing="ease-out" />
           <Line type="monotone" dataKey="genre" stroke={C.genre} strokeWidth={1.5} strokeDasharray="6 3" dot={false} name={t("chart.genreAvg")} animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
           <Line type="monotone" dataKey="p50" stroke={C.p50} strokeWidth={2.5} dot={{ r: 3, fill: "#FFF", stroke: C.p50, strokeWidth: 2 }} name="Match League" animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
-          <Legend verticalAlign="bottom" height={36} iconSize={12} wrapperStyle={{ fontSize: 11 }} />
+          <Legend verticalAlign="bottom" height={36} iconSize={12} wrapperStyle={{ ...CHART_TYPO.legend }} />
         </AreaChart>
       </ResponsiveContainer>
       </div>

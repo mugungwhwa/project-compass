@@ -7,6 +7,7 @@ import {
   ReferenceLine, Legend,
 } from "recharts"
 import { PALETTE } from "@/shared/config/chart-colors"
+import { CHART_TYPO } from "@/shared/config/chart-typography"
 import { ChartHeader } from "@/shared/ui/chart-header"
 import { ChartTooltip } from "@/shared/ui/chart-tooltip"
 
@@ -79,20 +80,20 @@ export function CausalImpactPanel({
           <CartesianGrid strokeDasharray="4 4" stroke={PALETTE.grid} vertical={false} />
           <XAxis
             dataKey="date"
-            tick={{ fontSize: 10, fill: PALETTE.axis }}
+            tick={{ ...CHART_TYPO.axisTick, fill: PALETTE.axis }}
             axisLine={{ stroke: PALETTE.border }}
             tickLine={false}
             tickFormatter={(v: string) => v.slice(5)}
           />
           <YAxis
-            tick={{ fontSize: 11, fill: PALETTE.axis }}
+            tick={{ ...CHART_TYPO.axisTick, fill: PALETTE.axis }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v: number) => `${v}%`}
             domain={["dataMin - 1", "dataMax + 1"]}
           />
           <Tooltip content={<ChartTooltip />} />
-          <Legend wrapperStyle={{ fontSize: 11, color: PALETTE.fg2 }} />
+          <Legend wrapperStyle={{ ...CHART_TYPO.legend, color: PALETTE.fg2 }} />
           <Area
             type="monotone"
             dataKey="band"
@@ -120,7 +121,7 @@ export function CausalImpactPanel({
             dot={{ r: 2.5, fill: PALETTE.observed }}
             animationDuration={1000}
           />
-          <ReferenceLine x={actionDate} stroke={PALETTE.p50} strokeDasharray="3 3" label={{ value: t("chart.causalImpact.executionPoint"), position: "top", fontSize: 10, fill: PALETTE.p50 }} />
+          <ReferenceLine x={actionDate} stroke={PALETTE.p50} strokeDasharray="3 3" label={{ value: t("chart.causalImpact.executionPoint"), position: "top", ...CHART_TYPO.annotationText, fill: PALETTE.p50 }} />
         </ComposedChart>
       </ResponsiveContainer>
     </motion.div>

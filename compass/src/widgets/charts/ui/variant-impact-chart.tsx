@@ -5,6 +5,7 @@ import { useLocale } from "@/shared/i18n"
 import type { ExperimentVariant } from "@/shared/api/mock-data"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Cell, ErrorBar, ResponsiveContainer } from "recharts"
 import { VARIANT_IMPACT_COLORS } from "@/shared/config/chart-colors"
+import { CHART_TYPO } from "@/shared/config/chart-typography"
 import { ChartHeader } from "@/shared/ui/chart-header"
 import { ChartTooltip } from "@/shared/ui/chart-tooltip"
 import { ExpandButton } from "@/shared/ui/expand-button"
@@ -54,7 +55,7 @@ export function VariantImpactChart({ variants, expanded: externalExpanded, onTog
           <CartesianGrid strokeDasharray="4 4" stroke={C.grid} horizontal={false} />
           <XAxis
             type="number"
-            tick={{ fontSize: 11, fill: C.axis }}
+            tick={{ ...CHART_TYPO.axisTick, fill: C.axis }}
             axisLine={{ stroke: C.border }}
             tickLine={false}
             tickFormatter={(v) => `$${v.toFixed(2)}`}
@@ -62,7 +63,7 @@ export function VariantImpactChart({ variants, expanded: externalExpanded, onTog
           <YAxis
             type="category"
             dataKey="name"
-            tick={{ fontSize: 11, fill: C.label }}
+            tick={{ ...CHART_TYPO.axisTick, fill: C.label }}
             axisLine={false}
             tickLine={false}
             width={115}
@@ -73,19 +74,19 @@ export function VariantImpactChart({ variants, expanded: externalExpanded, onTog
                 render={({ payload, label }) => (
                   <>
                     {label != null && (
-                      <div style={{ fontSize: 11, fontWeight: 600, color: "#0A0A0A", marginBottom: 4 }}>{label}</div>
+                      <div style={{ ...CHART_TYPO.tooltipTitle, color: "#0A0A0A", marginBottom: 4 }}>{label}</div>
                     )}
                     {payload.map((item, i) => {
                       if (String(item.dataKey ?? item.name) === "ltv") {
                         return (
-                          <div key={i} style={{ fontSize: 12, color: "#6B7280" }}>
-                            ΔLTV: <span style={{ fontWeight: 500, color: "#0A0A0A" }}>${Number(item.value).toFixed(2)}</span>
+                          <div key={i} style={{ ...CHART_TYPO.tooltipLabel, color: "#6B7280" }}>
+                            ΔLTV: <span style={{ ...CHART_TYPO.tooltipValue, color: "#0A0A0A" }}>${Number(item.value).toFixed(2)}</span>
                           </div>
                         )
                       }
                       return (
-                        <div key={i} style={{ fontSize: 12, color: "#6B7280" }}>
-                          {String(item.name)}: <span style={{ fontWeight: 500, color: "#0A0A0A" }}>{String(item.value)}</span>
+                        <div key={i} style={{ ...CHART_TYPO.tooltipLabel, color: "#6B7280" }}>
+                          {String(item.name)}: <span style={{ ...CHART_TYPO.tooltipValue, color: "#0A0A0A" }}>{String(item.value)}</span>
                         </div>
                       )
                     })}

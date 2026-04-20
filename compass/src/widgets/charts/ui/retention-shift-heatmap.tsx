@@ -66,7 +66,7 @@ export function RetentionShiftHeatmap({ actions }: Props) {
                   return (
                     <td key={d} className="px-1 py-1">
                       <div
-                        className="mx-auto rounded-md py-1.5 text-center text-[11px] font-medium text-[var(--fg-0)]"
+                        className="mx-auto rounded-md py-1.5 text-center text-[11px] font-medium font-mono text-[var(--fg-0)]"
                         style={{ background: cellColor(v), minWidth: 44 }}
                         title={`${d.toUpperCase()}: ${v >= 0 ? "+" : ""}${v.toFixed(1)}pp`}
                       >

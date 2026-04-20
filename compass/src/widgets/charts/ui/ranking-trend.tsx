@@ -5,6 +5,7 @@ import { useLocale } from "@/shared/i18n"
 import type { RankingHistoryPoint } from "@/shared/api/mock-data"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts"
 import { RANKING_TREND_COLORS } from "@/shared/config/chart-colors"
+import { CHART_TYPO } from "@/shared/config/chart-typography"
 import { ChartHeader } from "@/shared/ui/chart-header"
 import { ChartTooltip } from "@/shared/ui/chart-tooltip"
 import { ExpandButton } from "@/shared/ui/expand-button"
@@ -37,12 +38,12 @@ export function RankingTrend({ data, expanded: externalExpanded, onToggle: exter
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
           <CartesianGrid strokeDasharray="4 4" stroke={C.grid} vertical={false} />
-          <XAxis dataKey="date" tick={{ fontSize: 11, fill: C.axis }} axisLine={{ stroke: C.border }} tickLine={false} />
+          <XAxis dataKey="date" tick={{ ...CHART_TYPO.axisTick, fill: C.axis }} axisLine={{ stroke: C.border }} tickLine={false} />
           <YAxis
             reversed
             domain={[1, 10]}
             ticks={[1, 3, 5, 8, 10]}
-            tick={{ fontSize: 11, fill: C.axis }}
+            tick={{ ...CHART_TYPO.axisTick, fill: C.axis }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v) => `#${v}`}
@@ -53,11 +54,11 @@ export function RankingTrend({ data, expanded: externalExpanded, onToggle: exter
                 render={({ payload, label }) => (
                   <>
                     {label != null && (
-                      <div style={{ fontSize: 11, fontWeight: 600, color: "#0A0A0A", marginBottom: 4 }}>{label}</div>
+                      <div style={{ ...CHART_TYPO.tooltipTitle, color: "#0A0A0A", marginBottom: 4 }}>{label}</div>
                     )}
                     {payload.map((item, i) => (
-                      <div key={i} style={{ fontSize: 12, color: "#6B7280" }}>
-                        Genre Rank: <span style={{ fontWeight: 500, color: "#0A0A0A" }}>#{item.value}</span>
+                      <div key={i} style={{ ...CHART_TYPO.tooltipLabel, color: "#6B7280" }}>
+                        Genre Rank: <span style={{ ...CHART_TYPO.tooltipValue, color: "#0A0A0A" }}>#{item.value}</span>
                       </div>
                     ))}
                   </>
@@ -65,7 +66,7 @@ export function RankingTrend({ data, expanded: externalExpanded, onToggle: exter
               />
             }
           />
-          <ReferenceLine y={5} stroke={C.top5} strokeDasharray="3 3" strokeOpacity={0.5} label={{ value: "Top 5", position: "right", fontSize: 10, fill: C.top5 }} />
+          <ReferenceLine y={5} stroke={C.top5} strokeDasharray="3 3" strokeOpacity={0.5} label={{ value: "Top 5", position: "right", ...CHART_TYPO.axisLabel, fontFamily: CHART_TYPO.annotation.fontFamily, fill: C.top5 }} />
           <Line type="monotone" dataKey="myRank" stroke={C.line} strokeWidth={3} dot={{ r: 4, fill: "#FFFFFF", stroke: C.line, strokeWidth: 2 }} animationBegin={400} animationDuration={1200} animationEasing="ease-out" />
         </LineChart>
       </ResponsiveContainer>

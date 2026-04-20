@@ -12,6 +12,7 @@ import { ChartHeader } from "@/shared/ui/chart-header"
 import { ChartTooltip } from "@/shared/ui/chart-tooltip"
 import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
+import { CHART_TYPO } from "@/shared/config/chart-typography"
 
 type Props = {
   actions: ActionData[]
@@ -73,19 +74,19 @@ export function ActionRoiQuadrant({ actions, expanded: extExpanded, onToggle }: 
             dataKey="x"
             name={t("chart.roiQuadrant.cost")}
             unit="K"
-            tick={{ fontSize: 11, fill: PALETTE.axis }}
+            tick={{ ...CHART_TYPO.axisTick, fill: PALETTE.axis }}
             axisLine={{ stroke: PALETTE.border }}
             tickLine={false}
-            label={{ value: t("chart.roiQuadrant.cost"), position: "insideBottom", offset: -8, fontSize: 11, fill: PALETTE.fg2 }}
+            label={{ value: t("chart.roiQuadrant.cost"), position: "insideBottom", offset: -8, ...CHART_TYPO.annotationText, fill: PALETTE.fg2 }}
           />
           <YAxis
             type="number"
             dataKey="y"
             name="ΔLTV"
-            tick={{ fontSize: 11, fill: PALETTE.axis }}
+            tick={{ ...CHART_TYPO.axisTick, fill: PALETTE.axis }}
             axisLine={false}
             tickLine={false}
-            label={{ value: "ΔLTV", angle: -90, position: "insideLeft", fontSize: 11, fill: PALETTE.fg2 }}
+            label={{ value: "ΔLTV", angle: -90, position: "insideLeft", ...CHART_TYPO.axisLabel, fill: PALETTE.fg2 }}
           />
           <ZAxis range={[80, 80]} />
           <ReferenceLine x={medianCost} stroke={PALETTE.benchmark} strokeDasharray="3 3" strokeOpacity={0.5} />

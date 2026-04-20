@@ -43,7 +43,7 @@ export function CohortHeatmap() {
                   return (
                     <td key={i} className="px-1 py-1">
                       <div
-                        className="rounded-md px-3 py-2 text-center text-xs font-semibold"
+                        className="rounded-md px-3 py-2 text-center text-xs font-semibold font-mono"
                         style={{ backgroundColor: bg, color: text }}
                       >
                         {val}%

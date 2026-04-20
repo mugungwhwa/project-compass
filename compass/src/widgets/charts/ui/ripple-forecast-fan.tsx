@@ -8,6 +8,7 @@ import { ChartTooltip } from "@/shared/ui/chart-tooltip"
 import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 import { RIPPLE_FORECAST_COLORS } from "@/shared/config/chart-colors"
+import { CHART_TYPO } from "@/shared/config/chart-typography"
 import { AreaChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts"
 
 const C = RIPPLE_FORECAST_COLORS
@@ -51,13 +52,13 @@ export function RippleForecastFan({ forecast, variantName }: RippleForecastFanPr
           <CartesianGrid strokeDasharray="4 4" stroke={C.grid} vertical={false} />
           <XAxis
             dataKey="stage"
-            tick={{ fontSize: 12, fill: C.axis }}
+            tick={{ ...CHART_TYPO.axisTick, fill: C.axis }}
             axisLine={{ stroke: C.border }}
             tickLine={false}
-            label={{ value: t("exp.stageRollout"), position: "insideBottom", offset: -5, fontSize: 10, fill: C.axis }}
+            label={{ value: t("exp.stageRollout"), position: "insideBottom", offset: -5, ...CHART_TYPO.annotationText, fill: C.axis }}
           />
           <YAxis
-            tick={{ fontSize: 11, fill: C.axis }}
+            tick={{ ...CHART_TYPO.axisTick, fill: C.axis }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v) => `$${v.toFixed(0)}`}

@@ -8,6 +8,7 @@ import { ChartHeader } from "@/shared/ui/chart-header"
 import { ChartTooltip } from "@/shared/ui/chart-tooltip"
 import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
+import { CHART_TYPO } from "@/shared/config/chart-typography"
 
 const C = SATURATION_BAR_COLORS
 
@@ -30,10 +31,10 @@ export function SaturationBar({ data }: SaturationBarProps) {
       <ResponsiveContainer width="100%" height={chartHeight}>
         <BarChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
           <CartesianGrid strokeDasharray="4 4" stroke={C.grid} vertical={false} />
-          <XAxis dataKey="metric" tick={{ fontSize: 11, fill: C.axis }} axisLine={{ stroke: C.border }} tickLine={false} />
-          <YAxis tick={{ fontSize: 11, fill: C.axis }} axisLine={false} tickLine={false} />
+          <XAxis dataKey="metric" tick={{ ...CHART_TYPO.axisTick, fill: C.axis }} axisLine={{ stroke: C.border }} tickLine={false} />
+          <YAxis tick={{ ...CHART_TYPO.axisTick, fill: C.axis }} axisLine={false} tickLine={false} />
           <Tooltip content={<ChartTooltip />} />
-          <Legend wrapperStyle={{ fontSize: 11 }} />
+          <Legend wrapperStyle={{ ...CHART_TYPO.legend }} />
           <Bar dataKey="myGame" fill={C.myGame} radius={[4, 4, 0, 0]} barSize={16} name="Match League" animationBegin={200} animationDuration={800} animationEasing="ease-out" />
           <Bar dataKey="genreAvg" fill={C.genreAvg} radius={[4, 4, 0, 0]} barSize={16} name={t("chart.genreAvg")} animationBegin={200} animationDuration={800} animationEasing="ease-out" />
         </BarChart>
