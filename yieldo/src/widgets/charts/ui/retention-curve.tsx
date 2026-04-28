@@ -36,6 +36,7 @@ import {
   ReferenceLine,
   ResponsiveContainer,
   Legend,
+  LabelList,
 } from "recharts"
 
 type RetentionCurveProps = {
@@ -237,7 +238,21 @@ export function RetentionCurve({ data, asymptoticDay, expanded: externalExpanded
             animationBegin={400}
             animationDuration={1000}
             animationEasing="ease-out"
-          />
+          >
+            {/* Bloomberg-style endpoint label — the final value, painted on the
+                line tip in mono, so traders can read "where are we now" without
+                hovering. */}
+            <LabelList
+              dataKey="p50"
+              position="right"
+              offset={8}
+              formatter={(v) => (typeof v === "number" ? `${v.toFixed(1)}%` : "")}
+              fill={C.p50}
+              fontSize={11}
+              fontFamily="var(--font-geist-mono)"
+              fontWeight={600}
+            />
+          </Line>
 
           {/* Asymptotic arrival marker — custom interactive label */}
           <ReferenceLine

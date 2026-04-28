@@ -39,7 +39,7 @@ export const PALETTE = {
   axis:          "#C0C8D6",  // --fg-2 (axis labels — readable)
   grid:          "#2D3548",  // --chart-grid (visible but subtle)
   border:        "#1F2436",  // --border-default
-  bg:            "#141826",  // --bg-1 (chart panel background)
+  bg:            "#0E1320",  // --bg-1 (chart panel background, v3 deeper navy)
   fg0:           "#FFFFFF",  // --fg-0
   fg2:           "#C0C8D6",  // --fg-2
 
