@@ -42,7 +42,7 @@ export function RippleForecastFan({ forecast, variantName }: RippleForecastFanPr
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
       <ResponsiveContainer width="100%" height={chartHeight}>
-        <AreaChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+        <AreaChart data={data} margin={{ top: 12, right: 20, left: 4, bottom: 12 }}>
           <defs>
             <linearGradient id="rippleBand" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor={C.line} stopOpacity={0.18} />
@@ -69,12 +69,12 @@ export function RippleForecastFan({ forecast, variantName }: RippleForecastFanPr
                 render={({ payload, label }) => (
                   <div>
                     {label != null && (
-                      <div style={{ fontSize: 11, fontWeight: 600, color: "#0A0A0A", marginBottom: 4 }}>{label}</div>
+                      <div style={{ fontSize: 11, fontWeight: 600, color: "#FFE45E", marginBottom: 4 }}>{label}</div>
                     )}
                     {payload.map((p, i) => (
                       <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
-                        <span style={{ color: "#6B7280" }}>{p.name}</span>
-                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 500, color: "#0A0A0A", fontVariantNumeric: "tabular-nums" }}>
+                        <span style={{ color: "#ECF1F7" }}>{p.name}</span>
+                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 500, color: "#FFE45E", fontVariantNumeric: "tabular-nums" }}>
                           {p.value != null ? `$${Number(p.value).toFixed(0)}` : ""}
                         </span>
                       </div>

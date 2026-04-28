@@ -43,15 +43,15 @@ export function ExperimentBar({ data }: ExperimentBarProps) {
                 render={({ payload, label }) => (
                   <div>
                     {label != null && (
-                      <div style={{ fontSize: 11, fontWeight: 600, color: "#0A0A0A", marginBottom: 4 }}>
+                      <div style={{ fontSize: 11, fontWeight: 600, color: "#FFE45E", marginBottom: 4 }}>
                         {label}
                       </div>
                     )}
                     {payload.map((p, i) => (
                       <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
                         <TooltipDot color={p.color ?? C.positive} />
-                        <span style={{ color: "#6B7280" }}>ΔLTV</span>
-                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 500, color: "#0A0A0A", fontVariantNumeric: CHART_TYPO.tooltipValue.fontVariantNumeric, fontFamily: CHART_TYPO.tooltipValue.fontFamily }}>
+                        <span style={{ color: "#ECF1F7" }}>ΔLTV</span>
+                        <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 500, color: "#FFE45E", fontVariantNumeric: CHART_TYPO.tooltipValue.fontVariantNumeric, fontFamily: CHART_TYPO.tooltipValue.fontFamily }}>
                           {p.value != null ? `$${p.value}` : ""}
                         </span>
                       </div>

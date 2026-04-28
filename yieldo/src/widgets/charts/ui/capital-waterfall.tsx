@@ -174,12 +174,12 @@ export function CapitalWaterfall({ data, expanded: externalExpanded, onToggle: e
                   const runningSign = row.runningTotal > 0 ? "+" : ""
                   return (
                     <div>
-                      <div style={{ fontSize: 11, fontWeight: 600, color: "#0A0A0A", marginBottom: 6 }}>
+                      <div style={{ fontSize: 11, fontWeight: 600, color: "#FFE45E", marginBottom: 6 }}>
                         {label}
                       </div>
                       <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
                         <TooltipDot color={color} />
-                        <span style={{ color: "#6B7280" }}>
+                        <span style={{ color: "#ECF1F7" }}>
                           {row.type === "inflow"
                             ? (locale === "ko" ? "유입" : "Inflow")
                             : row.type === "outflow"
@@ -199,7 +199,7 @@ export function CapitalWaterfall({ data, expanded: externalExpanded, onToggle: e
                       </div>
                       <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, lineHeight: 1.6, marginTop: 2 }}>
                         <TooltipDot color={PALETTE.running} />
-                        <span style={{ color: "#6B7280" }}>
+                        <span style={{ color: "#ECF1F7" }}>
                           {locale === "ko" ? "누적" : "Cumulative"}
                         </span>
                         <span style={{

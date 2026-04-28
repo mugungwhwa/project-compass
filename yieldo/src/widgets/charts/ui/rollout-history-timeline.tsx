@@ -53,7 +53,7 @@ export function RolloutHistoryTimeline({ variant, expanded: externalExpanded, on
       />
       <div className="flex-1" style={{ minHeight: chartHeight }}>
       <ResponsiveContainer width="100%" height="100%">
-        <ComposedChart data={variant.rollout_history} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+        <ComposedChart data={variant.rollout_history} margin={{ top: 12, right: 20, left: 4, bottom: 12 }}>
           <CartesianGrid strokeDasharray="4 4" stroke={C.grid} vertical={false} />
           <XAxis
             dataKey="date"

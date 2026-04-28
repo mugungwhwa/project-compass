@@ -74,19 +74,19 @@ export function VariantImpactChart({ variants, expanded: externalExpanded, onTog
                 render={({ payload, label }) => (
                   <>
                     {label != null && (
-                      <div style={{ ...CHART_TYPO.tooltipTitle, color: "#0A0A0A", marginBottom: 4 }}>{label}</div>
+                      <div style={{ ...CHART_TYPO.tooltipTitle, color: "#FFE45E", marginBottom: 4 }}>{label}</div>
                     )}
                     {payload.map((item, i) => {
                       if (String(item.dataKey ?? item.name) === "ltv") {
                         return (
-                          <div key={i} style={{ ...CHART_TYPO.tooltipLabel, color: "#6B7280" }}>
-                            ΔLTV: <span style={{ ...CHART_TYPO.tooltipValue, color: "#0A0A0A" }}>${Number(item.value).toFixed(2)}</span>
+                          <div key={i} style={{ ...CHART_TYPO.tooltipLabel, color: "#ECF1F7" }}>
+                            ΔLTV: <span style={{ ...CHART_TYPO.tooltipValue, color: "#FFE45E" }}>${Number(item.value).toFixed(2)}</span>
                           </div>
                         )
                       }
                       return (
-                        <div key={i} style={{ ...CHART_TYPO.tooltipLabel, color: "#6B7280" }}>
-                          {String(item.name)}: <span style={{ ...CHART_TYPO.tooltipValue, color: "#0A0A0A" }}>{String(item.value)}</span>
+                        <div key={i} style={{ ...CHART_TYPO.tooltipLabel, color: "#ECF1F7" }}>
+                          {String(item.name)}: <span style={{ ...CHART_TYPO.tooltipValue, color: "#FFE45E" }}>{String(item.value)}</span>
                         </div>
                       )
                     })}

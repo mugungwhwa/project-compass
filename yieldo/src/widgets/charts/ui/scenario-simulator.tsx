@@ -58,7 +58,7 @@ export function ScenarioSimulator() {
         </div>
       </div>
       <ResponsiveContainer width="100%" height={160}>
-        <LineChart data={scenarioData} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
+        <LineChart data={scenarioData} margin={{ top: 10, right: 20, left: 4, bottom: 10 }}>
           <CartesianGrid strokeDasharray="4 4" stroke="var(--chart-grid)" vertical={false} />
           <XAxis dataKey="budget" tick={{ ...CHART_TYPO.axisTick, fill: "var(--fg-3)" }} axisLine={{ stroke: "var(--border-default)" }} tickLine={false} />
           <YAxis yAxisId="left" tick={{ ...CHART_TYPO.axisTick, fill: "var(--fg-3)" }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${v}d`} />

@@ -105,7 +105,7 @@ function AsymptoticLabel({
               padding: "8px 10px",
               fontSize: 11,
               lineHeight: 1.45,
-              color: "#4B5563",
+              color: "#C0C8D6",
               boxShadow: "none",
             }}
           >
@@ -148,7 +148,7 @@ export function RetentionCurve({ data, asymptoticDay, expanded: externalExpanded
       />
       <div className="flex-1" style={{ minHeight: chartHeight }}>
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+        <AreaChart data={chartData} margin={{ top: 12, right: 56, left: 4, bottom: 12 }}>
           <CartesianGrid strokeDasharray="2 4" stroke={C.grid} vertical={false} />
           <XAxis
             dataKey="day"
@@ -169,15 +169,15 @@ export function RetentionCurve({ data, asymptoticDay, expanded: externalExpanded
                 render={({ payload, label }) => (
                   <div>
                     {label != null && (
-                      <div style={{ ...CHART_TYPO.tooltipTitle, color: "#0A0A0A", marginBottom: 4 }}>
+                      <div style={{ ...CHART_TYPO.tooltipTitle, color: "#FFE45E", marginBottom: 4 }}>
                         {label}
                       </div>
                     )}
                     {payload.map((p, i) => (
                       <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, ...CHART_TYPO.tooltipLabel, lineHeight: 1.6 }}>
                         <TooltipDot color={p.color ?? C.p50} />
-                        <span style={{ color: "#6B7280" }}>{p.name}</span>
-                        <span style={{ marginLeft: "auto", paddingLeft: 12, ...CHART_TYPO.tooltipValue, color: "#0A0A0A" }}>
+                        <span style={{ color: "#ECF1F7" }}>{p.name}</span>
+                        <span style={{ marginLeft: "auto", paddingLeft: 12, ...CHART_TYPO.tooltipValue, color: "#FFE45E" }}>
                           {p.value != null ? `${p.value}%` : ""}
                         </span>
                       </div>

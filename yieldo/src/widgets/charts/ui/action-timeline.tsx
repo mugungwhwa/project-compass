@@ -47,7 +47,7 @@ export function ActionTimeline({ retentionTrend, actions }: ActionTimelineProps)
         ))}
       </div>
       <ResponsiveContainer width="100%" height={chartHeight}>
-        <ComposedChart data={retentionTrend} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+        <ComposedChart data={retentionTrend} margin={{ top: 12, right: 20, left: 4, bottom: 12 }}>
           <CartesianGrid strokeDasharray="4 4" stroke={C.grid} vertical={false} />
           <XAxis dataKey="date" tick={{ ...CHART_TYPO.axisTick, fill: C.axis }} axisLine={{ stroke: C.border }} tickLine={false} tickFormatter={(v: string) => v.slice(5)} />
           <YAxis tick={{ ...CHART_TYPO.axisTick, fill: C.axis }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${v}%`} domain={["dataMin - 1", "dataMax + 1"]} />

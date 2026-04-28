@@ -36,7 +36,7 @@ export function SaturationTrendChart({ data, expanded: externalExpanded, onToggl
       />
       <div className="flex-1" style={{ minHeight: chartHeight }}>
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+        <AreaChart data={data} margin={{ top: 12, right: 20, left: 4, bottom: 12 }}>
           <defs>
             <linearGradient id="thresholdGrad" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor={C.threshold} stopOpacity={0.3} />
@@ -56,15 +56,15 @@ export function SaturationTrendChart({ data, expanded: externalExpanded, onToggl
                 render={({ payload, label }) => (
                   <>
                     {label != null && (
-                      <div style={{ ...CHART_TYPO.tooltipTitle, color: "#0A0A0A", marginBottom: 4 }}>{label}</div>
+                      <div style={{ ...CHART_TYPO.tooltipTitle, color: "#FFE45E", marginBottom: 4 }}>{label}</div>
                     )}
                     {payload.map((item, i) => (
                       <div key={i} style={{ display: "flex", alignItems: "center", fontSize: 12, lineHeight: 1.6 }}>
                         {item.color && (
                           <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "50%", backgroundColor: item.color, marginRight: 6, flexShrink: 0 }} />
                         )}
-                        <span style={{ color: "#6B7280" }}>{item.name}</span>
-                        <span style={{ marginLeft: "auto", paddingLeft: 12, ...CHART_TYPO.tooltipValue, color: "#0A0A0A" }}>
+                        <span style={{ color: "#ECF1F7" }}>{item.name}</span>
+                        <span style={{ marginLeft: "auto", paddingLeft: 12, ...CHART_TYPO.tooltipValue, color: "#FFE45E" }}>
                           ${item.value}K
                         </span>
                       </div>

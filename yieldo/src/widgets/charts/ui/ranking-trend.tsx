@@ -36,7 +36,7 @@ export function RankingTrend({ data, expanded: externalExpanded, onToggle: exter
       />
       <div className="flex-1" style={{ minHeight: chartHeight }}>
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+        <LineChart data={data} margin={{ top: 12, right: 56, left: 4, bottom: 12 }}>
           <CartesianGrid strokeDasharray="4 4" stroke={C.grid} vertical={false} />
           <XAxis dataKey="date" tick={{ ...CHART_TYPO.axisTick, fill: C.axis }} axisLine={{ stroke: C.border }} tickLine={false} />
           <YAxis
@@ -54,11 +54,11 @@ export function RankingTrend({ data, expanded: externalExpanded, onToggle: exter
                 render={({ payload, label }) => (
                   <>
                     {label != null && (
-                      <div style={{ ...CHART_TYPO.tooltipTitle, color: "#0A0A0A", marginBottom: 4 }}>{label}</div>
+                      <div style={{ ...CHART_TYPO.tooltipTitle, color: "#FFE45E", marginBottom: 4 }}>{label}</div>
                     )}
                     {payload.map((item, i) => (
-                      <div key={i} style={{ ...CHART_TYPO.tooltipLabel, color: "#6B7280" }}>
-                        Genre Rank: <span style={{ ...CHART_TYPO.tooltipValue, color: "#0A0A0A" }}>#{item.value}</span>
+                      <div key={i} style={{ ...CHART_TYPO.tooltipLabel, color: "#ECF1F7" }}>
+                        Genre Rank: <span style={{ ...CHART_TYPO.tooltipValue, color: "#FFE45E" }}>#{item.value}</span>
                       </div>
                     ))}
                   </>

@@ -78,7 +78,7 @@ function TooltipGroup({ color, title, children }: { color: string; title: string
         }}
       />
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontSize: 11, fontWeight: 600, color: "#0A0A0A", marginBottom: 2 }}>
+        <div style={{ fontSize: 11, fontWeight: 600, color: "#FFE45E", marginBottom: 2 }}>
           {title}
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>{children}</div>
@@ -361,7 +361,7 @@ export function RevenueForecast({ data, meta, title, expanded: externalExpanded,
 
       <div className="flex-1" style={{ minHeight: chartHeight }}>
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={chartData} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
+          <AreaChart data={chartData} margin={{ top: 12, right: 64, left: 4, bottom: 12 }}>
             <defs>
               {/* Posterior (사후 확률) — green gradient band */}
               <linearGradient id="rfcPostBand" x1="0" y1="0" x2="0" y2="1">
@@ -390,7 +390,7 @@ export function RevenueForecast({ data, meta, title, expanded: externalExpanded,
                     return (
                       <div style={{ minWidth: 240 }}>
                         {label != null && (
-                          <div style={{ fontSize: 11, fontWeight: 600, color: "#0A0A0A", marginBottom: 8, paddingBottom: 6, borderBottom: "1px solid #F1F1ED" }}>
+                          <div style={{ fontSize: 11, fontWeight: 600, color: "#FFE45E", marginBottom: 8, paddingBottom: 6, borderBottom: "1px solid rgba(255,228,94,0.25)" }}>
                             {label}
                           </div>
                         )}
