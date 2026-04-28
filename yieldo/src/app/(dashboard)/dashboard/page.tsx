@@ -1,7 +1,7 @@
 "use client"
 
 import { PageHeader } from "@/widgets/sidebar"
-import { PortfolioVerdict, HeroVerdict, KPICards, TitleHeatmap, MarketContextCard, DataFreshnessStrip } from "@/widgets/dashboard"
+import { PortfolioVerdict, HeroVerdict, KPICards, TitleHeatmap, MarketContextCard, DataFreshnessStrip, YieldoCopilotStrip } from "@/widgets/dashboard"
 import { RevenueVsInvest, CapitalWaterfall, RevenueForecast } from "@/widgets/charts"
 import { useLocale } from "@/shared/i18n"
 import {
@@ -44,6 +44,11 @@ export default function ExecutiveOverviewPage() {
 
   return (
     <PageTransition>
+      {/* 0. yieldo Copilot insight strip — prominent, always-on AI signal */}
+      <FadeInUp>
+        <YieldoCopilotStrip />
+      </FadeInUp>
+
       {/* 1. Verdict — Portfolio aggregate or single-title drill-down */}
       <FadeInUp>
         {isPortfolioView ? (
