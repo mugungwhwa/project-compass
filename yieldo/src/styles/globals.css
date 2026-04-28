@@ -22,11 +22,14 @@
   --bg-3: #2D3548;   /* hover strong, inset, focus */
   --bg-4: #3A4258;   /* highest elevation / divider on dark */
 
-  /* ---------- Foreground / Text scale ---------- */
+  /* ---------- Foreground / Text scale ----------
+     Re-tiered 2026-04-28 for dark-on-dark legibility.  Original gray scale
+     (#6B7280 / #4A5568) passed WCAG AA but read as muted at 11-12px mono.
+     New scale lifts every tier one step so labels stay readable.            */
   --fg-0: #F8F8F8;   /* headlines, hero numbers, wordmark */
-  --fg-1: #B8BFCE;   /* body text */
-  --fg-2: #6B7280;   /* secondary, labels */
-  --fg-3: #4A5568;   /* disabled, captions, meta */
+  --fg-1: #D4DCE8;   /* body text — slightly more present than spec base */
+  --fg-2: #9AA3B5;   /* labels, eyebrow, KPI captions (was #6B7280) */
+  --fg-3: #6B7280;   /* meta, footnote, disabled (was #4A5568) */
 
   /* ---------- Border ---------- */
   --border-subtle: #141826;
@@ -55,17 +58,22 @@
   --signal-pending: var(--fg-2);
   --signal-pending-bg: rgba(107, 114, 128, 0.10);
 
-  /* ---------- Chart tokens ---------- */
-  --chart-p50: var(--accent-info);                    /* median line — info-blue, readable on dark */
-  --chart-band-inner: rgba(74, 158, 255, 0.22);       /* P25-P75 */
-  --chart-band-outer: rgba(74, 158, 255, 0.12);       /* P10-P90 */
-  --chart-benchmark: var(--fg-2);                     /* neutral gray dashed */
-  --chart-observed: var(--fg-0);                      /* actual datapoint dots */
-  --chart-grid: var(--bg-2);
+  /* ---------- Chart tokens ----------
+     2026-04-28: re-tuned for Bloomberg-grade visibility on dark.  Old bands
+     at 0.22 / 0.12 opacity were ghostly.  New scale doubles the inner band
+     and bumps the grid from #1F2436 (almost invisible) to #2D3548 (subtle
+     but readable). Lines stay full saturation, fills stay translucent
+     enough to not dominate, but every layer is now legible. */
+  --chart-p50: var(--accent-info);                    /* median line */
+  --chart-band-inner: rgba(74, 158, 255, 0.50);       /* P25-P75 — was 0.22 */
+  --chart-band-outer: rgba(74, 158, 255, 0.28);       /* P10-P90 — was 0.12 */
+  --chart-benchmark: #B8BFCE;                         /* dashed benchmark — was --fg-2 */
+  --chart-observed: var(--fg-0);                      /* datapoint dots */
+  --chart-grid: #2D3548;                              /* visible but subtle — was --bg-2 */
 
-  /* 6-cohort categorical palette (dark-theme readable) */
+  /* 6-cohort categorical palette (dark-theme bright, terminal-saturated) */
   --chart-cohort-1: #4A9EFF;   /* info blue */
-  --chart-cohort-2: #00D984;   /* do green */
+  --chart-cohort-2: #00E89A;   /* do green — pushed brighter */
   --chart-cohort-3: #F4C842;   /* yield yellow */
   --chart-cohort-4: #C39BFF;   /* lavender */
   --chart-cohort-5: #5DD3F0;   /* cyan */
