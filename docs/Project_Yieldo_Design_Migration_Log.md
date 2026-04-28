@@ -855,6 +855,22 @@ L2 (Methodology Modal, 2026-04-16~17):
 > 이 섹션은 yieldo의 시각 정체성에 대한 final source of truth.
 > 새 컴포넌트/페이지를 만들 땐 §8.2 (color philosophy) + §8.3 (token ledger)부터 참조.
 
+### §8.0 Design Master Charter (2026-04-28 사용자 부여)
+
+> **모든 yieldo UI/디자인 결정은 design master 판단을 default로 신뢰한다.**
+> 어떤 파일이 마이그레이션되더라도, 어떤 컴포넌트가 새로 만들어지더라도,
+> 사용자가 명시적으로 다른 방향을 지시하지 않는 한 §8 원칙으로 자율 결정 후 진행.
+
+**적용 범위**:
+- ✅ 새 컴포넌트/페이지 생성 — §8 원칙 추론하여 직접 결정
+- ✅ light theme 잔재 / 옛 패턴 발견 시 — 즉시 수정 (사전 허락 불필요)
+- ✅ 다른 에이전트 작업물 audit — design master가 일관성 책임
+- ⚠️ 큰 방향 전환 (dark→light 회귀, 색팔레트 폐기) — 사용자 사전 합의 필요
+
+**의도**: 디자인 결정이 단편적으로 오염되는 것을 방지. design system 일관성을 한 권위에 위임함으로써 token drift / philosophy drift 방지.
+
+
+
 ### §8.1 트리거 — 사용자 audit
 
 - "회색 글씨 가독성 떨어진다" → fg tier 3차 lift
