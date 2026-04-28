@@ -1,13 +1,10 @@
 /**
- * Mock Connections — 4-silo 통합 hub
+ * Connection types + 4-silo metadata.
  *
- *  · MMP (어트리뷰션 / UA): AppsFlyer, Adjust
- *  · Experimentation (실험): Statsig, Firebase
- *  · Financial (재무): QuickBooks, 수동 입력
- *  · Market Intelligence (시장 정보): 공개 벤치마크
- *
- *  PR 1에서는 AppsFlyer 카드만 mock connected 상태. 나머지는 silo placeholder.
- *  실제 동작은 PR 2-4에서 단계적 활성화.
+ *  · MMP (어트리뷰션 / UA): AppsFlyer, (후속) Adjust
+ *  · Experimentation (실험): (후속) Statsig, Firebase
+ *  · Financial (재무): (후속) QuickBooks, 수동 입력
+ *  · Market Intelligence (시장 정보): (후속) 공개 벤치마크
  */
 
 export type ConnectionStatus = "connected" | "warn" | "error" | "disconnected"
@@ -24,7 +21,7 @@ export type Connection = {
   status: ConnectionStatus
   lastSync?: string
   metrics?: ConnectionMetric[]
-  /** Optional — kept for forward compat with treenod patterns, unused in PR 1 UI */
+  /** Optional — forward compat fields, unused in current UI */
   initials?: string
   brandColor?: string
 }
@@ -43,17 +40,17 @@ export const CATEGORY_ORDER: ConnectionCategory[] = [
   "market",
 ]
 
-export const mockConnections: Connection[] = [
+/**
+ * 등록 가능한 connector 카탈로그 — silo별 placeholder 카드 렌더에 사용.
+ * 등록 상태(`status`)는 ConnectionsClient에서 /api/appsflyer/apps 응답으로 결정.
+ */
+export const AVAILABLE_CONNECTORS: Array<
+  Pick<Connection, "id" | "brand" | "category" | "description">
+> = [
   {
     id: "appsflyer",
     brand: "AppsFlyer",
     category: "mmp",
     description: "어트리뷰션 데이터 — Pull API로 cohort 리텐션·CPI·ROAS 수집.",
-    status: "connected",
-    lastSync: "방금 전",
-    metrics: [
-      { label: "CPI", value: "$0.84" },
-      { label: "Installs", value: "1.7M" },
-    ],
   },
 ]
