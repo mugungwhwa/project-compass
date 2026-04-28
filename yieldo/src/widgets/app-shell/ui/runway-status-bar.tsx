@@ -57,31 +57,85 @@ function formatCohort(ym: string, locale: string): string {
 function cohortYear(ym: string): string { return ym.split("-")[0] }
 function cohortMonthIdx(ym: string): number { return parseInt(ym.split("-")[1], 10) - 1 }
 
+type Direction = "up" | "down" | "flat"
+
 type Metric = {
   labelKey: TranslationKey
   value: string
   href?: string
+  /** Health-coded color for the value. */
   tone?: "neutral" | "positive" | "caution" | "risk"
+  /** Formatted delta vs prior period (e.g. "+$280K", "-5d"). */
+  delta?: string
+  /** Direction the value moved. */
+  direction?: Direction
+  /** Which direction is good for this metric.  Used to color the delta:
+      delta is green if direction === goodWhen, red if opposite, gray if flat. */
+  goodWhen?: "up" | "down"
 }
 
 function buildMetrics(gameId: string, cohortMonth: string): Metric[] {
   const data = getGameData(gameId, cohortMonth)
   const cashM = (data.cashRunway.initialCash / 1000).toFixed(1)
-  const runway = data.financialHealth.netRunway.value.toFixed(1)
-  const runwayTone: Metric["tone"] =
-    data.financialHealth.netRunway.value < 6
-      ? "risk"
-      : data.financialHealth.netRunway.value < 12
-        ? "caution"
-        : "positive"
-  const payback = data.financialHealth.paybackDay
-  const capEff = data.capitalKPIs.capitalEff.value.toFixed(2)
+  const runwayValue = data.financialHealth.netRunway.value
+  const runway = runwayValue.toFixed(1)
+  const paybackValue = data.financialHealth.paybackDay
+  const capEffValue = data.capitalKPIs.capitalEff.value
+  const capEff = capEffValue.toFixed(2)
 
+  // Health-coded tones (B-안: all 4 metrics get health colors, not just runway)
+  const runwayTone: Metric["tone"] =
+    runwayValue < 6 ? "risk" : runwayValue < 12 ? "caution" : "positive"
+  // Cash health derives from runway window (cash + burn = runway), but as
+  // a standalone "is the balance healthy?" we tier on runway proxy.
+  const cashTone: Metric["tone"] =
+    runwayValue < 6 ? "risk" : runwayValue < 12 ? "caution" : "positive"
+  // Payback target = D60 (yieldo standard for mobile games).  ≤60 healthy.
+  const paybackTone: Metric["tone"] =
+    paybackValue <= 60 ? "positive" : paybackValue <= 72 ? "caution" : "risk"
+  // CapEff: ≥1.0 means revenue ≥ investment.
+  const capEffTone: Metric["tone"] =
+    capEffValue >= 1.0 ? "positive" : capEffValue >= 0.8 ? "caution" : "risk"
+
+  // Sample deltas (mockup-grade — real version queries period-over-period
+  // snapshots).  Sign embedded so MetricCell can color by direction.
   return [
-    { labelKey: "status.cash",    value: `$${cashM}M`,  href: "/dashboard/capital", tone: "neutral" },
-    { labelKey: "status.runway",  value: `${runway}mo`, href: "/dashboard/capital", tone: runwayTone },
-    { labelKey: "status.payback", value: `D${payback}`, href: "/dashboard",         tone: "neutral" },
-    { labelKey: "status.capEff",  value: `${capEff}x`,  href: "/dashboard/capital", tone: "neutral" },
+    {
+      labelKey: "status.cash",
+      value: `$${cashM}M`,
+      href: "/dashboard/capital",
+      tone: cashTone,
+      delta: "-$280K",
+      direction: "down",
+      goodWhen: "up",
+    },
+    {
+      labelKey: "status.runway",
+      value: `${runway}mo`,
+      href: "/dashboard/capital",
+      tone: runwayTone,
+      delta: "-0.3",
+      direction: "down",
+      goodWhen: "up",
+    },
+    {
+      labelKey: "status.payback",
+      value: `D${paybackValue}`,
+      href: "/dashboard",
+      tone: paybackTone,
+      delta: "+5d",
+      direction: "up",
+      goodWhen: "down",
+    },
+    {
+      labelKey: "status.capEff",
+      value: `${capEff}x`,
+      href: "/dashboard/capital",
+      tone: capEffTone,
+      delta: "+0.04",
+      direction: "up",
+      goodWhen: "up",
+    },
   ]
 }
 
@@ -107,6 +161,17 @@ function MetricCell({
   metric: Metric
   label: string
 }) {
+  // Delta direction color: green if delta moves in the good direction,
+  // red if opposite, gray if flat.  Bloomberg pattern — sign in the
+  // text + color reinforcement (no separate arrow icon).
+  const deltaColor = (() => {
+    if (!metric.direction || metric.direction === "flat") return "text-[var(--fg-3)]"
+    if (!metric.goodWhen) return "text-[var(--fg-3)]"
+    return metric.direction === metric.goodWhen
+      ? "text-[var(--phosphor-green)]"
+      : "text-[var(--phosphor-red)]"
+  })()
+
   const content = (
     <span className="inline-flex items-baseline gap-1.5">
       <span className="text-caption uppercase tracking-wider text-[var(--fg-2)]">
@@ -115,6 +180,11 @@ function MetricCell({
       <span className={cn("font-mono text-h2", TONE_CLASS[metric.tone ?? "neutral"])}>
         {metric.value}
       </span>
+      {metric.delta && (
+        <span className={cn("font-mono text-[11px] font-semibold tabular-nums", deltaColor)}>
+          {metric.delta}
+        </span>
+      )}
     </span>
   )
   if (metric.href) {
