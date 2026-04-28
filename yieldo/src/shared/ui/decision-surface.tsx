@@ -159,10 +159,10 @@ function ConfidenceBar({ confidence }: { confidence: Confidence }) {
         {/* Track background */}
         <div className="absolute inset-x-0 top-0 h-full rounded-[var(--radius-inline)] bg-[var(--bg-3)]" />
 
-        {/* P10–P50 band (darker) */}
+        {/* P10–P50 band (darker) — phosphor cyan, terminal credibility tone */}
         <motion.div
-          className="absolute top-0 h-full rounded-l-[var(--radius-inline)] bg-[var(--brand)] opacity-60"
-          style={{ left: `${pct(p10)}%` }}
+          className="absolute top-0 h-full rounded-l-[var(--radius-inline)] bg-[var(--phosphor-cyan)] opacity-65"
+          style={{ left: `${pct(p10)}%`, boxShadow: "0 0 8px rgba(93,231,255,0.35)" }}
           initial={{ width: 0 }}
           animate={{ width: `${pct(p50) - pct(p10)}%` }}
           transition={{ duration: 0.6, ease: easing }}
@@ -170,7 +170,7 @@ function ConfidenceBar({ confidence }: { confidence: Confidence }) {
 
         {/* P50–P90 band (lighter) */}
         <motion.div
-          className="absolute top-0 h-full rounded-r-[var(--radius-inline)] bg-[var(--brand)] opacity-30"
+          className="absolute top-0 h-full rounded-r-[var(--radius-inline)] bg-[var(--phosphor-cyan)] opacity-30"
           style={{ left: `${pct(p50)}%` }}
           initial={{ width: 0 }}
           animate={{ width: `${pct(p90) - pct(p50)}%` }}
@@ -197,11 +197,14 @@ function ConfidenceBar({ confidence }: { confidence: Confidence }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.5, ease: easing }}
         >
-          <span className="rounded-[var(--radius-inline)] bg-[var(--fg-0)] px-1.5 py-0.5 text-[10px] font-mono font-semibold text-[var(--bg-1)] leading-none">
+          <span
+            className="rounded-[var(--radius-inline)] bg-[var(--phosphor-yellow)] px-1.5 py-0.5 text-[10px] font-mono font-bold text-[var(--bg-0)] leading-none"
+            style={{ boxShadow: "0 0 10px rgba(255,228,94,0.5)" }}
+          >
             {p50}
             {unit}
           </span>
-          <span className="text-[var(--fg-0)] leading-none text-[10px]" aria-hidden>
+          <span className="text-[var(--phosphor-yellow)] leading-none text-[10px]" aria-hidden>
             ▼
           </span>
         </motion.div>

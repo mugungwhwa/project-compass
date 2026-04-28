@@ -7,6 +7,7 @@ import { formatNumber } from "@/shared/lib"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
 import { SCENARIO_SIMULATOR_COLORS } from "@/shared/config/chart-colors"
 import { CHART_TYPO } from "@/shared/config/chart-typography"
+import { ChartTooltip } from "@/shared/ui/chart-tooltip"
 
 const C = SCENARIO_SIMULATOR_COLORS
 
@@ -62,7 +63,7 @@ export function ScenarioSimulator() {
           <XAxis dataKey="budget" tick={{ ...CHART_TYPO.axisTick, fill: "var(--fg-3)" }} axisLine={{ stroke: "var(--border-default)" }} tickLine={false} />
           <YAxis yAxisId="left" tick={{ ...CHART_TYPO.axisTick, fill: "var(--fg-3)" }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${v}d`} />
           <YAxis yAxisId="right" orientation="right" tick={{ ...CHART_TYPO.axisTick, fill: "var(--fg-3)" }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${v}%`} />
-          <Tooltip contentStyle={{ borderRadius: "var(--radius-card)", border: "1px solid var(--border-default)", fontSize: CHART_TYPO.tooltipLabel.fontSize, background: "var(--bg-1)", color: "var(--fg-0)" }} />
+          <Tooltip content={<ChartTooltip />} cursor={{ stroke: "var(--phosphor-yellow)", strokeWidth: 1, strokeDasharray: "3 3" }} />
           <Line yAxisId="left" type="monotone" dataKey="payback" stroke={C.payback} strokeWidth={2} name="Payback" dot={{ r: 2 }} animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
           <Line yAxisId="right" type="monotone" dataKey="bep" stroke={C.bep} strokeWidth={2} name="BEP %" dot={{ r: 2 }} animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
         </LineChart>
