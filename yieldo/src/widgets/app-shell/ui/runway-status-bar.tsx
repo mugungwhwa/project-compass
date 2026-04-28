@@ -19,7 +19,7 @@
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState, useRef, useEffect, useCallback, useId } from "react"
-import { createPortal } from "react-dom"
+import { Popover } from "@base-ui/react/popover"
 import { motion, AnimatePresence } from "framer-motion"
 import { Gamepad2, ChevronDown, Calendar, Check } from "lucide-react"
 import { DayPicker, type DateRange } from "react-day-picker"
@@ -218,14 +218,7 @@ export function RunwayStatusBar() {
   const [gameOpen, setGameOpen]             = useState(false)
   const [calendarOpen, setCalendarOpen]     = useState(false)
 
-  // Dropdown anchor state — viewport coords used with position:fixed so the
-  // dropdown escapes ancestor overflow:hidden (dashboard layout has it).
-  const [gameAnchor, setGameAnchor] = useState<{ top: number; right: number } | null>(null)
-  const [calAnchor, setCalAnchor]   = useState<{ top: number; right: number } | null>(null)
-
-  // Portal target — only available client-side
-  const [portalReady, setPortalReady] = useState(false)
-  useEffect(() => { setPortalReady(true) }, [])
+  // Position/portal/outside-click all handled by base-ui Popover.
 
   // Derive cohort month from dateRange for metrics lookup
   const selectedCohort = dateRange.from
@@ -243,67 +236,8 @@ export function RunwayStatusBar() {
   const calTriggerRef   = useRef<HTMLButtonElement>(null)
   const gameItemsRef    = useRef<(HTMLButtonElement | null)[]>([])
 
-  // Close dropdowns on outside click — but treat clicks inside any
-  // [data-dropdown-portal] as inside (since portaled elements aren't
-  // descendants of gameRef/calendarRef anymore).
-  useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      const target = e.target as Element | null
-      if (!target) return
-      if (target.closest?.("[data-dropdown-portal]")) return
-      if (gameRef.current && !gameRef.current.contains(target as Node)) {
-        setGameOpen(false)
-      }
-      if (calendarRef.current && !calendarRef.current.contains(target as Node)) {
-        setCalendarOpen(false)
-      }
-    }
-    document.addEventListener("mousedown", handleClick)
-    return () => document.removeEventListener("mousedown", handleClick)
-  }, [])
-
-  // Compute dropdown anchor positions when they open / on window resize.
-  // Position:fixed coords are viewport-relative, so they escape any
-  // ancestor overflow:hidden — the dropdown can render anywhere on screen.
-  // Drop FROM the status bar's bottom edge, not from each individual button.
-  // This makes the dropdown read as an extension of the top bar — flush with
-  // its lower border, sharing visual continuity.  Right edge still anchors
-  // to the trigger button so opens from the right side.
-  function getHeaderBottom(): number {
-    if (typeof document === "undefined") return 56
-    const headerEl = document.querySelector('header[role="banner"]') as HTMLElement | null
-    return headerEl ? headerEl.getBoundingClientRect().bottom : 56
-  }
-
-  useEffect(() => {
-    if (!gameOpen) return
-    function compute() {
-      const r = gameTriggerRef.current?.getBoundingClientRect()
-      if (r) setGameAnchor({ top: getHeaderBottom(), right: window.innerWidth - r.right })
-    }
-    compute()
-    window.addEventListener("resize", compute)
-    window.addEventListener("scroll", compute, { passive: true, capture: true })
-    return () => {
-      window.removeEventListener("resize", compute)
-      window.removeEventListener("scroll", compute, { capture: true } as EventListenerOptions)
-    }
-  }, [gameOpen])
-
-  useEffect(() => {
-    if (!calendarOpen) return
-    function compute() {
-      const r = calTriggerRef.current?.getBoundingClientRect()
-      if (r) setCalAnchor({ top: getHeaderBottom(), right: window.innerWidth - r.right })
-    }
-    compute()
-    window.addEventListener("resize", compute)
-    window.addEventListener("scroll", compute, { passive: true, capture: true })
-    return () => {
-      window.removeEventListener("resize", compute)
-      window.removeEventListener("scroll", compute, { capture: true } as EventListenerOptions)
-    }
-  }, [calendarOpen])
+  // Outside-click, anchor positioning, scroll/resize tracking — all handled
+  // by Popover.Root + Popover.Positioner internally.
 
   // Auto-focus selected item when game dropdown opens
   useEffect(() => {
@@ -409,19 +343,19 @@ export function RunwayStatusBar() {
         </div>
       </div>
 
-      {/* Right: Game + Period — same visual language as MetricCells (no borders) */}
+      {/* Right: Game + Period — base-ui Popover handles portal/positioning */}
       <div className="flex items-center gap-1">
 
-        {/* ── Game selector (MetricCell style) ── */}
-        <div ref={gameRef} className="relative">
-          <button
+        {/* ── Game (TITLE) selector ── */}
+        <Popover.Root
+          open={gameOpen}
+          onOpenChange={(open) => {
+            setGameOpen(open)
+            if (open) setCalendarOpen(false)
+          }}
+        >
+          <Popover.Trigger
             ref={gameTriggerRef}
-            type="button"
-            onClick={() => { setGameOpen((o) => !o); setCalendarOpen(false) }}
-            onKeyDown={handleGameTriggerKeyDown}
-            aria-haspopup="listbox"
-            aria-expanded={gameOpen}
-            aria-controls={gameListId}
             className={cn(
               "inline-flex items-baseline gap-1.5 rounded-[var(--radius-inline)] px-2 py-1",
               "transition-colors hover:bg-[var(--bg-3)]",
@@ -434,72 +368,59 @@ export function RunwayStatusBar() {
             </span>
             <span className="text-body font-medium text-[var(--fg-0)]">{selectedGame.label}</span>
             <ChevronDown className="h-3 w-3 flex-shrink-0 self-center text-[var(--fg-3)]" aria-hidden />
-          </button>
-
-          {/* Game dropdown — portaled to body, position:fixed to escape parent overflow */}
-          {portalReady && createPortal(
-          <AnimatePresence>
-            {gameOpen && gameAnchor && (
-              <motion.div
-                id={gameListId}
-                data-dropdown-portal=""
-                role="listbox"
-                aria-label="Select game"
-                className={cn(dropdownBase, "min-w-[200px]")}
-                style={{ position: "fixed", top: gameAnchor.top, right: gameAnchor.right }}
-                variants={dropdownVariants}
-                initial="hidden"
-                animate="visible"
-                exit="hidden"
-                transition={dropdownTransition}
+          </Popover.Trigger>
+          <Popover.Portal>
+            <Popover.Positioner side="bottom" align="end" sideOffset={4}>
+              <Popover.Popup
+                className={cn(dropdownBase, "min-w-[220px] outline-none")}
                 onKeyDown={handleGameDropdownKeyDown}
               >
-                {GAMES.map((game, idx) => (
-                  <button
-                    key={game.id}
-                    ref={(el) => { gameItemsRef.current[idx] = el }}
-                    role="option"
-                    aria-selected={game.id === selectedGame.id}
-                    type="button"
-                    tabIndex={-1}
-                    onClick={() => { setGameId(game.id); setGameOpen(false); gameTriggerRef.current?.focus() }}
-                    className={cn(
-                      "flex w-full items-center justify-between px-3 py-2 text-body",
-                      "transition-colors duration-[var(--duration-micro)]",
-                      "hover:bg-[var(--bg-3)]",
-                      game.id === selectedGame.id
-                        ? "text-[var(--brand)] font-medium"
-                        : "text-[var(--fg-1)]",
-                      gameActiveIdx === idx && "bg-[var(--bg-3)]",
-                      focusRing,
-                    )}
-                  >
-                    <span className="flex flex-col items-start">
-                      <span className="font-medium leading-tight">{game.label}</span>
-                      <span className="text-caption text-[var(--fg-3)]">{game.genre}</span>
-                    </span>
-                    {game.id === selectedGame.id && (
-                      <Check className="h-3.5 w-3.5 flex-shrink-0 text-[var(--brand)]" aria-hidden />
-                    )}
-                  </button>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>,
-            document.body,
-          )}
-        </div>
+                <div role="listbox" aria-label="Select game" id={gameListId}>
+                  {GAMES.map((game, idx) => (
+                    <button
+                      key={game.id}
+                      ref={(el) => { gameItemsRef.current[idx] = el }}
+                      role="option"
+                      aria-selected={game.id === selectedGame.id}
+                      type="button"
+                      tabIndex={-1}
+                      onClick={() => { setGameId(game.id); setGameOpen(false) }}
+                      className={cn(
+                        "flex w-full items-center justify-between px-3 py-2 text-body",
+                        "transition-colors duration-[var(--duration-micro)]",
+                        "hover:bg-[var(--bg-3)]",
+                        game.id === selectedGame.id
+                          ? "text-[var(--phosphor-yellow)] font-medium"
+                          : "text-[var(--fg-1)]",
+                        gameActiveIdx === idx && "bg-[var(--bg-3)]",
+                        focusRing,
+                      )}
+                    >
+                      <span className="flex flex-col items-start">
+                        <span className="font-medium leading-tight">{game.label}</span>
+                        <span className="text-caption text-[var(--fg-3)]">{game.genre}</span>
+                      </span>
+                      {game.id === selectedGame.id && (
+                        <Check className="h-3.5 w-3.5 flex-shrink-0 text-[var(--phosphor-yellow)]" aria-hidden />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </Popover.Popup>
+            </Popover.Positioner>
+          </Popover.Portal>
+        </Popover.Root>
 
-        {/* ── Period selector (MetricCell style) ── */}
-        <div ref={calendarRef} className="relative">
-          <button
+        {/* ── Period selector ── */}
+        <Popover.Root
+          open={calendarOpen}
+          onOpenChange={(open) => {
+            setCalendarOpen(open)
+            if (open) setGameOpen(false)
+          }}
+        >
+          <Popover.Trigger
             ref={calTriggerRef}
-            type="button"
-            onClick={() => { setCalendarOpen((o) => !o); setGameOpen(false) }}
-            onKeyDown={handleCalTriggerKeyDown}
-            aria-haspopup="dialog"
-            aria-expanded={calendarOpen}
-            aria-controls={calListId}
             className={cn(
               "inline-flex items-baseline gap-1.5 rounded-[var(--radius-inline)] px-2 py-1",
               "transition-colors hover:bg-[var(--bg-3)]",
@@ -518,28 +439,18 @@ export function RunwayStatusBar() {
                 : formatCohort(selectedCohort, locale)}
             </span>
             <ChevronDown className="h-3 w-3 flex-shrink-0 self-center text-[var(--fg-3)]" aria-hidden />
-          </button>
-
-          {/* Date range picker popover — portaled, position:fixed */}
-          {portalReady && createPortal(
-          <AnimatePresence>
-            {calendarOpen && calAnchor && (
-              <motion.div
+          </Popover.Trigger>
+          <Popover.Portal>
+            <Popover.Positioner side="bottom" align="end" sideOffset={4}>
+              <Popover.Popup
                 id={calListId}
-                data-dropdown-portal=""
                 aria-label="Select date range"
                 className={cn(
-                  "z-[60]",
-                  "rounded-b-[var(--radius-card)] rounded-t-none",
-                  "border border-t-0 border-[var(--phosphor-yellow)]/40 bg-[var(--bg-1)]",
+                  "z-[60] outline-none",
+                  "rounded-[var(--radius-card)]",
+                  "border border-[var(--phosphor-yellow)]/40 bg-[var(--bg-1)]",
                   "shadow-[0_0_18px_rgba(255,228,94,0.10),0_12px_36px_rgba(0,0,0,0.55)] p-4",
                 )}
-                style={{ position: "fixed", top: calAnchor.top, right: calAnchor.right }}
-                variants={dropdownVariants}
-                initial="hidden"
-                animate="visible"
-                exit="hidden"
-                transition={dropdownTransition}
               >
                 <DayPicker
                   mode="range"
@@ -557,12 +468,10 @@ export function RunwayStatusBar() {
                   showOutsideDays
                   style={{ ["--rdp-accent-color" as string]: "var(--brand)", ["--rdp-range_middle-background-color" as string]: "var(--brand-tint)" }}
                 />
-              </motion.div>
-            )}
-          </AnimatePresence>,
-            document.body,
-          )}
-        </div>
+              </Popover.Popup>
+            </Popover.Positioner>
+          </Popover.Portal>
+        </Popover.Root>
       </div>
     </header>
   )
