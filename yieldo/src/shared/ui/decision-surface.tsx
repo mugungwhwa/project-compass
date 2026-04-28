@@ -340,11 +340,17 @@ export function DecisionSurface({
           {/* 3. Confidence — REQUIRED. Lint rule elsewhere enforces this. */}
           <ConfidenceBar confidence={confidence} />
 
-          {/* 4. Recommendation (Display/Serif) + Rationale (support) —
-              break-keep prevents mid-word splits in Korean where word
-              boundaries are phrase-level, not token-level. */}
+          {/* 4. Recommendation (mono headline) + Rationale (support) —
+              2026-04-28: switched from Instrument Serif italic (text-display)
+              to mono phosphor-yellow.  Serif clashed with terminal mono
+              context — authority now from color + weight, not font swap. */}
           <div className="flex flex-col gap-2">
-            <p className="text-display text-[var(--fg-0)] break-keep">{recommendation}</p>
+            <p
+              className="font-mono text-2xl md:text-[28px] font-bold text-[var(--phosphor-yellow)] tracking-tight leading-tight break-keep"
+              style={{ textShadow: "0 0 18px rgba(255, 228, 94, 0.32)" }}
+            >
+              {recommendation}
+            </p>
             {rationale && (
               <p className="text-body text-[var(--signal-positive)] flex items-start gap-2 break-keep">
                 <span aria-hidden className="font-mono leading-[1.4]">↳</span>
