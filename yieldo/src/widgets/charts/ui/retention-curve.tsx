@@ -189,7 +189,7 @@ export function RetentionCurve({ data, asymptoticDay, expanded: externalExpanded
 
           {/* Outer band: P10–P90 (widest, palest) */}
           <Area
-            type="monotone"
+            type="linear"
             dataKey="p90"
             stroke="none"
             fill={C.bandOuter}
@@ -197,11 +197,11 @@ export function RetentionCurve({ data, asymptoticDay, expanded: externalExpanded
             animationDuration={1200}
             animationEasing="ease-out"
           />
-          <Area type="monotone" dataKey="p10" stroke="none" fill="none" />
+          <Area type="linear" dataKey="p10" stroke="none" fill="none" />
 
           {/* Inner band: P25–P75 (tighter, darker) */}
           <Area
-            type="monotone"
+            type="linear"
             dataKey="p75"
             stroke="none"
             fill={C.bandInner}
@@ -209,11 +209,11 @@ export function RetentionCurve({ data, asymptoticDay, expanded: externalExpanded
             animationDuration={1200}
             animationEasing="ease-out"
           />
-          <Area type="monotone" dataKey="p25" stroke="none" fill="none" />
+          <Area type="linear" dataKey="p25" stroke="none" fill="none" />
 
           {/* Genre benchmark: subordinate neutral dashed line */}
           <Line
-            type="monotone"
+            type="linear"
             dataKey="genre"
             stroke={C.benchmark}
             strokeWidth={1.25}
@@ -227,7 +227,7 @@ export function RetentionCurve({ data, asymptoticDay, expanded: externalExpanded
 
           {/* P50 median: primary signal line, solid observed dots */}
           <Line
-            type="monotone"
+            type="linear"
             dataKey="p50"
             stroke={C.p50}
             strokeWidth={2}

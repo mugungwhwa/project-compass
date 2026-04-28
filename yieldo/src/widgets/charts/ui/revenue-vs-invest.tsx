@@ -168,7 +168,7 @@ export function RevenueVsInvest({ data, expanded: externalExpanded, onToggle: ex
 
           {/* ── Cumulative UA Spend area (orange, behind) ── */}
           <Area
-            type="monotone"
+            type="linear"
             dataKey="cumUaSpend"
             stroke={C.uaSpend}
             strokeWidth={2.5}
@@ -182,7 +182,7 @@ export function RevenueVsInvest({ data, expanded: externalExpanded, onToggle: ex
 
           {/* ── Cumulative Revenue area (blue, front) ── */}
           <Area
-            type="monotone"
+            type="linear"
             dataKey="cumRevenue"
             stroke={C.revenue}
             strokeWidth={2.5}

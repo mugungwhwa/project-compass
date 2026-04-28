@@ -81,7 +81,7 @@ export function RolloutHistoryTimeline({ variant, expanded: externalExpanded, on
           <Tooltip content={<ChartTooltip />} />
           <Legend wrapperStyle={{ ...CHART_TYPO.legend }} />
           <Bar yAxisId="pct" dataKey="percentage" fill={C.bar} fillOpacity={0.5} radius={[4, 4, 0, 0]} barSize={20} name="% Rollout" animationBegin={200} animationDuration={800} animationEasing="ease-out" />
-          <Line yAxisId="ltv" type="monotone" dataKey="cumulative_ltv" stroke={C.line} strokeWidth={2.5} dot={{ r: 3.5, fill: "#FFFFFF", stroke: C.line, strokeWidth: 2 }} name="Cumulative LTV ($)" animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
+          <Line yAxisId="ltv" type="linear" dataKey="cumulative_ltv" stroke={C.line} strokeWidth={2.5} dot={{ r: 3.5, fill: "#FFFFFF", stroke: C.line, strokeWidth: 2 }} name="Cumulative LTV ($)" animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
         </ComposedChart>
       </ResponsiveContainer>
       </div>

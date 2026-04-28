@@ -75,8 +75,8 @@ export function SaturationTrendChart({ data, expanded: externalExpanded, onToggl
             }
           />
           <Legend wrapperStyle={{ ...CHART_TYPO.legend }} />
-          <Area type="monotone" dataKey="topGrossingThreshold" stroke={C.threshold} strokeWidth={2} fill="url(#thresholdGrad)" name={t("market.entryThreshold")} animationBegin={200} animationDuration={1200} />
-          <Area type="monotone" dataKey="myRevenue" stroke={C.myRevenue} strokeWidth={2.5} fill="url(#myRevGrad)" name={t("market.myRevenue")} animationBegin={400} animationDuration={1200} />
+          <Area type="linear" dataKey="topGrossingThreshold" stroke={C.threshold} strokeWidth={2} fill="url(#thresholdGrad)" name={t("market.entryThreshold")} animationBegin={200} animationDuration={1200} />
+          <Area type="linear" dataKey="myRevenue" stroke={C.myRevenue} strokeWidth={2.5} fill="url(#myRevGrad)" name={t("market.myRevenue")} animationBegin={400} animationDuration={1200} />
         </AreaChart>
       </ResponsiveContainer>
       </div>

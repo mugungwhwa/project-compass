@@ -229,7 +229,7 @@ export function CapitalWaterfall({ data, expanded: externalExpanded, onToggle: e
           </Bar>
           {/* Cumulative running-total line overlay */}
           <Line
-            type="monotone"
+            type="linear"
             dataKey="runningTotal"
             stroke={PALETTE.running}
             strokeWidth={1.5}

@@ -95,7 +95,7 @@ export function CausalImpactPanel({
           <Tooltip content={<ChartTooltip />} />
           <Legend wrapperStyle={{ ...CHART_TYPO.legend, color: PALETTE.fg2 }} />
           <Area
-            type="monotone"
+            type="linear"
             dataKey="band"
             name={t("chart.causalImpact.cfBand")}
             stroke="none"
@@ -103,7 +103,7 @@ export function CausalImpactPanel({
             animationDuration={800}
           />
           <Line
-            type="monotone"
+            type="linear"
             dataKey="counterfactual"
             name={t("chart.causalImpact.counterfactual")}
             stroke={PALETTE.benchmark}
@@ -113,7 +113,7 @@ export function CausalImpactPanel({
             animationDuration={800}
           />
           <Line
-            type="monotone"
+            type="linear"
             dataKey="observed"
             name={t("chart.causalImpact.observed")}
             stroke={PALETTE.observed}

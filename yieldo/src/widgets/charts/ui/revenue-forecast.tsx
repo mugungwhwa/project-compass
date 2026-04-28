@@ -403,7 +403,7 @@ export function RevenueForecast({ data, meta, title, expanded: externalExpanded,
             {showPrior && (
               <>
                 <Area
-                  type="monotone"
+                  type="linear"
                   dataKey="priorP90"
                   name={t("rfc.legendPrior")}
                   stroke="none"
@@ -411,26 +411,26 @@ export function RevenueForecast({ data, meta, title, expanded: externalExpanded,
                   isAnimationActive={false}
                   legendType="none"
                 />
-                <Area type="monotone" dataKey="priorP10" stroke="none" fill="#FFFFFF" isAnimationActive={false} legendType="none" />
-                <Line type="monotone" dataKey="priorP50" stroke={C.priorLine} strokeWidth={1} strokeDasharray="3 3" dot={false} isAnimationActive={false} legendType="none" />
+                <Area type="linear" dataKey="priorP10" stroke="none" fill="#FFFFFF" isAnimationActive={false} legendType="none" />
+                <Line type="linear" dataKey="priorP50" stroke={C.priorLine} strokeWidth={1} strokeDasharray="3 3" dot={false} isAnimationActive={false} legendType="none" />
               </>
             )}
 
             {/* Layer 2: Posterior band (always, middle) — solid blue */}
-            <Area type="monotone" dataKey="p90" name={t("rfc.legendPosterior")} stroke="none" fill="url(#rfcPostBand)" animationBegin={200} animationDuration={1200} animationEasing="ease-out" />
-            <Area type="monotone" dataKey="p10" stroke="none" fill="#FFFFFF" animationBegin={200} animationDuration={1200} animationEasing="ease-out" />
+            <Area type="linear" dataKey="p90" name={t("rfc.legendPosterior")} stroke="none" fill="url(#rfcPostBand)" animationBegin={200} animationDuration={1200} animationEasing="ease-out" />
+            <Area type="linear" dataKey="p10" stroke="none" fill="#FFFFFF" animationBegin={200} animationDuration={1200} animationEasing="ease-out" />
 
             {/* Layer 3: Posterior P10/P90 outlines */}
-            <Line type="monotone" dataKey="p90" stroke={C.line} strokeWidth={1} strokeDasharray="4 3" strokeOpacity={0.32} dot={false} animationBegin={400} animationDuration={1000} animationEasing="ease-out" legendType="none" />
-            <Line type="monotone" dataKey="p10" stroke={C.line} strokeWidth={1} strokeDasharray="4 3" strokeOpacity={0.32} dot={false} animationBegin={400} animationDuration={1000} animationEasing="ease-out" legendType="none" />
+            <Line type="linear" dataKey="p90" stroke={C.line} strokeWidth={1} strokeDasharray="4 3" strokeOpacity={0.32} dot={false} animationBegin={400} animationDuration={1000} animationEasing="ease-out" legendType="none" />
+            <Line type="linear" dataKey="p10" stroke={C.line} strokeWidth={1} strokeDasharray="4 3" strokeOpacity={0.32} dot={false} animationBegin={400} animationDuration={1000} animationEasing="ease-out" legendType="none" />
 
             {/* Layer 4: Posterior P50 (top, always) — solid blue 2px */}
-            <Line type="monotone" dataKey="p50" stroke={C.line} strokeWidth={2.25} dot={false} animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
+            <Line type="linear" dataKey="p50" stroke={C.line} strokeWidth={2.25} dot={false} animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
 
             {/* Layer 5: Experiment fork (conditional, topmost line) — green dashed */}
             {selectedExp && (
               <Line
-                type="monotone"
+                type="linear"
                 dataKey="forkP50"
                 name={t("rfc.legendFork")}
                 stroke={C.experiment}

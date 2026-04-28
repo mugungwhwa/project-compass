@@ -67,7 +67,7 @@ export function RankingTrend({ data, expanded: externalExpanded, onToggle: exter
             }
           />
           <ReferenceLine y={5} stroke={C.top5} strokeDasharray="3 3" strokeOpacity={0.5} label={{ value: "Top 5", position: "right", ...CHART_TYPO.axisLabel, fontFamily: CHART_TYPO.annotation.fontFamily, fill: C.top5 }} />
-          <Line type="monotone" dataKey="myRank" stroke={C.line} strokeWidth={3} dot={{ r: 4, fill: "#FFFFFF", stroke: C.line, strokeWidth: 2 }} animationBegin={400} animationDuration={1200} animationEasing="ease-out" />
+          <Line type="linear" dataKey="myRank" stroke={C.line} strokeWidth={3} dot={{ r: 4, fill: "#FFFFFF", stroke: C.line, strokeWidth: 2 }} animationBegin={400} animationDuration={1200} animationEasing="ease-out" />
         </LineChart>
       </ResponsiveContainer>
       </div>

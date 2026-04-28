@@ -84,9 +84,9 @@ export function RippleForecastFan({ forecast, variantName }: RippleForecastFanPr
               />
             }
           />
-          <Area type="monotone" dataKey="p90" stroke="none" fill="url(#rippleBand)" animationBegin={200} animationDuration={1200} animationEasing="ease-out" />
-          <Area type="monotone" dataKey="p10" stroke="none" fill="#FFFFFF" animationBegin={200} animationDuration={1200} animationEasing="ease-out" />
-          <Line type="monotone" dataKey="p50" stroke={C.line} strokeWidth={2.5} dot={{ r: 4, fill: "#FFFFFF", stroke: C.line, strokeWidth: 2 }} animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
+          <Area type="linear" dataKey="p90" stroke="none" fill="url(#rippleBand)" animationBegin={200} animationDuration={1200} animationEasing="ease-out" />
+          <Area type="linear" dataKey="p10" stroke="none" fill="#FFFFFF" animationBegin={200} animationDuration={1200} animationEasing="ease-out" />
+          <Line type="linear" dataKey="p50" stroke={C.line} strokeWidth={2.5} dot={{ r: 4, fill: "#FFFFFF", stroke: C.line, strokeWidth: 2 }} animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
           <ReferenceLine y={0} stroke={C.axis} strokeDasharray="3 3" />
         </AreaChart>
       </ResponsiveContainer>

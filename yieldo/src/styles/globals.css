@@ -457,10 +457,16 @@ body {
   without touching individual chart components.
 */
 
-/* All line/curve strokes thicker — terminals draw fat strokes for legibility */
+/* All line/curve strokes thicker — terminals draw fat strokes for legibility.
+   Sharp line ends + miter joins for Bloomberg-grade crispness (no rounded
+   pillows where lines meet). */
 .recharts-line-curve,
-.recharts-curve.recharts-line-curve {
+.recharts-curve.recharts-line-curve,
+.recharts-area-curve {
   stroke-width: 2.5 !important;
+  stroke-linecap: butt !important;
+  stroke-linejoin: miter !important;
+  stroke-miterlimit: 4 !important;
 }
 
 /* Hover crosshair = phosphor-yellow (Bloomberg trader style) */

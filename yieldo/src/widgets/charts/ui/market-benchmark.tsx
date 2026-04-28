@@ -69,10 +69,10 @@ export function MarketBenchmark({ data, expanded: externalExpanded, onToggle: ex
               />
             }
           />
-          <Area type="monotone" dataKey="p90" stroke="none" fill="url(#genreBand)" name={t("chart.bandOuter")} animationBegin={200} animationDuration={1200} animationEasing="ease-out" />
-          <Area type="monotone" dataKey="p10" stroke="none" fill="none" animationBegin={200} animationDuration={1200} animationEasing="ease-out" />
-          <Line type="monotone" dataKey="genre" stroke={C.genre} strokeWidth={1.5} strokeDasharray="6 3" dot={false} name={t("chart.genreAvg")} animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
-          <Line type="monotone" dataKey="p50" stroke={C.p50} strokeWidth={2.5} dot={{ r: 3, fill: "#FFF", stroke: C.p50, strokeWidth: 2 }} name="Match League" animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
+          <Area type="linear" dataKey="p90" stroke="none" fill="url(#genreBand)" name={t("chart.bandOuter")} animationBegin={200} animationDuration={1200} animationEasing="ease-out" />
+          <Area type="linear" dataKey="p10" stroke="none" fill="none" animationBegin={200} animationDuration={1200} animationEasing="ease-out" />
+          <Line type="linear" dataKey="genre" stroke={C.genre} strokeWidth={1.5} strokeDasharray="6 3" dot={false} name={t("chart.genreAvg")} animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
+          <Line type="linear" dataKey="p50" stroke={C.p50} strokeWidth={2.5} dot={{ r: 3, fill: "#FFF", stroke: C.p50, strokeWidth: 2 }} name="Match League" animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
           <Legend verticalAlign="bottom" height={36} iconSize={12} wrapperStyle={{ ...CHART_TYPO.legend }} />
         </AreaChart>
       </ResponsiveContainer>

@@ -69,7 +69,7 @@ export function CumulativeImpactCurve({ data, expanded: extExpanded, onToggle }:
           <Tooltip content={<ChartTooltip />} />
           <Legend wrapperStyle={{ ...CHART_TYPO.legend, color: PALETTE.fg2 }} />
           <Area
-            type="monotone"
+            type="linear"
             dataKey="baseline"
             name={t("chart.cumulativeImpact.baseline")}
             stroke={PALETTE.benchmark}
@@ -79,7 +79,7 @@ export function CumulativeImpactCurve({ data, expanded: extExpanded, onToggle }:
             animationDuration={800}
           />
           <Area
-            type="monotone"
+            type="linear"
             dataKey="actual"
             name={t("chart.cumulativeImpact.actual")}
             stroke={PALETTE.p50}
