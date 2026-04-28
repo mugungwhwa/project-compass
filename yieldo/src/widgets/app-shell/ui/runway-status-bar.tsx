@@ -7,13 +7,13 @@
   data and renders 4 key metrics in Geist Mono tabular.
 
   Locale aware (2026-04-08): metric labels translate via useLocale().
-  The brand mark <CompassLogo> is NOT translated — "project compass" is a
-  brand name and stays the same in every locale (same rule as "Vercel").
+  The brand mark <YieldoLogo> is NOT translated — "yieldo" is a brand name
+  and stays the same in every locale (same rule as "Vercel").
 
   Design language: Bloomberg Terminal status bar × Linear top nav.
   No gradients, no borders besides bottom rule, monochrome.
 
-  Source of truth: docs/Project_Compass_Design_Migration_Log.md §1.2 + §5
+  Source of truth: docs/Project_Yieldo_Design_Migration_Log.md §1.2 + §5
 */
 
 import Link from "next/link"
@@ -26,7 +26,7 @@ import { ko as koLocale, enUS } from "react-day-picker/locale"
 import "react-day-picker/style.css"
 import { mockCashRunway, mockFinancialHealth, mockCapitalKPIs, getGameData } from "@/shared/api"
 import { useSelectedGame } from "@/shared/store/selected-game"
-import { CompassLogo } from "@/shared/ui/compass-logo"
+import { YieldoLogo } from "@/shared/ui/yieldo-logo"
 import { useLocale } from "@/shared/i18n"
 import type { TranslationKey } from "@/shared/i18n/dictionary"
 import { cn } from "@/shared/lib"
@@ -264,9 +264,9 @@ export function RunwayStatusBar() {
           type="button"
           onClick={() => router.push("/dashboard")}
           className={cn("mr-4 transition-opacity hover:opacity-80", focusRing, "rounded-[var(--radius-inline)]")}
-          aria-label="project compass home"
+          aria-label="yieldo home"
         >
-          <CompassLogo size="lg" />
+          <YieldoLogo size="lg" />
         </button>
         <div className="flex items-center gap-1">
           {metrics.map((m) => (

@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { CompassLogo } from "@/shared/ui/compass-logo"
+import { YieldoLogo } from "@/shared/ui/yieldo-logo"
 import { useLocale } from "@/shared/i18n"
 
 export default function LoginPage() {
@@ -18,7 +18,7 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-[var(--background)]">
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center gap-2">
-          <CompassLogo size="lg" />
+          <YieldoLogo size="lg" />
           <p className="text-caption uppercase tracking-[0.18em] text-[var(--fg-2)]">
             {t("login.subtitle")}
           </p>
@@ -27,7 +27,7 @@ export default function LoginPage() {
           <div className="space-y-4">
             <div>
               <label className="mb-1.5 block text-xs font-medium text-[var(--text-secondary)]">Email</label>
-              <input type="email" defaultValue="demo@compass.io" className="w-full rounded-lg border border-[var(--border)] px-3 py-2 text-sm focus:border-[var(--brand)] focus:outline-none focus:ring-1 focus:ring-[var(--brand)]" />
+              <input type="email" defaultValue="demo@yieldo.io" className="w-full rounded-lg border border-[var(--border)] px-3 py-2 text-sm focus:border-[var(--brand)] focus:outline-none focus:ring-1 focus:ring-[var(--brand)]" />
             </div>
             <div>
               <label className="mb-1.5 block text-xs font-medium text-[var(--text-secondary)]">Password</label>

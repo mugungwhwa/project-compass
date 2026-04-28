@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { CompassLogo } from "@/shared/ui/compass-logo"
+import { YieldoLogo } from "@/shared/ui/yieldo-logo"
 import { useLocale } from "@/shared/i18n/context"
 import { cn } from "@/shared/lib/utils"
 
@@ -31,8 +31,8 @@ export function NavBar() {
           : "bg-transparent border-b border-transparent"
       )}
     >
-      <Link href="/" aria-label="Project Compass 홈">
-        <CompassLogo size="md" variant="full" />
+      <Link href="/" aria-label="yieldo 홈">
+        <YieldoLogo size="md" variant="full" />
       </Link>
 
       <nav className="flex items-center gap-5">
