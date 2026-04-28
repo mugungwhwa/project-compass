@@ -20,9 +20,36 @@ type SignalCardProps = {
 }
 
 const signalConfig = {
-  invest: { label: "signal.invest" as const, badgeBg: "bg-[var(--signal-green-bg)]", badgeText: "text-[var(--signal-green)]", badgeBorder: "border-[var(--signal-green-border)]", gaugePos: 78, cardBg: "signal-bg-invest" },
-  hold:   { label: "signal.hold" as const, badgeBg: "bg-[var(--signal-amber-bg)]", badgeText: "text-[var(--signal-amber)]", badgeBorder: "border-[var(--signal-amber-border)]", gaugePos: 50, cardBg: "signal-bg-hold" },
-  reduce: { label: "signal.reduce" as const, badgeBg: "bg-[var(--signal-red-bg)]", badgeText: "text-[var(--signal-red)]", badgeBorder: "border-[var(--signal-red-border)]", gaugePos: 22, cardBg: "signal-bg-reduce" },
+  invest: {
+    label: "signal.invest" as const,
+    badgeBg: "bg-[var(--signal-green-bg)]",
+    badgeText: "text-[var(--phosphor-green)]",
+    badgeBorder: "border-[var(--phosphor-green)]",
+    gaugePos: 78,
+    cardBg: "signal-bg-invest",
+    cardBorder: "border-2 border-[var(--phosphor-green)]",
+    cardGlow: "0 0 24px rgba(77, 255, 163, 0.20), 0 0 0 1px rgba(77, 255, 163, 0.25)",
+  },
+  hold: {
+    label: "signal.hold" as const,
+    badgeBg: "bg-[var(--signal-amber-bg)]",
+    badgeText: "text-[var(--phosphor-yellow)]",
+    badgeBorder: "border-[var(--phosphor-yellow)]",
+    gaugePos: 50,
+    cardBg: "signal-bg-hold",
+    cardBorder: "border-2 border-[var(--phosphor-yellow)]",
+    cardGlow: "0 0 24px rgba(255, 228, 94, 0.20), 0 0 0 1px rgba(255, 228, 94, 0.25)",
+  },
+  reduce: {
+    label: "signal.reduce" as const,
+    badgeBg: "bg-[var(--signal-red-bg)]",
+    badgeText: "text-[var(--phosphor-red)]",
+    badgeBorder: "border-[var(--phosphor-red)]",
+    gaugePos: 22,
+    cardBg: "signal-bg-reduce",
+    cardBorder: "border-2 border-[var(--phosphor-red)]",
+    cardGlow: "0 0 24px rgba(255, 107, 122, 0.20), 0 0 0 1px rgba(255, 107, 122, 0.25)",
+  },
 }
 
 const factorIcons = {
@@ -38,7 +65,14 @@ export function SignalCard({ status, confidence, factors, payback }: SignalCardP
   const p50Pos = Math.min((payback.p50 / maxDay) * 100, 100)
 
   return (
-    <div className={cn("relative rounded-[var(--radius-card)] border border-[var(--border)] p-6 mb-8 sticky top-0 z-10", config.cardBg)} style={{ boxShadow: "none" }}>
+    <div
+      className={cn(
+        "relative rounded-[var(--radius-modal)] p-6 mb-8 sticky top-0 z-10",
+        config.cardBorder,
+        config.cardBg,
+      )}
+      style={{ boxShadow: config.cardGlow }}
+    >
       {/* Top: badge + confidence */}
       <div className="flex items-center justify-between mb-4">
         <div className={cn("inline-flex items-center gap-2 rounded-full px-5 py-2 text-lg font-extrabold border", config.badgeBg, config.badgeText, config.badgeBorder)}>

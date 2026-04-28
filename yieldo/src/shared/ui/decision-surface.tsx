@@ -71,24 +71,30 @@ type StatusMeta = {
   badgeBg: string
   badgeText: string
   defaultCta: string
+  glow: string
 }
 
 // Visual tokens (colors, borders) are locale-agnostic; only strings differ.
+// 2026-04-28: borders upgraded to full 2px phosphor + outer halo so verdict
+// panels detach from the dark canvas (white-bg native contrast no longer free).
 const STATUS_VISUAL = {
   invest: {
-    borderColor: "border-t-[var(--signal-positive)]",
+    borderColor: "border-[var(--phosphor-green)]",
     badgeBg: "bg-[var(--signal-positive-bg)]",
-    badgeText: "text-[var(--signal-positive)]",
+    badgeText: "text-[var(--phosphor-green)]",
+    glow: "0 0 24px rgba(77, 255, 163, 0.20), 0 0 0 1px rgba(77, 255, 163, 0.25)",
   },
   hold: {
-    borderColor: "border-t-[var(--signal-caution)]",
+    borderColor: "border-[var(--phosphor-yellow)]",
     badgeBg: "bg-[var(--signal-caution-bg)]",
-    badgeText: "text-[var(--signal-caution)]",
+    badgeText: "text-[var(--phosphor-yellow)]",
+    glow: "0 0 24px rgba(255, 228, 94, 0.20), 0 0 0 1px rgba(255, 228, 94, 0.25)",
   },
   reduce: {
-    borderColor: "border-t-[var(--signal-risk)]",
+    borderColor: "border-[var(--phosphor-red)]",
     badgeBg: "bg-[var(--signal-risk-bg)]",
-    badgeText: "text-[var(--signal-risk)]",
+    badgeText: "text-[var(--phosphor-red)]",
+    glow: "0 0 24px rgba(255, 107, 122, 0.20), 0 0 0 1px rgba(255, 107, 122, 0.25)",
   },
 } as const
 
@@ -276,13 +282,13 @@ export function DecisionSurface({
     <section
       ref={sectionRef}
       className={cn(
-        "relative flex flex-col border-t-2 bg-[var(--bg-1)]",
-        "border-x border-b border-[var(--border-default)] rounded-[var(--radius-card)]",
+        "relative flex flex-col border-2 bg-[var(--bg-1)] rounded-[var(--radius-modal)]",
         "transition-[padding,gap] duration-[var(--duration-component)] ease-[var(--ease-out-quart)]",
         meta.borderColor,
         isCompact ? "gap-2 p-3" : "gap-6 p-6",
         className,
       )}
+      style={{ boxShadow: meta.glow }}
     >
       {/* 1. Status badge + (compact-only) inline situation + impact */}
       <div className="flex items-center justify-between gap-3">
