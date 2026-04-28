@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>yieldo — Investment Deck v2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg-dark: #080c18;
+    --bg-slide: #0c1120;
+    --bg-card: #131a2e;
+    --bg-card-hover: #1a2340;
+    --accent: #5b9aff;
+    --accent2: #3eddb5;
+    --accent3: #ffa94d;
+    --accent4: #ff6b8a;
+    --accent5: #a78bfa;
+    --text: #dce3f0;
+    --text-dim: #7a859e;
+    --text-bright: #ffffff;
+    --border: #1e2840;
+    --border-light: #2a3555;
+    --glow-blue: rgba(91,154,255,0.12);
+    --glow-green: rgba(62,221,181,0.12);
+  }
+
+  html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-dark);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  body.lang-ko { font-family: 'Noto Sans KR', 'Inter', -apple-system, sans-serif; }
+
+  /* === NAV === */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(8,12,24,0.88); backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  nav .logo { font-weight: 900; font-size: 15px; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; }
+  nav .nav-right { display: flex; align-items: center; gap: 14px; }
+  nav .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+  nav .nav-links a {
+    color: var(--text-dim); text-decoration: none; font-size: 11px; font-weight: 500;
+    padding: 5px 10px; border-radius: 6px; transition: all 0.2s;
+  }
+  nav .nav-links a:hover { color: var(--text-bright); background: var(--bg-card); }
+  nav .nav-links a.appendix-link { color: var(--accent5); opacity: 0.7; }
+  nav .nav-links a.appendix-link:hover { opacity: 1; }
+
+  /* === LANG TOGGLE === */
+  .lang-toggle {
+    background: var(--bg-card); border: 1px solid var(--border-light);
+    color: var(--accent); font-size: 11px; font-weight: 700;
+    padding: 6px 14px; border-radius: 100px; cursor: pointer;
+    letter-spacing: 1px; text-transform: uppercase;
+    transition: all 0.2s; font-family: inherit;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .lang-toggle:hover { border-color: var(--accent); background: rgba(91,154,255,0.1); }
+  .lang-toggle .lang-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); }
+
+  /* === SLIDE === */
+  .slide {
+    min-height: 100vh; scroll-snap-align: start;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 90px 80px 50px;
+    max-width: 1440px; margin: 0 auto;
+    position: relative;
+  }
+
+  .slide-number {
+    position: absolute; top: 72px; right: 80px;
+    font-size: 11px; color: var(--text-dim); font-weight: 700;
+    letter-spacing: 3px; opacity: 0.6;
+  }
+
+  /* === TITLE SLIDE === */
+  .slide.title-slide {
+    justify-content: center; align-items: center; text-align: center;
+    background: radial-gradient(ellipse at 50% 30%, rgba(91,154,255,0.06) 0%, transparent 70%);
+  }
+  .slide.title-slide h1 {
+    font-size: 76px; font-weight: 900; letter-spacing: -3px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 16px;
+  }
+  .slide.title-slide .subtitle {
+    font-size: 22px; color: var(--text-dim); font-weight: 400; max-width: 680px;
+    margin-bottom: 36px; line-height: 1.6;
+  }
+  .badge {
+    display: inline-block; background: var(--bg-card); border: 1px solid var(--border);
+    padding: 7px 20px; border-radius: 100px; font-size: 11px; color: var(--accent);
+    font-weight: 700; margin-bottom: 28px; letter-spacing: 1.5px; text-transform: uppercase;
+  }
+
+  /* === TYPOGRAPHY (v2: larger) === */
+  h2 {
+    font-size: 44px; font-weight: 900; letter-spacing: -1.5px;
+    margin-bottom: 10px; color: var(--text-bright);
+  }
+  h2 .num { color: var(--accent); margin-right: 14px; font-size: 36px; }
+  .section-sub {
+    font-size: 20px; color: var(--text-dim); font-weight: 400;
+    margin-bottom: 40px; max-width: 720px; line-height: 1.7;
+  }
+  h3 {
+    font-size: 20px; font-weight: 700; color: var(--text-bright);
+    margin-bottom: 16px; margin-top: 8px;
+  }
+  .big-label {
+    font-size: 13px; font-weight: 700; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px;
+  }
+
+  /* === GRIDS === */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+  .grid-5 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 14px; }
+
+  /* === CARDS (v2: larger text) === */
+  .card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 28px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--border-light); }
+  .card.glow-blue { background: linear-gradient(135deg, var(--bg-card), rgba(91,154,255,0.06)); border-color: rgba(91,154,255,0.2); }
+  .card.glow-green { background: linear-gradient(135deg, var(--bg-card), rgba(62,221,181,0.06)); border-color: rgba(62,221,181,0.2); }
+  .card.glow-orange { background: linear-gradient(135deg, var(--bg-card), rgba(255,169,77,0.06)); border-color: rgba(255,169,77,0.2); }
+  .card.glow-red { background: linear-gradient(135deg, var(--bg-card), rgba(255,107,138,0.06)); border-color: rgba(255,107,138,0.2); }
+  .card.glow-purple { background: linear-gradient(135deg, var(--bg-card), rgba(167,139,250,0.06)); border-color: rgba(167,139,250,0.2); }
+
+  .card h4 { font-size: 18px; font-weight: 700; color: var(--text-bright); margin-bottom: 10px; }
+  .card p, .card li { font-size: 15px; color: var(--text-dim); line-height: 1.75; }
+  .card ul { padding-left: 16px; }
+  .card ul li { margin-bottom: 4px; }
+  .card .tag {
+    display: inline-block; font-size: 10px; font-weight: 700; padding: 3px 8px;
+    border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;
+  }
+  .tag-blue { background: rgba(91,154,255,0.15); color: var(--accent); }
+  .tag-green { background: rgba(62,221,181,0.15); color: var(--accent2); }
+  .tag-orange { background: rgba(255,169,77,0.15); color: var(--accent3); }
+  .tag-red { background: rgba(255,107,138,0.15); color: var(--accent4); }
+  .tag-purple { background: rgba(167,139,250,0.15); color: var(--accent5); }
+
+  /* === STATS === */
+  .stat {
+    text-align: center; padding: 22px 16px;
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+  }
+  .stat .number {
+    font-size: 36px; font-weight: 900; letter-spacing: -2px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .stat .label { font-size: 13px; color: var(--text-dim); font-weight: 500; margin-top: 6px; line-height: 1.5; }
+
+  /* === TABLES === */
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th {
+    text-align: left; padding: 10px 14px;
+    font-size: 11px; font-weight: 700; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 1px;
+    border-bottom: 2px solid var(--border);
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text-dim); }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { color: var(--text); font-weight: 500; }
+  tr.total td { color: var(--text-bright); font-weight: 800; border-top: 2px solid var(--accent); }
+
+  /* === QUOTE (v2: larger) === */
+  .quote {
+    font-size: 22px; font-style: italic; color: var(--text); font-weight: 400;
+    border-left: 3px solid var(--accent); padding: 24px 32px;
+    margin: 28px 0; line-height: 1.7;
+    background: var(--glow-blue); border-radius: 0 12px 12px 0;
+  }
+  .quote .attribution {
+    font-size: 14px; font-style: normal; color: var(--text-dim);
+    margin-top: 12px; font-weight: 500;
+  }
+
+  /* === DIAGRAM BOXES === */
+  .diagram {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 28px; margin-top: 16px;
+    overflow-x: auto;
+  }
+
+  .pipe { display: flex; align-items: stretch; gap: 0; flex-wrap: nowrap; }
+  .pipe-step {
+    flex: 1; padding: 18px 16px; text-align: center;
+    border: 1px solid var(--border); position: relative;
+    min-width: 130px;
+  }
+  .pipe-step:first-child { border-radius: 10px 0 0 10px; }
+  .pipe-step:last-child { border-radius: 0 10px 10px 0; }
+  .pipe-step .pipe-icon { font-size: 22px; margin-bottom: 6px; }
+  .pipe-step .pipe-title { font-size: 14px; font-weight: 700; color: var(--text-bright); margin-bottom: 4px; }
+  .pipe-step .pipe-desc { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+  .pipe-step::after {
+    content: ''; position: absolute; right: -9px; top: 50%; transform: translateY(-50%);
+    width: 0; height: 0;
+    border-top: 9px solid transparent; border-bottom: 9px solid transparent;
+    border-left: 9px solid var(--border); z-index: 2;
+  }
+  .pipe-step:last-child::after { display: none; }
+  .pipe-step.p-blue { background: rgba(91,154,255,0.08); border-color: rgba(91,154,255,0.25); }
+  .pipe-step.p-green { background: rgba(62,221,181,0.08); border-color: rgba(62,221,181,0.25); }
+  .pipe-step.p-orange { background: rgba(255,169,77,0.08); border-color: rgba(255,169,77,0.25); }
+  .pipe-step.p-red { background: rgba(255,107,138,0.08); border-color: rgba(255,107,138,0.25); }
+  .pipe-step.p-purple { background: rgba(167,139,250,0.08); border-color: rgba(167,139,250,0.25); }
+  .pipe-step.p-blue::after { border-left-color: rgba(91,154,255,0.4); }
+  .pipe-step.p-green::after { border-left-color: rgba(62,221,181,0.4); }
+  .pipe-step.p-orange::after { border-left-color: rgba(255,169,77,0.4); }
+  .pipe-step.p-red::after { border-left-color: rgba(255,107,138,0.4); }
+  .pipe-step.p-purple::after { border-left-color: rgba(167,139,250,0.4); }
+
+  /* === FORMULA BOX === */
+  .formula {
+    background: rgba(91,154,255,0.06); border: 1px solid rgba(91,154,255,0.2);
+    border-radius: 10px; padding: 16px 24px; text-align: center;
+    font-size: 18px; font-weight: 700; color: var(--text-bright);
+    letter-spacing: 0.5px; margin: 12px 0;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+  .formula .op { color: var(--accent); }
+  .formula .eq { color: var(--accent2); }
+  .formula small { font-size: 13px; color: var(--text-dim); font-weight: 400; display: block; margin-top: 6px; font-family: 'Inter', sans-serif; }
+
+  /* === POSITIONING MAP === */
+  .pos-map {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 40px; position: relative; height: 380px;
+  }
+  .pos-map .axis-label {
+    position: absolute; font-size: 11px; color: var(--text-dim); font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .pos-map .dot {
+    position: absolute; padding: 6px 14px; border-radius: 8px;
+    font-size: 11px; font-weight: 700; white-space: nowrap;
+  }
+  .pos-map .cross-h { position: absolute; left: 60px; right: 40px; top: 50%; border-top: 1px dashed var(--border-light); }
+  .pos-map .cross-v { position: absolute; top: 30px; bottom: 50px; left: 50%; border-left: 1px dashed var(--border-light); }
+
+  /* === BEFORE/AFTER === */
+  .ba-grid {
+    display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0; align-items: stretch;
+    margin-bottom: 28px;
+  }
+  .ba-card {
+    padding: 32px; border-radius: 14px;
+  }
+  .ba-card.before {
+    background: rgba(255,107,138,0.06); border: 1px solid rgba(255,107,138,0.2);
+  }
+  .ba-card.after {
+    background: rgba(62,221,181,0.06); border: 1px solid rgba(62,221,181,0.2);
+  }
+  .ba-arrow {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; color: var(--accent);
+  }
+  .ba-card h4 {
+    font-size: 16px; font-weight: 800; margin-bottom: 20px; letter-spacing: 1px; text-transform: uppercase;
+  }
+  .ba-card .ba-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0; font-size: 18px; font-weight: 500;
+  }
+  .ba-card .ba-num {
+    font-size: 28px; font-weight: 900; min-width: 50px; text-align: right;
+  }
+
+  /* === HOW IT WORKS 3-COLUMN === */
+  .hiw-grid {
+    display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr; gap: 0; align-items: start;
+    margin-bottom: 20px;
+  }
+  .hiw-col {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 24px;
+  }
+  .hiw-arrow {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; color: var(--accent); padding-top: 40px;
+  }
+  .hiw-col h4 {
+    font-size: 16px; font-weight: 800; margin-bottom: 14px; color: var(--text-bright);
+  }
+  .hiw-col .hiw-item {
+    font-size: 15px; color: var(--text-dim); padding: 6px 0;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hiw-col .hiw-item .hiw-icon {
+    font-size: 13px; min-width: 20px; text-align: center;
+  }
+
+  /* === PRODUCT LAYOUT === */
+  .product-layout {
+    display: grid; grid-template-columns: 3fr 2fr; gap: 28px; align-items: start;
+  }
+  .product-screenshot {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 24px; min-height: 360px; position: relative; overflow: hidden;
+  }
+  .product-modules {
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .module-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px; border-radius: 10px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    transition: border-color 0.2s;
+  }
+  .module-item:hover { border-color: var(--border-light); }
+  .module-item.active { border-color: rgba(91,154,255,0.4); background: rgba(91,154,255,0.06); }
+  .module-dot {
+    width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+  }
+  .module-item h5 { font-size: 15px; font-weight: 700; color: var(--text-bright); margin-bottom: 2px; }
+  .module-item p { font-size: 13px; color: var(--text-dim); }
+
+  /* === USE OF FUNDS BAR === */
+  .funds-bar {
+    display: flex; border-radius: 10px; overflow: hidden; height: 40px;
+    margin: 20px 0;
+  }
+  .funds-bar .segment {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: var(--text-bright);
+  }
+
+  /* === APPENDIX DIVIDER === */
+  .appendix-divider {
+    min-height: 30vh; display: flex; align-items: center; justify-content: center;
+    text-align: center; scroll-snap-align: start;
+  }
+  .appendix-divider h2 {
+    font-size: 36px; color: var(--text-dim); font-weight: 300; letter-spacing: 4px;
+  }
+
+  /* === HIGHLIGHTS === */
+  .hl { color: var(--accent); font-weight: 600; }
+  .hl2 { color: var(--accent2); font-weight: 600; }
+  .hl3 { color: var(--accent3); font-weight: 600; }
+  .hl4 { color: var(--accent4); font-weight: 600; }
+  .hl5 { color: var(--accent5); font-weight: 600; }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 900px) {
+    .slide { padding: 80px 24px 40px; }
+    h2 { font-size: 28px; }
+    .grid-2, .grid-3, .grid-4, .grid-5 { grid-template-columns: 1fr; }
+    .slide.title-slide h1 { font-size: 38px; }
+    .pipe { flex-wrap: wrap; }
+    .ba-grid { grid-template-columns: 1fr; gap: 16px; }
+    .ba-arrow { transform: rotate(90deg); }
+    .hiw-grid { grid-template-columns: 1fr; gap: 16px; }
+    .hiw-arrow { transform: rotate(90deg); padding: 0; }
+    .product-layout { grid-template-columns: 1fr; }
+    nav .nav-links { display: none; }
+  }
+  @media print {
+    .slide { page-break-after: always; min-height: auto; padding: 40px; }
+    nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">yieldo</div>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="#title" data-ko="표지">Cover</a>
+      <a href="#problem" data-ko="문제">Problem</a>
+      <a href="#solution" data-ko="솔루션">Solution</a>
+      <a href="#how" data-ko="작동 방식">How</a>
+      <a href="#why-now" data-ko="왜 지금">Why Now</a>
+      <a href="#market" data-ko="시장">Market</a>
+      <a href="#product" data-ko="제품">Product</a>
+      <a href="#competition" data-ko="경쟁">Competition</a>
+      <a href="#business" data-ko="비즈니스">Business</a>
+      <a href="#team" data-ko="팀">Team</a>
+      <a href="#financials" data-ko="재무">Financials</a>
+      <a href="#ask" data-ko="투자 요청">The Ask</a>
+      <a class="appendix-link" href="#appendix-a1">A1</a>
+      <a class="appendix-link" href="#appendix-a2">A2</a>
+      <a class="appendix-link" href="#appendix-a3">A3</a>
+      <a class="appendix-link" href="#appendix-a4">A4</a>
+    </div>
+    <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Toggle language">
+      <span class="lang-dot"></span>
+      <span id="lang-toggle-label">한국어</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ===== SLIDE 01: TITLE ===== -->
+<section class="slide title-slide" id="title">
+  <div class="badge" data-ko="기밀 &mdash; 2026년 4월">Confidential &mdash; April 2026</div>
+  <h1>yieldo</h1>
+  <div class="subtitle" data-ko="모바일 게임 산업을 위한<br>실험-투자 의사결정 운영체제">
+    The Investment Decision Operating System<br>for the Mobile Gaming Industry
+  </div>
+  <p style="font-size:16px; color:var(--text-dim); max-width:560px; margin: 0 auto;" data-ko="마켓 인텔리전스를 자본 배분 인텔리전스로 전환합니다">
+    Transforming Market Intelligence into Capital Allocation Intelligence
+  </p>
+</section>
+
+<!-- ===== SLIDE 02: PROBLEM ===== -->
+<section class="slide" id="problem">
+  <span class="slide-number">02</span>
+  <h2 data-ko="<span class='num'>01</span>문제"><span class="num">01</span>The Problem</h2>
+  <p class="section-sub" data-ko="모바일 게임은 연간 <span class='hl'>900억 달러 이상</span> 규모 &mdash; 그럼에도 가장 근본적인 질문에 답하는 시스템이 없습니다.">
+    Mobile gaming generates <span class="hl">$90B+ annually</span> &mdash; yet no system answers the most fundamental question.
+  </p>
+
+  <div class="quote" style="margin-bottom:24px;" data-ko='"마케터와 미디어 바잉 팀이 단절되고 파편화된 광고 데이터만 남고, 한때 이를 이어주던 아이덴티티의 연결 고리가 끊어졌다면 &mdash; 이들은 의사결정과 예산 편성 프로세스를 어떻게 적응시켜야 하는가?"<div class="attribution">&mdash; Eric Seufert, Mobile Dev Memo ("The Emerging Marketing Economist")</div>'>
+    "If marketers and media buying teams are left with disparate, disjointed sets of advertising data,
+    with the identity ligaments that once unified them broken &mdash;
+    how do they adapt their decision-making and budgeting processes?"
+    <div class="attribution">&mdash; Eric Seufert, Mobile Dev Memo ("The Emerging Marketing Economist")</div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:28px;">
+    <div style="padding:14px 20px; background:rgba(91,154,255,0.05); border:1px solid rgba(91,154,255,0.18); border-radius:10px;">
+      <div style="font-size:11px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;" data-ko="기관 조사 근거 #1">Institutional Evidence #1</div>
+      <p style="font-size:14px; color:var(--text);" data-ko='<span class="hl">AppsFlyer State of Gaming 2026</span>: 2025년 게이밍 마케터의 <strong>#1 플래닝 챌린지</strong>로 "여러 팀에 걸친 LTV/CPM/CPI 지표의 오케스트레이션"이 선정됨.'><span class="hl">AppsFlyer State of Gaming 2026</span>: Gaming marketers ranked <strong>"orchestrating LTV, CPM, and CPI trends by geo across many different teams"</strong> as the #1 planning challenge for 2025.</p>
+    </div>
+    <div style="padding:14px 20px; background:rgba(255,169,77,0.05); border:1px solid rgba(255,169,77,0.18); border-radius:10px;">
+      <div style="font-size:11px; font-weight:700; color:var(--accent3); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;" data-ko="기관 조사 근거 #2">Institutional Evidence #2</div>
+      <p style="font-size:14px; color:var(--text);" data-ko='<span class="hl3">Gamigion (2025)</span>: 모바일 스튜디오는 UA 파이낸싱 자격을 얻기까지 <strong>6개월의 데이터 정합성 작업</strong>이 필요 &mdash; 운영 데이터가 재무제표와 맞지 않기 때문.'><span class="hl3">Gamigion (2025)</span>: Mobile studios need <strong>6 months of data reconciliation</strong> before qualifying for UA financing &mdash; because operational data doesn't tie back to financial statements.</p>
+    </div>
+  </div>
+
+  <div class="big-label" data-ko="데이터는 4개의 단절된 사일로에 갇혀 있다">Data lives in four disconnected silos</div>
+  <div class="grid-4" style="margin-bottom:28px;">
+    <div class="card glow-blue" style="text-align:center; padding:20px;">
+      <div class="tag tag-blue" data-ko="마켓 인텔">Market Intel</div>
+      <h4 style="font-size:16px;">Sensor Tower<br>AppMagic</h4>
+      <p data-ko='"시장은 어떻게 돌아가는가?"'>"What does the market look like?"</p>
+    </div>
+    <div class="card glow-green" style="text-align:center; padding:20px;">
+      <div class="tag tag-green" data-ko="어트리뷰션">Attribution</div>
+      <h4 style="font-size:16px;">AppsFlyer<br>Adjust</h4>
+      <p data-ko='"유저는 어디서 오는가?"'>"Where do users come from?"</p>
+    </div>
+    <div class="card glow-orange" style="text-align:center; padding:20px;">
+      <div class="tag tag-orange" data-ko="실험">Experiments</div>
+      <h4 style="font-size:16px;">Statsig<br>Firebase</h4>
+      <p data-ko='"어느 변형이 이겼는가?"'>"Which variant won?"</p>
+    </div>
+    <div class="card glow-red" style="text-align:center; padding:20px;">
+      <div class="tag tag-red" data-ko="재무">Financial</div>
+      <h4 style="font-size:16px;">ERP<br>Spreadsheets</h4>
+      <p data-ko='"우리 현 위치는?"'>"What's our current position?"</p>
+    </div>
+  </div>
+
+  <div style="text-align:center; padding:16px; background:rgba(255,107,138,0.08); border:1px solid rgba(255,107,138,0.2); border-radius:10px;">
+    <p style="font-size:18px; font-weight:700; color:var(--accent4);" data-ko='이 중 어느 것도 답하지 않습니다: "더 투자해야 할까?"'>
+      None of these answer: "Should we invest more?"
+    </p>
+    <p style="font-size:15px; color:var(--text-dim); margin-top:4px;" data-ko="결과: 감(感) 기반 의사결정으로 수십억 달러가 잘못 배분됩니다.">
+      The result: billions in misallocated capital driven by gut-feel decisions.
+    </p>
+  </div>
+</section>
+
+<!-- ===== SLIDE 03: SOLUTION (Before/After) ===== -->
+<section class="slide" id="solution">
+  <span class="slide-number">03</span>
+  <h2 data-ko="<span class='num'>02</span>솔루션"><span class="num">02</span>The Solution</h2>
+  <p class="section-sub" data-ko="yieldo: 모바일 게임을 위한 세계 최초의 <span class='hl'>투자 의사결정 OS</span>.">
+    yieldo: the world's first <span class="hl">Operating Intelligence Terminal</span> for mobile gaming.
+  </p>
+
+  <div class="ba-grid">
+    <div class="ba-card before">
+      <h4 style="color:var(--accent4);" data-ko="yieldo 도입 전">Before yieldo</h4>
+      <div class="ba-item" data-ko='<span class="ba-num" style="color:var(--accent4);">4</span>개의 분리된 툴 확인'><span class="ba-num" style="color:var(--accent4);">4</span> separate tools to check</div>
+      <div class="ba-item" data-ko='<span class="ba-num" style="color:var(--accent4);">3</span>회차의 회의'><span class="ba-num" style="color:var(--accent4);">3</span> rounds of meetings</div>
+      <div class="ba-item" data-ko='<span class="ba-num" style="color:var(--accent4);">2</span>주의 의사결정 기간'><span class="ba-num" style="color:var(--accent4);">2</span> weeks to reach a decision</div>
+      <div class="ba-item" data-ko='<span class="ba-num" style="color:var(--accent4);">&empty;</span> 근거 기반 확신 없음'><span class="ba-num" style="color:var(--accent4);">&empty;</span> evidence-based confidence</div>
+    </div>
+    <div class="ba-arrow">&rarr;</div>
+    <div class="ba-card after">
+      <h4 style="color:var(--accent2);" data-ko="yieldo 도입 후">After yieldo</h4>
+      <div class="ba-item" data-ko='<span class="ba-num" style="color:var(--accent2);">1</span>개의 통합 대시보드'><span class="ba-num" style="color:var(--accent2);">1</span> unified dashboard</div>
+      <div class="ba-item" data-ko='<span class="ba-num" style="color:var(--accent2);">1</span>개의 투자 시그널'><span class="ba-num" style="color:var(--accent2);">1</span> investment signal</div>
+      <div class="ba-item" data-ko='<span class="ba-num" style="color:var(--accent2);">&lt;1</span>일 내 의사결정'><span class="ba-num" style="color:var(--accent2);">&lt;1</span> day to decision</div>
+      <div class="ba-item" data-ko='<span class="ba-num" style="color:var(--accent2);">90%</span> 신뢰구간'><span class="ba-num" style="color:var(--accent2);">90%</span> confidence intervals</div>
+    </div>
+  </div>
+
+  <div class="diagram" style="text-align:center; padding:20px 28px; background: linear-gradient(135deg, var(--glow-blue), var(--glow-green));">
+    <p style="font-size:20px; font-weight:800; color:var(--text-bright);" data-ko="마켓 인텔리전스 &nbsp;&rarr;&nbsp; <span class='hl2'>자본 배분 인텔리전스</span>">
+      Market Intelligence &nbsp;&rarr;&nbsp; <span class="hl2">Capital Allocation Intelligence</span>
+    </p>
+    <p style="font-size:15px; color:var(--text-dim); margin-top:6px;" data-ko="또 하나의 분석 대시보드가 아닙니다. 기존 툴 위에 자리 잡는 의사결정 번역 레이어입니다.">Not another analytics dashboard. A decision translation layer that sits above your existing tools.</p>
+  </div>
+</section>
+
+<!-- ===== SLIDE 04: HOW IT WORKS (Tech 4-in-1) ===== -->
+<section class="slide" id="how">
+  <span class="slide-number">04</span>
+  <h2 data-ko="<span class='num'>03</span>작동 방식"><span class="num">03</span>How It Works</h2>
+  <p class="section-sub" data-ko="3단계: 데이터 연결, AI가 결과 예측, 투자 의사결정 제공.">
+    Three steps: connect your data, AI predicts outcomes, you get investment decisions.
+  </p>
+
+  <div class="hiw-grid" style="margin-bottom:28px;">
+    <div class="hiw-col" style="border-color:rgba(91,154,255,0.3);">
+      <div class="tag tag-blue" style="margin-bottom:12px;" data-ko="1단계">Step 1</div>
+      <h4 style="color:var(--accent);" data-ko="데이터 연결">Your Data</h4>
+      <div class="hiw-item" data-ko='<span class="hiw-icon" style="color:var(--accent2);">&#9679;</span> MMP: CPI, ROAS, 코호트'><span class="hiw-icon" style="color:var(--accent2);">&#9679;</span> MMP: CPI, ROAS, cohorts</div>
+      <div class="hiw-item" data-ko='<span class="hiw-icon" style="color:var(--accent3);">&#9679;</span> 실험: A/B 테스트 결과'><span class="hiw-icon" style="color:var(--accent3);">&#9679;</span> Experiments: A/B test results</div>
+      <div class="hiw-item" data-ko='<span class="hiw-icon" style="color:var(--accent5);">&#9679;</span> 재무: 번레이트, 매출'><span class="hiw-icon" style="color:var(--accent5);">&#9679;</span> Financial: burn rate, revenue</div>
+    </div>
+    <div class="hiw-arrow">&rarr;</div>
+    <div class="hiw-col" style="border-color:rgba(167,139,250,0.3);">
+      <div class="tag tag-purple" style="margin-bottom:12px;" data-ko="2단계">Step 2</div>
+      <h4 style="color:var(--accent5);" data-ko="yieldo AI">yieldo AI</h4>
+      <div class="hiw-item" data-ko='<span class="hiw-icon" style="color:var(--accent);">&#9670;</span> D7 데이터 &rarr; 365일 리텐션 예측'><span class="hiw-icon" style="color:var(--accent);">&#9670;</span> D7 data &rarr; 365-day retention prediction</div>
+      <div class="hiw-item" data-ko='<span class="hiw-icon" style="color:var(--accent2);">&#9670;</span> LTV &amp; 페이백 계산'><span class="hiw-icon" style="color:var(--accent2);">&#9670;</span> LTV & payback calculation</div>
+      <div class="hiw-item" data-ko='<span class="hiw-icon" style="color:var(--accent3);">&#9670;</span> 몬테카를로 시나리오 시뮬레이션'><span class="hiw-icon" style="color:var(--accent3);">&#9670;</span> Monte Carlo scenario simulation</div>
+    </div>
+    <div class="hiw-arrow">&rarr;</div>
+    <div class="hiw-col" style="border-color:rgba(62,221,181,0.3);">
+      <div class="tag tag-green" style="margin-bottom:12px;" data-ko="3단계">Step 3</div>
+      <h4 style="color:var(--accent2);" data-ko="투자 의사결정">Investment Decision</h4>
+      <div class="hiw-item" data-ko='<span style="font-size:16px; min-width:20px; text-align:center;">&#9679;</span> <strong style="color:var(--accent2);">GREEN</strong>: 추가 투자'><span style="font-size:16px; min-width:20px; text-align:center;">&#9679;</span> <strong style="color:var(--accent2);">GREEN</strong>: Invest more</div>
+      <div class="hiw-item" data-ko='<span class="hiw-icon">&#8594;</span> 페이백: D47 <span style="color:var(--text-dim);">(D38&ndash;D62)</span>'><span class="hiw-icon">&#8594;</span> Payback: D47 <span style="color:var(--text-dim);">(D38&ndash;D62)</span></div>
+      <div class="hiw-item" data-ko='<span class="hiw-icon">&#8594;</span> "UA 지출 15% 증액"'><span class="hiw-icon">&#8594;</span> "Increase UA spend 15%"</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div style="text-align:center; padding:24px; background:rgba(62,221,181,0.06); border:1px solid rgba(62,221,181,0.2); border-radius:14px;">
+      <p style="font-size:16px; font-weight:600; color:var(--accent2); margin-bottom:6px;" data-ko="핵심 역량">Core Capability</p>
+      <p style="font-size:22px; font-weight:800; color:var(--text-bright);" data-ko="D7 데이터로 365일 매출 예측">D7 data predicts 365-day revenue</p>
+      <p style="font-size:14px; color:var(--text-dim); margin-top:6px;" data-ko="보수적 / 기대치 / 낙관적 시나리오 범위 포함">With conservative / expected / optimistic scenario ranges</p>
+    </div>
+    <div style="text-align:center; padding:24px; background:rgba(255,169,77,0.06); border:1px solid rgba(255,169,77,0.2); border-radius:14px;">
+      <p style="font-size:16px; font-weight:600; color:var(--accent3); margin-bottom:6px;" data-ko="입증된 임팩트">Proven Impact</p>
+      <p style="font-size:22px; font-weight:800; color:var(--text-bright);" data-ko="연 $1.08M 업리프트 / 54배 ROI">$1.08M annual uplift / 54x ROI</p>
+      <p style="font-size:14px; color:var(--text-dim); margin-top:6px;" data-ko="단일 A/B 테스트를 투자 가치로 번역한 사례">From a single A/B test translated to investment value</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 05: WHY NOW ===== -->
+<section class="slide" id="why-now">
+  <span class="slide-number">05</span>
+  <h2 data-ko="<span class='num'>04</span>왜 지금인가"><span class="num">04</span>Why Now</h2>
+  <p class="section-sub" data-ko="4개의 힘이 수렴해 완벽한 시장 타이밍을 만듭니다.">Four converging forces create the perfect market timing.</p>
+
+  <div class="grid-2">
+    <div class="card glow-blue" style="padding:32px;">
+      <div class="tag tag-blue" data-ko="시장 성숙">Market Maturity</div>
+      <h4 data-ko="성장 시대는 끝났다">Growth era is over</h4>
+      <p style="font-size:18px;" data-ko="자본 오배분의 여유는 <span class='hl'>거의 제로로 축소</span>됐습니다. 운영자는 1달러 한 푼까지 ROI를 증명해야 합니다.">Margin for capital misallocation has <span class="hl">shrunk to near zero</span>. Operators must prove ROI on every dollar.</p>
+    </div>
+    <div class="card glow-green" style="padding:32px;">
+      <div class="tag tag-green" data-ko="인프라 준비 완료">Infrastructure Ready</div>
+      <h4 data-ko="빌딩 블록이 갖춰졌다">Building blocks exist</h4>
+      <p style="font-size:18px;" data-ko="API, 클라우드 ML, 데이터 플랫폼이 모두 성숙했습니다. 데이터 레이어는 존재하지만 &mdash; <span class='hl2'>인텔리전스 레이어가 없습니다</span>.">APIs, cloud ML, and data platforms are mature. The data layer exists &mdash; <span class="hl2">the intelligence layer is missing</span>.</p>
+    </div>
+    <div class="card glow-purple" style="padding:32px;">
+      <div class="tag tag-purple" data-ko="AI 변곡점">AI Inflection</div>
+      <h4 data-ko="예측이 실현 가능해졌다">Prediction is viable</h4>
+      <p style="font-size:18px;" data-ko="LSTM, 베이지안 추론, LLM이 이제 <span class='hl5'>스타트업 수준 비용으로 프로덕션 운용 가능</span>합니다.">LSTM, Bayesian inference, and LLMs are now <span class="hl5">production-ready at startup cost</span>.</p>
+    </div>
+    <div class="card glow-orange" style="padding:32px;">
+      <div class="tag tag-orange" data-ko="산업 통합">Industry Consolidation</div>
+      <h4 data-ko="자본 효율성이 필수">Capital efficiency required</h4>
+      <p style="font-size:18px;" data-ko="M&amp;A와 투자 의사결정은 이제 <span class='hl3'>표준화된 의사결정 프레임워크</span>를 요구합니다.">M&A and investment decisions demand a <span class="hl3">standardized decision framework</span>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 06: MARKET ===== -->
+<section class="slide" id="market">
+  <span class="slide-number">06</span>
+  <h2 data-ko="<span class='num'>05</span>시장 기회"><span class="num">05</span>Market Opportunity</h2>
+  <p class="section-sub" data-ko="$900억+ 산업 안에서 만들어지는 새로운 카테고리.">A new category within a $90B+ industry.</p>
+
+  <div class="grid-3" style="margin-bottom:32px;">
+    <div class="stat" style="border:2px solid rgba(91,154,255,0.3); padding:28px;">
+      <div class="number">$1.5-3B</div>
+      <div class="label" data-ko="TAM<br>자본 배분 인텔리전스">TAM<br>Capital Allocation Intelligence</div>
+    </div>
+    <div class="stat" style="border:2px solid rgba(62,221,181,0.3); padding:28px;">
+      <div class="number">$100-300M</div>
+      <div class="label" data-ko="SAM<br>중대형 퍼블리셔 ($10M+ 매출)">SAM<br>Mid-to-Large Publishers ($10M+)</div>
+    </div>
+    <div class="stat" style="border:2px solid rgba(255,169,77,0.3); padding:28px;">
+      <div class="number">$3-5M</div>
+      <div class="label" data-ko="3년차 ARR 목표<br>40-60 고객사">Year 3 ARR Target<br>40-60 Customers</div>
+    </div>
+  </div>
+
+  <div class="diagram" style="padding:24px;">
+    <div class="big-label" style="margin-bottom:14px;" data-ko="바텀업 계산">Bottom-Up Calculation</div>
+    <div class="grid-3" style="gap:16px;">
+      <div style="text-align:center;">
+        <div style="font-size:28px; font-weight:900; color:var(--accent);">800-1,500</div>
+        <div style="font-size:14px; color:var(--text-dim); margin-top:4px;" data-ko="글로벌 타겟 기업 수<br>($10M+ 게임 매출)">Target companies globally<br>($10M+ gaming revenue)</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:28px; font-weight:900; color:var(--accent2);">$50-120K</div>
+        <div style="font-size:14px; color:var(--text-dim); margin-top:4px;" data-ko="평균 계약 가치 (ACV)<br>연간">Average Contract Value<br>per year</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:28px; font-weight:900; color:var(--accent3);">$40-180M</div>
+        <div style="font-size:14px; color:var(--text-dim); margin-top:4px;" data-ko="획득 가능 매출<br>(SAM 범위)">Addressable revenue<br>(SAM range)</div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:16px; font-size:14px; color:var(--text-dim);" data-ko="TAM은 $900억+ 모바일 게임 지출 중 더 나은 의사결정 인프라로 재배분 가능한 1.5&ndash;3%에서 도출">
+      TAM derived from 1.5&ndash;3% of $90B+ mobile gaming spend redirectable through better decision infrastructure
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 07: PRODUCT ===== -->
+<section class="slide" id="product">
+  <span class="slide-number">07</span>
+  <h2 data-ko="<span class='num'>06</span>제품"><span class="num">06</span>Product</h2>
+  <p class="section-sub" data-ko="5개 모듈 &mdash; 각 모듈은 특정 투자 의사결정에 답합니다.">Five modules &mdash; each answering a specific investment decision.</p>
+
+  <div class="product-layout">
+    <!-- Screenshot area -->
+    <div class="product-screenshot">
+      <div style="position:absolute; top:16px; left:16px; right:16px; display:flex; gap:6px;">
+        <div style="width:10px; height:10px; border-radius:50%; background:var(--accent4);"></div>
+        <div style="width:10px; height:10px; border-radius:50%; background:var(--accent3);"></div>
+        <div style="width:10px; height:10px; border-radius:50%; background:var(--accent2);"></div>
+      </div>
+      <!-- Mock dashboard -->
+      <div style="margin-top:32px;">
+        <div style="display:flex; gap:12px; margin-bottom:16px;">
+          <div style="flex:1; background:rgba(62,221,181,0.1); border:1px solid rgba(62,221,181,0.25); border-radius:10px; padding:16px; text-align:center;">
+            <div style="font-size:11px; color:var(--accent2); font-weight:700; text-transform:uppercase; letter-spacing:1px;" data-ko="투자 시그널">Investment Signal</div>
+            <div style="font-size:32px; font-weight:900; color:var(--accent2); margin:8px 0;">GREEN</div>
+            <div style="font-size:12px; color:var(--text-dim);" data-ko="추가 투자 &mdash; 높은 확신">Invest More &mdash; High Confidence</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:12px; margin-bottom:16px;">
+          <div style="flex:1; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:12px; text-align:center;">
+            <div style="font-size:10px; color:var(--text-dim);" data-ko="페이백">Payback</div>
+            <div style="font-size:20px; font-weight:800; color:var(--text-bright);">D47</div>
+            <div style="font-size:10px; color:var(--text-dim);">D38&ndash;D62</div>
+          </div>
+          <div style="flex:1; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:12px; text-align:center;">
+            <div style="font-size:10px; color:var(--text-dim);" data-ko="BEP 확률">BEP Prob.</div>
+            <div style="font-size:20px; font-weight:800; color:var(--accent2);">94%</div>
+          </div>
+          <div style="flex:1; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:12px; text-align:center;">
+            <div style="font-size:10px; color:var(--text-dim);">D30 ROAS</div>
+            <div style="font-size:20px; font-weight:800; color:var(--accent);">1.23x</div>
+          </div>
+        </div>
+        <!-- Mini retention chart -->
+        <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:14px;">
+          <div style="font-size:10px; color:var(--text-dim); margin-bottom:10px;" data-ko="리텐션 곡선 (예측 vs 실측)">Retention Curve (Predicted vs Actual)</div>
+          <svg viewBox="0 0 300 80" style="width:100%; height:80px;">
+            <!-- P90 band -->
+            <path d="M0,15 Q60,25 120,38 T240,52 L300,55 L300,70 L240,67 Q180,62 120,52 Q60,40 0,30 Z" fill="rgba(91,154,255,0.08)"/>
+            <!-- P50 line -->
+            <path d="M0,22 Q60,32 120,44 T240,58 L300,62" fill="none" stroke="var(--accent)" stroke-width="2"/>
+            <!-- Actual dots -->
+            <circle cx="0" cy="20" r="3" fill="var(--accent2)"/>
+            <circle cx="30" cy="28" r="3" fill="var(--accent2)"/>
+            <circle cx="60" cy="33" r="3" fill="var(--accent2)"/>
+            <circle cx="90" cy="38" r="3" fill="var(--accent2)"/>
+            <circle cx="120" cy="42" r="3" fill="var(--accent2)"/>
+            <!-- Predicted area -->
+            <line x1="130" y1="0" x2="130" y2="80" stroke="var(--border-light)" stroke-dasharray="4"/>
+            <text x="135" y="10" fill="var(--text-dim)" font-size="7" font-family="Inter">Predicted &rarr;</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Module list -->
+    <div class="product-modules">
+      <div class="module-item active">
+        <div class="module-dot" style="background:var(--accent);"></div>
+        <div>
+          <h5 data-ko="오버뷰">Overview</h5>
+          <p data-ko='"더 투자할 수 있는가?"'>"Can we invest more?"</p>
+        </div>
+      </div>
+      <div class="module-item">
+        <div class="module-dot" style="background:var(--accent2);"></div>
+        <div>
+          <h5 data-ko="마켓 갭">Market Gap</h5>
+          <p data-ko='"시장 대비 우리 위치는?"'>"Where do we stand vs. market?"</p>
+        </div>
+      </div>
+      <div class="module-item">
+        <div class="module-dot" style="background:var(--accent3);"></div>
+        <div>
+          <h5 data-ko="액션 임팩트">Action Impact</h5>
+          <p data-ko='"실제로 무엇이 효과 있는가?"'>"What's actually working?"</p>
+        </div>
+      </div>
+      <div class="module-item">
+        <div class="module-dot" style="background:var(--accent4);"></div>
+        <div>
+          <h5 data-ko="실험 보드">Experiments</h5>
+          <p data-ko='"R&amp;D가 회수되고 있는가?"'>"Is R&D paying off?"</p>
+        </div>
+      </div>
+      <div class="module-item">
+        <div class="module-dot" style="background:var(--accent5);"></div>
+        <div>
+          <h5 data-ko="자본 콘솔">Capital Console</h5>
+          <p data-ko='"다음에 무엇을 해야 하는가?"'>"What should we do next?"</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 08: COMPETITION ===== -->
+<section class="slide" id="competition">
+  <span class="slide-number">08</span>
+  <h2 data-ko="<span class='num'>07</span>경쟁 구도"><span class="num">07</span>Competitive Landscape</h2>
+  <p class="section-sub" data-ko="이 카테고리는 <span class='hl'>아직 존재하지 않습니다</span>. yieldo가 만듭니다.">The category <span class="hl">does not yet exist</span>. yieldo creates it.</p>
+
+  <div class="pos-map" style="margin-bottom:24px;">
+    <div class="cross-h"></div>
+    <div class="cross-v"></div>
+    <div class="axis-label" style="bottom:12px; left:50%; transform:translateX(-50%); display:flex; width:80%; justify-content:space-between;">
+      <span data-ko="&larr; 관찰">&larr; Observation</span>
+      <span data-ko="의사결정 &rarr;">Decision &rarr;</span>
+    </div>
+    <div class="axis-label" style="left:12px; top:50%; transform:translateY(-50%) rotate(-90deg); white-space:nowrap;" data-ko="내부 + 외부 통합 &uarr;">
+      Internal + External &uarr;
+    </div>
+    <div class="dot" style="top:50px; right:100px; background:rgba(91,154,255,0.2); color:var(--accent); border:2px solid var(--accent); font-size:14px; padding:10px 20px; border-radius:10px;">
+      YIELDO
+    </div>
+    <div class="dot" style="top:70px; left:90px; background:rgba(255,169,77,0.12); color:var(--accent3);">Sensor Tower</div>
+    <div class="dot" style="top:100px; left:170px; background:rgba(255,169,77,0.12); color:var(--accent3);">AppMagic</div>
+    <div class="dot" style="top:170px; left:45%; background:rgba(62,221,181,0.15); color:var(--accent2);">AppsFlyer</div>
+    <div class="dot" style="top:210px; left:52%; background:rgba(62,221,181,0.15); color:var(--accent2);">Adjust</div>
+    <div class="dot" style="top:195px; right:32%; background:rgba(167,139,250,0.15); color:var(--accent5);">Statsig</div>
+    <div class="dot" style="bottom:90px; left:120px; background:rgba(255,107,138,0.12); color:var(--accent4);">Looker</div>
+    <div class="dot" style="bottom:115px; left:200px; background:rgba(255,107,138,0.12); color:var(--accent4);">Tableau</div>
+    <!-- Internal BI Teams: highlighted as key competitor -->
+    <div class="dot" style="bottom:60px; right:25%; background:rgba(255,169,77,0.2); color:var(--accent3); border:2px dashed var(--accent3); font-size:13px; padding:8px 16px;" data-ko="내부 BI 팀">Internal BI Teams</div>
+  </div>
+
+  <div class="grid-3">
+    <div class="card glow-blue">
+      <h4 data-ko="vs. 데이터 프로바이더">vs. Data Providers</h4>
+      <p style="font-size:16px;" data-ko="Sensor Tower는 <em>시장</em>을 보여줍니다. yieldo는 시장을 <strong>의사결정</strong>으로 번역합니다. 우리는 그들의 데이터를 더 가치있게 만듭니다.">Sensor Tower shows <em>market</em>. yieldo translates market into <strong>decisions</strong>. We make their data more valuable.</p>
+    </div>
+    <div class="card glow-orange" style="border:1px dashed rgba(255,169,77,0.4);">
+      <h4 data-ko="vs. 내부 BI 팀">vs. Internal BI Teams</h4>
+      <p style="font-size:16px;" data-ko="가장 큰 경쟁자. 우리는 <strong>더 빠른 가치 실현</strong>과 내부 팀이 복제할 수 없는 도메인 특화 AI를 제공합니다.">Our biggest competitor. We offer <strong>faster time-to-value</strong> and domain-specific AI that internal teams can't replicate.</p>
+    </div>
+    <div class="card glow-green">
+      <h4 data-ko="vs. 범용 BI">vs. Generic BI</h4>
+      <p style="font-size:16px;" data-ko="Looker는 <em>대시보드</em>를 보여줍니다. yieldo는 정량적 확신과 함께 <strong>투자 권고</strong>를 제공합니다.">Looker shows <em>dashboards</em>. yieldo delivers <strong>investment recommendations</strong> with quantified confidence.</p>
+    </div>
+  </div>
+
+  <!-- Adjacent players — complementary, not competitive -->
+  <div style="margin-top:24px; padding:20px 28px; border:1px dashed rgba(167,139,250,0.35); border-radius:12px; background:rgba(167,139,250,0.04);">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+      <div style="font-size:11px; font-weight:700; color:var(--accent5); text-transform:uppercase; letter-spacing:1.5px;" data-ko="인접 플레이어 &mdash; 경쟁이 아닌 보완">Adjacent Players &mdash; Complementary, Not Competitive</div>
+    </div>
+    <div class="grid-2" style="gap:18px;">
+      <div>
+        <h4 style="font-size:15px; color:var(--accent5); margin-bottom:6px;" data-ko="PvX Partners + PvX Lambda">PvX Partners + PvX Lambda</h4>
+        <p style="font-size:14px; color:var(--text-dim); line-height:1.65;" data-ko="General Catalyst 파트너십으로 $250M+ UA 파이낸싱 집행. 자체 ML(PvX Lambda)로 코호트&rarr;LTV&rarr;페이백을 내부 심사용으로 예측. <span class='hl5'>자본을 제공</span>하지만 운영자에게 의사결정 툴을 판매하지는 않음.">Deploys $250M+ UA financing with General Catalyst. Uses internal ML (PvX Lambda) to predict cohort&rarr;LTV&rarr;payback <em>for underwriting</em>. <span class="hl5">Provides capital</span> — does not sell a decision tool to operators.</p>
+      </div>
+      <div>
+        <h4 style="font-size:15px; color:var(--accent2); margin-bottom:6px;" data-ko="yieldo의 포지션">Where yieldo Fits</h4>
+        <p style="font-size:14px; color:var(--text-dim); line-height:1.65;" data-ko="yieldo는 <strong>운영자가 직접 사용</strong>하는 의사결정 OS. PvX는 yieldo의 예측을 <strong>파이낸싱 심사에 활용</strong>할 수 있고, yieldo 고객은 PvX를 통해 <strong>검증된 자본을 확보</strong>할 수 있음 &mdash; 장기적으로 <span class='hl2'>상호보완 파트너십 또는 M&amp;A 경로</span>.">yieldo is the decision OS that <strong>operators use directly</strong>. PvX can leverage yieldo forecasts <strong>for underwriting</strong>; yieldo customers can access <strong>verified capital</strong> through PvX &mdash; long-term, a natural <span class="hl2">partnership or M&amp;A path</span>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 09: BUSINESS MODEL ===== -->
+<section class="slide" id="business">
+  <span class="slide-number">09</span>
+  <h2 data-ko="<span class='num'>08</span>비즈니스 모델"><span class="num">08</span>Business Model</h2>
+  <p class="section-sub" data-ko="3단계 매출 진화 &mdash; 컨설팅에서 SaaS, 그리고 엔터프라이즈로.">Three-phase revenue evolution &mdash; consulting to SaaS to enterprise.</p>
+
+  <div class="pipe" style="margin-bottom:28px;">
+    <div class="pipe-step p-blue" style="flex:1;">
+      <div class="pipe-title" data-ko="1단계: 컨설팅">Phase 1: Consulting</div>
+      <div class="pipe-desc" data-ko="1년차<br>리포트 $10-30K<br>리테이너 $5-15K/월<br>파일럿 $20-50K">Year 1<br>Reports $10-30K<br>Retainer $5-15K/mo<br>Pilots $20-50K</div>
+    </div>
+    <div class="pipe-step p-green" style="flex:1;">
+      <div class="pipe-title" data-ko="2단계: SaaS">Phase 2: SaaS</div>
+      <div class="pipe-desc" data-ko="2-3년차<br>플랫폼 $3-10K/월<br>시트당 $500-1K/월<br>프리미엄 모델링">Year 2-3<br>Platform $3-10K/mo<br>Per seat $500-1K/mo<br>Premium modeling</div>
+    </div>
+    <div class="pipe-step p-orange" style="flex:1;">
+      <div class="pipe-title" data-ko="3단계: 엔터프라이즈">Phase 3: Enterprise</div>
+      <div class="pipe-desc" data-ko="3년차+<br>계약 $100-500K/년<br>API 사용량 기반<br>전략 자문">Year 3+<br>Contracts $100-500K/yr<br>API usage-based<br>Strategic advisory</div>
+    </div>
+  </div>
+
+  <div class="big-label" data-ko="스케일 시점 목표 유닛 이코노믹스">Target Unit Economics at Scale</div>
+  <div class="grid-4">
+    <div class="stat">
+      <div class="number">$50-120K</div>
+      <div class="label">ACV</div>
+    </div>
+    <div class="stat">
+      <div class="number">80%+</div>
+      <div class="label" data-ko="총 마진">Gross Margin</div>
+    </div>
+    <div class="stat">
+      <div class="number">110%+</div>
+      <div class="label" data-ko="순 매출 유지율">Net Revenue Retention</div>
+    </div>
+    <div class="stat">
+      <div class="number">&gt;5:1</div>
+      <div class="label" data-ko="LTV:CAC 비율">LTV:CAC Ratio</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 10: TEAM + TRACTION ===== -->
+<section class="slide" id="team">
+  <span class="slide-number">10</span>
+  <h2 data-ko="<span class='num'>09</span>팀 &amp; 트랙션"><span class="num">09</span>Team &amp; Traction</h2>
+  <p class="section-sub" data-ko="문제를 직접 겪은 운영자들이 만듭니다.">Built by operators who lived the problem.</p>
+
+  <div class="grid-2" style="margin-bottom:28px;">
+    <div class="card glow-blue" style="padding:32px;">
+      <div class="tag tag-blue" data-ko="창업자">Founder</div>
+      <h4 style="font-size:20px;" data-ko="Founder-Market Fit">Founder-Market Fit</h4>
+      <ul style="margin-top:12px;" data-ko='<li style="font-size:16px;"><strong>리텐션 5대 성질</strong> 이론의 원 저자</li><li style="font-size:16px;"><strong>라이브 모바일 게임 운영</strong>에서 데이터 전략 &amp; 분석</li><li style="font-size:16px;"><strong>풀스택 개발</strong> &mdash; Next.js, ML 파이프라인, 클라우드 인프라</li><li style="font-size:16px;"><strong>비즈니스 도메인</strong> &mdash; UA, 라이브옵스, 자본 배분</li>'>
+        <li style="font-size:16px;"><strong>Original author</strong> of the Five Retention Properties theory</li>
+        <li style="font-size:16px;"><strong>Data strategy & analytics</strong> in live mobile gaming operations</li>
+        <li style="font-size:16px;"><strong>Full-stack development</strong> &mdash; Next.js, ML pipelines, cloud infra</li>
+        <li style="font-size:16px;"><strong>Business domain</strong> &mdash; UA, live ops, capital allocation</li>
+      </ul>
+    </div>
+    <div class="card glow-green" style="padding:32px;">
+      <div class="tag tag-green" data-ko="진행 상황">Progress</div>
+      <h4 style="font-size:20px;" data-ko="현재까지의 트랙션">Traction to Date</h4>
+      <div style="display:flex; flex-direction:column; gap:14px; margin-top:12px;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:28px; height:28px; border-radius:6px; background:rgba(62,221,181,0.15); display:flex; align-items:center; justify-content:center; font-size:14px; color:var(--accent2);">&#10003;</div>
+          <span style="font-size:16px;" data-ko="전체 설계 문서 완성 (8개 문서)">Complete design documentation (8 documents)</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:28px; height:28px; border-radius:6px; background:rgba(62,221,181,0.15); display:flex; align-items:center; justify-content:center; font-size:14px; color:var(--accent2);">&#10003;</div>
+          <span style="font-size:16px;" data-ko="8주 MVP 개발 로드맵 확정">8-week MVP development roadmap finalized</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:28px; height:28px; border-radius:6px; background:rgba(62,221,181,0.15); display:flex; align-items:center; justify-content:center; font-size:14px; color:var(--accent2);">&#10003;</div>
+          <span style="font-size:16px;" data-ko="리텐션 이론 학술 문헌 피어 검증">Retention theory peer-validated (academic literature)</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:28px; height:28px; border-radius:6px; background:rgba(91,154,255,0.15); display:flex; align-items:center; justify-content:center; font-size:14px; color:var(--accent);">&#8594;</div>
+          <span style="font-size:16px;" data-ko="운영자 인터뷰 &amp; 파일럿 아웃리치 진행 중">Operator interviews &amp; pilot outreach in progress</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:20px 28px;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <div style="font-size:14px; font-weight:700; color:var(--text-bright);" data-ko="현재 팀">Current Team</div>
+        <div style="font-size:15px; color:var(--text-dim); margin-top:4px;" data-ko="2인 창업 팀 &mdash; 매니지드 인프라(Vercel + Supabase + GCP)로 운영 오버헤드 최소화">2-person founding team &mdash; managed infrastructure (Vercel + Supabase + GCP) minimizes ops overhead</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:13px; color:var(--text-dim);" data-ko="창업자 / 풀스택 &bull; 데이터/AI 엔지니어">Founder / Full-Stack &bull; Data/AI Engineer</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 11: FINANCIALS ===== -->
+<section class="slide" id="financials">
+  <span class="slide-number">11</span>
+  <h2 data-ko="<span class='num'>10</span>재무 전망"><span class="num">10</span>Financial Projections</h2>
+  <p class="section-sub" data-ko="보수적 전망과 명확한 흑자 전환 경로.">Conservative projections with clear path to profitability.</p>
+
+  <div class="grid-2" style="margin-bottom:28px;">
+    <div>
+      <div class="big-label" data-ko="매출">Revenue</div>
+      <table data-ko='<tr><th></th><th>1년차</th><th>2년차</th><th>3년차</th></tr><tr><td>컨설팅</td><td>$200K</td><td>$300K</td><td>$200K</td></tr><tr><td>SaaS</td><td>$50K</td><td>$800K</td><td>$2.8M</td></tr><tr><td>엔터프라이즈</td><td>&mdash;</td><td>$100K</td><td>$1M</td></tr><tr class="total"><td>합계</td><td>$250K</td><td>$1.2M</td><td>$4.2M</td></tr>'>
+        <tr><th></th><th>Year 1</th><th>Year 2</th><th>Year 3</th></tr>
+        <tr><td>Consulting</td><td>$200K</td><td>$300K</td><td>$200K</td></tr>
+        <tr><td>SaaS</td><td>$50K</td><td>$800K</td><td>$2.8M</td></tr>
+        <tr><td>Enterprise</td><td>&mdash;</td><td>$100K</td><td>$1M</td></tr>
+        <tr class="total"><td>Total</td><td>$250K</td><td>$1.2M</td><td>$4.2M</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="big-label" data-ko="비용">Costs</div>
+      <table data-ko='<tr><th></th><th>1년차</th><th>2년차</th><th>3년차</th></tr><tr><td>인건비</td><td>$400K</td><td>$900K</td><td>$1.8M</td></tr><tr><td>인프라</td><td>$50K</td><td>$150K</td><td>$350K</td></tr><tr><td>영업 &amp; 마케팅</td><td>$30K</td><td>$200K</td><td>$500K</td></tr><tr><td>운영</td><td>$50K</td><td>$100K</td><td>$200K</td></tr><tr class="total"><td>합계</td><td>$530K</td><td>$1.35M</td><td>$2.85M</td></tr>'>
+        <tr><th></th><th>Year 1</th><th>Year 2</th><th>Year 3</th></tr>
+        <tr><td>Personnel</td><td>$400K</td><td>$900K</td><td>$1.8M</td></tr>
+        <tr><td>Infrastructure</td><td>$50K</td><td>$150K</td><td>$350K</td></tr>
+        <tr><td>Sales & Marketing</td><td>$30K</td><td>$200K</td><td>$500K</td></tr>
+        <tr><td>Operations</td><td>$50K</td><td>$100K</td><td>$200K</td></tr>
+        <tr class="total"><td>Total</td><td>$530K</td><td>$1.35M</td><td>$2.85M</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="grid-4">
+    <div class="stat"><div class="number">80%</div><div class="label" data-ko="총 마진 (Y3)">Gross Margin (Y3)</div></div>
+    <div class="stat"><div class="number">$3-5M</div><div class="label" data-ko="ARR 목표 (Y3)">ARR Target (Y3)</div></div>
+    <div class="stat"><div class="number">40-60</div><div class="label" data-ko="고객사 (Y3)">Customers (Y3)</div></div>
+    <div class="stat"><div class="number">10-14</div><div class="label" data-ko="팀 규모 (Y3)">Team Size (Y3)</div></div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 12: THE ASK + VISION ===== -->
+<section class="slide" id="ask">
+  <span class="slide-number">12</span>
+  <h2 data-ko="<span class='num'>11</span>투자 요청"><span class="num">11</span>The Ask</h2>
+  <p class="section-sub" data-ko="카테고리를 정의할 투자 의사결정 OS 구축을 위한 자금.">Funding to build the category-defining Operating Intelligence Terminal.</p>
+
+  <div style="text-align:center; padding:36px; background:linear-gradient(135deg, var(--glow-blue), var(--glow-green)); border:2px solid rgba(91,154,255,0.3); border-radius:16px; margin-bottom:28px;">
+    <div style="font-size:14px; color:var(--accent); font-weight:700; text-transform:uppercase; letter-spacing:2px; margin-bottom:8px;" data-ko="시드 라운드">Seed Round</div>
+    <div style="font-size:48px; font-weight:900; color:var(--text-bright);">$500K &ndash; $750K</div>
+    <div style="font-size:16px; color:var(--text-dim); margin-top:8px;" data-ko="18개월 런웨이로 PMF까지 도달">18-month runway to product-market fit</div>
+  </div>
+
+  <div class="big-label" data-ko="자금 사용처">Use of Funds</div>
+  <div class="funds-bar" style="margin-bottom:8px;">
+    <div class="segment" style="flex:50; background:rgba(91,154,255,0.3);" data-ko="제품 50%">Product 50%</div>
+    <div class="segment" style="flex:25; background:rgba(167,139,250,0.3);" data-ko="데이터 &amp; AI 25%">Data &amp; AI 25%</div>
+    <div class="segment" style="flex:15; background:rgba(62,221,181,0.3);" data-ko="GTM 15%">GTM 15%</div>
+    <div class="segment" style="flex:10; background:rgba(255,169,77,0.3);" data-ko="운영 10%">Ops 10%</div>
+  </div>
+  <div style="display:flex; gap:16px; margin-bottom:36px; font-size:12px; color:var(--text-dim);">
+    <span data-ko="<span class='hl'>제품 개발</span> &mdash; 풀스택 플랫폼 구축"><span class="hl">Product Development</span> &mdash; Full-stack platform build</span>
+    <span data-ko="<span class='hl5'>데이터 &amp; AI</span> &mdash; ML 모델, 벤치마크 데이터"><span class="hl5">Data & AI</span> &mdash; ML models, benchmark data</span>
+    <span data-ko="<span class='hl2'>GTM</span> &mdash; 파일럿, 컨퍼런스, 콘텐츠"><span class="hl2">GTM</span> &mdash; Pilots, conferences, content</span>
+    <span data-ko="<span class='hl3'>운영</span> &mdash; 법무, 인프라, 관리"><span class="hl3">Ops</span> &mdash; Legal, infra, admin</span>
+  </div>
+
+  <!-- Vision -->
+  <div style="text-align:center; padding:28px; border-top:1px solid var(--border); margin-top:12px;">
+    <div style="font-size:14px; color:var(--text-dim); font-weight:700; text-transform:uppercase; letter-spacing:2px; margin-bottom:12px;" data-ko="비전">Vision</div>
+    <div style="font-size:24px; font-weight:800; color:var(--text-bright); max-width:700px; margin:0 auto;" data-ko="모바일 게임의 투자 의사결정을 직관에서 과학으로.">
+      Transform investment decisions in mobile gaming from intuition to science.
+    </div>
+    <div style="margin-top:24px;">
+      <span style="font-size:42px; font-weight:900; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        yieldo
+      </span>
+    </div>
+    <div style="font-size:14px; color:var(--text-dim); margin-top:8px;" data-ko="모바일 게임을 위한 투자 의사결정 OS &mdash; 기밀, 2026년 4월">
+      The Operating Intelligence Terminal for Mobile Gaming &mdash; Confidential, April 2026
+    </div>
+  </div>
+</section>
+
+
+<!-- ========== APPENDIX ========== -->
+<section class="appendix-divider" id="appendix">
+  <h2 data-ko="부록">APPENDIX</h2>
+</section>
+
+<!-- ===== APPENDIX A1: RETENTION PREDICTION ENGINE ===== -->
+<section class="slide" id="appendix-a1">
+  <span class="slide-number">A1</span>
+  <h2 data-ko="리텐션 예측 엔진">Retention Prediction Engine</h2>
+  <p class="section-sub" data-ko="리텐션 5대 성질 &bull; 이중 레이어 예측 아키텍처 &bull; 베이지안 사전분포&rarr;사후분포">The Five Retention Properties &bull; Dual-layer prediction architecture &bull; Bayesian Prior&rarr;Posterior</p>
+
+  <div class="big-label" data-ko="리텐션의 5가지 수학적 성질">The Five Mathematical Properties of Retention</div>
+  <div class="grid-5" style="margin-bottom:24px;">
+    <div class="card" style="padding:16px;">
+      <div class="tag tag-blue">P1</div>
+      <h4 style="font-size:13px;" data-ko="단조 비증가">Monotonic Non-Increase</h4>
+      <p style="font-size:12px;" data-ko="D(N) &le; D(N-1) 항상 성립">D(N) &le; D(N-1) always</p>
+    </div>
+    <div class="card" style="padding:16px;">
+      <div class="tag tag-green">P2</div>
+      <h4 style="font-size:13px;" data-ko="순차 의존성">Sequential Dependency</h4>
+      <p style="font-size:12px;" data-ko="각 날은 이전 상태의 영향을 받음">Each day influenced by prior state</p>
+    </div>
+    <div class="card" style="padding:16px;">
+      <div class="tag tag-orange">P3</div>
+      <h4 style="font-size:13px;" data-ko="시간에 따른 감소">Temporal Decrease</h4>
+      <p style="font-size:12px;" data-ko="시간이 흐를수록 리텐션 감소">Retention declines over time</p>
+    </div>
+    <div class="card" style="padding:16px;">
+      <div class="tag tag-red">P4</div>
+      <h4 style="font-size:13px;" data-ko="감소율의 둔화">Decelerating Decline</h4>
+      <p style="font-size:12px;" data-ko="감소 속도가 점차 느려짐">Rate of decrease slows</p>
+    </div>
+    <div class="card" style="padding:16px;">
+      <div class="tag tag-purple">P5</div>
+      <h4 style="font-size:13px;" data-ko="점근적 바닥">Asymptotic Floor</h4>
+      <p style="font-size:12px;" data-ko="곡선이 안정된 기반으로 수렴">Curve converges to stable base</p>
+    </div>
+  </div>
+
+  <div class="big-label" data-ko="이중 레이어 아키텍처">Dual-Layer Architecture</div>
+  <div class="grid-2">
+    <div class="card glow-blue">
+      <div class="tag tag-blue" data-ko="레이어 1: 파라메트릭 (초기)">Layer 1: Parametric (Early)</div>
+      <h4 data-ko="Power Law + 장르 사전분포">Power Law + Genre Prior</h4>
+      <p data-ko="R(t) = a &times; t^b + c &mdash; D1-D7 데이터로 작동. 장르별 벤치마크 밴드가 베이지안 사전분포를 제공.">R(t) = a &times; t^b + c &mdash; works from D1-D7 data. Genre-stratified benchmark bands provide Bayesian prior.</p>
+      <div class="formula" style="font-size:14px; margin-top:12px;" data-ko='사전분포(장르) <span class="op">+</span> 관측(D1-D7) <span class="eq">=</span> 사후분포'>
+        Prior(genre) <span class="op">+</span> Observed(D1-D7) <span class="eq">=</span> Posterior
+      </div>
+    </div>
+    <div class="card glow-purple">
+      <div class="tag tag-purple" data-ko="레이어 2: LSTM (스케일)">Layer 2: LSTM (Scale)</div>
+      <h4 data-ko="딥러닝 + 어텐션">Deep Learning + Attention</h4>
+      <p data-ko="2&times; LSTM (128 유닛) + 어텐션 + MC 드롭아웃. 충분한 코호트 볼륨이 쌓인 D14+ 시점에 활성화.">2&times; LSTM (128 units) + Attention + MC Dropout. Activates at D14+ with sufficient cohort volume.</p>
+      <div class="formula" style="font-size:14px; margin-top:12px;" data-ko='D14+ 시퀀스 <span class="op">&rarr;</span> D60-D365 <span class="eq">P10/P50/P90</span>'>
+        D14+ sequences <span class="op">&rarr;</span> D60-D365 <span class="eq">P10/P50/P90</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== APPENDIX A2: REVENUE + A/B TRANSLATION ===== -->
+<section class="slide" id="appendix-a2">
+  <span class="slide-number">A2</span>
+  <h2 data-ko="매출 &amp; 실험 번역">Revenue &amp; Experiment Translation</h2>
+  <p class="section-sub" data-ko="CPI에서 일일 매출까지 &bull; A/B 테스트 결과에서 투자 ROI까지">From CPI to daily revenue &bull; A/B test results to investment ROI</p>
+
+  <div class="big-label" data-ko="매출 파이프라인">Revenue Pipeline</div>
+  <div class="diagram" style="margin-bottom:24px;">
+    <div class="pipe" style="margin-bottom:16px;">
+      <div class="pipe-step p-blue"><div class="pipe-title" data-ko="UA 지출">UA Spend</div><div class="pipe-desc" data-ko="채널별 일 예산">Daily budget by channel</div></div>
+      <div class="pipe-step p-blue"><div class="pipe-title">&divide; CPI</div><div class="pipe-desc" data-ko="설치 단가">Cost per install</div></div>
+      <div class="pipe-step p-green"><div class="pipe-title">= DAU</div><div class="pipe-desc" data-ko="활성 유저">Active users</div></div>
+      <div class="pipe-step p-green"><div class="pipe-title">&times; ARPDAU</div><div class="pipe-desc" data-ko="DAU당 매출">Revenue per DAU</div></div>
+      <div class="pipe-step p-orange"><div class="pipe-title" data-ko="= 매출">= Revenue</div><div class="pipe-desc" data-ko="일일 수익">Daily income</div></div>
+    </div>
+    <div class="formula" data-ko='일일 매출 <span class="op">=</span> (UA 지출 <span class="op">&divide;</span> CPI) <span class="op">&times;</span> 리텐션(d) <span class="op">&times;</span> ARPDAU'>
+      Daily Revenue <span class="op">=</span> (UA Spend <span class="op">&divide;</span> CPI) <span class="op">&times;</span> Retention(d) <span class="op">&times;</span> ARPDAU
+    </div>
+  </div>
+
+  <div class="big-label" data-ko="A/B 테스트 &rarr; 투자 가치">A/B Test &rarr; Investment Value</div>
+  <div class="grid-2">
+    <div class="card glow-purple">
+      <h4 data-ko="실험 예시">Experiment Example</h4>
+      <table data-ko='<tr><th>지표</th><th>대조군</th><th>처리군</th><th>ATE</th></tr><tr><td>D7 리텐션</td><td>32.1%</td><td>35.8%</td><td style="color:var(--accent2);">+3.7%p</td></tr><tr><td>ARPDAU</td><td>$0.42</td><td>$0.48</td><td style="color:var(--accent2);">+$0.06</td></tr><tr><td>D30 LTV</td><td>$4.20</td><td>$5.10</td><td style="color:var(--accent2);">+$0.90</td></tr><tr class="total"><td>페이백</td><td>142일</td><td>118일</td><td style="color:var(--accent2);">-24일</td></tr>'>
+        <tr><th>Metric</th><th>Control</th><th>Treatment</th><th>ATE</th></tr>
+        <tr><td>D7 Retention</td><td>32.1%</td><td>35.8%</td><td style="color:var(--accent2);">+3.7%p</td></tr>
+        <tr><td>ARPDAU</td><td>$0.42</td><td>$0.48</td><td style="color:var(--accent2);">+$0.06</td></tr>
+        <tr><td>D30 LTV</td><td>$4.20</td><td>$5.10</td><td style="color:var(--accent2);">+$0.90</td></tr>
+        <tr class="total"><td>Payback</td><td>142 days</td><td>118 days</td><td style="color:var(--accent2);">-24 days</td></tr>
+      </table>
+    </div>
+    <div class="card glow-green">
+      <h4 data-ko="투자 번역">Investment Translation</h4>
+      <div style="display:flex; flex-direction:column; gap:10px; margin-top:8px;">
+        <div class="formula" style="font-size:14px; padding:10px 16px; text-align:left; margin:0;" data-ko='&Delta;LTV <span class="op">=</span> +$0.90/유저'>
+          &Delta;LTV <span class="op">=</span> +$0.90/user
+        </div>
+        <div class="formula" style="font-size:14px; padding:10px 16px; text-align:left; margin:0;" data-ko='연 임팩트 <span class="op">=</span> $0.90 <span class="op">&times;</span> 120만 유저 <span class="eq">=</span> <span class="hl2">$1.08M</span>'>
+          Annual Impact <span class="op">=</span> $0.90 <span class="op">&times;</span> 1.2M users <span class="eq">=</span> <span class="hl2">$1.08M</span>
+        </div>
+        <div class="formula" style="font-size:14px; padding:10px 16px; text-align:left; margin:0;" data-ko='실험 ROI <span class="eq">=</span> <span class="hl2">54배</span><small>$1.08M 가치 / $20K 실험 비용</small>'>
+          Experiment ROI <span class="eq">=</span> <span class="hl2">54x</span>
+          <small>$1.08M value / $20K experiment cost</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== APPENDIX A3: PLATFORM INTEGRATION ===== -->
+<section class="slide" id="appendix-a3">
+  <span class="slide-number">A3</span>
+  <h2 data-ko="플랫폼 통합 아키텍처">Platform Integration Architecture</h2>
+  <p class="section-sub" data-ko="4개 데이터 사일로 &rarr; 통합 레이어 &rarr; 의사결정 엔진">Four data silos &rarr; Unified layer &rarr; Decision engine</p>
+
+  <div class="diagram">
+    <div class="big-label" style="margin-bottom:16px;" data-ko="엔드투엔드 데이터 플로우">End-to-End Data Flow</div>
+    <div class="grid-4" style="margin-bottom:8px;">
+      <div style="text-align:center; padding:12px; border:1px solid rgba(91,154,255,0.25); border-radius:8px; background:rgba(91,154,255,0.06);">
+        <div style="font-size:11px; font-weight:700; color:var(--accent);" data-ko="마켓">MARKET</div>
+        <div style="font-size:13px; color:var(--text-dim); margin-top:4px;" data-ko="공개 벤치마크<br>앱스토어 API">Public Benchmarks<br>App Store APIs</div>
+      </div>
+      <div style="text-align:center; padding:12px; border:1px solid rgba(62,221,181,0.25); border-radius:8px; background:rgba(62,221,181,0.06);">
+        <div style="font-size:11px; font-weight:700; color:var(--accent2);" data-ko="어트리뷰션">ATTRIBUTION</div>
+        <div style="font-size:13px; color:var(--text-dim); margin-top:4px;">AppsFlyer API<br>Adjust API</div>
+      </div>
+      <div style="text-align:center; padding:12px; border:1px solid rgba(255,169,77,0.25); border-radius:8px; background:rgba(255,169,77,0.06);">
+        <div style="font-size:11px; font-weight:700; color:var(--accent3);" data-ko="실험">EXPERIMENTS</div>
+        <div style="font-size:13px; color:var(--text-dim); margin-top:4px;">Statsig API<br>Firebase BQ</div>
+      </div>
+      <div style="text-align:center; padding:12px; border:1px solid rgba(167,139,250,0.25); border-radius:8px; background:rgba(167,139,250,0.06);">
+        <div style="font-size:11px; font-weight:700; color:var(--accent5);" data-ko="재무">FINANCIAL</div>
+        <div style="font-size:13px; color:var(--text-dim); margin-top:4px;" data-ko="ERP / 스프레드시트<br>수동 업로드">ERP / Sheets<br>Manual Upload</div>
+      </div>
+    </div>
+    <div style="text-align:center; padding:6px; color:var(--text-dim); font-size:14px;">&darr;&darr;&darr;&darr;</div>
+    <div style="padding:16px 24px; border:1px solid rgba(91,154,255,0.3); border-radius:10px; background:rgba(91,154,255,0.06); margin-bottom:8px;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-size:14px; font-weight:700; color:var(--accent);" data-ko="통합 데이터 레이어">Unified Data Layer</div>
+          <div style="font-size:13px; color:var(--text-dim);" data-ko="스키마 정규화 &bull; 고객 격리(RLS) &bull; 피처 엔지니어링">Schema normalization &bull; Customer isolation (RLS) &bull; Feature engineering</div>
+        </div>
+        <div style="font-size:12px; color:var(--text-dim); text-align:right;">Supabase PostgreSQL</div>
+      </div>
+    </div>
+    <div style="text-align:center; padding:6px; color:var(--text-dim); font-size:14px;">&darr;</div>
+    <div style="padding:16px 24px; border:1px solid rgba(62,221,181,0.3); border-radius:10px; background:rgba(62,221,181,0.06); margin-bottom:8px;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-size:14px; font-weight:700; color:var(--accent2);" data-ko="의사결정 인텔리전스 엔진">Decision Intelligence Engine</div>
+          <div style="font-size:13px; color:var(--text-dim);" data-ko="LSTM 리텐션 &bull; 베이지안 LTV &bull; ATE 계산기 &bull; 몬테카를로 시뮬">LSTM retention &bull; Bayesian LTV &bull; ATE calculator &bull; Monte Carlo sim</div>
+        </div>
+        <div style="font-size:12px; color:var(--text-dim); text-align:right;">NumPyro / PyTorch</div>
+      </div>
+    </div>
+    <div style="text-align:center; padding:6px; color:var(--text-dim); font-size:14px;">&darr;</div>
+    <div style="padding:16px 24px; border:1px solid rgba(255,169,77,0.3); border-radius:10px; background:rgba(255,169,77,0.06);">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-size:14px; font-weight:700; color:var(--accent3);" data-ko="의사결정 인터페이스">Decision Interface</div>
+          <div style="font-size:13px; color:var(--text-dim);" data-ko="경영진 오버뷰 &bull; 액션 임팩트 &bull; 자본 콘솔">Executive Overview &bull; Action Impact &bull; Capital Console</div>
+        </div>
+        <div style="font-size:12px; color:var(--text-dim); text-align:right;">Next.js + API</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== APPENDIX A4: DETAILED ROADMAP ===== -->
+<section class="slide" id="appendix-a4">
+  <span class="slide-number">A4</span>
+  <h2 data-ko="상세 3년 로드맵">Detailed 3-Year Roadmap</h2>
+  <p class="section-sub" data-ko="검증에서 카테고리 리더십까지.">From validation to category leadership.</p>
+
+  <div style="display:flex; flex-direction:column; gap:16px; margin-bottom:24px;">
+    <div class="big-label" data-ko="1년차: 검증 &amp; 구축">Year 1: Validate &amp; Build</div>
+    <div class="grid-4" style="gap:12px;">
+      <div class="card" style="padding:16px; border-left:3px solid var(--accent);">
+        <div style="font-size:12px; font-weight:700; color:var(--accent);">Q1 2026</div>
+        <h4 style="font-size:14px;" data-ko="고객 발굴">Customer Discovery</h4>
+        <p style="font-size:13px;" data-ko="20+ 운영자 인터뷰 &bull; 문제 검증">20+ operator interviews &bull; Problem validation</p>
+      </div>
+      <div class="card" style="padding:16px; border-left:3px solid var(--accent);">
+        <div style="font-size:12px; font-weight:700; color:var(--accent);">Q2 2026</div>
+        <h4 style="font-size:14px;" data-ko="파일럿 런칭">Pilot Launch</h4>
+        <p style="font-size:13px;" data-ko="2-3건의 수작업 리포트 파일럿">2-3 handcrafted report pilots</p>
+      </div>
+      <div class="card" style="padding:16px; border-left:3px solid var(--accent2);">
+        <div style="font-size:12px; font-weight:700; color:var(--accent2);">Q3 2026</div>
+        <h4 style="font-size:14px;" data-ko="MVP 개발">MVP Development</h4>
+        <p style="font-size:13px;" data-ko="LSTM 리텐션 + 매출 엔진 대시보드">LSTM retention + revenue engine dashboard</p>
+      </div>
+      <div class="card" style="padding:16px; border-left:3px solid var(--accent2);">
+        <div style="font-size:12px; font-weight:700; color:var(--accent2);">Q4 2026</div>
+        <h4 style="font-size:14px;" data-ko="초기 고객">Early Customers</h4>
+        <p style="font-size:13px;" data-ko="5-10 유료 고객 &bull; 케이스 스터디">5-10 paying customers &bull; Case studies</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card glow-green" style="padding:24px;">
+      <div class="tag tag-green" data-ko="2년차: PMF">Year 2: Product-Market Fit</div>
+      <ul data-ko='<li>완전한 SaaS 플랫폼 v1 출시</li><li>최초의 서구권 고객사</li><li>Top 5 데이터 소스 커넥터</li><li>15-25 고객사, PMF 입증</li>'>
+        <li>Full SaaS platform v1 launch</li>
+        <li>First Western market customers</li>
+        <li>Top 5 data source connectors</li>
+        <li>15-25 customers, demonstrated PMF</li>
+      </ul>
+    </div>
+    <div class="card glow-orange" style="padding:24px;">
+      <div class="tag tag-orange" data-ko="3년차: 스케일">Year 3: Scale</div>
+      <ul data-ko='<li>엔터프라이즈 티어 계약</li><li>API &amp; 개발자 에코시스템</li><li>40-60 고객사, EMEA 확장</li><li>Series A 준비, $3-5M ARR 경로</li>'>
+        <li>Enterprise tier contracts</li>
+        <li>API &amp; developer ecosystem</li>
+        <li>40-60 customers, EMEA expansion</li>
+        <li>Series A ready, $3-5M ARR path</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  const btn = document.getElementById('lang-toggle');
+  const label = document.getElementById('lang-toggle-label');
+  const body = document.body;
+  let currentLang = 'en';
+
+  btn.addEventListener('click', function () {
+    currentLang = currentLang === 'en' ? 'ko' : 'en';
+    label.textContent = currentLang === 'en' ? '한국어' : 'English';
+    body.classList.toggle('lang-ko', currentLang === 'ko');
+    document.documentElement.lang = currentLang;
+
+    document.querySelectorAll('[data-ko]').forEach(function (el) {
+      // Cache original English HTML on first toggle
+      if (!el.hasAttribute('data-en')) {
+        el.setAttribute('data-en', el.innerHTML);
+      }
+      el.innerHTML = currentLang === 'ko'
+        ? el.getAttribute('data-ko')
+        : el.getAttribute('data-en');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -8,7 +8,7 @@
 
 ## 1. Problem
 
-Executive Overview의 차트 2장이 Compass의 핵심 질문에 정확히 답하지 못함:
+Executive Overview의 차트 2장이 yieldo의 핵심 질문에 정확히 답하지 못함:
 
 | 기존 차트 | 문제 |
 |-----------|------|

@@ -13,7 +13,7 @@ if ! echo "$CMD" | grep -qE '(^|[[:space:]&;|])git[[:space:]]+commit([[:space:]]
 fi
 
 WORKSPACE_DIR="${CLAUDE_PROJECT_DIR:-$(pwd)}"
-APP_DIR="$WORKSPACE_DIR/compass"
+APP_DIR="$WORKSPACE_DIR/yieldo"
 
 if [ ! -d "$APP_DIR" ]; then
   echo "❌ precommit-gate: compass/ 서브디렉터리를 찾지 못함 ($APP_DIR)" >&2
@@ -22,7 +22,7 @@ fi
 
 cd "$APP_DIR"
 
-echo "━━━ Compass pre-commit gate (in compass/) ━━━" >&2
+echo "━━━ yieldo pre-commit gate (in yieldo/) ━━━" >&2
 
 echo "▸ tsc --noEmit..." >&2
 if ! npx tsc --noEmit 2>&1 >&2; then

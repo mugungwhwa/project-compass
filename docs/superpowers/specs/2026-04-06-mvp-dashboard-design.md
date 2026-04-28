@@ -1,4 +1,4 @@
-# Compass MVP Dashboard Design Spec
+# yieldo MVP Dashboard Design Spec
 
 **Date**: 2026-04-06
 **Purpose**: 예비창업패키지 심사위원 데모용 MVP 대시보드
@@ -49,7 +49,7 @@ Chart Asymptotic:#22C55E (convergence marker)
 ## 3. Project Structure
 
 ```
-compass/
+yieldo/
 ├── src/
 │   ├── app/
 │   │   ├── layout.tsx                # Root layout (Inter font, theme)
@@ -111,7 +111,7 @@ compass/
 
 ```
 ┌─────────────────────┐
-│ 🧭 Compass          │  Logo + brand
+│ 🧭 yieldo          │  Logo + brand
 │                     │
 │ DECISION            │  Section label
 │ ▶ Executive Overview│  Active: bg-blue-50, text-blue-600

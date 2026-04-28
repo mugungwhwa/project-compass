@@ -3,7 +3,7 @@
 **Date**: 2026-04-16
 **Module**: Market Position (Module 2) → Methodology Modal (Layer 2)
 **Source**: Brainstorming (8 sections, all approved)
-**Predecessor**: `2026-04-14-market-gap-bayesian-p3-implementation.md` §3.2 (원안), `2026-04-15-compass-positioning-language-layering-design.md` (L0/L1/L2 정책)
+**Predecessor**: `2026-04-14-market-gap-bayesian-p3-implementation.md` §3.2 (원안), `2026-04-15-yieldo-positioning-language-layering-design.md` (L0/L1/L2 정책)
 
 ---
 
@@ -272,18 +272,18 @@ Recharts/visx 미사용. 근거:
 ## 10. File Structure (예상)
 
 **신규 (Create):**
-- `compass/src/widgets/charts/ui/cyclic-update-timeline.tsx` — 메인 컴포넌트 (step grid + play control)
-- `compass/src/shared/ui/methodology-modal.tsx` — 범용 modal 셸 (header/body/footer 레이아웃)
-- `compass/src/shared/api/mock-data.ts` 하단에 `CyclicUpdateStep`, `CyclicUpdateData` 타입 + `mockCyclicUpdate_matchLeague_d7` 데이터
+- `yieldo/src/widgets/charts/ui/cyclic-update-timeline.tsx` — 메인 컴포넌트 (step grid + play control)
+- `yieldo/src/shared/ui/methodology-modal.tsx` — 범용 modal 셸 (header/body/footer 레이아웃)
+- `yieldo/src/shared/api/mock-data.ts` 하단에 `CyclicUpdateStep`, `CyclicUpdateData` 타입 + `mockCyclicUpdate_matchLeague_d7` 데이터
 
 **수정 (Modify):**
-- `compass/src/widgets/charts/ui/prior-posterior-chart.tsx` — 하단에 "방법론 보기" CTA link 추가 + modal 연결
-- `compass/src/widgets/charts/index.ts` — `CyclicUpdateTimeline` re-export
-- `compass/src/shared/i18n/dictionary.ts` — `methodology.*` 키 추가 (modal header/footer/narrative)
+- `yieldo/src/widgets/charts/ui/prior-posterior-chart.tsx` — 하단에 "방법론 보기" CTA link 추가 + modal 연결
+- `yieldo/src/widgets/charts/index.ts` — `CyclicUpdateTimeline` re-export
+- `yieldo/src/shared/i18n/dictionary.ts` — `methodology.*` 키 추가 (modal header/footer/narrative)
 
 **건드리지 않음:**
-- `compass/src/shared/config/chart-colors.ts` — `MARKET_GAP_PROOF_COLORS` 이미 있음
-- `compass/src/app/(dashboard)/dashboard/market-gap/page.tsx` — 페이지 레이아웃 변경 없음 (modal은 컴포넌트 내부에서 렌더)
+- `yieldo/src/shared/config/chart-colors.ts` — `MARKET_GAP_PROOF_COLORS` 이미 있음
+- `yieldo/src/app/(dashboard)/dashboard/market-gap/page.tsx` — 페이지 레이아웃 변경 없음 (modal은 컴포넌트 내부에서 렌더)
 
 ---
 
@@ -344,7 +344,7 @@ Recharts/visx 미사용. 근거:
 ## 15. 관련 문서
 
 - `2026-04-14-market-gap-bayesian-p3-implementation.md` §3.2 (원안, 이 spec으로 supersede)
-- `2026-04-15-compass-positioning-language-layering-design.md` (L0/L1/L2 정책)
+- `2026-04-15-yieldo-positioning-language-layering-design.md` (L0/L1/L2 정책)
 - `2026-04-15-market-gap-layer1-rebalance.md` (L1 구현 완료 — 이 위에 L2 올림)
 - Memory: `project_language_layering.md` (L2 용어 허용 규칙)
 - Memory: `project_market_gap_alpha_frame.md` (Alpha는 L2 signature metric)

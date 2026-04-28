@@ -94,7 +94,7 @@
 
 ### 4.1 CumulativeImpactCurve
 
-- **위치**: `compass/src/widgets/charts/ui/cumulative-impact-curve.tsx`
+- **위치**: `yieldo/src/widgets/charts/ui/cumulative-impact-curve.tsx`
 - **시각화**: AreaChart × 2 (실제 누적 vs 반사실 baseline), gradient fill
 - **데이터**: `mockCumulativeImpact` — `{ date, actual, baseline }[]`
 - **인사이트**: 차트 헤더에 "현재 운영 덕에 유저 1인당 +{gap} ΔLTV가 쌓였습니다" 동적 표시
@@ -102,7 +102,7 @@
 
 ### 4.2 ActionRoiQuadrant
 
-- **위치**: `compass/src/widgets/charts/ui/action-roi-quadrant.tsx`
+- **위치**: `yieldo/src/widgets/charts/ui/action-roi-quadrant.tsx`
 - **시각화**: ScatterChart, X=Cost($K), Y=ΔLTV, 액션 타입별 색상
 - **4분면 기준선**: Cost 중앙값, ΔLTV 중앙값
 - **데이터**: `mockActions.filter(a => a.cost)` — `cost` 필드 신규 추가
@@ -114,7 +114,7 @@
 
 ### 4.3 CausalImpactPanel
 
-- **위치**: `compass/src/widgets/charts/ui/causal-impact-panel.tsx`
+- **위치**: `yieldo/src/widgets/charts/ui/causal-impact-panel.tsx`
 - **시각화**: ComposedChart (Area band + 2 lines + ReferenceLine)
 - **데이터**: `mockCausalImpact` — 대표 액션 1건 (`v2.3 Release`)의 Pre/Post 시계열 + 반사실 90% CI
 - **상단 3-카드**: ATE (점추정 + 90% CI), 인과 확률 P(effect>0), 판정 (Real Impact / Inconclusive)
@@ -123,7 +123,7 @@
 
 ### 4.4 RetentionShiftHeatmap
 
-- **위치**: `compass/src/widgets/charts/ui/retention-shift-heatmap.tsx`
+- **위치**: `yieldo/src/widgets/charts/ui/retention-shift-heatmap.tsx`
 - **시각화**: 테이블 기반 셀 색상 매핑 (HSL 채도 = ΔRetention 절대값)
 - **데이터**: `mockActions[].retentionShift` — `{ d1, d3, d7, d14, d30 }` 신규 필드
 - **색상**: 양수=파랑계, 음수=빨강계, 0=백색. 강도는 ±2.5pp까지 선형 매핑
@@ -219,7 +219,7 @@ Mike의 `feedback_chart_specs.md` 정책 준수: **차트 1개 = 1 spec 문서 =
 
 - P2 차트 3종 (Distribution / Velocity Timeline / Concurrent Overlap)
 - 실제 데이터 연동 (Statsig API, Live Ops 캘린더, MMP cohort)
-- Causal Impact 백엔드 (NumPyro 기반 BSTS 모델 — `Project_Compass_Engine_Blueprint.md` 참조)
+- Causal Impact 백엔드 (NumPyro 기반 BSTS 모델 — `Project_Yieldo_Engine_Blueprint.md` 참조)
 
 ---
 

@@ -1,4 +1,4 @@
-# Investment Decision OS 구축 여정
+# Operating Intelligence Terminal 구축 여정
 
 ## 1. 이 사업의 본질
 
@@ -64,7 +64,7 @@
 
 ### 한 줄 정의
 
-**Market Intelligence를 Capital Allocation Intelligence로 바꾸는 게임 산업용 Investment Decision OS**
+**Market Intelligence를 Capital Allocation Intelligence로 바꾸는 게임 산업용 Operating Intelligence Terminal**
 
 ### 제품이 하는 일
 
@@ -459,4 +459,4 @@ Databricks는 좋은 후보이다.
 - 시장과 내부 액션을 연결하고,
 - 개입이 사업에 미치는 영향을 시각화하며,
 - 적자인수의 한계와 가능성을 보여주는,
-- 게임 산업용 Investment Decision OS 이다.
+- 게임 산업용 Operating Intelligence Terminal 이다.
