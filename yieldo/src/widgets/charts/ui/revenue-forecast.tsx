@@ -190,48 +190,52 @@ export function RevenueForecast({ data, meta, title, expanded: externalExpanded,
 
         <span className="mx-0.5 h-4 w-px bg-[var(--border-default)]" aria-hidden />
 
-        {/* Posterior legend — always visible, static. Active by default so
-            label gets phosphor-green accent (matches the line color). */}
-        <div className="inline-flex h-7 items-center gap-1.5 rounded-[var(--radius-inline)] px-2">
+        {/* Posterior legend — always-on layer.  Identical chrome to other
+            toggle pills so multi-active doesn't create color-competition.
+            Data color lives in the Swatch; status lives in unified yellow ON. */}
+        <div className="inline-flex h-7 items-center gap-1.5 rounded-[var(--radius-inline)] px-2 border border-[var(--border-default)] bg-[var(--bg-3)]/40">
           <Swatch color={C.line} variant="solid" />
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--phosphor-green)]">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--fg-1)]">
             {t("rfc.legendPosterior")}
           </span>
-          <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--phosphor-green)]"
-            style={{ textShadow: "0 0 8px rgba(77,255,163,0.4)" }}>
+          <span
+            className="text-[11px] font-bold uppercase tracking-wider text-[var(--phosphor-yellow)]"
+            style={{ textShadow: "0 0 6px rgba(255,228,94,0.4)" }}
+          >
             ON
           </span>
         </div>
 
-        {/* Prior toggle — phosphor-red when ON (matches line color), muted when OFF */}
+        {/* Prior toggle — same chrome as Posterior; only fill/border intensity
+            shifts on ON state.  ON status is universal yellow (Bloomberg
+            pattern: yellow = "active" everywhere, regardless of layer). */}
         <button
           type="button"
           onClick={() => setShowPrior((v) => !v)}
           aria-pressed={showPrior}
           className={cn(
             "inline-flex h-7 items-center gap-1.5 rounded-[var(--radius-inline)] px-2",
-            "transition-all hover:bg-[var(--bg-3)]",
+            "transition-all hover:border-[var(--phosphor-yellow)]/60",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--phosphor-yellow)]",
             "focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-1)]",
             showPrior
-              ? "bg-[var(--bg-3)] border border-[var(--phosphor-red)]/50"
-              : "border border-[var(--border-default)]",
+              ? "bg-[var(--bg-3)]/40 border border-[var(--phosphor-yellow)]/40"
+              : "border border-[var(--border-default)] bg-transparent",
           )}
-          style={showPrior ? { boxShadow: "0 0 12px rgba(255,107,122,0.18)" } : undefined}
         >
           <Swatch color={C.prior} variant={showPrior ? "dashed-filled" : "dashed"} dim={!showPrior} />
           <span className={cn(
             "text-[11px] font-semibold uppercase tracking-wider",
-            showPrior ? "text-[var(--phosphor-red)]" : "text-[var(--fg-1)]",
+            showPrior ? "text-[var(--fg-1)]" : "text-[var(--fg-2)]",
           )}>
             {t("rfc.showPrior")}
           </span>
           <span
             className={cn(
-              "text-[11px] font-bold uppercase tracking-wider tabular-nums leading-none",
-              showPrior ? "text-[var(--phosphor-red)]" : "text-[var(--fg-2)]",
+              "text-[11px] font-bold uppercase tracking-wider leading-none",
+              showPrior ? "text-[var(--phosphor-yellow)]" : "text-[var(--fg-3)]",
             )}
-            style={showPrior ? { textShadow: "0 0 8px rgba(255,107,122,0.4)" } : undefined}
+            style={showPrior ? { textShadow: "0 0 6px rgba(255,228,94,0.4)" } : undefined}
           >
             {showPrior ? "ON" : "OFF"}
           </span>
@@ -248,32 +252,31 @@ export function RevenueForecast({ data, meta, title, expanded: externalExpanded,
             aria-controls={expListId}
             className={cn(
               "inline-flex h-7 items-center gap-1.5 rounded-[var(--radius-inline)] px-2",
-              "transition-all hover:bg-[var(--bg-3)]",
+              "transition-all hover:border-[var(--phosphor-yellow)]/60",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--phosphor-yellow)]",
               "focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-1)]",
               selectedExp || expOpen
-                ? "bg-[var(--bg-3)] border border-[var(--phosphor-cyan)]/50"
-                : "border border-[var(--border-default)]",
+                ? "bg-[var(--bg-3)]/40 border border-[var(--phosphor-yellow)]/40"
+                : "border border-[var(--border-default)] bg-transparent",
             )}
-            style={selectedExp ? { boxShadow: "0 0 12px rgba(93,231,255,0.18)" } : undefined}
           >
             <Swatch color={C.experiment} variant={selectedExp ? "dashed-filled" : "dashed"} dim={!selectedExp} />
             <span className={cn(
               "text-[11px] font-semibold uppercase tracking-wider",
-              selectedExp ? "text-[var(--phosphor-cyan)]" : "text-[var(--fg-1)]",
+              selectedExp ? "text-[var(--fg-1)]" : "text-[var(--fg-2)]",
             )}>
               {t("rfc.experimentLabel")}
             </span>
             <span
               className={cn(
                 "text-[11px] font-bold tabular-nums leading-none whitespace-nowrap uppercase tracking-wider",
-                selectedExp ? "text-[var(--phosphor-cyan)]" : "text-[var(--fg-2)]",
+                selectedExp ? "text-[var(--phosphor-yellow)]" : "text-[var(--fg-3)]",
               )}
-              style={selectedExp ? { textShadow: "0 0 8px rgba(93,231,255,0.4)" } : undefined}
+              style={selectedExp ? { textShadow: "0 0 6px rgba(255,228,94,0.4)" } : undefined}
             >
               {selectedExp ? selectedExp.id : "OFF"}
             </span>
-            <ChevronDown className={cn("h-3 w-3 flex-shrink-0 transition-transform", selectedExp ? "text-[var(--phosphor-cyan)]" : "text-[var(--fg-2)]", expOpen && "rotate-180")} aria-hidden />
+            <ChevronDown className={cn("h-3 w-3 flex-shrink-0 transition-transform", selectedExp ? "text-[var(--phosphor-yellow)]" : "text-[var(--fg-2)]", expOpen && "rotate-180")} aria-hidden />
           </button>
 
           <AnimatePresence>
