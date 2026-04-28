@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { useLocale } from "@/shared/i18n"
 import type { RankingHistoryPoint } from "@/shared/api/mock-data"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts"
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, LabelList } from "recharts"
 import { RANKING_TREND_COLORS } from "@/shared/config/chart-colors"
 import { CHART_TYPO } from "@/shared/config/chart-typography"
 import { ChartHeader } from "@/shared/ui/chart-header"
@@ -67,7 +67,18 @@ export function RankingTrend({ data, expanded: externalExpanded, onToggle: exter
             }
           />
           <ReferenceLine y={5} stroke={C.top5} strokeDasharray="3 3" strokeOpacity={0.5} label={{ value: "Top 5", position: "right", ...CHART_TYPO.axisLabel, fontFamily: CHART_TYPO.annotation.fontFamily, fill: C.top5 }} />
-          <Line type="linear" dataKey="myRank" stroke={C.line} strokeWidth={3} dot={{ r: 4, fill: "#FFFFFF", stroke: C.line, strokeWidth: 2 }} animationBegin={400} animationDuration={1200} animationEasing="ease-out" />
+          <Line type="linear" dataKey="myRank" stroke={C.line} strokeWidth={3} dot={{ r: 4, fill: "#FFFFFF", stroke: C.line, strokeWidth: 2 }} animationBegin={400} animationDuration={1200} animationEasing="ease-out">
+            <LabelList
+              dataKey="myRank"
+              position="right"
+              offset={8}
+              formatter={(v) => (typeof v === "number" ? `#${v}` : "")}
+              fill={C.line}
+              fontSize={11}
+              fontFamily="var(--font-geist-mono)"
+              fontWeight={700}
+            />
+          </Line>
         </LineChart>
       </ResponsiveContainer>
       </div>
