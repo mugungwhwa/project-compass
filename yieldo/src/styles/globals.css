@@ -23,13 +23,13 @@
   --bg-4: #3A4258;   /* highest elevation / divider on dark */
 
   /* ---------- Foreground / Text scale ----------
-     Re-tiered 2026-04-28 for dark-on-dark legibility.  Original gray scale
-     (#6B7280 / #4A5568) passed WCAG AA but read as muted at 11-12px mono.
-     New scale lifts every tier one step so labels stay readable.            */
-  --fg-0: #F8F8F8;   /* headlines, hero numbers, wordmark */
-  --fg-1: #D4DCE8;   /* body text — slightly more present than spec base */
-  --fg-2: #9AA3B5;   /* labels, eyebrow, KPI captions (was #6B7280) */
-  --fg-3: #6B7280;   /* meta, footnote, disabled (was #4A5568) */
+     Re-tiered twice for dark-on-dark legibility.  After v2 user still found
+     labels muted at 12px mono — pushed every tier one more step toward
+     white, narrowing the spread but keeping fg-0 the clear top.             */
+  --fg-0: #FFFFFF;   /* headlines, hero numbers, wordmark — pure white now */
+  --fg-1: #ECF1F7;   /* body text — almost-white, very present */
+  --fg-2: #C0C8D6;   /* labels, eyebrow, KPI captions (was #9AA3B5) */
+  --fg-3: #8E96A4;   /* meta, footnote, disabled (was #6B7280) */
 
   /* ---------- Border ---------- */
   --border-subtle: #141826;
@@ -286,7 +286,7 @@ body {
   font-size: 12px;
   line-height: 1.5;
   letter-spacing: 0.01em;
-  font-weight: 400;
+  font-weight: 500;  /* bumped from 400 — mono captions need weight on dark */
 }
 
 /*
