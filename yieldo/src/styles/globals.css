@@ -176,16 +176,23 @@ button:disabled,
 }
 
 /* ---------- Base body ---------- */
+/*
+  yieldo terminal type chain (2026-04-28):
+    Geist Mono (Latin)  →  D2 Coding (한글 monospace, Naver)
+    →  JetBrains Mono   →  ui-monospace  →  monospace fallback
+  Browsers pick glyphs per-character, so Latin renders in Geist Mono and
+  Korean automatically uses D2 Coding — both monospace, both terminal.
+*/
 body {
   font-family:
-    var(--font-geist-sans),
-    "Pretendard Variable",
-    Pretendard,
-    "Apple SD Gothic Neo",
-    "Malgun Gothic",
-    system-ui,
-    -apple-system,
-    sans-serif;
+    var(--font-geist-mono),
+    "D2Coding",
+    "D2 Coding",
+    "JetBrains Mono",
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
   background: var(--bg-0);
   color: var(--fg-0);
   font-feature-settings: "cv11", "ss01";

@@ -74,6 +74,11 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap&subset=korean"
         />
+        {/* D2 Coding — Korean monospace pair for Geist Mono (yieldo terminal aesthetic) */}
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/D2Coding.css"
+        />
       </head>
       <body>
         <LocaleProvider>
