@@ -19,6 +19,7 @@
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState, useRef, useEffect, useCallback, useId } from "react"
+import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Gamepad2, ChevronDown, Calendar, Check } from "lucide-react"
 import { DayPicker, type DateRange } from "react-day-picker"
@@ -217,6 +218,15 @@ export function RunwayStatusBar() {
   const [gameOpen, setGameOpen]             = useState(false)
   const [calendarOpen, setCalendarOpen]     = useState(false)
 
+  // Dropdown anchor state — viewport coords used with position:fixed so the
+  // dropdown escapes ancestor overflow:hidden (dashboard layout has it).
+  const [gameAnchor, setGameAnchor] = useState<{ top: number; right: number } | null>(null)
+  const [calAnchor, setCalAnchor]   = useState<{ top: number; right: number } | null>(null)
+
+  // Portal target — only available client-side
+  const [portalReady, setPortalReady] = useState(false)
+  useEffect(() => { setPortalReady(true) }, [])
+
   // Derive cohort month from dateRange for metrics lookup
   const selectedCohort = dateRange.from
     ? `${dateRange.from.getFullYear()}-${String(dateRange.from.getMonth() + 1).padStart(2, "0")}`
@@ -233,19 +243,57 @@ export function RunwayStatusBar() {
   const calTriggerRef   = useRef<HTMLButtonElement>(null)
   const gameItemsRef    = useRef<(HTMLButtonElement | null)[]>([])
 
-  // Close dropdowns on outside click
+  // Close dropdowns on outside click — but treat clicks inside any
+  // [data-dropdown-portal] as inside (since portaled elements aren't
+  // descendants of gameRef/calendarRef anymore).
   useEffect(() => {
     function handleClick(e: MouseEvent) {
-      if (gameRef.current && !gameRef.current.contains(e.target as Node)) {
+      const target = e.target as Element | null
+      if (!target) return
+      if (target.closest?.("[data-dropdown-portal]")) return
+      if (gameRef.current && !gameRef.current.contains(target as Node)) {
         setGameOpen(false)
       }
-      if (calendarRef.current && !calendarRef.current.contains(e.target as Node)) {
+      if (calendarRef.current && !calendarRef.current.contains(target as Node)) {
         setCalendarOpen(false)
       }
     }
     document.addEventListener("mousedown", handleClick)
     return () => document.removeEventListener("mousedown", handleClick)
   }, [])
+
+  // Compute dropdown anchor positions when they open / on window resize.
+  // Position:fixed coords are viewport-relative, so they escape any
+  // ancestor overflow:hidden — the dropdown can render anywhere on screen.
+  useEffect(() => {
+    if (!gameOpen) return
+    function compute() {
+      const r = gameTriggerRef.current?.getBoundingClientRect()
+      if (r) setGameAnchor({ top: r.bottom + 4, right: window.innerWidth - r.right })
+    }
+    compute()
+    window.addEventListener("resize", compute)
+    window.addEventListener("scroll", compute, { passive: true, capture: true })
+    return () => {
+      window.removeEventListener("resize", compute)
+      window.removeEventListener("scroll", compute, { capture: true } as EventListenerOptions)
+    }
+  }, [gameOpen])
+
+  useEffect(() => {
+    if (!calendarOpen) return
+    function compute() {
+      const r = calTriggerRef.current?.getBoundingClientRect()
+      if (r) setCalAnchor({ top: r.bottom + 4, right: window.innerWidth - r.right })
+    }
+    compute()
+    window.addEventListener("resize", compute)
+    window.addEventListener("scroll", compute, { passive: true, capture: true })
+    return () => {
+      window.removeEventListener("resize", compute)
+      window.removeEventListener("scroll", compute, { capture: true } as EventListenerOptions)
+    }
+  }, [calendarOpen])
 
   // Auto-focus selected item when game dropdown opens
   useEffect(() => {
@@ -309,10 +357,13 @@ export function RunwayStatusBar() {
     }
   }
 
+  // Position is provided via inline style (top/right coords from anchor state),
+  // so dropdownBase only carries appearance + z-index.  Portal target is
+  // document.body, escaping any ancestor overflow:hidden.
   const dropdownBase = cn(
-    "absolute right-0 top-full z-50 mt-1",
-    "rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)]",
-    "shadow-[0_8px_32px_rgba(0,0,0,0.08)] py-1",
+    "z-[60]",
+    "rounded-[var(--radius-card)] border border-[var(--phosphor-yellow)]/40 bg-[var(--bg-1)]",
+    "shadow-[0_0_18px_rgba(255,228,94,0.10),0_12px_36px_rgba(0,0,0,0.55)] py-1",
   )
 
   const focusRing = cn(
@@ -372,14 +423,17 @@ export function RunwayStatusBar() {
             <ChevronDown className="h-3 w-3 flex-shrink-0 self-center text-[var(--fg-3)]" aria-hidden />
           </button>
 
-          {/* Game dropdown */}
+          {/* Game dropdown — portaled to body, position:fixed to escape parent overflow */}
+          {portalReady && createPortal(
           <AnimatePresence>
-            {gameOpen && (
+            {gameOpen && gameAnchor && (
               <motion.div
                 id={gameListId}
+                data-dropdown-portal=""
                 role="listbox"
                 aria-label="Select game"
-                className={cn(dropdownBase, "min-w-[180px]")}
+                className={cn(dropdownBase, "min-w-[200px]")}
+                style={{ position: "fixed", top: gameAnchor.top, right: gameAnchor.right }}
                 variants={dropdownVariants}
                 initial="hidden"
                 animate="visible"
@@ -418,7 +472,9 @@ export function RunwayStatusBar() {
                 ))}
               </motion.div>
             )}
-          </AnimatePresence>
+          </AnimatePresence>,
+            document.body,
+          )}
         </div>
 
         {/* ── Period selector (MetricCell style) ── */}
@@ -451,17 +507,20 @@ export function RunwayStatusBar() {
             <ChevronDown className="h-3 w-3 flex-shrink-0 self-center text-[var(--fg-3)]" aria-hidden />
           </button>
 
-          {/* Date range picker popover */}
+          {/* Date range picker popover — portaled, position:fixed */}
+          {portalReady && createPortal(
           <AnimatePresence>
-            {calendarOpen && (
+            {calendarOpen && calAnchor && (
               <motion.div
                 id={calListId}
+                data-dropdown-portal=""
                 aria-label="Select date range"
                 className={cn(
-                  "absolute right-0 top-full z-50 mt-2",
-                  "rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)]",
-                  "shadow-[0_8px_32px_rgba(0,0,0,0.10)] p-4",
+                  "z-[60]",
+                  "rounded-[var(--radius-card)] border border-[var(--phosphor-yellow)]/40 bg-[var(--bg-1)]",
+                  "shadow-[0_0_18px_rgba(255,228,94,0.10),0_12px_36px_rgba(0,0,0,0.55)] p-4",
                 )}
+                style={{ position: "fixed", top: calAnchor.top, right: calAnchor.right }}
                 variants={dropdownVariants}
                 initial="hidden"
                 animate="visible"
@@ -486,7 +545,9 @@ export function RunwayStatusBar() {
                 />
               </motion.div>
             )}
-          </AnimatePresence>
+          </AnimatePresence>,
+            document.body,
+          )}
         </div>
       </div>
     </header>
