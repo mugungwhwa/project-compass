@@ -7,13 +7,13 @@
   Shows P10/P50/P90 fan widening over 12 months.
   Red "cash-out zone" highlights below-threshold territory.
 
-  This is the first Compass chart built on Visx instead of Recharts —
+  This is the first yieldo chart built on Visx instead of Recharts —
   chosen because Recharts can't express:
     - a hard rectangular "cash-out zone" underlay
     - a fan that widens asymmetrically around P50
     - annotation lines that reference specific data geometry
 
-  Source of truth: docs/Project_Compass_Design_Migration_Log.md §4.1
+  Source of truth: docs/Project_yieldo_Design_Migration_Log.md §4.1
   Data: mockCashRunway (src/shared/api/mock-data.ts)
 */
 

@@ -30,7 +30,7 @@ export default function CapitalConsolePage() {
         ]} />
       </FadeInUp>
 
-      {/* Runway Fan Chart — Compass signature visualization, Visx-powered */}
+      {/* Runway Fan Chart — yieldo signature visualization, Visx-powered */}
       <FadeInUp className="mb-6">
         <RunwayFanChart data={mockCashRunway} locale={locale} />
       </FadeInUp>

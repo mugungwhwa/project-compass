@@ -1,9 +1,9 @@
-# Compass Landing Page v2 — Design Specification
+# yieldo Landing Page v2 — Design Specification
 
 **Version**: 1.0  
 **Date**: 2026-04-14  
 **Status**: Source of truth for Phase 2 implementation  
-**FSD target**: `compass/src/widgets/landing/ui/sections/*.tsx`
+**FSD target**: `yieldo/src/widgets/landing/ui/sections/*.tsx`
 
 ---
 
@@ -11,7 +11,7 @@
 
 **Tone**: Bloomberg Terminal authority × Vercel clarity. Not a consumer SaaS splash page — an operator-grade decision instrument. Every section answers a capital question, not a product question.
 
-**One memorable thing**: The page never shows "features." It shows decisions. Each section is structured as: *question an operator asks → evidence Compass shows → confidence it carries.*
+**One memorable thing**: The page never shows "features." It shows decisions. Each section is structured as: *question an operator asks → evidence yieldo shows → confidence it carries.*
 
 **Anti-patterns to avoid**:
 - Purple gradients on white (AI slop)
@@ -131,7 +131,7 @@ The six preview components are live React trees — not screenshots or image fil
 
 ### Placement and native sizes
 
-The crops are already implemented at `/compass/src/widgets/landing/ui/dashboard-preview/`. Each has default `width`, `height`, and `scale` props that control its rendered footprint. The table below is the authoritative sizing contract.
+The crops are already implemented at `/yieldo/src/widgets/landing/ui/dashboard-preview/`. Each has default `width`, `height`, and `scale` props that control its rendered footprint. The table below is the authoritative sizing contract.
 
 | Component | Section | Placement | Native rendered size (default props) | Scale |
 |---|---|---|---|---|
@@ -250,7 +250,7 @@ Three pills below CTA. Style: `inline-flex items-center gap-1.5 px-3 py-1.5 roun
 - Eyebrow: "Decision Layer"
 - H1 Line 1: "Run your game portfolio"
 - H1 Line 2: "at the speed of evidence."
-- Subhead: "Not another dashboard. Compass turns market, experiment, UA, and financial data into one investment decision."
+- Subhead: "Not another dashboard. yieldo turns market, experiment, UA, and financial data into one investment decision."
 
 **KO**:
 - Eyebrow: "Decision Layer"
@@ -299,7 +299,7 @@ The "misses" line uses `--signal-caution` (amber) — not red. Amber = "incomple
 
 1. Heading ("Every team has data. Nobody connects it.")
 2. 4 silo cards (scan the landscape of fragmentation)
-3. Conclusion line ("Compass connects all four into one investment decision.") — `font-medium text-[var(--fg-0)]`, signals resolution
+3. Conclusion line ("yieldo connects all four into one investment decision.") — `font-medium text-[var(--fg-0)]`, signals resolution
 
 #### Copy
 
@@ -307,7 +307,7 @@ The "misses" line uses `--signal-caution` (amber) — not red. Amber = "incomple
 - Eyebrow: "The Problem"
 - Heading: "Every team has data. Nobody connects it."
 - Subhead: "Market, UA, product, and finance each answer a narrow question. None answers the one that matters."
-- Conclusion: "Compass connects all four into one investment decision."
+- Conclusion: "yieldo connects all four into one investment decision."
 
 Cards (EN):
 | Label | Does | Misses |
@@ -321,7 +321,7 @@ Cards (EN):
 - Eyebrow: "The Problem"
 - Heading: "모두가 데이터를 갖고 있지만, 아무도 연결하지 않습니다."
 - Subhead: "시장, UA, 프로덕트, 재무 — 각자 좁은 질문에만 답합니다. 진짜 중요한 질문엔 아무도 답하지 않습니다."
-- Conclusion: "Compass가 네 영역을 하나의 투자 판단으로 연결합니다."
+- Conclusion: "yieldo가 네 영역을 하나의 투자 판단으로 연결합니다."
 
 **Korean line-break**: Heading needs `word-break: keep-all`. Conclusion should stay on 1 line at `md+`.
 
@@ -331,7 +331,7 @@ Cards: `whileInView`, stagger `0.09s` per card. Section heading: `whileInView`, 
 
 ---
 
-### S3 — Four Questions Compass Answers
+### S3 — Four Questions yieldo Answers
 
 **File**: `sections/questions-section.tsx`  
 **Background**: `--bg-2`
@@ -358,7 +358,7 @@ Each card is a decision-framing unit, not a feature card:
   [Mini annotation: text-xs font-mono text-[var(--brand)] mt-4]  ← e.g. "82% confidence · Invest More"
 ```
 
-The mini annotation at the bottom of each card is an inline signal — a 1-line glimpse of what Compass actually shows. It uses `--font-geist-mono` and `--brand` color to look data-register.
+The mini annotation at the bottom of each card is an inline signal — a 1-line glimpse of what yieldo actually shows. It uses `--font-geist-mono` and `--brand` color to look data-register.
 
 #### Visual Hierarchy
 
@@ -394,7 +394,7 @@ KO equivalents — all question text needs `word-break: keep-all`.
 **File**: `sections/module-overview-section.tsx`  
 **Background**: `--bg-0`
 
-This is the Statsig "Integrated products" equivalent — the clearest statement that Compass is a unified system, not four separate tools.
+This is the Statsig "Integrated products" equivalent — the clearest statement that yieldo is a unified system, not four separate tools.
 
 #### Layout
 
@@ -435,9 +435,9 @@ KO equivalents with `word-break: keep-all` on all text.
 
 #### Copy
 
-**EN**: Eyebrow: "Platform" | Heading: "There's a smarter way to run a game portfolio." | Subhead: "Compass gives operators a unified decision layer across market intelligence, UA, experiments, and financials."
+**EN**: Eyebrow: "Platform" | Heading: "There's a smarter way to run a game portfolio." | Subhead: "yieldo gives operators a unified decision layer across market intelligence, UA, experiments, and financials."
 
-**KO**: Eyebrow: "Platform" | Heading: "게임 포트폴리오를 운영하는 더 똑똑한 방법이 있습니다." | Subhead: "Compass는 시장 인텔리전스, UA, 실험, 재무 데이터를 하나의 의사결정 레이어로 통합합니다."
+**KO**: Eyebrow: "Platform" | Heading: "게임 포트폴리오를 운영하는 더 똑똑한 방법이 있습니다." | Subhead: "yieldo는 시장 인텔리전스, UA, 실험, 재무 데이터를 하나의 의사결정 레이어로 통합합니다."
 
 #### Animation
 
@@ -483,9 +483,9 @@ Style: `flex items-start gap-3 text-sm text-[var(--fg-1)]` with `w-1.5 h-1.5 rou
 
 #### Copy
 
-**EN**: Eyebrow: "Proof" | Heading: "One screen for the decision that matters most." | Subhead: "Compass gives game operators one investment signal, the evidence behind it, and the next action to take."
+**EN**: Eyebrow: "Proof" | Heading: "One screen for the decision that matters most." | Subhead: "yieldo gives game operators one investment signal, the evidence behind it, and the next action to take."
 
-**KO**: Eyebrow: "Proof" | Heading: "가장 중요한 의사결정을 위한 하나의 화면." | Subhead: "Compass는 게임 운영자에게 하나의 투자 시그널, 그 근거, 그리고 다음 실행 방향을 제공합니다."
+**KO**: Eyebrow: "Proof" | Heading: "가장 중요한 의사결정을 위한 하나의 화면." | Subhead: "yieldo는 게임 운영자에게 하나의 투자 시그널, 그 근거, 그리고 다음 실행 방향을 제공합니다."
 
 #### Visual Hierarchy
 
@@ -610,9 +610,9 @@ Above the table, the question in a `blockquote`-style box:
 
 #### Copy
 
-**EN**: Eyebrow: "Explainability" | Heading: "Know what changed — before you change the budget." | Body: "Compass explains why payback moved, what changed in retention or CPI, and how much each factor contributed."
+**EN**: Eyebrow: "Explainability" | Heading: "Know what changed — before you change the budget." | Body: "yieldo explains why payback moved, what changed in retention or CPI, and how much each factor contributed."
 
-**KO**: Eyebrow: "Explainability" | Heading: "예산을 바꾸기 전에, 무엇이 변했는지 파악하세요." | Body: "Compass는 회수 기간이 변동한 이유, 리텐션이나 CPI에서 무엇이 달라졌는지, 각 요인이 얼마나 기여했는지를 설명합니다."
+**KO**: Eyebrow: "Explainability" | Heading: "예산을 바꾸기 전에, 무엇이 변했는지 파악하세요." | Body: "yieldo는 회수 기간이 변동한 이유, 리텐션이나 CPI에서 무엇이 달라졌는지, 각 요인이 얼마나 기여했는지를 설명합니다."
 
 #### Visual Hierarchy
 
@@ -690,9 +690,9 @@ These stats are conceptual benchmarks — not real numbers until there is actual
 
 #### Copy
 
-**EN**: Eyebrow: "Experiment ROI" | Heading: "Experiments don't just ship. They move capital." | Subhead: "Compass translates experiment results into ΔLTV, payback movement, and capital efficiency — so winning tests become funding decisions."
+**EN**: Eyebrow: "Experiment ROI" | Heading: "Experiments don't just ship. They move capital." | Subhead: "yieldo translates experiment results into ΔLTV, payback movement, and capital efficiency — so winning tests become funding decisions."
 
-**KO**: Eyebrow: "Experiment ROI" | Heading: "실험은 그냥 출시되지 않습니다. 자본을 움직입니다." | Subhead: "Compass는 실험 결과를 ΔLTV, 회수 기간 변동, 자본 효율성으로 번역합니다."
+**KO**: Eyebrow: "Experiment ROI" | Heading: "실험은 그냥 출시되지 않습니다. 자본을 움직입니다." | Subhead: "yieldo는 실험 결과를 ΔLTV, 회수 기간 변동, 자본 효율성으로 번역합니다."
 
 #### Korean line-break
 
@@ -721,7 +721,7 @@ Heading `whileInView`. Pipeline nodes: sequential stagger `150ms`. Stat row: sim
 
 #### Comparison Structure
 
-Four columns as cards, last one (Compass) is visually distinguished.
+Four columns as cards, last one (yieldo) is visually distinguished.
 
 Grid: `grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4`
 
@@ -733,7 +733,7 @@ Card style for competitors:
   [What it tells you: text-sm text-[var(--fg-2)] mt-3 leading-relaxed]
 ```
 
-Card style for Compass (last column):
+Card style for yieldo (last column):
 ```
 [p-6, bg-[var(--bg-1)], border border-[var(--brand)], rounded-[var(--radius-card)]]
   [Category: text-xs uppercase tracking-wide text-[var(--brand)]]
@@ -748,23 +748,23 @@ No checkmark grids. No competitor logos. Text-only comparison, more FT-editorial
 | Analytics | Dashboard | What happened |
 | Experimentation | Testing | Which variant won |
 | Finance | Reporting | What was spent |
-| **Compass** | **Decision Layer** | **Whether to invest more** |
+| **yieldo** | **Decision Layer** | **Whether to invest more** |
 
 #### Copy
 
-**EN**: Eyebrow: "Category" | Heading: "Built for decisions, not just measurement." | Subhead: "Analytics tells you what happened. Compass tells you what to do next."
+**EN**: Eyebrow: "Category" | Heading: "Built for decisions, not just measurement." | Subhead: "Analytics tells you what happened. yieldo tells you what to do next."
 
-**KO**: Eyebrow: "Category" | Heading: "측정이 아닌 의사결정을 위해 만들어졌습니다." | Subhead: "분석 도구는 무슨 일이 있었는지 말해줍니다. Compass는 다음에 무엇을 해야 할지 말해줍니다."
+**KO**: Eyebrow: "Category" | Heading: "측정이 아닌 의사결정을 위해 만들어졌습니다." | Subhead: "분석 도구는 무슨 일이 있었는지 말해줍니다. yieldo는 다음에 무엇을 해야 할지 말해줍니다."
 
 #### Visual Hierarchy
 
 1. Heading (positions the category gap)
-2. Compass card (brand-bordered, distinguished)
+2. yieldo card (brand-bordered, distinguished)
 3. Competitor cards (muted, contextual)
 
 #### Animation
 
-Cards: stagger `0.08s` per card, last card (Compass) gets `0.05s` extra delay so it "lands" last.
+Cards: stagger `0.08s` per card, last card (yieldo) gets `0.05s` extra delay so it "lands" last.
 
 ---
 
@@ -798,9 +798,9 @@ This section is minimal by design. The page has already made the argument — th
 
 #### Copy
 
-**EN**: Heading: "See the decision, not just the data." | Subhead: "See how Compass turns game data into investment decisions." | Primary CTA: "See the decision demo" | Secondary: "Or explore the live demo →"
+**EN**: Heading: "See the decision, not just the data." | Subhead: "See how yieldo turns game data into investment decisions." | Primary CTA: "See the decision demo" | Secondary: "Or explore the live demo →"
 
-**KO**: Heading: "데이터가 아닌 판단을 확인하세요." | Subhead: "Compass가 게임 데이터를 투자 판단으로 바꾸는 과정을 직접 확인하세요." | Primary CTA: "데모 보기" | Secondary: "또는 라이브 데모 탐색하기 →"
+**KO**: Heading: "데이터가 아닌 판단을 확인하세요." | Subhead: "yieldo가 게임 데이터를 투자 판단으로 바꾸는 과정을 직접 확인하세요." | Primary CTA: "데모 보기" | Secondary: "또는 라이브 데모 탐색하기 →"
 
 #### Animation
 
@@ -925,7 +925,7 @@ Phase 2 engineers must verify all items before PR merge.
 - [ ] Color contrast: all text tokens meet WCAG AA on their background tokens
 
 ### FSD compliance
-- [ ] All section components in `compass/src/widgets/landing/ui/sections/`
-- [ ] `compass/src/widgets/landing/index.ts` exports all new section components
+- [ ] All section components in `yieldo/src/widgets/landing/ui/sections/`
+- [ ] `yieldo/src/widgets/landing/index.ts` exports all new section components
 - [ ] No direct imports from `sections/` outside `widgets/landing/`
 - [ ] No business logic inside section components — props and i18n copy only

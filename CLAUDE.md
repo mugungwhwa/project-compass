@@ -1,6 +1,6 @@
-# Project Compass — Foundation Document
+# yieldo — Foundation Document
 
-## Experiment-to-Investment Decision OS for the Mobile Gaming Industry
+## Signal-to-Yield Operating Terminal for the Mobile Gaming Industry
 
 **Version**: 1.0
 **Date**: March 2026
@@ -13,7 +13,7 @@
 
 ### 1.1 One-Line Definition
 
-**Project Compass transforms game interventions, experiments, and market signals into capital allocation decisions — the Experiment-to-Investment Decision OS for mobile gaming.**
+**yieldo transforms game interventions, experiments, and market signals into capital allocation decisions — the Signal-to-Yield Operating Terminal for mobile gaming.**
 
 ### 1.2 What This Project Is
 
@@ -27,7 +27,7 @@ An AI-powered decision operating system that measures whether A/B tests, live op
 - Not a data warehouse (Databricks, Snowflake already do this)
 - Not a generic BI dashboard (Looker, Tableau already do this)
 
-Compass is the **translation layer** that sits above all of these and converts their outputs into investment decisions.
+yieldo is the **translation layer** that sits above all of these and converts their outputs into investment decisions.
 
 ---
 
@@ -82,7 +82,7 @@ No existing tool bridges these four silos into a unified investment decision. Op
 
 But the question goes deeper: **Which specific interventions — experiments, live events, UA campaigns, feature releases — are actually increasing LTV? And do those gains justify reallocating capital?** No existing tool answers this.
 
-**Project Compass is this missing layer.**
+**yieldo is this missing layer.**
 
 ---
 
@@ -245,7 +245,7 @@ These rules reflect the insight that **the shape of the curve matters more than 
 
 ### 4.1 Core Principle: Market Intelligence as Prior
 
-The fundamental insight of Project Compass is the application of Bayesian inference to investment decisions:
+The fundamental insight of yieldo is the application of Bayesian inference to investment decisions:
 
 ```
 Prior (Market Intelligence) + Likelihood (Internal Data) = Posterior (Investment Decision)
@@ -352,7 +352,7 @@ Every intervention — A/B test, live ops event, UA campaign, feature release �
 
 Current experimentation platforms report statistical results: "Treatment improved D7 retention by +3.7 percentage points (p < 0.05)."
 
-Compass translates this into investment language:
+yieldo translates this into investment language:
 
 ```
 ATE (Average Treatment Effect)
@@ -366,7 +366,7 @@ ATE (Average Treatment Effect)
 
 ### 6.2 Experiment Portfolio as Investment
 
-Compass reframes the experimentation function not as an R&D cost center, but as an investment portfolio:
+yieldo reframes the experimentation function not as an R&D cost center, but as an investment portfolio:
 
 | Metric | Meaning |
 |---|---|
@@ -465,7 +465,7 @@ The founder's marketing + business development + data strategy background is a s
 
 ### 8.1 Dual-Layer Prediction Architecture
 
-Compass uses a two-layer prediction system that mirrors the data availability lifecycle:
+yieldo uses a two-layer prediction system that mirrors the data availability lifecycle:
 
 **Layer 1: Parametric Retention Model (Early-Stage)**
 - When: Soft-launch, D1-D7 data available
@@ -511,7 +511,7 @@ Compass uses a two-layer prediction system that mirrors the data availability li
 - Batch: GCP Cloud Run Jobs + Cloud Scheduler
 - Cache: Upstash Redis
 - ML Tracking: W&B (Weights & Biases) free tier
-- Detailed specifications: See `Project_Compass_Tech_Stack.md`
+- Detailed specifications: See `Project_Yieldo_Tech_Stack.md`
 
 ### 8.4.1 Vercel 배포 가이드 (제출용 호스팅)
 
@@ -519,7 +519,7 @@ Compass uses a two-layer prediction system that mirrors the data availability li
 
 **Vercel 프로젝트 설정**:
 - Git Repo: `mugungwhwa/project-compass`
-- Root Directory: `compass`
+- Root Directory: `yieldo`
 - Framework: Next.js (자동 감지)
 - Install Command Override: `npm install --legacy-peer-deps`
   - 이유: `@visx` 라이브러리가 peer dependency로 React 18만 명시하나 React 19에서 정상 동작. 클린 설치 시 peer conflict 방지.
@@ -555,11 +555,11 @@ Compass uses a two-layer prediction system that mirrors the data availability li
 - Reference: Visible.vc model — 3-minute structured data collection, progressive expansion
 
 **Silo 1 — Market Intelligence:**
-- NOT dependent on app intelligence platform crawling (legal risk — see `Project_Compass_Legal.md`)
+- NOT dependent on app intelligence platform crawling (legal risk — see `Project_Yieldo_Legal.md`)
 - Phase 1: Public benchmark reports (GameAnalytics, AppsFlyer Index, Unity) as Bayesian prior
 - Phase 2: Customer data → Bayesian posterior updating (network effect — improves with usage)
 - Phase 3: App intelligence API partnership/licensing when platform scale justifies negotiation
-- Legal compliance: See `Project_Compass_Legal.md` for detailed analysis
+- Legal compliance: See `Project_Yieldo_Legal.md` for detailed analysis
 
 ### 8.6 Market Intelligence Data Strategy
 
@@ -597,12 +597,12 @@ The platform becomes more accurate as it grows — a defensible competitive moat
 - Enterprise contracts with custom deployment
 - API access for programmatic decision integration
 - Data connector marketplace
-- Strategic advisory powered by Compass intelligence
+- Strategic advisory powered by yieldo intelligence
 - Purpose: High-value, long-term relationships
 
 ### 9.2 Pricing Philosophy
 
-Compass pricing reflects **value delivered**, not data volume. The product enables multi-million dollar capital allocation decisions — pricing is a fraction of the efficiency gains it creates.
+yieldo pricing reflects **value delivered**, not data volume. The product enables multi-million dollar capital allocation decisions — pricing is a fraction of the efficiency gains it creates.
 
 ---
 
@@ -618,7 +618,7 @@ No existing product combines market intelligence, operational data, experiment r
               High External + Internal Integration
                         ▲
                         │
-    Sensor Tower  ●     │              ● COMPASS
+    Sensor Tower  ●     │              ● YIELDO
     AppMagic      ●     │
                         │
 ◄───────────────────────┼────────────────────────►
@@ -636,7 +636,7 @@ Observation             │              Decision
 
 ### 10.3 Relationship with Existing Tools
 
-Compass is **complementary** to existing tools:
+yieldo is **complementary** to existing tools:
 - Makes Sensor Tower/AppMagic data more valuable (connects to decisions)
 - Makes AppsFlyer/Adjust data actionable (connects to investment outcomes)
 - Makes Statsig/Firebase results meaningful (translates to capital value)
@@ -648,7 +648,7 @@ Compass is **complementary** to existing tools:
 
 ### 11.1 Primary Users
 
-| User | What They Need from Compass |
+| User | What They Need from yieldo |
 |---|---|
 | Game Company CEO | "Should we invest more in this title?" |
 | UA / Marketing Lead | "Is our acquisition spend justified by returns?" |
@@ -659,7 +659,7 @@ Compass is **complementary** to existing tools:
 
 ### 11.2 Design Principle
 
-These users are **business operators**, not data analysts. They want investment guidance, not analytical dashboards. Every Compass interface must answer a question that starts with "Should we..." not "What happened..."
+These users are **business operators**, not data analysts. They want investment guidance, not analytical dashboards. Every yieldo interface must answer a question that starts with "Should we..." not "What happened..."
 
 ---
 
@@ -673,7 +673,7 @@ These users are **business operators**, not data analysts. They want investment 
 
 **Note on market sizing**: The "Capital Allocation Intelligence" category does not yet exist, making TAM estimation inherently top-down. The $1.5-3B figure is derived from 1.5-3% of total mobile gaming industry spend ($90B+) that could be redirected through better decision infrastructure. This is a conservative estimate validated against adjacent market sizes (Sensor Tower ~$100M+, AppsFlyer ~$300M+, total gaming data ecosystem $1-2B).
 
-**Key competitive consideration**: The most significant practical competitor is not another SaaS tool, but **internal BI teams** at large publishers who build similar functionality through spreadsheets and custom dashboards. Compass must demonstrate time-to-value and sophistication advantages that justify external procurement over internal build.
+**Key competitive consideration**: The most significant practical competitor is not another SaaS tool, but **internal BI teams** at large publishers who build similar functionality through spreadsheets and custom dashboards. yieldo must demonstrate time-to-value and sophistication advantages that justify external procurement over internal build.
 
 ---
 
@@ -716,10 +716,10 @@ These users are **business operators**, not data analysts. They want investment 
 
 ### Internal Research
 - Retention Properties Theory (2021). Original formulation of the five retention properties and slope-based prediction methodology.
-- Investment Decision OS Journey. Internal strategic document defining product vision and positioning. (Absorbed into this document — Sections 7.3-7.5)
+- Operating Intelligence Terminal Journey. Internal strategic document defining product vision and positioning. (Absorbed into this document — Sections 7.3-7.5)
 
 ### Legal Analysis
-- Project Compass Legal Analysis (2026). API integration compliance, crawling risk assessment, Korean law considerations. See `Project_Compass_Legal.md`
+- yieldo Legal Analysis (2026). API integration compliance, crawling risk assessment, Korean law considerations. See `Project_Yieldo_Legal.md`
 
 ---
 
@@ -730,14 +730,14 @@ These users are **business operators**, not data analysts. They want investment 
 | Document | Purpose | Audience |
 |---|---|---|
 | **CLAUDE.md** (this file) | Foundation — scientific methodology, product definition, all strategic decisions | AI agents, internal reference, source of truth |
-| **Project_Compass_Business_Plan.md** | Investor/government-facing business case | External reviewers, 예비창업패키지 심사위원 |
-| **Project_Compass_Tech_Stack.md** | Implementation specifications, role assignments, roadmap | Internal dev team (2-person) |
-| **Project_Compass_Legal.md** | API integration + crawling legal analysis, compliance framework | Internal, lawyer review |
-| **Project_Compass_Data_Sources_Guide.md** | 데이터 소스별 URL, API 사양, 저장 스키마, 수집 스케줄 | Internal dev team (실전 구현 참조) |
-| **Project_Compass_Engine_Blueprint.md** | 통계/추론 엔진 구현 블루프린트 — 데이터→예측→번역→판정 전체 파이프라인 코드 | Internal dev team (구현 지침) |
-| **Project_Compass_UI_Guide.md** | UI/UX 설계 지침 — 레이아웃, 시그널 시각화, 불확실성 표현, 모듈별 화면 가이드 | Frontend dev (디자인 참조) |
-| **`.claude/skills/compass-dev/`** | 개발 오케스트레이션 — `/compass-dev` 명령으로 병렬 에이전트 디스패치 (SKILL.md + agents.md + tasks.md) | Claude Code 개발 세션 |
-| **`.claude/skills/compass-verify/`** | 5-Point 검증 독립 스킬 — `/compass-verify` 명령으로 단독 검증 수행 | Claude Code 검증 세션 |
+| **Project_Yieldo_Business_Plan.md** | Investor/government-facing business case | External reviewers, 예비창업패키지 심사위원 |
+| **Project_Yieldo_Tech_Stack.md** | Implementation specifications, role assignments, roadmap | Internal dev team (2-person) |
+| **Project_Yieldo_Legal.md** | API integration + crawling legal analysis, compliance framework | Internal, lawyer review |
+| **Project_Yieldo_Data_Sources_Guide.md** | 데이터 소스별 URL, API 사양, 저장 스키마, 수집 스케줄 | Internal dev team (실전 구현 참조) |
+| **Project_Yieldo_Engine_Blueprint.md** | 통계/추론 엔진 구현 블루프린트 — 데이터→예측→번역→판정 전체 파이프라인 코드 | Internal dev team (구현 지침) |
+| **Project_Yieldo_UI_Guide.md** | UI/UX 설계 지침 — 레이아웃, 시그널 시각화, 불확실성 표현, 모듈별 화면 가이드 | Frontend dev (디자인 참조) |
+| **`.claude/skills/yieldo-dev/`** | 개발 오케스트레이션 — `/yieldo-dev` 명령으로 병렬 에이전트 디스패치 (SKILL.md + agents.md + tasks.md) | Claude Code 개발 세션 |
+| **`.claude/skills/yieldo-verify/`** | 5-Point 검증 독립 스킬 — `/yieldo-verify` 명령으로 단독 검증 수행 | Claude Code 검증 세션 |
 
 ### For Business Reports
 - Sections 1-6 provide the problem statement, scientific foundation, and solution framework
@@ -753,7 +753,7 @@ These users are **business operators**, not data analysts. They want investment 
 
 ### For Product Development
 - Section 7 (Product Architecture) defines the module structure + product philosophy
-- Section 8 (Technology Stack) specifies the implementation approach — details in `Project_Compass_Tech_Stack.md`
+- Section 8 (Technology Stack) specifies the implementation approach — details in `Project_Yieldo_Tech_Stack.md`
 - Section 3.5-3.6 (Prediction Methodology) guides the retention model implementation
 - Section 6 (Experiment Translation) defines the A/B test → investment pipeline
 - Section 8.5-8.6 (External Integration + Data Strategy) defines silo bridging and legal compliance
@@ -767,4 +767,4 @@ These users are **business operators**, not data analysts. They want investment 
 ### For Legal Review
 - Section 8.5 (External Platform Integration) outlines the integration model
 - Section 8.6 (Market Intelligence Data Strategy) explains data sourcing compliance
-- `Project_Compass_Legal.md` provides detailed legal analysis, Korean law, and action items
+- `Project_Yieldo_Legal.md` provides detailed legal analysis, Korean law, and action items

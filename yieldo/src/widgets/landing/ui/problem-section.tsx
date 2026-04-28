@@ -7,7 +7,7 @@ const copy = {
   ko: {
     heading: '모두가 데이터를 갖고 있지만, 아무도 연결하지 않습니다',
     sub: '모바일 게임 산업은 ROAS 기반으로 투자하고, 회계는 별도로 관리하며, 실험 결과는 스프레드시트에 남습니다. 이 세 영역 사이의 회색 지대에서 수백만 달러의 의사결정이 감으로 이루어집니다.',
-    conclusion: 'Compass가 셋을 하나의 투자 판단으로 연결합니다.',
+    conclusion: 'yieldo가 셋을 하나의 투자 판단으로 연결합니다.',
     gaps: [
       { label: 'UA', does: '유입 효율은 안다', misses: '투자 가치는 모른다' },
       { label: '재무', does: '소진 속도는 안다', misses: '실험 효과는 모른다' },
@@ -17,7 +17,7 @@ const copy = {
   en: {
     heading: 'Every team has data. Nobody connects it.',
     sub: 'The mobile gaming industry invests based on ROAS, manages accounting separately, and leaves experiment results in spreadsheets. In the gray area between these three domains, multi-million dollar decisions are made on gut feeling.',
-    conclusion: 'Compass connects all three into one investment decision.',
+    conclusion: 'yieldo connects all three into one investment decision.',
     gaps: [
       { label: 'UA', does: 'Knows acquisition efficiency', misses: 'Not investment value' },
       { label: 'Finance', does: 'Knows burn and runway', misses: 'Not experiment impact' },

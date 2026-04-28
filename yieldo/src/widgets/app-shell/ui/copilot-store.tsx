@@ -8,7 +8,7 @@
 
   Future (Level 2+): This provider will own message history,
   streaming state, tool-use queue, and context serialization.
-  See: docs/Project_Compass_Design_Migration_Log.md §5
+  See: docs/Project_yieldo_Design_Migration_Log.md §5
 
   Source of truth: .omc/specs/2026-04-08-dashboard-shell-refactor.md
 */

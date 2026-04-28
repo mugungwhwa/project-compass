@@ -1,4 +1,4 @@
-# Project Compass — Design Migration Log
+# yieldo — Design Migration Log
 
 > **목적**: 2026-04 시작된 US 엔터프라이즈 시장 대응 디자인 리노베이션의 모든 결정, 변경, 진행 상황을 추적하는 살아있는 문서. 새 세션/새 협업자가 이 파일 하나만 읽으면 "어디까지 왔고 다음에 뭘 해야 하는지" 알 수 있어야 한다.
 >
@@ -19,7 +19,7 @@
 | `RetentionCurve` 새 토큰 재스타일링 | ✅ 완료 | 2026-04-07 |
 | `@visx/*` 설치 (--legacy-peer-deps) | ✅ 완료 | 2026-04-07 |
 | `RunwayFanChart` Visx PoC (Module 5) | ✅ 완료 | 2026-04-07 |
-| **BI 통일: project compass + Nautical N** | ✅ 완료 | 2026-04-08 |
+| **BI 통일: project yieldo + Nautical N** | ✅ 완료 | 2026-04-08 |
 | **App-shell: RunwayStatusBar (top)** | ✅ 완료 | 2026-04-08 |
 | ~~App-shell: CopilotPanel (우측 slide-in)~~ | 🔁 폐기 → CommandBar로 교체 | 2026-04-08 |
 | **App-shell: CopilotCommandBar (Variant A, 하단 고정)** | ✅ 완료 | 2026-04-08 |
@@ -32,7 +32,7 @@
 | **B2B Readiness Blueprint 문서** | ✅ 완료 | 2026-04-09 |
 | **DS Research (Bloomberg/Toss/Top 10)** | ✅ 완료 | 2026-04-09 |
 | **사이드바 192px 슬림화 + nav font-medium** | ✅ 완료 | 2026-04-10 |
-| **Status bar h-14 + CompassLogo lg** | ✅ 완료 | 2026-04-10 |
+| **Status bar h-14 + yieldoLogo lg** | ✅ 완료 | 2026-04-10 |
 | **모듈 타이틀 재정립 (투자 결정 언어)** | ✅ 완료 | 2026-04-10 |
 | **게임별 mock 데이터 (3 variants + cohort multiplier)** | ✅ 완료 | 2026-04-10 |
 | **Asymptotic Arrival 인터랙티브 툴팁** | ✅ 완료 | 2026-04-10 |
@@ -61,7 +61,7 @@
 ## 1. 확정된 디자인 전략 (Source of Truth)
 
 ### 1.1 포지셔닝
-- **카테고리**: Experiment-to-Investment Decision OS for Mobile Gaming
+- **카테고리**: Signal-to-Yield Operating Terminal for Mobile Gaming
 - **핵심 사용자**: 미국 중대형 게임 퍼블리셔의 CEO / CFO / UA Lead / Live Ops Head ($10M+ 매출)
 - **디자인 무드**: *"Bloomberg Terminal이 Vercel을 인수했을 때처럼 생겨야 한다."*
 - **키워드**: Conviction · Calibrated · Austere · Signal-Dense · Operator-Grade
@@ -81,17 +81,17 @@
 | Density | **Compact** | 여러 지표 동시 비교 |
 
 ### 1.3 폐기된 자산 / 결정 (2026-04-07)
-- ~~`Project_Compass_Deck.html` (v1)~~ → **삭제 완료** (2026-04-07)
+- ~~`Project_Yieldo_Deck.html` (v1)~~ → **삭제 완료** (2026-04-07)
 - ~~`prototype_dashboard.html`~~ → **삭제 완료** (2026-04-07)
 - ~~한국어 i18n 디폴트 정책~~ → 영어 디폴트로 교체
 - ~~Deck brand accent 팔레트 (`--accent-coral`, `--accent-lavender`, `--glow-blue` 등)~~ → 전면 폐기, globals.css에서 제거 예정
 - ~~5겹 신뢰구간 노출 (P10/P25/P50/P75/P90 동시)~~ → 3겹(P10/P50/P90)으로 축소, 나머지는 토글
-- ~~PvX Lambda 구조 기계적 모방~~ → Compass 고유의 ATE→LTV 파이프라인 중심으로
+- ~~PvX Lambda 구조 기계적 모방~~ → yieldo 고유의 ATE→LTV 파이프라인 중심으로
 - ~~Inter + JetBrains Mono 폰트 스택~~ → Geist + Geist Mono + Instrument Serif로 교체
 
 ### 1.4 유지된 자산
-- `Project_Compass_Deck_v2.html` — 유지 (단, 향후 영어 단일 덱으로 재작성 예정)
-- `compass/` Next.js 프로젝트의 FSD 구조 (`src/app`, `src/shared`, `src/widgets`) — 유지
+- `Project_Yieldo_Deck_v2.html` — 유지 (단, 향후 영어 단일 덱으로 재작성 예정)
+- `yieldo/` Next.js 프로젝트의 FSD 구조 (`src/app`, `src/shared`, `src/widgets`) — 유지
 - 기존 signal 컬러 방향 (Green/Amber/Red) — 유지, 정확한 hex만 재조정
 - ATE → ΔLTV → Experiment ROI 번역 파이프라인 메시징 — 유지, 카피 톤만 조정
 
@@ -113,7 +113,7 @@
 | Instrument Serif | `next/font/google` | 🔴 미적용 |
 
 ### 2.2 Next 16 주의사항 (프로젝트 경고)
-`compass/AGENTS.md`에 명시:
+`yieldo/AGENTS.md`에 명시:
 > "This is NOT the Next.js you know. This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code."
 
 **규칙**: Next.js 관련 코드 작성 전 반드시 로컬 docs 선행 확인.
@@ -138,25 +138,25 @@
 > 모든 파일 편집은 이 섹션에 기록. 형식: `[날짜] 파일경로 — 변경 요약 — 근거`
 
 ### 2026-04-07
-- `Project_Compass_Deck.html` — **삭제** — Deck v1 폐기 결정
+- `Project_Yieldo_Deck.html` — **삭제** — Deck v1 폐기 결정
 - `prototype_dashboard.html` — **삭제** — 구 프로토타입 폐기
-- `docs/Project_Compass_Design_Migration_Log.md` — **생성** — 이 문서
+- `docs/Project_Yieldo_Design_Migration_Log.md` — **생성** — 이 문서
 
 ### 2026-04-14 (Sprint 5: Statsig-style Landing v2 Rebuild)
 
 #### 핵심 결정
-- **랜딩 구조 4섹션 → 10섹션 확장** — Statsig 리듬(Decision → Why → Modules → Proof → Explanation → CTA) 차용, Compass 포지셔닝으로 변형. `Compass_Statsig_Style_Landing_Strategy.md`가 source of truth.
+- **랜딩 구조 4섹션 → 10섹션 확장** — Statsig 리듬(Decision → Why → Modules → Proof → Explanation → CTA) 차용, yieldo 포지셔닝으로 변형. `Yieldo_Statsig_Style_Landing_Strategy.md`가 source of truth.
 - **대시보드 위젯 재사용 접근법 3번 피벗** → 최종 **실제 위젯을 자연 크기 그대로 임베드**. 축소·변형 금지. 마케팅 SVG 재창조는 제품과 랜딩 간 시각 언어 불일치를 낳아 폐기.
 - **언어별 Hero 폰트 패밀리** — Instrument Serif + Noto Serif KR(한글 폴백) 유지. Nanum Square Round 실험 후 철회 — 디자인 시스템 일관성 우선.
 
 #### 변경된 파일
-- `compass/src/widgets/landing/ui/sections/*.tsx` — 10개 섹션 컴포넌트 신규 (hero/problem/questions/modules/product-proof/chart-stories/copilot/translation/comparison/cta)
-- `compass/src/widgets/landing/ui/_shared/*.tsx` — `SectionShell`(4개 band variant: canvas/surface/inset/dark), `Eyebrow`, `widget-fixtures.ts`(랜딩 전용 고정 스냅샷)
-- `compass/src/widgets/landing/ui/showcase/pipeline-showcase.tsx` — 대시보드에 대응 위젯 없는 Experiment→ΔLTV→Payback 다이어그램만 bespoke 유지
-- `compass/src/widgets/landing/index.ts` — barrel 재구성
-- `compass/src/shared/i18n/dictionary.ts` — `landing.v2.*` 56+키 추가 (EN 기본, KO 병행, `headlineLine1/2` 분할)
-- `compass/src/app/(public)/page.tsx` — 10섹션 재조립
-- `compass/src/app/layout.tsx` — Noto Serif KR CDN 로드(한글 글리프용, `next/font/google` 타입 한계 우회)
+- `yieldo/src/widgets/landing/ui/sections/*.tsx` — 10개 섹션 컴포넌트 신규 (hero/problem/questions/modules/product-proof/chart-stories/copilot/translation/comparison/cta)
+- `yieldo/src/widgets/landing/ui/_shared/*.tsx` — `SectionShell`(4개 band variant: canvas/surface/inset/dark), `Eyebrow`, `widget-fixtures.ts`(랜딩 전용 고정 스냅샷)
+- `yieldo/src/widgets/landing/ui/showcase/pipeline-showcase.tsx` — 대시보드에 대응 위젯 없는 Experiment→ΔLTV→Payback 다이어그램만 bespoke 유지
+- `yieldo/src/widgets/landing/index.ts` — barrel 재구성
+- `yieldo/src/shared/i18n/dictionary.ts` — `landing.v2.*` 56+키 추가 (EN 기본, KO 병행, `headlineLine1/2` 분할)
+- `yieldo/src/app/(public)/page.tsx` — 10섹션 재조립
+- `yieldo/src/app/layout.tsx` — Noto Serif KR CDN 로드(한글 글리프용, `next/font/google` 타입 한계 우회)
 - `docs/design/landing-v2-spec.md`, `docs/design/statsig-reference.md` — 신규 설계 문서
 
 #### 중간 기착지 (폐기된 시도)
@@ -185,7 +185,7 @@
 - `034261d` — Chart/Proof 섹션에서 텍스트·위젯 수평 중심 정렬 (`mx-auto`) → 시각 비대칭 해소.
 - `7f21477` → `c030334` → `91a1453` — 대시보드 위젯의 `sticky top-0 z-10` 해제 3단계 시도: Tailwind v3 prefix `!important` → v4 suffix → 최종 globals.css `.landing-static-widget` 명시적 CSS 규칙으로 확정 해결.
 - `13c8c60` — `HeroVerdict`에 `compactScrollThreshold` prop 추가, 랜딩에서 `Number.MAX_SAFE_INTEGER` 전달해 `DecisionSurface`의 스크롤 기반 compact 전환 비활성화. 위젯이 스크롤 중 "접히는" 현상 제거.
-- `c08c640` — §7 Copilot(Explainer) 삭제, Experiment Impact 카드로 교체. Compass 포지셔닝("decision layer, not analytics")과 정합. §8 파이프라인과 역할 분담 (§7 = one-scene case, §8 = schema). 새 i18n 키 `landing.v2.expImpact.*` 추가.
+- `c08c640` — §7 Copilot(Explainer) 삭제, Experiment Impact 카드로 교체. yieldo 포지셔닝("decision layer, not analytics")과 정합. §8 파이프라인과 역할 분담 (§7 = one-scene case, §8 = schema). 새 i18n 키 `landing.v2.expImpact.*` 추가.
 - `c0b1491` — 랜딩 내 모든 CTA(`#demo`, `/contact`, `/dashboard`)를 `/login`으로 통일 라우팅. NavBar 로고만 `/` 유지.
 
 ---
@@ -210,9 +210,9 @@
 #### 변경 파일 및 근거
 
 **MVP Revision (`25d0aa5`)**
-- `compass/src/app/(public)/**` (랜딩) — 4사일로 내러티브로 통일, CTA "View Live Demo" 중심 재편 — 데모 체험이 첫 가치 전달 지점
+- `yieldo/src/app/(public)/**` (랜딩) — 4사일로 내러티브로 통일, CTA "View Live Demo" 중심 재편 — 데모 체험이 첫 가치 전달 지점
 - 전체 mock — 게임명 `"Puzzle Quest"` → **`"Match League"`** 전면 통일 — 예창패 트랙과 제품 내 표기 일치
-- `compass/src/shared/i18n/dictionary.ts` — KPI 명칭 투자 언어화
+- `yieldo/src/shared/i18n/dictionary.ts` — KPI 명칭 투자 언어화
   - Payback Period → **Payback Forecast** / 회수 기간 → **회수 예측**
   - BEP Probability → **Break-even Probability** / BEP 확률 → **손익분기 확률**
   - Burn Tolerance → **Runway Impact** / 잔여 운영 기간 → **잔여 운영력**
@@ -221,20 +221,20 @@
 - 추천 액션 — 기대효과 숫자 표기 (`+$120K annualized revenue`) — 결정 가격표 명시
 - Copilot — 시나리오 액션 버튼 3개 (Run scenario / Compare channels / Simulate lower CPI) — 정적 답변 → 실행 가능 탐색
 - 차트 3개(RevenueVsInvest, RetentionCurve, RevenueForecast) — 한 줄 인사이트 삽입
-- `compass/src/app/(dashboard)/layout.tsx` — 우상단 **Demo Data** 배지
+- `yieldo/src/app/(dashboard)/layout.tsx` — 우상단 **Demo Data** 배지
 
 **Pretendard + Noto Serif KR (`2d0b156`)**
-- `compass/src/app/layout.tsx`, `compass/src/styles/globals.css`
+- `yieldo/src/app/layout.tsx`, `yieldo/src/styles/globals.css`
   - 본문 한글: `Noto Sans KR` → **`Pretendard`** (jsdelivr CDN, Variable) — Geist와 x-height·메트릭 호환, Toss DPS 표준
   - 결정문 한글: `Instrument Serif` 체인에 **`Noto Serif KR`** 폴백 — 영문 serif 권위감을 한글에도 일관 적용
   - 근거: 한/영 혼용 화면에서 본문 리듬 + 결정문 무게감이 모두 한 방향으로 읽혀야 함
 
 **Dynamic chart grid (`2a4a8ec`, `f104a9f`, `c3c95cb`, `6aa9eec`)**
-- `compass/src/shared/hooks/use-grid-layout.ts` — **신규** 훅
+- `yieldo/src/shared/hooks/use-grid-layout.ts` — **신규** 훅
   - 컨테이너 레벨 확대 상태 관리: `{ expandedId, toggle, getSpan, isOrphan, getClassName }`
   - Framer Motion `layout` prop 기반 FLIP 애니메이션으로 자동 재배치
   - 홀수 남은 차트는 `col-span-2`로 확장되어 빈 칸 제거
-- `compass/src/shared/hooks/use-chart-expand.ts` — 선택적 외부 상태 주입 (`expanded?`, `onToggle?`) 지원
+- `yieldo/src/shared/hooks/use-chart-expand.ts` — 선택적 외부 상태 주입 (`expanded?`, `onToggle?`) 지원
 - 그리드 내 차트 컴포넌트 — `expanded?` / `onToggle?` optional props 추가
 - 차트 카드 — `h-full flex flex-col`, body는 `flex-1` + `minHeight: chartHeight`, `ResponsiveContainer height="100%"` — CSS Grid `align-items: stretch`가 쌍의 높이 자동 동기화
 - 그리드 쌍 `baseHeight` 상향 통일 (큰 쪽 기준)
@@ -244,14 +244,14 @@
 - `ChartHeader` 3줄(title + subtitle + context) 통일 — 그리드 stretch만으론 시각 균형 미완성, 헤더 줄 수까지 맞춰야 함
 - **Overview 2.0 보완 (`6aa9eec`)**
   - CapitalWaterfall, TitleHeatmap, MarketContextCard에 `ExpandButton` 추가 (c69a166 리디자인에서 누락된 부분)
-  - `compass/src/app/(dashboard)/dashboard/page.tsx` — §3(3:2), §5(3:1) **비대칭 그리드** 리플로우 로직 추가. 확대 시 양쪽 모두 `col-span-max`로 전환하여 스택
+  - `yieldo/src/app/(dashboard)/dashboard/page.tsx` — §3(3:2), §5(3:1) **비대칭 그리드** 리플로우 로직 추가. 확대 시 양쪽 모두 `col-span-max`로 전환하여 스택
   - DataFreshnessStrip은 의도적 제외 (정보 스트립)
 
 **Housekeeping (`d6e3aa8`)**
-- 루트 `.gitignore` — `.next/`, `Compass_MVP_Revision_Notes_*.md` 추가 (빌드 결과물 / 임시 리비전 노트 비추적)
+- 루트 `.gitignore` — `.next/`, `Yieldo_MVP_Revision_Notes_*.md` 추가 (빌드 결과물 / 임시 리비전 노트 비추적)
 
 ### 2026-04-13 (Sprint 3: Status Bar UX 확정 + 배포)
-- **git push** → `mugungwhwa/project-compass` main 브랜치 (`8daab7c→4dde8dd`). Vercel 자동 배포 연동 완료.
+- **git push** → `mugungwhwa/project-yieldo` main 브랜치 (`8daab7c→4dde8dd`). Vercel 자동 배포 연동 완료.
 - `CLAUDE.md` §8.4.1 — **Vercel 배포 가이드** 추가 (Root Dir, Install Override `--legacy-peer-deps`, 빌드 워크플로우)
 
 ### 2026-04-10 ~ 12 (Sprint 3: Status Bar 게임·캘린더 UX)
@@ -262,7 +262,7 @@
 - 해결: 둘 다 `text-caption uppercase label + text-h2 value` 포맷. 유일한 차이는 ▾ chevron
 
 #### 변경 파일
-- `compass/src/widgets/app-shell/ui/runway-status-bar.tsx` — **대폭 재작성**
+- `yieldo/src/widgets/app-shell/ui/runway-status-bar.tsx` — **대폭 재작성**
   - Segmented Pill 해체 → 게임/캘린더가 `gap-1` 독립 MetricCell 스타일
   - `react-day-picker` (DateRange mode) 통합 — 시작일~종료일 범위 선택
   - 트리거 표시: `Mar 1–31` (en) / `3/1–31` (ko) — `font-mono` 숫자, `text-body font-medium` 텍스트
@@ -272,44 +272,44 @@
   - `getGameData(gameId, cohortMonth)` 연동 — 게임/코호트 변경 시 메트릭 실시간 전환
   - ◀ ▶ 화살표 버튼 제거 (DayPicker가 자체 월 내비 제공)
   - `ChevronLeft`, `ChevronRight` import 제거
-- `compass/src/shared/api/mock-data.ts` — **게임별 mock 데이터** 추가
+- `yieldo/src/shared/api/mock-data.ts` — **게임별 mock 데이터** 추가
   - `GAME_VARIANTS` 레코드: puzzle-quest (기존), hero-saga (hold/71%), farm-empire (invest/91%)
   - `COHORT_MULTIPLIERS`: 월별 미세 변동 (0.92~1.03)
   - `getGameData(gameId, cohortMonth)` 함수 export
-- `compass/src/styles/globals.css` — **2가지 추가**
+- `yieldo/src/styles/globals.css` — **2가지 추가**
   - `--bg-0: #F7F8FA` — 앱 배경 토큰 (Toss DPS 참고 연회색). `--background: var(--bg-0)`으로 변경
   - **커서 표준화 정책** — `button:not(:disabled)`, `[role="button"]`, `a[href]` 등 모든 인터랙티브 요소에 `cursor: pointer` 자동 적용. `disabled` → `cursor: not-allowed`
-- `compass/package.json` — `react-day-picker` 의존성 추가
+- `yieldo/package.json` — `react-day-picker` 의존성 추가
 
 #### 추가 수정 (04-10)
-- `compass/src/widgets/charts/ui/retention-curve.tsx` — Asymptotic Arrival 툴팁 수정
+- `yieldo/src/widgets/charts/ui/retention-curve.tsx` — Asymptotic Arrival 툴팁 수정
   - Recharts `<ReferenceLine label>` 정적 텍스트 → 커스텀 `<AsymptoticLabel>` SVG 컴포넌트
   - `foreignObject`로 HTML 카드 렌더 (hover 시 설명 표시)
   - 투명 `<rect>` 80×20px 히트 영역 추가
   - `info.asymptotic` 사전 키 추가 (ko/en)
-- `compass/src/shared/i18n/dictionary.ts` — 모듈 타이틀 재정립
+- `yieldo/src/shared/i18n/dictionary.ts` — 모듈 타이틀 재정립
   - `exec.title`: "추가 투자가 가능한가?" → **"지금 투자를 늘려야 하는가?"**
   - `actions.title`: "실제로 효과가 있는 것은?" → **"어떤 운영이 가장 효과적인가?"**
   - `experiments.title`: "R&D가 성과를 내고 있는가?" → **"R&D 투자가 성과를 내는가?"**
   - `capital.title`: "다음에 무엇을 해야 하는가?" → **"자본을 어디에 배분할 것인가?"**
-- `compass/src/widgets/sidebar/ui/app-sidebar.tsx`
+- `yieldo/src/widgets/sidebar/ui/app-sidebar.tsx`
   - 사이드바 폭 `w-[220px]` → `w-[192px]` (13% 감소)
   - nav 아이템 `font-semibold` → `font-medium`, 패딩 축소
   - 한국어 라벨 `truncate` + `min-w-0` overflow 보호
   - 게임 셀렉터 제거 (status bar로 이동)
-- `compass/src/widgets/app-shell/ui/runway-status-bar.tsx` — status bar 높이 `h-12` → `h-14`, CompassLogo `size="md"` → `size="lg"`
-- `compass/src/shared/ui/compass-logo.tsx` — `xl` 사이즈 추가 (22/30px)
-- `compass/src/widgets/charts/ui/scenario-simulator.tsx` — legacy 토큰 정리 (`bg-white` → `bg-[var(--bg-1)]` 등)
+- `yieldo/src/widgets/app-shell/ui/runway-status-bar.tsx` — status bar 높이 `h-12` → `h-14`, yieldoLogo `size="md"` → `size="lg"`
+- `yieldo/src/shared/ui/yieldo-logo.tsx` — `xl` 사이즈 추가 (22/30px)
+- `yieldo/src/widgets/charts/ui/scenario-simulator.tsx` — legacy 토큰 정리 (`bg-white` → `bg-[var(--bg-1)]` 등)
 
 ### 2026-04-09 (B2B Readiness 감사 + DS Research)
-- `docs/Project_Compass_B2B_Readiness_Blueprint.md` — **생성** — 24차원 gap 분석, P0/P1/P2 분류, 4단계 로드맵
+- `docs/Project_Yieldo_B2B_Readiness_Blueprint.md` — **생성** — 24차원 gap 분석, P0/P1/P2 분류, 4단계 로드맵
 - Migration Log §6 — B2B Blueprint 포인터 추가
 - Migration Log §7 — Design System Research 섹션 추가 (Bloomberg/Toss/Top 10 레퍼런스, 구축 옵션 4가지, 숫자 표기 규칙 draft)
-- `compass/src/widgets/sidebar/ui/page-header.tsx` — **비작동 UI 제거** (게임 셀렉터, 기간 셀렉터, 내보내기 버튼). "5분 전" → "Sample data" 배지
-- `compass/src/widgets/sidebar/ui/app-sidebar.tsx` — 게임 셀렉터 footer→상단 이동, `h-screen`→`h-full`+`pb-20`
-- `compass/src/shared/i18n/dictionary.ts` — 한국어 네이밍 정리 (외래어 음역 제거: "페이백"→"회수 시점", "코파일럿"→"질의응답" 등)
-- `compass/src/app/layout.tsx` — `Noto_Sans_KR` 폰트 추가, `--font-noto-kr` CSS 변수
-- `compass/src/styles/globals.css` — body font-family에 `var(--font-noto-kr)` 체인 추가
+- `yieldo/src/widgets/sidebar/ui/page-header.tsx` — **비작동 UI 제거** (게임 셀렉터, 기간 셀렉터, 내보내기 버튼). "5분 전" → "Sample data" 배지
+- `yieldo/src/widgets/sidebar/ui/app-sidebar.tsx` — 게임 셀렉터 footer→상단 이동, `h-screen`→`h-full`+`pb-20`
+- `yieldo/src/shared/i18n/dictionary.ts` — 한국어 네이밍 정리 (외래어 음역 제거: "페이백"→"회수 시점", "코파일럿"→"질의응답" 등)
+- `yieldo/src/app/layout.tsx` — `Noto_Sans_KR` 폰트 추가, `--font-noto-kr` CSS 변수
+- `yieldo/src/styles/globals.css` — body font-family에 `var(--font-noto-kr)` 체인 추가
 
 ### 2026-04-08 — 밤 (한국어 i18n 지원 + 로케일 디폴트 일치화)
 사용자 리포트: 현재 화면이 "사이드바는 한국어 / 상단 status bar·하단 copilot은 영어"의 하이브리드 상태. 원인 진단:
@@ -317,46 +317,46 @@
 - **내가 새로 만든 3개 shell 컴포넌트**(`RunwayStatusBar`, `CopilotCommandBar`, login subtitle)는 `useLocale()`를 쓰지 않고 **하드코딩 영어**만 갖고 있었음
 - 결과: 한국어 로케일 상태에서 sidebar/HeroVerdict/KPI는 한국어, 내 새 컴포넌트는 영어 → 시각적 언어 혼재
 
-- `compass/src/shared/i18n/dictionary.ts` — **17개 신규 키 추가**
+- `yieldo/src/shared/i18n/dictionary.ts` — **17개 신규 키 추가**
   - `status.cash`, `status.runway`, `status.payback`, `status.capEff` — status bar 메트릭 라벨
-  - `copilot.askCompass`, `copilot.placeholder`, `copilot.comingSoon`, `copilot.context`, `copilot.footer`, `copilot.module1Ctx` — Copilot UI 라벨
+  - `copilot.askyieldo`, `copilot.placeholder`, `copilot.comingSoon`, `copilot.context`, `copilot.footer`, `copilot.module1Ctx` — Copilot UI 라벨
   - `copilot.mock.user`, `copilot.mock.intro`, `copilot.mock.b1/b2/b3`, `copilot.mock.followup` — Copilot v0 mock 답변 카드 내용
   - `login.subtitle` — login 페이지 서브타이틀
-- `compass/src/widgets/app-shell/ui/runway-status-bar.tsx` — **locale-aware로 재작성**
+- `yieldo/src/widgets/app-shell/ui/runway-status-bar.tsx` — **locale-aware로 재작성**
   - `buildMetrics()`가 hardcoded string 대신 `TranslationKey`를 반환
   - `MetricCell`이 `t(labelKey)`로 렌더
-  - `<CompassLogo>` 워드마크는 브랜드 이름이므로 번역 안 함 (Vercel/Linear 원칙)
-- `compass/src/widgets/app-shell/ui/copilot-command-bar.tsx` — **locale-aware로 재작성**
+  - `<yieldoLogo>` 워드마크는 브랜드 이름이므로 번역 안 함 (Vercel/Linear 원칙)
+- `yieldo/src/widgets/app-shell/ui/copilot-command-bar.tsx` — **locale-aware로 재작성**
   - 하드코딩 `MOCK_ANSWER` 상수 제거
   - `FloatingAnswerCard`, `CopilotCommandBar` 모두 `useLocale()` + `t()` 기반
   - Mock bullets는 `[t("copilot.mock.b1"), t("copilot.mock.b2"), t("copilot.mock.b3")]`로 조립
-- `compass/src/app/(auth)/login/page.tsx` — subtitle을 `t("login.subtitle")`로 교체
-- `compass/src/shared/i18n/context.tsx` — **LocaleProvider 기본값 `"ko"` → `"en"`**
+- `yieldo/src/app/(auth)/login/page.tsx` — subtitle을 `t("login.subtitle")`로 교체
+- `yieldo/src/shared/i18n/context.tsx` — **LocaleProvider 기본값 `"ko"` → `"en"`**
   - 이 변경으로 `<html lang="en">`과 런타임 로케일이 일치
   - 기존 사용자는 localStorage에 이전 선택(`ko` 또는 `en`)이 남아있으면 그걸 존중 (toggle로 자유 전환 가능)
   - 신규 사용자는 영어 디폴트 경험
 - **빌드 검증**: `npm run build` — Next 16.2.2 Turbopack 2.8s / tsc 2.5s / 10 static pages 통과
 
-### 2026-04-08 — 저녁 (BI 통일: project compass / Nautical N)
-사용자 검토 후 문제 발견: 상단 status bar의 `Compass` (Instrument Serif)와 우측 sidebar의 `COMPASS` (Inter 900 uppercase, 구 brand blue `#2563EB`, 스트레이 N 텍스트 SVG 아티팩트 포함)가 완전히 다른 BI를 쓰고 있었음. 두 워드마크가 한 화면에 동시 보임.
+### 2026-04-08 — 저녁 (BI 통일: project yieldo / Nautical N)
+사용자 검토 후 문제 발견: 상단 status bar의 `yieldo` (Instrument Serif)와 우측 sidebar의 `YIELDO` (Inter 900 uppercase, 구 brand blue `#2563EB`, 스트레이 N 텍스트 SVG 아티팩트 포함)가 완전히 다른 BI를 쓰고 있었음. 두 워드마크가 한 화면에 동시 보임.
 
 10개 글로벌 레퍼런스 조사 후 사용자 결정:
-- **이름 변경**: `Compass` → `project compass` (lowercase, 2-word codename 형식)
+- **이름 변경**: `yieldo` → `project yieldo` (lowercase, 2-word codename 형식)
 - **방향**: Direction γ — Nautical N (얇은 북쪽 화살표 삼각형 + Geist Sans 600 lowercase 워드마크)
 - **레퍼런스**: Vercel(△), Cursor(이름-아이콘 일치), Linear(geometric mark + lowercase wordmark)
 
-- `compass/src/shared/ui/compass-logo.tsx` — **전면 재작성**
-  - 기존: `<CompassLogo size showSubtitle>` — Inter 900 UPPERCASE "COMPASS" + 1-line subtitle "INVESTMENT DECISION OS" + ornate compass-rose SVG with stray "N" text + hardcoded `#2563EB`
-  - 신규: `<CompassLogo size variant>` — Geist Sans 600 lowercase "project compass" + 단순 솔리드 삼각형 (north needle) `<path d="M7 1 L13 13 L1 13 Z" fill="var(--brand)"/>` + brand blue 토큰 사용
+- `yieldo/src/shared/ui/yieldo-logo.tsx` — **전면 재작성**
+  - 기존: `<yieldoLogo size showSubtitle>` — Inter 900 UPPERCASE "YIELDO" + 1-line subtitle "INVESTMENT DECISION OS" + ornate yieldo-rose SVG with stray "N" text + hardcoded `#2563EB`
+  - 신규: `<yieldoLogo size variant>` — Geist Sans 600 lowercase "project yieldo" + 단순 솔리드 삼각형 (north needle) `<path d="M7 1 L13 13 L1 13 Z" fill="var(--brand)"/>` + brand blue 토큰 사용
   - Size 스케일 재조정: sm (12/14) / md (14/18) / lg (18/24)
   - Variant: `full` (icon + word) | `icon` (mark only, 좁은 공간용)
   - 모든 색은 토큰으로 (`var(--brand)`, `var(--fg-0)`)
-- `compass/src/widgets/app-shell/ui/runway-status-bar.tsx` — 인라인 Instrument Serif `Compass` 스팬 제거, `<CompassLogo size="md" />` 사용
-- `compass/src/app/layout.tsx` — metadata title `"Compass —"` → `"project compass —"`
-- 사이드바 (`app-sidebar.tsx`)는 이미 `<CompassLogo size="sm" />`를 호출 중이므로 자동으로 새 디자인 적용 — 추가 수정 불필요. 이게 컴포넌트 분리의 보상.
+- `yieldo/src/widgets/app-shell/ui/runway-status-bar.tsx` — 인라인 Instrument Serif `yieldo` 스팬 제거, `<yieldoLogo size="md" />` 사용
+- `yieldo/src/app/layout.tsx` — metadata title `"yieldo —"` → `"project yieldo —"`
+- 사이드바 (`app-sidebar.tsx`)는 이미 `<yieldoLogo size="sm" />`를 호출 중이므로 자동으로 새 디자인 적용 — 추가 수정 불필요. 이게 컴포넌트 분리의 보상.
 
 **브랜드 시스템 결정 정리** (Migration Log §1.2 갱신 필요):
-- **Wordmark**: `project compass` (lowercase, 2-word, Geist Sans 600, `-0.015em` tracking)
+- **Wordmark**: `project yieldo` (lowercase, 2-word, Geist Sans 600, `-0.015em` tracking)
 - **Brand mark**: 솔리드 isoceles 삼각형 (북쪽 화살표), brand blue `#1A7FE8`
 - **사용 폰트 역할 분리**:
   - Instrument Serif → **오직 Decision statements** (HeroVerdict 권고문). 워드마크에 사용 금지.
@@ -367,18 +367,18 @@
 ### 2026-04-08 — 오후 (Variant A 피벗: Right Panel → Bottom Command Bar)
 사용자 실사용 검토 후 피드백: *"이부분을 아래 하단에 메세지창으로 만들어보는건 어때?"* — 우측 slide-in 패널을 **하단 고정 command bar + floating answer card**로 교체. Cursor/Perplexity/Vercel v0 패턴.
 
-- `compass/src/widgets/app-shell/ui/copilot-panel.tsx` — **삭제** — 우측 slide-in 패널 폐기
-- `compass/src/widgets/app-shell/ui/copilot-command-bar.tsx` — **신규**
+- `yieldo/src/widgets/app-shell/ui/copilot-panel.tsx` — **삭제** — 우측 slide-in 패널 폐기
+- `yieldo/src/widgets/app-shell/ui/copilot-command-bar.tsx` — **신규**
   - `CopilotCommandBar` (하단 고정, 64px): 좌측 ⚡ 토글 버튼 + 가운데 비활성 input + 우측 Send(disabled) + ⌘K 배지
   - `FloatingAnswerCard` (내부 컴포넌트): bottom 88px 위치에 fixed, 640px max-width, 중앙 정렬. 열릴 때 fade + y-up 2px. Backdrop opacity 0.03 (거의 투명, 클릭 시 닫힘). Esc 키 핸들러 로컬 추가.
   - 카드 구조: 헤더(context + close X) → user query → AI response(intro + bullets + followup, border-l 2px brand) → 푸터 hint
   - v0: 입력 disabled, 클릭 시 MOCK_ANSWER 카드 표시. 실제 AI 응답은 Level 2부터
-- `compass/src/widgets/app-shell/ui/runway-status-bar.tsx` — **수정** — 우측 "Ask Compass" 트리거 버튼 제거. Command bar가 이제 하단에 항상 보이므로 중복 제거. Lucide Zap/Command 임포트와 useCopilot import도 함께 제거
-- `compass/src/widgets/app-shell/index.ts` — **수정** — `CopilotPanel` export 제거, `CopilotCommandBar` export 추가
-- `compass/src/app/(dashboard)/layout.tsx` — **수정** — `<CopilotPanel>` → `<CopilotCommandBar>` 교체. `<main>` 패딩 `pb-8` → `pb-24`로 증가 (하단 bar 64px + 여유)
+- `yieldo/src/widgets/app-shell/ui/runway-status-bar.tsx` — **수정** — 우측 "Ask yieldo" 트리거 버튼 제거. Command bar가 이제 하단에 항상 보이므로 중복 제거. Lucide Zap/Command 임포트와 useCopilot import도 함께 제거
+- `yieldo/src/widgets/app-shell/index.ts` — **수정** — `CopilotPanel` export 제거, `CopilotCommandBar` export 추가
+- `yieldo/src/app/(dashboard)/layout.tsx` — **수정** — `<CopilotPanel>` → `<CopilotCommandBar>` 교체. `<main>` 패딩 `pb-8` → `pb-24`로 증가 (하단 bar 64px + 여유)
 
 **결정 근거**: 
-- Cursor/v0/Perplexity 모두 bottom command bar 패턴으로 수렴. Compass 타깃 사용자(운영자)는 개발자와 같은 키보드/커맨드 친화 사용자
+- Cursor/v0/Perplexity 모두 bottom command bar 패턴으로 수렴. yieldo 타깃 사용자(운영자)는 개발자와 같은 키보드/커맨드 친화 사용자
 - 우측 panel이 360px를 항상 잡을 위험 제거 → 본문 화면 보호
 - 하단 bar 진입 마찰 0 (토글 필요 없음, 항상 보임)
 - CopilotProvider/store는 100% 재사용 — UI shell만 swap
@@ -391,83 +391,83 @@
 ### 2026-04-08 (Sprint 2: App-Shell Refactor)
 - **Deep Interview** (4 라운드, 10% 모호성): Module 1의 FinancialHealth + AI Recommendation을 page 위젯에서 app-shell 컴포넌트로 승격하기로 결정
 - 스펙: `.omc/specs/2026-04-08-dashboard-shell-refactor.md`
-- `compass/src/widgets/app-shell/ui/copilot-store.tsx` — **신규** — React Context + Provider, ⌘K/⌃K 토글 핸들러, Esc로 닫기. v0는 단순 open/close 상태만 (메시지 히스토리, 스트리밍 등 Level 2+에서)
-- `compass/src/widgets/app-shell/ui/runway-status-bar.tsx` — **신규** — 상단 sticky 48px status bar
-  - 좌측: `Compass` brand sigil (Instrument Serif) + 4개 메트릭 셀 (Cash $1.8M / Runway 14.5mo / Payback D47 / Cap Eff 1.42x)
+- `yieldo/src/widgets/app-shell/ui/copilot-store.tsx` — **신규** — React Context + Provider, ⌘K/⌃K 토글 핸들러, Esc로 닫기. v0는 단순 open/close 상태만 (메시지 히스토리, 스트리밍 등 Level 2+에서)
+- `yieldo/src/widgets/app-shell/ui/runway-status-bar.tsx` — **신규** — 상단 sticky 48px status bar
+  - 좌측: `yieldo` brand sigil (Instrument Serif) + 4개 메트릭 셀 (Cash $1.8M / Runway 14.5mo / Payback D47 / Cap Eff 1.42x)
   - 각 메트릭 라벨은 Geist Sans uppercase caption, 값은 Geist Mono tabular text-h2
   - tone 시스템: runway가 6mo 미만이면 risk red, 12mo 미만이면 caution amber, 그 외는 positive green
   - 각 메트릭 클릭 시 해당 모듈 (`/dashboard/capital`)로 이동
-  - 우측: `⚡ Ask Compass · ⌘K` 트리거 버튼 — 활성 시 brand-tint 배경
-- `compass/src/widgets/app-shell/ui/copilot-panel.tsx` — **신규** — 우측 360px slide-in 패널 (v0 STATIC SHELL)
-  - 헤더: Sparkles + "Ask Compass" + 닫기 X
+  - 우측: `⚡ Ask yieldo · ⌘K` 트리거 버튼 — 활성 시 brand-tint 배경
+- `yieldo/src/widgets/app-shell/ui/copilot-panel.tsx` — **신규** — 우측 360px slide-in 패널 (v0 STATIC SHELL)
+  - 헤더: Sparkles + "Ask yieldo" + 닫기 X
   - Context indicator 바: "Module 1 · Executive Overview · Cohort 2026-03" (정적)
   - 메시지 영역: 4개 하드코딩 turn (user → assistant with bullets+followup → user → assistant placeholder)
   - 입력 영역: disabled input (`"AI copilot — coming soon"` placeholder) + ⌘K 배지
-  - 푸터: "Compass Copilot v0 · Static preview · See roadmap §5"
+  - 푸터: "yieldo Copilot v0 · Static preview · See roadmap §5"
   - Backdrop: opacity 0.04 (거의 투명, 클릭 시 닫힘)
   - Translation: `translate-x-full` ↔ `translate-x-0` (220ms ease-out-quart)
-- `compass/src/widgets/app-shell/index.ts` — **신규** — barrel exports
-- `compass/src/app/(dashboard)/layout.tsx` — **수정** — `<CopilotProvider>`로 wrap, `<RunwayStatusBar>`를 main 위에, `<CopilotPanel>`을 fixed overlay로 추가. flex container를 column으로 변경
-- `compass/src/app/(dashboard)/dashboard/page.tsx` — **수정** — `<FinancialHealth>` 임포트 및 사용 제거, AI Recommendation inline div 제거, 마지막 grid 재정렬 (RevenueForecast 단독)
+- `yieldo/src/widgets/app-shell/index.ts` — **신규** — barrel exports
+- `yieldo/src/app/(dashboard)/layout.tsx` — **수정** — `<CopilotProvider>`로 wrap, `<RunwayStatusBar>`를 main 위에, `<CopilotPanel>`을 fixed overlay로 추가. flex container를 column으로 변경
+- `yieldo/src/app/(dashboard)/dashboard/page.tsx` — **수정** — `<FinancialHealth>` 임포트 및 사용 제거, AI Recommendation inline div 제거, 마지막 grid 재정렬 (RevenueForecast 단독)
 - 빌드 검증: 다음 단계
 - **다음 세션 권장**: KPI Cards 토큰 정리 → Module 3/4 DecisionSurface 적용 → AI Copilot Level 2 (Vercel AI SDK)
 
 ### 2026-04-07 (Sprint 2: Integration 첫 세션)
-- `compass/src/widgets/dashboard/ui/market-hero-verdict.tsx` — **DecisionSurface 기반으로 재작성**
+- `yieldo/src/widgets/dashboard/ui/market-hero-verdict.tsx` — **DecisionSurface 기반으로 재작성**
   - Public API 보존 + optional `recommendation` prop 추가
   - Status 매핑: `rising` → invest, `falling` → reduce, `stable` → hold
   - Confidence interval: `rank`과 `rankChange`로부터 합성 (`synthesizeRankCI`) — 변동 적을수록 band 타이트, 변동 클수록 wider
   - Impact 배지: "+5 rank · 92% posterior" 형태로 momentum + confidence 동시 표시
   - Default recommendation: status별 영/한 기본 문장 제공, 외부에서 override 가능
-- `compass/src/widgets/charts/ui/retention-curve.tsx` — **Compass 시그니처 차트 재스타일링**
+- `yieldo/src/widgets/charts/ui/retention-curve.tsx` — **yieldo 시그니처 차트 재스타일링**
   - 하드코딩 hex(`#5B9AFF`, `#FFA94D`, `#3EDDB5`, `#94A3B8`, `#E2E8F0`, `#F1F5F9`) → 상단 `const C` 객체로 분리, globals.css 토큰과 동기화
   - Wrapper gradient + glow 제거 → flat card
   - Recharts SVG attr이 `var()`를 안정적으로 해석 못 하므로 **token-mirrored hex 패턴** 채택 (주석으로 토큰 이름 병기)
   - P50 dot: hollow → solid fill (더 정직한 observed 표시)
   - CartesianGrid stroke: `2 4`로 미세화, legend icon 12→10, strokeWidth 2.5→2
-- `compass/src/shared/api/mock-data.ts` — **`mockCashRunway` 추가** — `RunwayPoint`, `RunwayFanData` 타입 포함, 12개월 P10/P50/P90 fan 데이터, initialCash 1800K, cashOutThreshold 0, p50CashOutMonth 12.0, probCashOut 0.23
-- `compass/package.json` — **@visx 설치 (7 패키지)** — `@visx/group`, `@visx/scale`, `@visx/shape`, `@visx/axis`, `@visx/curve`, `@visx/responsive`, `@visx/text`. React 19 peer dep 충돌 → `--legacy-peer-deps`로 설치 (Visx는 SVG 렌더링만 하므로 runtime 안전)
-- `compass/src/widgets/charts/ui/runway-fan-chart.tsx` — **신규 생성** — Compass 첫 Visx 차트
+- `yieldo/src/shared/api/mock-data.ts` — **`mockCashRunway` 추가** — `RunwayPoint`, `RunwayFanData` 타입 포함, 12개월 P10/P50/P90 fan 데이터, initialCash 1800K, cashOutThreshold 0, p50CashOutMonth 12.0, probCashOut 0.23
+- `yieldo/package.json` — **@visx 설치 (7 패키지)** — `@visx/group`, `@visx/scale`, `@visx/shape`, `@visx/axis`, `@visx/curve`, `@visx/responsive`, `@visx/text`. React 19 peer dep 충돌 → `--legacy-peer-deps`로 설치 (Visx는 SVG 렌더링만 하므로 runtime 안전)
+- `yieldo/src/widgets/charts/ui/runway-fan-chart.tsx` — **신규 생성** — yieldo 첫 Visx 차트
   - 구조: `ParentSize` → `Group` → Cash-out zone rect → gridlines → `AreaClosed` (P10-P90 band) → `LinePath` P90/P10 (dashed outline) → `LinePath` P50 (primary) → P50 dots → P50 cash-out 교차 마커 → `AxisBottom`/`AxisLeft`
   - Cash-out zone: threshold 아래 직사각형 필(`rgba(201,55,44,0.08)`) + dashed threshold line
   - P50 cash-out marker: P50이 threshold를 가로지르는 x 좌표에 vertical dashed line + 붉은 원형 마커
   - 축 폰트: `var(--font-geist-mono)` tabular — 모든 숫자 정렬
-  - 우상단 annotation: `23% probability of cash-out by month 12` — Compass 디자인 원칙 §3 "확률은 숫자와 면적으로 동시에"
+  - 우상단 annotation: `23% probability of cash-out by month 12` — yieldo 디자인 원칙 §3 "확률은 숫자와 면적으로 동시에"
   - 컨테이너는 flat card, 토큰 기반 border/radius
-- `compass/src/widgets/charts/index.ts` — `RunwayFanChart` export 추가
-- `compass/src/app/(dashboard)/dashboard/capital/page.tsx` — `<RunwayFanChart data={mockCashRunway} locale={locale} />` 추가 (KPI Cards 아래, ScenarioSimulator 위)
+- `yieldo/src/widgets/charts/index.ts` — `RunwayFanChart` export 추가
+- `yieldo/src/app/(dashboard)/dashboard/capital/page.tsx` — `<RunwayFanChart data={mockCashRunway} locale={locale} />` 추가 (KPI Cards 아래, ScenarioSimulator 위)
 - **빌드 검증**: 각 단계 후 `npm run build` 실행, 모두 Next 16.2.2 Turbopack 2.6-2.9s + tsc 2.3-2.6s + 10페이지 정적 생성 통과
 
 ### 2026-04-07 (Sprint 2 진행 중: Integration)
-- `compass/src/app/globals.css` — **삭제** — 고아 파일(아무도 import 안 함), 과거 shadcn 초기화 잔재
-- `compass/src/styles/globals.css` — **레거시 alias 블록 추가** — 기존 위젯 13개가 참조하던 폐기 클래스/변수 복구
+- `yieldo/src/app/globals.css` — **삭제** — 고아 파일(아무도 import 안 함), 과거 shadcn 초기화 잔재
+- `yieldo/src/styles/globals.css` — **레거시 alias 블록 추가** — 기존 위젯 13개가 참조하던 폐기 클래스/변수 복구
   - 추가된 alias 변수: `--accent-blue/green/orange/lavender/coral` (→ `--chart-cohort-*`), `--brand-light` (→ `--brand-tint`), `--glow-blue/green` (→ 거의 투명한 no-op)
   - 추가된 legacy 유틸리티 클래스: `.card-premium` (gradient/glow 제거, flat enterprise card로), `.card-glow` (border 전환만), `.text-hero`, `.text-hero-lg`, `.text-glow` (no-op), `.signal-bg-invest/hold/reduce` (그라데이션 제거, tint만)
   - 원칙: 이 블록은 위젯이 하나씩 `DecisionSurface` 기반으로 리팩터되면서 점진적으로 삭제. 신규 코드 사용 금지
-- `compass/src/widgets/dashboard/ui/hero-verdict.tsx` — **내부 구현 DecisionSurface 기반으로 재작성**
+- `yieldo/src/widgets/dashboard/ui/hero-verdict.tsx` — **내부 구현 DecisionSurface 기반으로 재작성**
   - Public API 보존 (status, confidence, factors, payback, nextAction)
   - 신규 optional prop: `reason` (situation 문장용)
   - 매핑: payback → DecisionSurface.confidence, nextAction → recommendation (Serif Display), reason → situation, factors → evidence (접힘), confidence 스칼라 → impact 배지
   - framer-motion sticky wrapper는 최소 유지 (Module 1 top-of-fold 고정)
   - 구 하드코딩 색상(`#3EDDB5`, `#FF6B8A`, `#FFA94D` 등) 전부 새 시그널 토큰으로 교체
-- `compass/src/app/(dashboard)/dashboard/page.tsx` — `<HeroVerdict>`에 `reason={mockSignal.reason}` prop 추가 (1줄)
+- `yieldo/src/app/(dashboard)/dashboard/page.tsx` — `<HeroVerdict>`에 `reason={mockSignal.reason}` prop 추가 (1줄)
 - **빌드 검증**: `npm run build` — Next 16.2.2 Turbopack 3.3s 컴파일, tsc 2.9s 통과, 10개 정적 페이지 생성 성공
 
 ### 2026-04-07 (Sprint 1: Foundation 완료)
-- `compass/src/styles/globals.css` — **전면 재작성** — 구 accent/glow/premium 유틸리티 제거, 새 토큰 체계 도입
+- `yieldo/src/styles/globals.css` — **전면 재작성** — 구 accent/glow/premium 유틸리티 제거, 새 토큰 체계 도입
   - 추가: `--bg-0..4`, `--fg-0..3`, `--brand: #1A7FE8`, `--signal-{positive|caution|risk|pending}`, `--chart-p50/band-inner/band-outer/cohort-1..6`, `--radius-{inline|card|modal}`, `--duration-{micro|component|chart}`, `--ease-out-quart`
   - 제거: `--accent-coral`, `--accent-lavender`, `--glow-blue`, `.card-premium`, `.text-glow`, `.signal-bg-*` 그라데이션
   - 유지(전환용): `--background`, `--text-primary`, `--signal-green` 등을 새 토큰의 alias로 남김 — 기존 위젯이 깨지지 않도록 하는 브릿지. 전면 리팩터 후 삭제 예정
   - 다크 테마: `html[data-theme="dark"]` 기반 opt-in, 기본값은 light
   - 글로벌: `* { font-variant-numeric: tabular-nums }` — 모든 숫자 비교 가능하게
   - 타이포 유틸: `.text-display / .text-h1 / .text-h2 / .text-h3 / .text-body / .text-caption`
-- `compass/src/app/layout.tsx` — 폰트 스택 교체 + 언어 변경
+- `yieldo/src/app/layout.tsx` — 폰트 스택 교체 + 언어 변경
   - `Inter` → `Geist` (variable: `--font-geist-sans`)
   - `JetBrains_Mono` → `Geist_Mono` (variable: `--font-geist-mono`)
   - 신규: `Instrument_Serif` (variable: `--font-instrument-serif`, weight 400, italic 포함) — Decision statement 전용
   - `lang="ko"` → `lang="en"`
   - metadata title/description US 메시지로 교체
-- `compass/src/shared/ui/decision-surface.tsx` — **신규 생성** — Compass의 유닛 컴포넌트
+- `yieldo/src/shared/ui/decision-surface.tsx` — **신규 생성** — yieldo의 유닛 컴포넌트
   - 4단 구조: Status Badge / Situation / ConfidenceBar / Recommendation(Display-Serif) / Evidence(collapsed)
   - Confidence는 **필수 prop** — 타입 시스템 레벨에서 강제 (`confidence: Confidence` non-optional)
   - `ConfidenceBar` 내장: P10-P90을 너비로, P50을 2px vertical mark로 시각화 — 숫자가 아닌 너비로 확신도 전달
@@ -475,13 +475,13 @@
   - Evidence는 `useState`로 접힘/펼침 토글, 기본 접힘
   - 3가지 status: `invest` (green) / `hold` (amber) / `reduce` (red) — 각각 border-top 2px + badge 색
   - 타입체크 통과 (`npx tsc --noEmit` clean)
-- `docs/Project_Compass_Design_Migration_Log.md` — **이 문서 생성 및 Sprint 1 완료 기록**
+- `docs/Project_Yieldo_Design_Migration_Log.md` — **이 문서 생성 및 Sprint 1 완료 기록**
 
 ---
 
 ## 4. 컴포넌트 계약 (Design System Contracts)
 
-### 4.1 `<DecisionSurface>` — Compass의 유닛 컴포넌트
+### 4.1 `<DecisionSurface>` — yieldo의 유닛 컴포넌트
 모든 의사결정 지점에서 사용. **Confidence 영역 누락 시 빌드 실패 (lint 규칙)**.
 
 ```tsx
@@ -518,7 +518,7 @@
 > 2026-04-08 deep interview 결과로 정의된 4단계 진화 경로. v0 (Level 1) shell만 현재 구현되어 있고, 나머지는 미래 작업의 청사진. 이 섹션을 읽으면 다음 세션이 어디서부터 이어가야 할지 알 수 있다.
 
 ### 비전 한 줄
-> *"운영자가 자연어로 Compass에게 묻고, Compass가 답하고, 결국 Compass가 직접 행동한다 — 모든 단계에서 신뢰구간과 근거가 함께 표시된다."*
+> *"운영자가 자연어로 yieldo에게 묻고, yieldo가 답하고, 결국 yieldo가 직접 행동한다 — 모든 단계에서 신뢰구간과 근거가 함께 표시된다."*
 
 ### Level 1 — Static UI Shell ✅ (2026-04-08 완료)
 - **무엇**: 우측 slide-in 패널의 시각적 껍데기. 4개 하드코딩 메시지. 입력창 비활성.
@@ -530,7 +530,7 @@
 - **무엇**: 매일 자동 생성되는 실제 추천 2-3개. 사용자가 추천에 대해 추가 질문을 하면 LLM이 답변. 입력창 활성화.
 - **선행 작업**:
   - Anthropic API 키 발급 + Vercel 환경변수 설정
-  - `compass/src/shared/api/copilot.ts` 신규 — Vercel AI SDK 래퍼
+  - `yieldo/src/shared/api/copilot.ts` 신규 — Vercel AI SDK 래퍼
   - `mockSignal.recommendations[]` 자리에 실제 generation 호출
   - Cron: Vercel Cron 6시간마다 재계산
 - **기술 스택**:
@@ -559,7 +559,7 @@
 ### Level 4 — Action Executor Agent
 - **무엇**: 사용자가 "Pause Facebook US bid by 40%" 같은 명령을 내리면 AI가 인간 승인 게이트 후 실제 외부 API 호출. 모든 액션은 audit trail에 기록되고 rollback 가능.
 - **선행 작업**:
-  - **법무 검토** — 외부 API write 액세스의 책임 한계, customer consent 모델, GDPR/PIPA 영향 (`Project_Compass_Legal.md` 참조)
+  - **법무 검토** — 외부 API write 액세스의 책임 한계, customer consent 모델, GDPR/PIPA 영향 (`Project_Yieldo_Legal.md` 참조)
   - **OAuth integration**: AppsFlyer, Statsig, Firebase 각각의 OAuth flow 구현 (Better Auth Organization plugin과 통합)
   - **Audit log table**: Supabase `audit_log` (user_id, org_id, action_type, before_state, after_state, rollback_handler, executed_at) — RLS 정책 필수
   - **Approval gate UX**: AI proposes → 카드에 "Execute" / "Reject" / "Modify" 버튼 → human click → server action → external API
@@ -574,7 +574,7 @@
 
 ### 권장 SDK: Vercel AI SDK
 **`ai` package + `@ai-sdk/anthropic`** 조합을 권장하는 이유:
-1. **Next.js App Router 네이티브** — Compass의 스택과 1:1 매칭
+1. **Next.js App Router 네이티브** — yieldo의 스택과 1:1 매칭
 2. **`useChat()` hook** — 메시지 상태, 스트리밍, error 핸들링이 내장
 3. **Tool-use 추상화** — 동일 코드로 Claude/OpenAI/기타 모델 swap 가능 (vendor lock-in 최소화)
 4. **Server Component-friendly** — RSC 안에서도 작동
@@ -603,9 +603,9 @@ npm install --legacy-peer-deps ai @ai-sdk/anthropic zod
 
 ## 6. B2B Readiness Blueprint (별도 문서)
 
-> 2026-04-09 생성 — "project compass"가 프로토타입에서 프로덕션 B2B SaaS로 가는 여정의 **14개 차원 gap 분석 + 단계별 로드맵** 문서:
+> 2026-04-09 생성 — "project yieldo"가 프로토타입에서 프로덕션 B2B SaaS로 가는 여정의 **14개 차원 gap 분석 + 단계별 로드맵** 문서:
 >
-> 📄 **[`Project_Compass_B2B_Readiness_Blueprint.md`](./Project_Compass_B2B_Readiness_Blueprint.md)**
+> 📄 **[`Project_Yieldo_B2B_Readiness_Blueprint.md`](./Project_Yieldo_B2B_Readiness_Blueprint.md)**
 >
 > 핵심 요약:
 > - 현재 **B2B 준비도 ≈ 15-20%** (프론트엔드 디자인만 강함, 백엔드 인프라 0)
@@ -617,7 +617,7 @@ npm install --legacy-peer-deps ai @ai-sdk/anthropic zod
 
 ## 7. Design System Research — 참조 자료 (2026-04-09)
 
-> **목적**: 향후 Compass 공식 디자인 시스템 구축 시 참조할 글로벌 레퍼런스와 분석. 구축은 나중에 하되 조사 결과는 여기 보존.
+> **목적**: 향후 yieldo 공식 디자인 시스템 구축 시 참조할 글로벌 레퍼런스와 분석. 구축은 나중에 하되 조사 결과는 여기 보존.
 >
 > **배경**: 사용자가 *"Bloomberg TDC 같은 게 있나? 토스처럼 디자인 표준화를 하면?"* 질문 → 현실 체크 + 레퍼런스 카탈로그 + 구축 옵션 정리.
 
@@ -625,7 +625,7 @@ npm install --legacy-peer-deps ai @ai-sdk/anthropic zod
 - **공식 "Bloomberg TDC" 같은 공개 디자인 시스템은 없음** (2026-04 기준)
 - Bloomberg 내부 component library + 40년 된 터미널 디자인 기준은 모두 비공개
 - Bloomberg 유사도 레퍼런스 중 **가장 가까운 공개 자료 3가지**:
-  1. **Palantir Blueprint** (`blueprintjs.com`) — 데이터 밀도 높은 엔터프라이즈 UI, 오픈소스 React, 풀 가이드. **Compass 도메인과 가장 유사**.
+  1. **Palantir Blueprint** (`blueprintjs.com`) — 데이터 밀도 높은 엔터프라이즈 UI, 오픈소스 React, 풀 가이드. **yieldo 도메인과 가장 유사**.
   2. Bloomberg 데이터 비주얼라이제이션 팀 백서 (SSRN/academic 일부 공개)
   3. Koyfin / FactSet / Refinitiv Eikon — 공개 가이드 없지만 UI 자체가 reference case
 
@@ -638,8 +638,8 @@ Toss(`toss.design`)가 유명한 실제 이유:
 4. **컬러는 기능이 아닌 의미** — Toss Blue는 행동 유도에만. 빨강은 경고가 아닌 자금 손실.
 5. **"페이퍼"(`toss.tech`)로 제품 철학 공개** — 원칙·실패·A/B 결과. 채용 자산 + 브랜드.
 
-### 7.3 TDS → Compass 적용 매핑
-| TDS 원칙 | Compass 현재 상태 |
+### 7.3 TDS → yieldo 적용 매핑
+| TDS 원칙 | yieldo 현재 상태 |
 |---|---|
 | "왜" 문서화 | ✅ 이 Migration Log이 이미 수행 중 |
 | 숫자 표기 규칙 | ❌ 가장 큰 gap — 별도 §9.2로 정립 필요 |
@@ -647,7 +647,7 @@ Toss(`toss.design`)가 유명한 실제 이유:
 | 컬러의 의미성 | ✅ signal 3색(positive/caution/risk) 구축됨 |
 | 공개 페이퍼 | ❌ 블로그는 추후 |
 
-### 7.4 글로벌 레퍼런스 Top 10 (Compass 우선순위 순)
+### 7.4 글로벌 레퍼런스 Top 10 (yieldo 우선순위 순)
 
 #### Tier 1 — 직접 훔칠 만함
 | # | 이름 | URL | 유사도 | 훔칠 포인트 |
@@ -675,11 +675,11 @@ Toss(`toss.design`)가 유명한 실제 이유:
 | 9 | **Arc Browser Principles** (blog) | 전복적 설계 사고 |
 | 10 | **NASA Space Design** (최근 리뉴얼) | 미션 패치 + "project" prefix 정당성 |
 
-### 7.5 Compass Design System 구축 옵션 (미래 작업)
+### 7.5 yieldo Design System 구축 옵션 (미래 작업)
 향후 공식 디자인 시스템을 구축할 때 고려할 4가지 경로:
 
 #### Option A — Lightweight Markdown Doc
-- `docs/Project_Compass_Design_System.md` 독립 파일
+- `docs/Project_Yieldo_Design_System.md` 독립 파일
 - 원칙 + 토큰 + 컴포넌트 + 패턴 + 톤 가이드
 - 공수: 1-2일. 단점: 시각 레퍼런스 약함.
 
@@ -793,7 +793,7 @@ L2 (Methodology Modal, 2026-04-16~17):
 - ✅ A+B 하이브리드 확정: Top-line = Decision OS (CLAUDE.md §1 유지), Alpha = L2 signature mechanism
 - ✅ L0/L1/L2 언어 레이어링 정책 — Marketing(L0) / Operator UI(L1, 기술 용어 0) / Methodology(L2, Alpha·Bayesian 허용)
 - ✅ Alpha 단어 외부 검증 대기 (operator 3+/VC 2+/analyst 1-2 인터뷰 — 코드 아님)
-- ✅ Spec: `2026-04-15-compass-positioning-language-layering-design.md`
+- ✅ Spec: `2026-04-15-yieldo-positioning-language-layering-design.md`
 
 **Market Gap deferred 항목**:
 - Cyclic Timeline 다른 게임/지표 mock 확장 (동일 구조, ~30min per game)
@@ -820,16 +820,16 @@ L2 (Methodology Modal, 2026-04-16~17):
 - **데이터 정직성 vs 데모 품질 트레이드오프**: As-of snapshot 같은 "과거 시점" 조작은 mock으로 위조 가능하지만, 심사 시 "이거 진짜야?"에서 깨진다. 진짜로 구현하기 전까진 정직한 고정 라벨로 두고, 같은 스토리를 다른 방식으로(예: Prior band 토글) 전달.
 
 **수정하지 말 것**:
-- `compass/AGENTS.md` — Next 16 주의사항 경고, 보존
-- `compass/CLAUDE.md` — `@AGENTS.md` 참조 포인터, 보존
-- `Project_Compass_Deck_v2.html` — 향후 재작성 대상이지만 아직 삭제 금지
+- `yieldo/AGENTS.md` — Next 16 주의사항 경고, 보존
+- `yieldo/CLAUDE.md` — `@AGENTS.md` 참조 포인터, 보존
+- `Project_Yieldo_Deck_v2.html` — 향후 재작성 대상이지만 아직 삭제 금지
 - `globals.css`의 "Legacy aliases" 블록 — 모든 기존 위젯이 새 토큰으로 리팩터되기 전까지 유지
 
 **읽어야 할 참조**:
 - 루트 `CLAUDE.md` — 제품 정의 원본
-- `docs/Project_Compass_Engine_Blueprint.md` — 엔진 파이프라인
-- `docs/Project_Compass_UI_Guide.md` — 기존 UI 가이드 (Sprint 2에서 업데이트 필요)
-- `compass/node_modules/next/dist/docs/01-app/` — Next 16 API 참조 (Next.js 코드 건드리기 전 필독)
+- `docs/Project_Yieldo_Engine_Blueprint.md` — 엔진 파이프라인
+- `docs/Project_Yieldo_UI_Guide.md` — 기존 UI 가이드 (Sprint 2에서 업데이트 필요)
+- `yieldo/node_modules/next/dist/docs/01-app/` — Next 16 API 참조 (Next.js 코드 건드리기 전 필독)
 
 **회귀 테스트 체크포인트**:
 - [ ] `npx tsc --noEmit` 통과 (Sprint 1 통과 확인됨)
@@ -838,12 +838,12 @@ L2 (Methodology Modal, 2026-04-16~17):
 - [ ] 기존 5개 dashboard 페이지 (overview/market-gap/actions/experiments/capital) 시각 확인
 
 **수정하지 말 것**:
-- `compass/AGENTS.md` — Next 16 주의사항 경고, 보존
-- `compass/CLAUDE.md` — `@AGENTS.md` 참조 포인터, 보존
-- `Project_Compass_Deck_v2.html` — 향후 재작성 대상이지만 아직 삭제 금지
+- `yieldo/AGENTS.md` — Next 16 주의사항 경고, 보존
+- `yieldo/CLAUDE.md` — `@AGENTS.md` 참조 포인터, 보존
+- `Project_Yieldo_Deck_v2.html` — 향후 재작성 대상이지만 아직 삭제 금지
 
 **읽어야 할 참조**:
 - 루트 `CLAUDE.md` — 제품 정의 원본
-- `docs/Project_Compass_Engine_Blueprint.md` — 엔진 파이프라인
-- `docs/Project_Compass_UI_Guide.md` — 기존 UI 가이드 (업데이트 필요)
-- `compass/node_modules/next/dist/docs/01-app/` — Next 16 API 참조
+- `docs/Project_Yieldo_Engine_Blueprint.md` — 엔진 파이프라인
+- `docs/Project_Yieldo_UI_Guide.md` — 기존 UI 가이드 (업데이트 필요)
+- `yieldo/node_modules/next/dist/docs/01-app/` — Next 16 API 참조

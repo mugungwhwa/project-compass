@@ -1,6 +1,6 @@
-# Project Compass — Deck 리디자인 가이드
+# yieldo — Deck 리디자인 가이드
 
-**용도**: 다음 세션에서 `Project_Compass_Deck_v2.html`을 제작할 때 이 문서를 참조
+**용도**: 다음 세션에서 `Project_Yieldo_Deck_v2.html`을 제작할 때 이 문서를 참조
 
 ---
 
@@ -67,7 +67,7 @@
 ```
 3단계 다이어그램:
 
-  [Your Data]           [Compass AI]                    [Investment Decision]
+  [Your Data]           [yieldo AI]                    [Investment Decision]
   MMP (CPI, ROAS)  →    리텐션 예측                →     ● GREEN: Increase rollout
   실험 (ATE)        →    ATE → ΔLTV → Exp ROI 번역  →     Payback: D47 (D38-D62)
   재무 (Burn Rate)  →    시나리오 시뮬               →     "UA 15% 증가 권장"
@@ -119,14 +119,14 @@
   3. 실험 플랫폼        Statsig, Firebase, Optimizely
      → "어떤 변형이 이겼는가?" — 실험 승리 ≠ 투자 가치 번역 불가
 
-  4. Funding Intelligence  (신규 카테고리 — Compass가 정의)
+  4. Funding Intelligence  (신규 카테고리 — yieldo가 정의)
      Visible.vc, Mosaic, Runway
      → 재무 건전성 모니터링 도구. 게임 인터벤션 효과와 연결 불가.
-     → "Compass와 카테고리가 다름": Compass는 인터벤션 → 투자 가치 번역,
+     → "yieldo와 카테고리가 다름": yieldo는 인터벤션 → 투자 가치 번역,
         Funding Intelligence는 재무 상태 보고
 
   [포지셔닝 메시지]:
-  "Compass는 위 4개 카테고리 어디에도 속하지 않는다.
+  "yieldo는 위 4개 카테고리 어디에도 속하지 않는다.
    실험 결과·UA 성과·시장 맥락을 통합해 '이 인터벤션이 투자할 가치가 있는가'를
    답하는 유일한 플랫폼."
 ```
@@ -190,7 +190,7 @@
 ```
 1. 이 가이드를 읽는다
 2. 기존 Deck.html을 archive에 복사
-3. Project_Compass_Deck_v2.html을 12슬라이드 + 부록으로 신규 제작
+3. Project_Yieldo_Deck_v2.html을 12슬라이드 + 부록으로 신규 제작
 4. prototype_dashboard.html의 스크린샷을 Product 슬라이드에 활용
 5. 브라우저에서 확인 후 반복 수정
 ```

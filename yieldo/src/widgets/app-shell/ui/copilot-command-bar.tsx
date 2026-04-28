@@ -17,7 +17,7 @@
 
   Future (Level 2+): useChat() from ai-sdk will drive a messages[]
   state, the card will stream tokens, and the input will actually send.
-  See: docs/Project_Compass_Design_Migration_Log.md §5
+  See: docs/Project_yieldo_Design_Migration_Log.md §5
 
   Source of truth: .omc/specs/2026-04-08-dashboard-shell-refactor.md
 */
@@ -64,7 +64,7 @@ function FloatingAnswerCard() {
       <div
         role="dialog"
         aria-modal="false"
-        aria-label="Compass Copilot answer"
+        aria-label="yieldo Copilot answer"
         aria-hidden={!isOpen}
         style={{ maxWidth: CARD_MAX_WIDTH }}
         className={cn(
@@ -169,7 +169,7 @@ export function CopilotCommandBar() {
           <button
             type="button"
             onClick={toggle}
-            aria-label={t("copilot.askCompass")}
+            aria-label={t("copilot.askYieldo")}
             aria-pressed={isOpen}
             className={cn(
               "inline-flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[var(--radius-card)] border transition-colors",

@@ -10,6 +10,7 @@
 
   Replaces the previous CompassLogo (Instrument Serif italic "PROJECT COMPASS"
   + nautical triangle needle), which is archived under archive/.
+  Historical name is preserved here intentionally (see archive/).
 */
 
 type YieldoLogoProps = {

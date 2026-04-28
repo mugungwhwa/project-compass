@@ -1,24 +1,24 @@
-# Compass Refocus Checklist + PvX Lambda UI Benchmark
+# yieldo Refocus Checklist + PvX Lambda UI Benchmark
 
 작성일: 2026-04-06  
-목적: 기존 Project Compass를 **UA funding readiness 중심 해석**에서 벗어나, **게임의 A/B 테스트·운영 개입·시장 반응을 LTV/투자 판단으로 번역하는 OS**로 재정렬하기 위한 실행 체크리스트.
+목적: 기존 yieldo를 **UA funding readiness 중심 해석**에서 벗어나, **게임의 A/B 테스트·운영 개입·시장 반응을 LTV/투자 판단으로 번역하는 OS**로 재정렬하기 위한 실행 체크리스트.
 
 ---
 
 ## 0. 이번 리포커싱의 핵심 한 줄
 
 ### 기존 해석
-- Compass = 투자 여부를 판단하는 Investment Decision OS
+- yieldo = 투자 여부를 판단하는 Operating Intelligence Terminal
 - 질문 = **"지금 더 투자해도 되는가?"**
 
 ### 리포커싱 후 해석
-- Compass = 게임의 실험과 운영 개입을 **LTV / Payback / 투자 판단**으로 번역하는 시스템
+- yieldo = 게임의 실험과 운영 개입을 **LTV / Payback / 투자 판단**으로 번역하는 시스템
 - 질문 = **"어떤 개입이 실제로 LTV를 올렸고, 그 결과 더 투자해야 하는가?"**
 
 ### 내부 기준 문장
-- **Compass turns game interventions into investment decisions.**
-- **Compass is an Experiment-to-Investment Decision OS for live game teams.**
-- **Compass measures whether A/B tests and live interventions are actually creating investable growth.**
+- **yieldo turns game interventions into investment decisions.**
+- **yieldo is an Signal-to-Yield Operating Terminal for live game teams.**
+- **yieldo measures whether A/B tests and live interventions are actually creating investable growth.**
 
 ---
 
@@ -79,8 +79,8 @@
 
 ### 수정 체크리스트
 - [ ] One-line definition을 아래 중 하나로 교체
-  - [ ] Compass is the system that turns game interventions into investment decisions.
-  - [ ] Compass is an Experiment-to-Investment Decision OS for mobile game teams.
+  - [ ] yieldo is the system that turns game interventions into investment decisions.
+  - [ ] yieldo is an Signal-to-Yield Operating Terminal for mobile game teams.
 - [ ] "Can we invest more?"를 단독 첫 질문으로 두지 않기
 - [ ] 첫 질문을 다음처럼 변경
   - [ ] Which experiments and live actions are actually increasing LTV?
@@ -93,14 +93,14 @@
 
 ### 추천 교체 문장
 **Before**  
-Project Compass transforms Market Intelligence into Capital Allocation Intelligence.
+yieldo transforms Market Intelligence into Capital Allocation Intelligence.
 
 **After**  
-Project Compass transforms game interventions, experiments, and market signals into capital allocation decisions.
+yieldo transforms game interventions, experiments, and market signals into capital allocation decisions.
 
 ---
 
-## B. `Project_Compass_Business_Plan.md`
+## B. `Project_Yieldo_Business_Plan.md`
 
 ### 역할
 투자자/정부지원/외부 설명용 사업계획 핵심 문서.
@@ -110,7 +110,7 @@ Project Compass transforms game interventions, experiments, and market signals i
 - 하지만 현재는 다소 "투자 판단 일반론"이 앞에 있고, **게임 개발 과정의 실험 가치 측정**이 뒤에 있음
 
 ### 유지
-- Investment Decision OS 큰 개념
+- Operating Intelligence Terminal 큰 개념
 - 4 silo 문제의식
 - 시장 기회
 - 5개 모듈 구조
@@ -133,14 +133,14 @@ Project Compass transforms game interventions, experiments, and market signals i
 - [ ] Product Overview에서 Module 3 / 4 설명을 더 길고 앞쪽으로 강조
 - [ ] Module 1은 summary layer, Module 3/4는 value creation layer로 설명
 - [ ] Competitive section에서 PvX/Lambda류는 "underwriting/funding intelligence"로 구분
-- [ ] Compass는 "capital allocation for operators"로 정의
+- [ ] yieldo는 "capital allocation for operators"로 정의
 
 ### 추천 문장
-**Compass does not merely evaluate whether a game deserves more capital. It measures whether ongoing game interventions are creating the conditions that justify more capital.**
+**yieldo does not merely evaluate whether a game deserves more capital. It measures whether ongoing game interventions are creating the conditions that justify more capital.**
 
 ---
 
-## C. `Project_Compass_Deck_v2.html`
+## C. `Project_Yieldo_Deck_v2.html`
 
 ### 역할
 투자자 덱 / 외부 설명용 시각적 핵심 자산.
@@ -177,7 +177,7 @@ Project Compass transforms game interventions, experiments, and market signals i
 
 #### Slide 04 How It Works
 - [ ] Your Data 항목에 실험과 live actions를 더 앞세우기
-- [ ] Compass AI에서 ATE → ΔLTV → decision 흐름을 더 크게 표기
+- [ ] yieldo AI에서 ATE → ΔLTV → decision 흐름을 더 크게 표기
 - [ ] 하단 strongest proof 숫자 영역에 experiment ROI 사례 넣기
 
 #### Slide 07 Product
@@ -190,7 +190,7 @@ Project Compass transforms game interventions, experiments, and market signals i
   - Funding Intelligence
   - Experimentation Platform
   - Market Intelligence
-  - Compass = Intervention-to-Investment OS
+  - yieldo = Intervention-to-Investment OS
 
 ---
 
@@ -238,14 +238,14 @@ Project Compass transforms game interventions, experiments, and market signals i
 
 ---
 
-## E. `Project_Compass_UI_Guide.md`
+## E. `Project_Yieldo_UI_Guide.md`
 
 ### 역할
 제품 UX 원칙 정의 문서.
 
 ### 현재 상태 판단
 - 거의 유지 가능
-- Compass 리포커싱과 가장 잘 맞는 문서 중 하나
+- yieldo 리포커싱과 가장 잘 맞는 문서 중 하나
 
 ### 유지
 - Decision-first
@@ -271,7 +271,7 @@ Project Compass transforms game interventions, experiments, and market signals i
 
 ---
 
-## F. `Project_Compass_Engine_Blueprint.md`
+## F. `Project_Yieldo_Engine_Blueprint.md`
 
 ### 역할
 데이터 → 예측 → 번역 → 결정 파이프라인 구현 청사진.
@@ -301,7 +301,7 @@ Project Compass transforms game interventions, experiments, and market signals i
 
 ---
 
-## G. `Project_Compass_Data_Sources_Guide.md`
+## G. `Project_Yieldo_Data_Sources_Guide.md`
 
 ### 역할
 데이터 소스/수집/연동 가이드.
@@ -326,7 +326,7 @@ Project Compass transforms game interventions, experiments, and market signals i
 
 ---
 
-## H. `Project_Compass_Tech_Stack.md`
+## H. `Project_Yieldo_Tech_Stack.md`
 
 ### 역할
 시스템 아키텍처 / 역할 분리 / 기술 스택 정의.
@@ -350,7 +350,7 @@ Project Compass transforms game interventions, experiments, and market signals i
 
 ---
 
-## I. `Project_Compass_Deck_Redesign_Guide.md`
+## I. `Project_Yieldo_Deck_Redesign_Guide.md`
 
 ### 역할
 덱 제작 가이드라인.
@@ -382,7 +382,7 @@ Project Compass transforms game interventions, experiments, and market signals i
 
 ---
 
-## K. `Project_Compass_Legal.md`
+## K. `Project_Yieldo_Legal.md`
 
 ### 역할
 법적 데이터 수집 / 연동 기준 문서.
@@ -400,22 +400,22 @@ Project Compass transforms game interventions, experiments, and market signals i
 
 ### 1순위: 정체성/대외 메시지
 1. `CLAUDE.md`
-2. `Project_Compass_Business_Plan.md`
-3. `Project_Compass_Deck_v2.html`
-4. `Project_Compass_Deck_Redesign_Guide.md`
+2. `Project_Yieldo_Business_Plan.md`
+3. `Project_Yieldo_Deck_v2.html`
+4. `Project_Yieldo_Deck_Redesign_Guide.md`
 
 ### 2순위: 제품 UX 문구
 5. `prototype_dashboard.html`
-6. `Project_Compass_UI_Guide.md`
+6. `Project_Yieldo_UI_Guide.md`
 7. `CONTEXT_INDEX.md`
 
 ### 3순위: 기술 문서 문장 정리
-8. `Project_Compass_Engine_Blueprint.md`
-9. `Project_Compass_Tech_Stack.md`
-10. `Project_Compass_Data_Sources_Guide.md`
+8. `Project_Yieldo_Engine_Blueprint.md`
+9. `Project_Yieldo_Tech_Stack.md`
+10. `Project_Yieldo_Data_Sources_Guide.md`
 
 ### 4순위: 점검용
-11. `Project_Compass_Legal.md`
+11. `Project_Yieldo_Legal.md`
 
 ---
 
@@ -433,14 +433,14 @@ PvX Lambda는 공개 랜딩 기준으로 아래 흐름을 갖는다.
 6. Social proof / authority
 7. Conversion CTA
 
-### Compass에 가져올 수 있는 것
+### yieldo에 가져올 수 있는 것
 - 짧은 hero headline + subheadline 구조
 - 기능 4카드 구조
 - 제품 preview를 중간에 넣는 방식
 - integration / trust section 강조
 - CTA 반복 구조
 
-### Compass가 그대로 따라하면 안 되는 것
+### yieldo가 그대로 따라하면 안 되는 것
 - funding readiness 느낌
 - financing application funnel 중심 설계
 - operator tool보다 lender tool처럼 보이는 카피
@@ -448,7 +448,7 @@ PvX Lambda는 공개 랜딩 기준으로 아래 흐름을 갖는다.
 
 ---
 
-## 5. PvX Lambda UI 흐름을 Compass에 맞게 변환하는 법
+## 5. PvX Lambda UI 흐름을 yieldo에 맞게 변환하는 법
 
 ## Hero
 ### PvX식
@@ -456,7 +456,7 @@ PvX Lambda는 공개 랜딩 기준으로 아래 흐름을 갖는다.
 - Watch How it Works
 - funding/decision utility 강조
 
-### Compass식 변환
+### yieldo식 변환
 - Headline: **Change how game capital gets allocated**
 - Sub: **Measure which experiments and live actions actually increase LTV — then decide where to invest next**
 - CTA 1: **See Demo**
@@ -471,7 +471,7 @@ PvX Lambda는 공개 랜딩 기준으로 아래 흐름을 갖는다.
 - Deterministic ROAS Benchmarks
 - Reliable Financial Forecasting
 
-### Compass식 변환
+### yieldo식 변환
 - **Experiment ROI Translation**
 - **Action Impact Timeline**
 - **Market-to-Game Gap**
@@ -483,7 +483,7 @@ PvX Lambda는 공개 랜딩 기준으로 아래 흐름을 갖는다.
 ### PvX식
 - decision making hub 소개
 
-### Compass식 변환
+### yieldo식 변환
 - Executive Overview는 요약 패널로만 제시
 - 반드시 **Action Impact / Experiment Investment / Capital Console**도 같이 노출
 - 제품이 "투자 판정판"이 아니라 "실험-개입 운영 시스템"처럼 보이게 구성
@@ -495,7 +495,7 @@ PvX Lambda는 공개 랜딩 기준으로 아래 흐름을 갖는다.
 - 신뢰 가능한 cohort
 - data lake / integration
 
-### Compass식 변환
+### yieldo식 변환
 - AppsFlyer / Adjust / Statsig / Databricks / Finance Inputs 연결
 - Prior vs Posterior 시각화
 - "Not another dashboard" 문장
@@ -507,17 +507,17 @@ PvX Lambda는 공개 랜딩 기준으로 아래 흐름을 갖는다.
 ### PvX식
 - Apply / Get Access / Download Guide
 
-### Compass식 변환
+### yieldo식 변환
 - **Request Demo**
 - **See Product Walkthrough**
 - **Get the Intervention-to-LTV Guide**
 
 ---
 
-## 6. Compass 랜딩 추천 IA (정보구조)
+## 6. yieldo 랜딩 추천 IA (정보구조)
 
 ## Section 1. Hero
-- What Compass is
+- What yieldo is
 - 2 CTA
 - 오른쪽에 dashboard preview
 
@@ -525,7 +525,7 @@ PvX Lambda는 공개 랜딩 기준으로 아래 흐름을 갖는다.
 - 4 silo cards
 - + "experiments do not automatically become investment evidence"
 
-## Section 3. What Compass Does
+## Section 3. What yieldo Does
 - Intervention → Signal Change → ΔLTV → Decision
 - before/after 구조
 
@@ -557,8 +557,8 @@ PvX Lambda는 공개 랜딩 기준으로 아래 흐름을 갖는다.
 아래 문장을 Claude Code 작업 지시의 기본 문장으로 사용 가능.
 
 ```md
-Compass is not a UA funding readiness tool.
-Compass is an Experiment-to-Investment Decision OS for live game teams.
+yieldo is not a UA funding readiness tool.
+yieldo is an Signal-to-Yield Operating Terminal for live game teams.
 
 Keep the infrastructure, data pipelines, Bayesian retention/LTV engine, and experiment translation architecture.
 Refocus the product narrative, landing structure, deck messaging, and module emphasis around this core question:
@@ -567,7 +567,7 @@ Which game interventions and A/B tests are actually increasing LTV, and does tha
 
 Prioritize Action Impact and Experiment Investment over generic funding language.
 Use PvX Lambda only as a benchmark for landing-page flow, feature-card compression, trust/integration sections, and CTA sequencing.
-Do not make Compass look like a lender or underwriting platform.
+Do not make yieldo look like a lender or underwriting platform.
 ```
 
 ---

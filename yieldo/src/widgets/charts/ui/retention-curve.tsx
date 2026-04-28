@@ -1,7 +1,7 @@
 "use client"
 
 /*
-  RetentionCurve — Compass's signature chart.
+  RetentionCurve — yieldo's signature chart.
   --------------------------------------------
   Refactored 2026-04-07 to the new design language:
   - No gradient wrapper, no glow

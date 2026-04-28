@@ -2,7 +2,7 @@
  * market-signal.ts 기대 동작 예시 + runtime assertion.
  *
  * 테스트 러너 도입 전까지 이 파일로 수동 검증한다.
- * 실행: cd compass && npx tsx src/shared/lib/market-signal.examples.ts
+ * 실행: cd yieldo && npx tsx src/shared/lib/market-signal.examples.ts
  */
 
 import { computeMarketSignal, MARKET_SIGNAL_HOLD_THRESHOLD } from "./market-signal"

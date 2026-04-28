@@ -1,6 +1,6 @@
-# Project Compass — B2B Readiness Blueprint
+# yieldo — B2B Readiness Blueprint
 
-> **목적**: "project compass"가 프로토타입에서 프로덕션 B2B SaaS로 가는 여정의 gap 분석 및 단계별 로드맵.
+> **목적**: "project yieldo"가 프로토타입에서 프로덕션 B2B SaaS로 가는 여정의 gap 분석 및 단계별 로드맵.
 >
 > **사용법**: 새 세션에서 *"B2B 준비도 블루프린트를 보고 다음 작업 정해줘"* 라고만 하면 이 문서가 맥락이 되어 이어갈 수 있습니다.
 >
@@ -23,20 +23,20 @@
 ### 프론트엔드 디자인 시스템 (강점)
 - **Stack**: Next.js 16.2.2 + React 19 + Turbopack + FSD 아키텍처
 - **Design**: Tailwind v4 + 자체 디자인 토큰(`globals.css`) + Geist Sans/Mono + Instrument Serif + Noto Sans KR
-- **BI**: `△ project compass` 통일 (Direction γ — Nautical N)
+- **BI**: `△ project yieldo` 통일 (Direction γ — Nautical N)
 - **Signature components**: `<DecisionSurface>`, `<HeroVerdict>`, `<MarketHeroVerdict>`, `<RunwayFanChart>` (visx)
 - **App shell**: Top status bar (persistent financial health) + Bottom command bar + Floating answer card (Cursor/Perplexity 패턴)
 - **i18n**: ko/en 완비, 브랜드 이름은 번역 제외 원칙
 - **5 dashboard 모듈**: Overview / Market Gap / Actions / Experiments / Capital (모두 mock 데이터로 렌더)
-- **Design Migration Log**: `docs/Project_Compass_Design_Migration_Log.md` — 모든 변경 추적
+- **Design Migration Log**: `docs/Project_Yieldo_Design_Migration_Log.md` — 모든 변경 추적
 
 ### 제품 정체성 문서 (강점)
 - `CLAUDE.md` — 제품 정의, Retention Theory, Bayesian Framework
-- `Project_Compass_Business_Plan.md` — 비즈니스 케이스
-- `Project_Compass_Engine_Blueprint.md` — 엔진 구현 청사진
-- `Project_Compass_UI_Guide.md` — UI 설계 지침
-- `Project_Compass_Legal.md` — 법적 분석
-- `Project_Compass_Data_Sources_Guide.md` — 데이터 소스 명세
+- `Project_Yieldo_Business_Plan.md` — 비즈니스 케이스
+- `Project_Yieldo_Engine_Blueprint.md` — 엔진 구현 청사진
+- `Project_Yieldo_UI_Guide.md` — UI 설계 지침
+- `Project_Yieldo_Legal.md` — 법적 분석
+- `Project_Yieldo_Data_Sources_Guide.md` — 데이터 소스 명세
 
 ### CLAUDE.md에 계획된 인프라 (구현 0)
 | 항목 | 계획 | 구현 상태 |
@@ -57,7 +57,7 @@
 
 | # | 차원 | 현재 | 필요 | 예상 공수 |
 |---|---|---|---|---|
-| 1 | **실제 인증** | login 페이지 UI만, `demo@compass.io` 하드코딩 | Better Auth 또는 Clerk, email/password + Google SSO + 이메일 인증 + 세션 관리 | 3-5일 |
+| 1 | **실제 인증** | login 페이지 UI만, `demo@yieldo.io` 하드코딩 | Better Auth 또는 Clerk, email/password + Google SSO + 이메일 인증 + 세션 관리 | 3-5일 |
 | 2 | **멀티 테넌트 (Organizations)** | 전역 mock 1개, 모든 사용자가 공유 | Better Auth Organization plugin, `org_id` scoped, RLS 정책 | 1주 |
 | 3 | **데이터베이스** | 없음, 모든 데이터가 `mock-data.ts` 상수 | Supabase 프로젝트, 스키마 설계 (users/orgs/titles/cohorts/experiments/actions/audit_log), 마이그레이션 | 1-2주 |
 | 4 | **API 라우트** | `src/app/api/` 디렉토리 존재 안 함 | Server Actions + Route Handlers: fetch cohort, run scenario, save decision, log action | 1주 |
@@ -188,11 +188,11 @@
 ## 8. 참조
 
 - `CLAUDE.md` — 제품 정체성 (섹션 7.4 2인 팀 명시, 8.4 기술 스택, 8.5 통합 전략)
-- `docs/Project_Compass_Design_Migration_Log.md` — 디자인 시스템 변경 이력
-- `docs/Project_Compass_Business_Plan.md` — 비즈니스 케이스
-- `docs/Project_Compass_Legal.md` — 법적 분석
-- `docs/Project_Compass_Engine_Blueprint.md` — 엔진 청사진
-- `docs/Project_Compass_Data_Sources_Guide.md` — 데이터 소스
+- `docs/Project_Yieldo_Design_Migration_Log.md` — 디자인 시스템 변경 이력
+- `docs/Project_Yieldo_Business_Plan.md` — 비즈니스 케이스
+- `docs/Project_Yieldo_Legal.md` — 법적 분석
+- `docs/Project_Yieldo_Engine_Blueprint.md` — 엔진 청사진
+- `docs/Project_Yieldo_Data_Sources_Guide.md` — 데이터 소스
 
 ---
 

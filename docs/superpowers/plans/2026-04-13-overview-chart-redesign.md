@@ -30,7 +30,7 @@
 ### Task 1: Data Model + Mock Data
 
 **Files:**
-- Modify: `compass/src/shared/api/mock-data.ts`
+- Modify: `yieldo/src/shared/api/mock-data.ts`
 
 - [ ] **Step 1: Add types after existing `RevenueVsInvestPoint`**
 
@@ -100,8 +100,8 @@ git commit -m "feat: add RevenueDecomp types and mock data"
 ### Task 2: Colors + i18n
 
 **Files:**
-- Modify: `compass/src/shared/config/chart-colors.ts`
-- Modify: `compass/src/shared/i18n/dictionary.ts`
+- Modify: `yieldo/src/shared/config/chart-colors.ts`
+- Modify: `yieldo/src/shared/i18n/dictionary.ts`
 
 - [ ] **Step 1: Add color config after `REVENUE_VS_INVEST_COLORS`**
 
@@ -151,7 +151,7 @@ git commit -m "feat: add revenue decomposition colors and i18n keys"
 ### Task 3: ExperimentRevenue Chart Widget
 
 **Files:**
-- Create: `compass/src/widgets/charts/ui/experiment-revenue.tsx`
+- Create: `yieldo/src/widgets/charts/ui/experiment-revenue.tsx`
 
 This is the main task. The component has three inline sub-sections: VelocityElasticityBar, InteractiveLegend, and the chart body.
 
@@ -499,8 +499,8 @@ git commit -m "feat: add ExperimentRevenue chart widget with isolation mode"
 ### Task 4: Wire Up — Exports + Overview Page
 
 **Files:**
-- Modify: `compass/src/widgets/charts/index.ts`
-- Modify: `compass/src/app/(dashboard)/dashboard/page.tsx`
+- Modify: `yieldo/src/widgets/charts/index.ts`
+- Modify: `yieldo/src/app/(dashboard)/dashboard/page.tsx`
 
 - [ ] **Step 1: Add export to charts index**
 

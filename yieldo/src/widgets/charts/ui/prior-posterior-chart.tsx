@@ -22,7 +22,7 @@ type PriorPosteriorChartProps = {
 /**
  * Market Gap — Layer 1 "장르 기대치 vs 우리 실적" 차트.
  *
- * L0/L1/L2 언어 레이어링 정책(docs/superpowers/specs/2026-04-15-compass-positioning-language-layering-design.md)에 따라
+ * L0/L1/L2 언어 레이어링 정책(docs/superpowers/specs/2026-04-15-yieldo-positioning-language-layering-design.md)에 따라
  * L1(operator UI)에는 Prior/Posterior/Bayesian/Alpha 용어 사용 금지. 장르 기대치 / 우리 실적 /
  * Invest·Hold·Reduce 신호 언어로 통일. 색상은 Revenue Forecast와 정합 (빨강=장르, 초록=우리, 파랑=격차 accent).
  */

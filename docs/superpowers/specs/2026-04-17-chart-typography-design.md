@@ -18,7 +18,7 @@
 
 ### 1. 공통 config 파일 생성
 
-`compass/src/shared/config/chart-typography.ts`
+`yieldo/src/shared/config/chart-typography.ts`
 
 ```ts
 export const CHART_FONT = {

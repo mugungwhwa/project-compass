@@ -66,7 +66,7 @@ export function ChartTooltip({
 
   if (render) {
     return (
-      <div className={`compass-tooltip ${className}`} style={TOOLTIP_STYLE}>
+      <div className={`yieldo-tooltip ${className}`} style={TOOLTIP_STYLE}>
         {render({ active: !!active, payload, label })}
       </div>
     )
@@ -74,7 +74,7 @@ export function ChartTooltip({
 
   // Default rendering: label + rows with color dots
   return (
-    <div className={`compass-tooltip ${className}`} style={TOOLTIP_STYLE}>
+    <div className={`yieldo-tooltip ${className}`} style={TOOLTIP_STYLE}>
       {label != null && (
         <div style={{ fontSize: 11, fontWeight: 600, color: "#0A0A0A", marginBottom: 4 }}>
           {label}

@@ -14,7 +14,7 @@ const I18nContext = createContext<I18nContextType | null>(null)
 export function LocaleProvider({ children }: { children: ReactNode }) {
   const [locale, setLocale] = useState<Locale>(() => {
     if (typeof window !== "undefined") {
-      return (localStorage.getItem("compass-locale") as Locale) || "en"
+      return (localStorage.getItem("yieldo-locale") as Locale) || "en"
     }
     return "en"
   })
@@ -22,7 +22,7 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   const toggleLocale = useCallback(() => {
     setLocale((prev) => {
       const next = prev === "ko" ? "en" : "ko"
-      localStorage.setItem("compass-locale", next)
+      localStorage.setItem("yieldo-locale", next)
       return next
     })
   }, [])

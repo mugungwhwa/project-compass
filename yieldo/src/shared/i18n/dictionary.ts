@@ -260,8 +260,8 @@ const dictionary = {
   "methodology.title":         { ko: "방법론: {metric} 판정의 근거",      en: "Methodology: basis for {metric} judgment" },
   "methodology.subtitle":     { ko: "장르 기대치가 내부 데이터로 업데이트되는 과정",
                                  en: "How genre expectations update with internal data" },
-  "methodology.footer":       { ko: "Compass는 매 코호트 데이터 도착 시 장르 기대치를 우리 실적으로 업데이트합니다. 시간이 지날수록 예측 범위가 좁아지며, 이 수렴이 Invest/Hold/Reduce 판정의 신뢰도를 결정합니다.",
-                                 en: "Compass updates genre expectations with our actuals as each cohort arrives. Over time the prediction range narrows, and this convergence determines the confidence of the Invest/Hold/Reduce judgment." },
+  "methodology.footer":       { ko: "yieldo는 매 코호트 데이터 도착 시 장르 기대치를 우리 실적으로 업데이트합니다. 시간이 지날수록 예측 범위가 좁아지며, 이 수렴이 Invest/Hold/Reduce 판정의 신뢰도를 결정합니다.",
+                                 en: "yieldo updates genre expectations with our actuals as each cohort arrives. Over time the prediction range narrows, and this convergence determines the confidence of the Invest/Hold/Reduce judgment." },
   "methodology.footerL2":     { ko: "(Bayesian posterior update, Alpha Persistence 검증)",
                                  en: "(Bayesian posterior update, Alpha Persistence verification)" },
   "methodology.play":         { ko: "재생",                              en: "Play" },
@@ -288,16 +288,16 @@ const dictionary = {
   "status.capEff":         { ko: "자본 효율",     en: "Cap Eff" },
 
   // --- App shell: bottom copilot command bar (2026-04-08, refined 2026-04-09) ---
-  "copilot.askCompass":    { ko: "질문하기",
-                             en: "Ask Compass" },
-  "copilot.placeholder":   { ko: "Compass에게 무엇이든 물어보세요… (샘플 답변을 보려면 클릭)",
-                             en: "Ask Compass anything…  (v0 preview — click to see sample answer)" },
+  "copilot.askYieldo":    { ko: "질문하기",
+                             en: "Ask yieldo" },
+  "copilot.placeholder":   { ko: "yieldo에게 무엇이든 물어보세요… (샘플 답변을 보려면 클릭)",
+                             en: "Ask yieldo anything…  (v0 preview — click to see sample answer)" },
   "copilot.comingSoon":    { ko: "AI 질의응답 — 준비 중",
                              en: "AI copilot — coming soon" },
   "copilot.context":       { ko: "현재 화면",
                              en: "Context" },
-  "copilot.footer":        { ko: "Compass 질의응답 v0 · 샘플 미리보기 · 실제 AI 연결은 로드맵 §5 참조",
-                             en: "Compass Copilot v0 · Static preview · Real AI in Level 2 (see roadmap §5)" },
+  "copilot.footer":        { ko: "yieldo 질의응답 v0 · 샘플 미리보기 · 실제 AI 연결은 로드맵 §5 참조",
+                             en: "yieldo Copilot v0 · Static preview · Real AI in Level 2 (see roadmap §5)" },
   "copilot.module1Ctx":    { ko: "한눈에 보기 · 코호트 2026-03",
                              en: "Module 1 · Executive Overview · Cohort 2026-03" },
 
@@ -435,8 +435,8 @@ const dictionary = {
   "landing.v2.hero.headlineLine2":    { ko: "감이 아닌 근거로.",           en: "at the speed of evidence." },
   "landing.v2.hero.subheading":       { ko: "또 하나의 대시보드가 아닙니다. 투자 판단을 위한 의사결정 레이어입니다.",
                                         en: "Not another dashboard. Your investment decision layer." },
-  "landing.v2.hero.description":      { ko: "Compass는 시장, 실험, UA, 재무 데이터를 하나로 연결해 게임 운영자를 위한 투자 의사결정 기반을 제공합니다.",
-                                        en: "Compass turns market, experiment, UA, and financial data into one investment decision layer for game operators." },
+  "landing.v2.hero.description":      { ko: "yieldo는 시장, 실험, UA, 재무 데이터를 하나로 연결해 게임 운영자를 위한 투자 의사결정 기반을 제공합니다.",
+                                        en: "yieldo turns market, experiment, UA, and financial data into one investment decision layer for game operators." },
   "landing.v2.hero.point1":           { ko: "신뢰도를 갖춘 투자 예측",      en: "Forecast investment outcomes with confidence" },
   "landing.v2.hero.point2":           { ko: "시장 격차를 명확히 파악",      en: "See your market gap clearly" },
   "landing.v2.hero.point3":           { ko: "실험 성과를 자본 가치로 전환",  en: "Translate experiment wins into capital decisions" },
@@ -452,11 +452,11 @@ const dictionary = {
   "landing.v2.whyFail.card3Desc":     { ko: "어떤 변형이 이겼는지 압니다",  en: "knows which variant won" },
   "landing.v2.whyFail.card4Title":    { ko: "재무",        en: "Finance" },
   "landing.v2.whyFail.card4Desc":     { ko: "소진과 런웨이를 압니다",  en: "knows burn and runway" },
-  "landing.v2.whyFail.conclusion":    { ko: "Compass는 네 가지를 모두 하나의 투자 의사결정으로 연결합니다.",
-                                        en: "Compass connects all four into one investment decision." },
+  "landing.v2.whyFail.conclusion":    { ko: "yieldo는 네 가지를 모두 하나의 투자 의사결정으로 연결합니다.",
+                                        en: "yieldo connects all four into one investment decision." },
 
-  // --- Landing Page v2: Section 3 (What Compass Answers) ---
-  "landing.v2.answers.headline":      { ko: "Compass가 실제로 답하는 질문들",  en: "What Compass actually answers" },
+  // --- Landing Page v2: Section 3 (What yieldo Answers) ---
+  "landing.v2.answers.headline":      { ko: "yieldo가 실제로 답하는 질문들",  en: "What yieldo actually answers" },
   "landing.v2.answers.q1":            { ko: "지금 투자를 늘려야 하는가?",       en: "Should we invest more right now?" },
   "landing.v2.answers.q2":            { ko: "페이백이 왜 이동했는가?",         en: "Why did payback drift?" },
   "landing.v2.answers.q3":            { ko: "우리는 시장의 어디에 있는가?",     en: "Where are we below market?" },
@@ -465,8 +465,8 @@ const dictionary = {
   // --- Landing Page v2: Section 4 (Product Modules) ---
   "landing.v2.modules.headline":      { ko: "게임 포트폴리오를 운영하는 더 똑똑한 방법이 있습니다.",
                                         en: "There's a smarter way to run a game portfolio." },
-  "landing.v2.modules.description":   { ko: "Compass는 시장 인텔리전스, UA, 실험, 재무에 걸친 통합 의사결정 레이어를 제공합니다.",
-                                        en: "Compass gives operators a unified decision layer across market intelligence, UA, experiments, and financials." },
+  "landing.v2.modules.description":   { ko: "yieldo는 시장 인텔리전스, UA, 실험, 재무에 걸친 통합 의사결정 레이어를 제공합니다.",
+                                        en: "yieldo gives operators a unified decision layer across market intelligence, UA, experiments, and financials." },
   "landing.v2.modules.m1Name":        { ko: "투자 신호",       en: "Investment Signal" },
   "landing.v2.modules.m1Desc":        { ko: "투자를 늘릴 수 있는가? 신뢰도, 페이백, 현재 자본 효율성을 보여줍니다.",
                                         en: "Can we invest more? Shows confidence, payback, and current capital efficiency." },
@@ -483,8 +483,8 @@ const dictionary = {
   // --- Landing Page v2: Section 5 (Product Proof) ---
   "landing.v2.proof.headline":        { ko: "가장 중요한 의사결정, 한 화면에.",
                                         en: "One screen for the decision that matters most." },
-  "landing.v2.proof.description":     { ko: "Compass는 게임 운영자에게 하나의 투자 신호, 그 근거, 그리고 취할 다음 액션을 제공합니다.",
-                                        en: "Compass gives game operators one investment signal, the evidence behind it, and the next action to take." },
+  "landing.v2.proof.description":     { ko: "yieldo는 게임 운영자에게 하나의 투자 신호, 그 근거, 그리고 취할 다음 액션을 제공합니다.",
+                                        en: "yieldo gives game operators one investment signal, the evidence behind it, and the next action to take." },
 
   // --- Landing Page v2: Section 6A (Chart Story: Revenue vs Investment) ---
   "landing.v2.chart1.headline":       { ko: "성장이 회수되고 있는지 확인하세요.",
@@ -507,8 +507,8 @@ const dictionary = {
   // --- Landing Page v2: Section 7 (Experiment Impact — replaces former Copilot/Explain) ---
   "landing.v2.expImpact.headline":      { ko: "실험은 설명으로 그치지 않습니다. 자본을 움직입니다.",
                                           en: "Experiments don't explain — they move capital." },
-  "landing.v2.expImpact.description":   { ko: "배포된 모든 실험은 측정 가능한 자본 이벤트입니다. ΔLTV · Δ페이백 · Δ런웨이. Compass는 A/B 결과를 투자 판단으로 번역해, 이긴 실험이 다음 자본 결정으로 이어지게 합니다.",
-                                          en: "Every shipped test becomes a measurable capital event: ΔLTV, ΔPayback, ΔRunway. Compass links A/B results to investment outcomes so winning tests translate to next funding decisions." },
+  "landing.v2.expImpact.description":   { ko: "배포된 모든 실험은 측정 가능한 자본 이벤트입니다. ΔLTV · Δ페이백 · Δ런웨이. yieldo는 A/B 결과를 투자 판단으로 번역해, 이긴 실험이 다음 자본 결정으로 이어지게 합니다.",
+                                          en: "Every shipped test becomes a measurable capital event: ΔLTV, ΔPayback, ΔRunway. yieldo links A/B results to investment outcomes so winning tests translate to next funding decisions." },
   "landing.v2.expImpact.experimentName":{ ko: "리워드 캘린더 A/B",                   en: "Reward Calendar A/B" },
   "landing.v2.expImpact.experimentMeta":{ ko: "14일 테스트 · 50% 배포 완료",          en: "14-day test · Shipped to 50%" },
   "landing.v2.expImpact.paybackLabel":  { ko: "페이백",                              en: "Payback" },
@@ -519,14 +519,14 @@ const dictionary = {
   // Deprecated (retained for rollback); prefer landing.v2.expImpact.*
   "landing.v2.explain.headline":      { ko: "예산을 바꾸기 전에 무엇이 변했는지 알아야 합니다.",
                                         en: "Know what changed — before you change the budget." },
-  "landing.v2.explain.description":   { ko: "Compass는 페이백이 왜 이동했는지, 리텐션이나 CPI에서 무엇이 변했는지, 그 변화가 얼마나 중요한지 설명합니다.",
-                                        en: "Compass explains why payback moved, what changed in retention or CPI, and how much those changes matter." },
+  "landing.v2.explain.description":   { ko: "yieldo는 페이백이 왜 이동했는지, 리텐션이나 CPI에서 무엇이 변했는지, 그 변화가 얼마나 중요한지 설명합니다.",
+                                        en: "yieldo explains why payback moved, what changed in retention or CPI, and how much those changes matter." },
 
   // --- Landing Page v2: Section 8 (Experiment-to-Investment) ---
   "landing.v2.experiment.headline":   { ko: "실험은 단순히 출시되지 않습니다. 자본을 움직입니다.",
                                         en: "Experiments don't just ship. They move capital." },
-  "landing.v2.experiment.description":{ ko: "Compass는 실험 결과를 ΔLTV, 페이백 이동, 자본 효율성으로 전환합니다. 따라서 성공한 테스트는 자금 배분 의사결정이 됩니다.",
-                                        en: "Compass translates experiment results into ΔLTV, payback movement, and capital efficiency — so winning tests become funding decisions." },
+  "landing.v2.experiment.description":{ ko: "yieldo는 실험 결과를 ΔLTV, 페이백 이동, 자본 효율성으로 전환합니다. 따라서 성공한 테스트는 자금 배분 의사결정이 됩니다.",
+                                        en: "yieldo translates experiment results into ΔLTV, payback movement, and capital efficiency — so winning tests become funding decisions." },
   "landing.v2.experiment.pipelineStep1":  { ko: "실험 결과",  en: "Experiment Result" },
   "landing.v2.experiment.pipelineStep2":  { ko: "ΔLTV",      en: "ΔLTV" },
   "landing.v2.experiment.pipelineStep3":  { ko: "페이백",     en: "Payback" },
@@ -541,8 +541,8 @@ const dictionary = {
                                         en: "Experimentation tells you which variant won" },
   "landing.v2.compare.finance":       { ko: "재무 도구는 무엇을 썼는지 말해줍니다",
                                         en: "Finance tells you what was spent" },
-  "landing.v2.compare.compass":       { ko: "Compass는 더 투자해야 하는지 말해줍니다",
-                                        en: "Compass tells you whether to invest more" },
+  "landing.v2.compare.yieldo":       { ko: "yieldo는 더 투자해야 하는지 말해줍니다",
+                                        en: "yieldo tells you whether to invest more" },
 
   // --- Landing Page v2: Section 6 callouts ---
   "landing.v2.chart1.callout":        { ko: "매출 CAGR: +34% · ROAS(D30): 1.14×",
@@ -557,12 +557,12 @@ const dictionary = {
                                         en: "Why did payback drift from D42 to D47?" },
 
   // --- Landing Page v2: Section 8 subhead ---
-  "landing.v2.experiment.subhead":    { ko: "Compass는 실험 결과를 ΔLTV, 회수 기간 변동, 자본 효율성으로 번역합니다.",
-                                        en: "Compass translates experiment results into ΔLTV, payback movement, and capital efficiency — so winning tests become funding decisions." },
+  "landing.v2.experiment.subhead":    { ko: "yieldo는 실험 결과를 ΔLTV, 회수 기간 변동, 자본 효율성으로 번역합니다.",
+                                        en: "yieldo translates experiment results into ΔLTV, payback movement, and capital efficiency — so winning tests become funding decisions." },
 
   // --- Landing Page v2: Section 9 subhead ---
-  "landing.v2.compare.subhead":       { ko: "분석 도구는 무슨 일이 있었는지 말해줍니다. Compass는 다음에 무엇을 해야 할지 말해줍니다.",
-                                        en: "Analytics tells you what happened. Compass tells you what to do next." },
+  "landing.v2.compare.subhead":       { ko: "분석 도구는 무슨 일이 있었는지 말해줍니다. yieldo는 다음에 무엇을 해야 할지 말해줍니다.",
+                                        en: "Analytics tells you what happened. yieldo tells you what to do next." },
 
   // --- Landing Page v2: Section 10 (CTA) ---
   "landing.v2.cta.heading":          { ko: "데이터가 아닌 판단을 확인하세요.",
@@ -571,8 +571,8 @@ const dictionary = {
   "landing.v2.cta.secondaryButton":   { ko: "제품 둘러보기",  en: "See the product" },
   "landing.v2.cta.secondary":         { ko: "또는 라이브 데모 탐색하기 →",
                                         en: "Or explore the live demo →" },
-  "landing.v2.cta.description":       { ko: "Compass가 게임 데이터를 투자 판단으로 어떻게 전환하는지 보세요.",
-                                        en: "See how Compass turns game data into investment decisions." },
+  "landing.v2.cta.description":       { ko: "yieldo가 게임 데이터를 투자 판단으로 어떻게 전환하는지 보세요.",
+                                        en: "See how yieldo turns game data into investment decisions." },
 
 } as const
 

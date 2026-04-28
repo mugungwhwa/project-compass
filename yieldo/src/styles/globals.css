@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 /*
-  Compass Design Tokens — US Enterprise Edition
+  yieldo Design Tokens — US Enterprise Edition
   ----------------------------------------------
-  Source of truth: docs/Project_Compass_Design_Migration_Log.md §1.2
+  Source of truth: docs/Project_yieldo_Design_Migration_Log.md §1.2
   Mood: "Bloomberg Terminal meets Vercel"
   Theme default: light. Dark via html[data-theme="dark"].
   DO NOT add decorative colors (coral, lavender, glow effects).
@@ -84,7 +84,7 @@
   /* ---------- Legacy aliases (transitional — remove after full migration) ---------- */
   /* These keep existing widgets from breaking while we refactor them module-by-module.
      Each alias should be removed as its last consumer is migrated to the new tokens.
-     Tracking: docs/Project_Compass_Design_Migration_Log.md §3 */
+     Tracking: docs/Project_yieldo_Design_Migration_Log.md §3 */
   --background: var(--bg-0);
   --card: var(--bg-1);
   --border: var(--border-default);
@@ -198,7 +198,7 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Global tabular numerals — every number in Compass is comparable */
+/* Global tabular numerals — every number in yieldo is comparable */
 * {
   font-variant-numeric: tabular-nums;
 }
@@ -270,7 +270,7 @@ body {
   the target. Each class should be deleted as its last consumer is migrated.
 
   Do NOT use these in new code. Use the new tokens and <DecisionSurface>.
-  Tracking: docs/Project_Compass_Design_Migration_Log.md §3
+  Tracking: docs/Project_yieldo_Design_Migration_Log.md §3
   ============================================================================
 */
 

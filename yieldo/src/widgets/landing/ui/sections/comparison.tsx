@@ -104,7 +104,7 @@ export function ComparisonSection() {
             </motion.div>
           ))}
 
-          {/* Compass card — visually distinguished */}
+          {/* yieldo card — visually distinguished */}
           <motion.div
             custom={competitors.length + 0.05}
             variants={cardVariant}
@@ -114,7 +114,7 @@ export function ComparisonSection() {
             className="p-7 bg-[var(--bg-1)] border border-[var(--brand)] rounded-[var(--radius-card)]"
           >
             <p className="text-xs uppercase tracking-wide text-[var(--brand)]">
-              Compass
+              yieldo
             </p>
             <p className="text-base font-semibold text-[var(--fg-0)] mt-3">
               Decision Layer
@@ -123,7 +123,7 @@ export function ComparisonSection() {
               className="text-sm text-[var(--fg-1)] mt-3 leading-relaxed font-medium"
               style={{ wordBreak: "keep-all" }}
             >
-              {t("landing.v2.compare.compass")}
+              {t("landing.v2.compare.yieldo")}
             </p>
           </motion.div>
         </div>

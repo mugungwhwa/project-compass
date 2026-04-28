@@ -8,12 +8,12 @@
   violating the "if it looks clickable, it must work" principle.
 
   - Game selector now lives ONCE in sidebar top (global context switcher)
-  - Period selector removed entirely — Compass is a "current state" decision tool,
+  - Period selector removed entirely — yieldo is a "current state" decision tool,
     not an analytics tool. Per-chart time filters will be added where needed.
   - Export removed — will return as per-chart icons when real PDF/CSV is built.
   - "5분 전" timestamp → "Sample data" badge (honest about demo state)
 
-  See: docs/Project_Compass_Design_Migration_Log.md §7
+  See: docs/Project_yieldo_Design_Migration_Log.md §7
 */
 
 import { useLocale } from "@/shared/i18n"

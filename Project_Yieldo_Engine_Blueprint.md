@@ -1,4 +1,4 @@
-# Project Compass — 통계/추론 엔진 구현 블루프린트
+# yieldo — 통계/추론 엔진 구현 블루프린트
 
 **Version**: 1.0
 **Date**: 2026-04-01
@@ -260,7 +260,7 @@ CREATE TABLE financial_access_log (
   ip_address INET
 );
 
--- Compass 산출물 (테넌트별 격리)
+-- yieldo 산출물 (테넌트별 격리)
 retention_predictions -- 리텐션 예측 결과 (P10/P50/P90)
 investment_metrics    -- LTV, Payback, BEP, IRR, ROAS 산출물
 investment_signals    -- Green/Yellow/Red 판정 + 근거
@@ -821,7 +821,7 @@ def calculate_payback(ltv: LTVResult, cpi: float) -> PaybackResult:
   투자 시그널 변화: YELLOW → GREEN (BEP 확률 +12pp)
 ```
 
-이 체인이 Compass의 핵심 가치다 — A/B 플랫폼이 "Treatment 승리"를 보고하는 시점에서, Compass는 "이 승리가 $44K 연간 추가 수익과 14일 빠른 페이백을 의미한다"고 번역한다.
+이 체인이 yieldo의 핵심 가치다 — A/B 플랫폼이 "Treatment 승리"를 보고하는 시점에서, yieldo는 "이 승리가 $44K 연간 추가 수익과 14일 빠른 페이백을 의미한다"고 번역한다.
 
 ```python
 def translate_experiment_to_investment(
@@ -913,7 +913,7 @@ def translate_experiment_to_investment(
 
 ### 5.3.1 Variant-Level LTV Decomposition
 
-A/B 실험은 단순 "treatment vs control"이 아니라 **다중 variant + 롤아웃 이력**으로 운영된다. Compass는 실험을 `ExperimentVariant` 단위로 분해하여 각 variant가 **실제로 이동시킨 LTV**를 추적한다.
+A/B 실험은 단순 "treatment vs control"이 아니라 **다중 variant + 롤아웃 이력**으로 운영된다. yieldo는 실험을 `ExperimentVariant` 단위로 분해하여 각 variant가 **실제로 이동시킨 LTV**를 추적한다.
 
 ```python
 def decompose_experiment_to_variants(
@@ -962,7 +962,7 @@ def decompose_experiment_to_variants(
 
 ### 5.3.2 Deployment-Stage LTV Ripple Forecasting
 
-A/B 실험이 "승리"했다고 해서 100% 롤아웃 시 효과가 ATE 그대로 유지되는 것은 아니다. Compass는 **stage-wise ripple forecast**를 생성하여 각 확장 단계의 예상 LTV 리프트를 사전 추정한다.
+A/B 실험이 "승리"했다고 해서 100% 롤아웃 시 효과가 ATE 그대로 유지되는 것은 아니다. yieldo는 **stage-wise ripple forecast**를 생성하여 각 확장 단계의 예상 LTV 리프트를 사전 추정한다.
 
 ```python
 def forecast_rollout_ripple(
@@ -1224,7 +1224,7 @@ Green/Yellow/Red 시그널 판정 (BEP 확률, ROAS, Burn Tolerance 종합)
 ```
 
 예산 재배분 결정은 개별 인터벤션의 ΔLTV와 Experiment ROI 누적 값에 근거한다.
-**가장 높은 ROI를 보인 인터벤션 유형에 자원을 집중하는 것이 Compass의 최종 권고 논리다.**
+**가장 높은 ROI를 보인 인터벤션 유형에 자원을 집중하는 것이 yieldo의 최종 권고 논리다.**
 
 ### 6.1 Green / Yellow / Red 판정 로직
 
@@ -1695,5 +1695,5 @@ Week 7-8: Stage 5 (DECIDE) + Dashboard
 - CLAUDE.md Section 4: Bayesian Decision Framework
 - CLAUDE.md Section 5: Revenue Modeling Engine
 - CLAUDE.md Section 6: Experiment-to-Investment Translation
-- Project_Compass_Tech_Stack.md: 기술 스택 상세
-- Project_Compass_Data_Sources_Guide.md: 데이터 소스 URL/API 상세
+- Project_Yieldo_Tech_Stack.md: 기술 스택 상세
+- Project_Yieldo_Data_Sources_Guide.md: 데이터 소스 URL/API 상세

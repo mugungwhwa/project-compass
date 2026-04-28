@@ -95,7 +95,7 @@ export const REVENUE_FORECAST_COLORS = {
   prior:      PALETTE.risk,               // #C9372C
   priorFill:  "rgba(201, 55, 44, 0.08)",
   priorLine:  "rgba(201, 55, 44, 0.55)",
-  // Experiment fork — blue dashed (Compass brand blue for "if we ship this")
+  // Experiment fork — blue dashed (yieldo brand blue for "if we ship this")
   experiment: PALETTE.revenue,            // #5B9AFF
   forkMark:   PALETTE.legendGray,         // #64748B, vertical ship-line
   // Shared neutrals

@@ -7,7 +7,7 @@
   Only ONE game selector in the entire app — sidebar owns the global context.
   No duplicate in PageHeader.
 
-  See: docs/Project_Compass_Design_Migration_Log.md
+  See: docs/Project_yieldo_Design_Migration_Log.md
 */
 
 import Link from "next/link"

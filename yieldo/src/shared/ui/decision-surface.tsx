@@ -1,12 +1,12 @@
 "use client"
 
 /*
-  <DecisionSurface> — Compass's unit component.
+  <DecisionSurface> — yieldo's unit component.
   ----------------------------------------------
-  Every decision point in Compass MUST use this pattern.
+  Every decision point in yieldo MUST use this pattern.
   4-part structure: Situation → Confidence → Recommendation → Evidence.
 
-  Source of truth: docs/Project_Compass_Design_Migration_Log.md §4.1
+  Source of truth: docs/Project_yieldo_Design_Migration_Log.md §4.1
 
   Rules:
   - Confidence is NOT optional. Point estimates without intervals are forbidden.

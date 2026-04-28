@@ -3,7 +3,7 @@ import { CopilotProvider, RunwayStatusBar, CopilotCommandBar } from "@/widgets/a
 
 /*
   Dashboard shell layout — 2026-04-08 refactor (Variant A).
-  See: docs/Project_Compass_Design_Migration_Log.md §5
+  See: docs/Project_yieldo_Design_Migration_Log.md §5
        .omc/specs/2026-04-08-dashboard-shell-refactor.md
 
   Structure:

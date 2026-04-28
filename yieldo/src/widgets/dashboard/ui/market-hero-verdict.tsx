@@ -15,7 +15,7 @@
   so that the ConfidenceBar reflects how stable the current position is:
   a stable top rank → tight band; a volatile rank → wider band.
 
-  Source of truth: docs/Project_Compass_Design_Migration_Log.md §4.1
+  Source of truth: docs/Project_yieldo_Design_Migration_Log.md §4.1
 */
 
 import { useLocale } from "@/shared/i18n"

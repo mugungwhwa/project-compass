@@ -16,7 +16,7 @@
     reason      → DecisionSurface.situation               (new optional prop)
     factors     → DecisionSurface.evidence                (collapsed list)
 
-  Source of truth: docs/Project_Compass_Design_Migration_Log.md §4.1
+  Source of truth: docs/Project_yieldo_Design_Migration_Log.md §4.1
 */
 
 import { useLocale } from "@/shared/i18n"

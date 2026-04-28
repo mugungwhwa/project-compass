@@ -1,6 +1,6 @@
-# Project Compass
+# yieldo
 
-## Experiment-to-Investment Decision OS for the Mobile Gaming Industry
+## Signal-to-Yield Operating Terminal for the Mobile Gaming Industry
 
 ### Business Plan
 
@@ -13,7 +13,7 @@ Prepared: March 2026
 
 1. [Executive Summary](#1-executive-summary)
 2. [The Problem](#2-the-problem)
-3. [The Solution: Project Compass](#3-the-solution-project-compass)
+3. [The Solution: yieldo](#3-the-solution-project-yieldo)
 4. [Why Now](#4-why-now)
 5. [Market Opportunity](#5-market-opportunity)
 6. [Product Overview](#6-product-overview)
@@ -39,7 +39,7 @@ The mobile gaming industry generates over $90 billion annually, yet the operator
 
 Today, teams run A/B tests and live game interventions constantly — but the results are never translated into capital decisions. Experimentation platforms (Statsig, LaunchDarkly) report that a variant won. Attribution platforms (AppsFlyer, Adjust) report where users came from. But no tool connects those results to LTV impact, payback shift, or capital allocation guidance. **Teams know experiment winners, but not investment winners.** A/B tools tell teams what won, but not whether it created investment value. Live game iteration lacks an operating system linking intervention to LTV.
 
-**Project Compass** is the world's first **Experiment-to-Investment Decision Operating System** for the mobile gaming industry. It sits above existing tools and translates every intervention — A/B test result, live ops event, UA change, feature release — into investment language: ΔLTV, payback shift, and capital allocation guidance. Compass does not merely evaluate whether a game deserves more capital. It measures whether ongoing game interventions are creating the conditions that justify more capital.
+**yieldo** is the world's first **Experiment-to-Investment Decision Operating System** for the mobile gaming industry. It sits above existing tools and translates every intervention — A/B test result, live ops event, UA change, feature release — into investment language: ΔLTV, payback shift, and capital allocation guidance. yieldo does not merely evaluate whether a game deserves more capital. It measures whether ongoing game interventions are creating the conditions that justify more capital.
 
 **We are not building another analytics tool. We are building the intervention-to-investment translation layer that the industry has never had.**
 
@@ -47,7 +47,7 @@ Today, teams run A/B tests and live game interventions constantly — but the re
 
 | | |
 |---|---|
-| **Product** | Experiment-to-Investment Decision OS for mobile game operators |
+| **Product** | Signal-to-Yield Operating Terminal for mobile game operators |
 | **Category** | Intervention-to-Investment Intelligence (new category) |
 | **Target Users** | Game company CEOs, UA/Marketing leads, Live Ops heads, CFOs, BD teams |
 | **Positioning** | Translates interventions and experiment outcomes into Capital Allocation Intelligence |
@@ -129,15 +129,15 @@ The result: billions of dollars in misallocated capital across the industry ever
 
 ---
 
-## 3. The Solution: Project Compass
+## 3. The Solution: yieldo
 
 ### 3.1 One-Line Definition
 
-**Project Compass translates every game intervention — experiment result, live ops action, UA change, feature release — into capital allocation intelligence. It is the Experiment-to-Investment Decision OS for the mobile gaming industry.**
+**yieldo translates every game intervention — experiment result, live ops action, UA change, feature release — into capital allocation intelligence. It is the Signal-to-Yield Operating Terminal for the mobile gaming industry.**
 
-### 3.2 What Compass Does
+### 3.2 What yieldo Does
 
-Project Compass is not an analytics dashboard. It is an **operating system for intervention-to-investment decisions**. The core translation chain that Compass executes for every intervention is:
+yieldo is not an analytics dashboard. It is an **operating system for intervention-to-investment decisions**. The core translation chain that yieldo executes for every intervention is:
 
 ```
 Intervention (A/B test, live ops event, UA change, feature release)
@@ -147,9 +147,9 @@ Intervention (A/B test, live ops event, UA change, feature release)
     → Decision (invest more / hold / reduce / pivot)
 ```
 
-This chain is what every existing tool fails to complete. Compass exists to close it.
+This chain is what every existing tool fails to complete. yieldo exists to close it.
 
-More specifically, Compass:
+More specifically, yieldo:
 
 1. **Integrates** data from multiple sources:
    - External market data (Sensor Tower, AppMagic)
@@ -169,9 +169,9 @@ More specifically, Compass:
    - "Your experiment velocity is generating $X in annualized capital efficiency gains"
    - "Market saturation signals suggest reducing spend by X% over the next quarter"
 
-### 3.3 What Compass Does NOT Do
+### 3.3 What yieldo Does NOT Do
 
-Compass deliberately avoids competing with existing best-in-class tools:
+yieldo deliberately avoids competing with existing best-in-class tools:
 
 | We Do NOT Build | Why |
 |---|---|
@@ -181,14 +181,14 @@ Compass deliberately avoids competing with existing best-in-class tools:
 | Data warehouse infrastructure | Databricks / Snowflake serve this need |
 | Generic BI dashboards | Looker / Tableau already exist |
 
-Instead, Compass is the **translation layer** that sits above all of these and converts their outputs into capital allocation decisions.
+Instead, yieldo is the **translation layer** that sits above all of these and converts their outputs into capital allocation decisions.
 
 ### 3.4 Core Philosophy: Intervention Over Observation
 
 Traditional analytics answers: *"What happened?"*
-Project Compass answers: **"What intervention drives what investment outcome?"**
+yieldo answers: **"What intervention drives what investment outcome?"**
 
-Every screen in Compass is structured as:
+Every screen in yieldo is structured as:
 
 ```
 Action (UA spend, live ops event, balance patch, A/B result, feature release)
@@ -230,7 +230,7 @@ Modern AI and machine learning capabilities enable:
 - Automated anomaly detection across market and internal signals
 - Scenario simulation at speeds previously impossible
 
-These capabilities make a product like Compass viable for the first time.
+These capabilities make a product like yieldo viable for the first time.
 
 ### 4.4 Industry Consolidation Creates Urgency
 
@@ -272,7 +272,7 @@ Projected Year 3 ARR: **$5M-$15M**
 
 ### 5.4 Market Expansion Potential
 
-Beyond mobile gaming, the Investment Decision OS model applies to:
+Beyond mobile gaming, the Operating Intelligence Terminal model applies to:
 
 - **Console/PC gaming** publishers with live-service models
 - **Digital entertainment** (streaming, social media apps) with similar UA/LTV economics
@@ -284,7 +284,7 @@ Beyond mobile gaming, the Investment Decision OS model applies to:
 
 ### 6.1 Product Architecture
 
-Compass is organized into five core modules, each designed around a specific decision need:
+yieldo is organized into five core modules, each designed around a specific decision need:
 
 #### Module 1: Executive Overview — "Can We Invest More?" *(Summary Layer)*
 
@@ -341,7 +341,7 @@ The decision-making cockpit.
 
 ### 6.2 User Experience Philosophy
 
-Compass is designed for **business operators, not data analysts**. Every interface element follows three rules:
+yieldo is designed for **business operators, not data analysts**. Every interface element follows three rules:
 
 1. **Decision-first**: Every screen starts with the decision it enables, not the data behind it
 2. **Action-linked**: Every metric is connected to a specific action that can change it
@@ -394,7 +394,7 @@ Compass is designed for **business operators, not data analysts**. Every interfa
 
 ### 7.5 Modeling Approach
 
-Compass employs a **Bayesian decision support** framework rather than a "prediction machine" approach:
+yieldo employs a **Bayesian decision support** framework rather than a "prediction machine" approach:
 
 - **External Market Prior**: Market-level benchmarks and trends form the prior belief
 - **Internal Observed Posterior**: Actual game performance data updates the belief
@@ -413,8 +413,8 @@ Compass employs a **Bayesian decision support** framework rather than a "predict
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    PROJECT COMPASS                          │
-│                 Investment Decision OS                      │
+│                    PROJECT YIELDO                          │
+│                 Operating Intelligence Terminal                      │
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
 │   ┌─────────────┐  ┌──────────────┐  ┌─────────────────┐   │
@@ -458,16 +458,16 @@ Compass employs a **Bayesian decision support** framework rather than a "predict
 
 **Key design decisions**:
 
-- Customers are not required to use Databricks — Compass ingests data from their existing warehouse
+- Customers are not required to use Databricks — yieldo ingests data from their existing warehouse
 - Long-term architecture supports customer-owned warehouse or hybrid deployment models
-- All modeling runs on Compass infrastructure to protect proprietary algorithms
+- All modeling runs on yieldo infrastructure to protect proprietary algorithms
 
 ### 8.3 Integration Architecture
 
-Compass is designed as a **read-layer** that integrates with existing tools, not replaces them:
+yieldo is designed as a **read-layer** that integrates with existing tools, not replaces them:
 
 - **API-first**: All data connectors are API-based for easy integration
-- **No SDK required**: Compass does not require customers to install client-side SDKs
+- **No SDK required**: yieldo does not require customers to install client-side SDKs
 - **Flexible ingestion**: Supports API pulls, webhook pushes, file uploads, and warehouse queries
 - **Export capability**: Decision outputs can be exported to existing BI tools, Slack, email, or custom integrations
 
@@ -499,7 +499,7 @@ Compass is designed as a **read-layer** that integrates with existing tools, not
 
 | Revenue Stream | Description | Pricing |
 |---|---|---|
-| Platform Subscription | Core Investment Decision OS access | $3K-$10K/month |
+| Platform Subscription | Core Operating Intelligence Terminal access | $3K-$10K/month |
 | Seat-Based Pricing | Per-user access for additional team members | $500-$1K/seat/month |
 | Project Add-Ons | Additional game titles or projects | $1K-$3K/project/month |
 | Premium Modeling | Advanced scenario simulation and forecasting | $2K-$5K/month add-on |
@@ -511,7 +511,7 @@ Compass is designed as a **read-layer** that integrates with existing tools, not
 | Enterprise Contracts | Custom deployment, SLA, dedicated support | $100K-$500K/year |
 | API Access | Programmatic access to decision intelligence | Usage-based pricing |
 | Data Connector Marketplace | Pre-built integrations with additional data sources | Revenue share model |
-| Strategic Advisory | C-level decision support powered by Compass data | Premium retainer |
+| Strategic Advisory | C-level decision support powered by yieldo data | Premium retainer |
 
 ### 9.2 Unit Economics (Target at Scale)
 
@@ -525,7 +525,7 @@ Compass is designed as a **read-layer** that integrates with existing tools, not
 
 ### 9.3 Pricing Philosophy
 
-Compass pricing is based on **value delivered**, not data volume. The product helps operators make multi-million dollar allocation decisions — pricing reflects a fraction of the capital efficiency gains it enables.
+yieldo pricing is based on **value delivered**, not data volume. The product helps operators make multi-million dollar allocation decisions — pricing reflects a fraction of the capital efficiency gains it enables.
 
 ---
 
@@ -533,7 +533,7 @@ Compass pricing is based on **value delivered**, not data volume. The product he
 
 ### 10.1 The Category Gap
 
-The most important insight about Compass's competitive position is this: **the category does not yet exist.**
+The most important insight about yieldo's competitive position is this: **the category does not yet exist.**
 
 No current product combines market intelligence, operational data, experiment results, and financial modeling into a unified investment decision layer for game operators. This represents a genuine whitespace opportunity.
 
@@ -549,13 +549,13 @@ No current product combines market intelligence, operational data, experiment re
 | **Looker / Tableau** | General BI visualization | Shows data, doesn't make decisions — requires analyst interpretation |
 | **Internal spreadsheets** | Ad-hoc financial modeling | Fragile, disconnected from live data, not scalable |
 
-### 10.3 Compass Positioning
+### 10.3 yieldo Positioning
 
 ```
                     Market Data Integration
                            ▲
                            │
-          Sensor Tower  ●  │         ● Compass
+          Sensor Tower  ●  │         ● yieldo
           AppMagic      ●  │
                            │
     ◄──────────────────────┼──────────────────────►
@@ -570,13 +570,13 @@ No current product combines market intelligence, operational data, experiment re
                     Internal Data Integration
 ```
 
-**Compass occupies the upper-right quadrant** — high integration of both market and internal data, oriented toward decisions rather than observations. No current player occupies this space.
+**yieldo occupies the upper-right quadrant** — high integration of both market and internal data, oriented toward decisions rather than observations. No current player occupies this space.
 
 ### 10.4 Adjacent Category Distinction: Funding Intelligence vs. Intervention-to-Investment OS
 
-An important distinction separates Compass from funding-oriented tools (e.g., PvX Partners, Lambda-style revenue-based financing platforms):
+An important distinction separates yieldo from funding-oriented tools (e.g., PvX Partners, Lambda-style revenue-based financing platforms):
 
-| Dimension | Funding Intelligence (PvX / Lambda style) | Compass: Intervention-to-Investment OS |
+| Dimension | Funding Intelligence (PvX / Lambda style) | yieldo: Intervention-to-Investment OS |
 |---|---|---|
 | **Core question** | "Does this game qualify for external financing?" | "Are our interventions creating investable growth?" |
 | **Data direction** | Outside-in: financier evaluates operator | Inside-out: operator understands their own economics |
@@ -585,23 +585,23 @@ An important distinction separates Compass from funding-oriented tools (e.g., Pv
 | **Experiment role** | Not included | Central — ATE → ΔLTV is a core pipeline |
 | **Live ops role** | Not included | Action Impact Board measures every intervention |
 
-Compass is **not a funding readiness or underwriting tool**. It is an operating system that helps operators understand whether their own game interventions are compounding investment value — and whether that justifies continued or increased capital deployment.
+yieldo is **not a funding readiness or underwriting tool**. It is an operating system that helps operators understand whether their own game interventions are compounding investment value — and whether that justifies continued or increased capital deployment.
 
 ### 10.5 Competitive Moat
 
 1. **Intervention-to-Investment Translation**: Proprietary pipeline from ATE/action logs → ΔLTV → payback shift — not replicable from generic BI tools
 2. **Integration Complexity**: Combining experimentation results, live ops logs, MMP data, and financial inputs into a coherent investment framework creates significant switching costs
-3. **Network Effects**: As more customers use Compass, anonymized benchmark data improves genre-level priors and ΔLTV estimates for all users
+3. **Network Effects**: As more customers use yieldo, anonymized benchmark data improves genre-level priors and ΔLTV estimates for all users
 4. **Operational Knowledge**: Built by operators who understand the actual decision process, not by data infrastructure engineers
 5. **Category Definition**: First-mover advantage in defining the Intervention-to-Investment OS category
 
 ### 10.6 Relationship with Market Intelligence Providers
 
-Compass is **complementary** to Sensor Tower, AppMagic, and similar providers — not competitive.
+yieldo is **complementary** to Sensor Tower, AppMagic, and similar providers — not competitive.
 
-- Compass makes their data more valuable by connecting it to investment decisions
+- yieldo makes their data more valuable by connecting it to investment decisions
 - Long-term partnership or acquisition opportunities exist
-- Compass can serve as a premium layer that increases the perceived value of market intelligence subscriptions
+- yieldo can serve as a premium layer that increases the perceived value of market intelligence subscriptions
 
 ---
 
@@ -660,11 +660,11 @@ Focus on decision-makers at mobile game companies:
 
 | Partner Type | Value Proposition | Examples |
 |---|---|---|
-| Market Intelligence | Compass adds a decision layer to their data | Sensor Tower, AppMagic |
-| Attribution Platforms | Compass connects UA measurement to investment outcomes | AppsFlyer, Adjust |
-| Game Publishers | Compass helps portfolio-level capital allocation | Major publishers |
-| Industry Consultancies | Compass powers their advisory practice | Game industry advisors |
-| Data Platforms | Compass is a premium application on their infrastructure | Databricks, Snowflake |
+| Market Intelligence | yieldo adds a decision layer to their data | Sensor Tower, AppMagic |
+| Attribution Platforms | yieldo connects UA measurement to investment outcomes | AppsFlyer, Adjust |
+| Game Publishers | yieldo helps portfolio-level capital allocation | Major publishers |
+| Industry Consultancies | yieldo powers their advisory practice | Game industry advisors |
+| Data Platforms | yieldo is a premium application on their infrastructure | Databricks, Snowflake |
 
 ---
 
@@ -682,9 +682,9 @@ The founding team comes from **Treenod's Data Team**, bringing deep, hands-on ex
 
 3. **Industry Network**: Deep relationships across the Korean and Asia-Pacific mobile gaming ecosystem — providing immediate access to pilot customers and design partners.
 
-4. **Technical Depth**: Proven capability in data engineering, statistical modeling, machine learning, and production system design — the exact skills required to build Compass.
+4. **Technical Depth**: Proven capability in data engineering, statistical modeling, machine learning, and production system design — the exact skills required to build yieldo.
 
-5. **Business Acumen**: Understanding of mobile gaming economics, UA dynamics, live operations, and capital allocation — the domain knowledge that makes Compass's decision layer credible.
+5. **Business Acumen**: Understanding of mobile gaming economics, UA dynamics, live operations, and capital allocation — the domain knowledge that makes yieldo's decision layer credible.
 
 ### 12.2 Why Operator Background Matters
 
@@ -769,7 +769,7 @@ A purely technical team would build a better analytics tool. A purely business t
 
 ### 14.4 Path to Profitability
 
-Compass reaches **cash-flow positive in Year 2** through the combination of:
+yieldo reaches **cash-flow positive in Year 2** through the combination of:
 - High-margin SaaS revenue replacing lower-margin consulting
 - Efficient customer acquisition through industry networks
 - Low infrastructure costs relative to revenue (no raw data collection costs)
@@ -802,7 +802,7 @@ Compass reaches **cash-flow positive in Year 2** through the combination of:
 
 1. **Validate** the investment decision framework with 5-10 paying pilot customers
 2. **Build** the MVP platform with core decision modules
-3. **Prove** that Compass measurably improves capital allocation decisions
+3. **Prove** that yieldo measurably improves capital allocation decisions
 4. **Establish** repeatable go-to-market playbook for the gaming industry
 5. **Position** for Series A with demonstrated product-market fit and $1M+ ARR trajectory
 
@@ -820,7 +820,7 @@ Compass reaches **cash-flow positive in Year 2** through the combination of:
 
 ### 16.1 The Three Horizons
 
-**Horizon 1 (Years 1-3): Mobile Gaming Investment Decision OS**
+**Horizon 1 (Years 1-3): Mobile Gaming Operating Intelligence Terminal**
 - Establish the category and prove the value proposition
 - Build a profitable, growing SaaS business serving mobile game operators
 
@@ -829,22 +829,22 @@ Compass reaches **cash-flow positive in Year 2** through the combination of:
 - Add portfolio-level decision support for publishers managing 10+ titles
 - Build the industry's most comprehensive investment benchmark dataset
 
-**Horizon 3 (Years 5+): Universal Investment Decision OS**
+**Horizon 3 (Years 5+): Universal Operating Intelligence Terminal**
 - Apply the framework to adjacent industries with similar economics (streaming, e-commerce, subscription businesses)
 - Become the standard infrastructure for capital allocation intelligence
 
 ### 16.2 Strategic Optionality
 
-Compass is designed to create multiple strategic outcomes:
+yieldo is designed to create multiple strategic outcomes:
 
 1. **Independent Growth**: Scale as a standalone SaaS company with $100M+ ARR potential
 2. **Strategic Acquisition**: Highly attractive to market intelligence companies (Sensor Tower, data.ai) who want to move up the value chain from data to decisions
 3. **Platform Evolution**: Become the operating system layer that other tools plug into, creating a defensible ecosystem
-4. **Internal Leverage**: The Compass framework becomes a proprietary advantage for the founding team's long-term ambition to operate their own gaming studio — with the industry's best investment decision infrastructure already built in-house
+4. **Internal Leverage**: The yieldo framework becomes a proprietary advantage for the founding team's long-term ambition to operate their own gaming studio — with the industry's best investment decision infrastructure already built in-house
 
 ### 16.3 The Founder's North Star
 
-> *"We build Compass not just as a business, but as proof that the most important layer in gaming — the investment decision layer — has been missing. When we eventually build our own games, we will already have the operating system that every studio wishes they had."*
+> *"We build yieldo not just as a business, but as proof that the most important layer in gaming — the investment decision layer — has been missing. When we eventually build our own games, we will already have the operating system that every studio wishes they had."*
 
 ---
 
@@ -880,7 +880,7 @@ These valuations and market positions validate the scale of opportunity in gamin
 
 ### C. Comparable Company Frameworks
 
-Compass draws inspiration from decision intelligence platforms in other industries:
+yieldo draws inspiration from decision intelligence platforms in other industries:
 
 | Company | Industry | What They Do | Relevance |
 |---|---|---|---|
@@ -889,13 +889,13 @@ Compass draws inspiration from decision intelligence platforms in other industri
 | Gainsight | SaaS | Customer success intelligence | Translates signals into business decisions |
 | Anaplan | Enterprise | Connected planning and capital allocation | Financial modeling integrated with operational data |
 
-Compass applies similar principles to the mobile gaming vertical — with domain-specific models, metrics, and decision frameworks.
+yieldo applies similar principles to the mobile gaming vertical — with domain-specific models, metrics, and decision frameworks.
 
 ---
 
 **Contact**
 
-Project Compass
+yieldo
 [Contact Information]
 [Website]
 

@@ -1,6 +1,6 @@
 /*
   app-shell barrel — components that live above any single page.
-  See: docs/Project_Compass_Design_Migration_Log.md §5
+  See: docs/Project_yieldo_Design_Migration_Log.md §5
 */
 
 export { CopilotProvider, useCopilot } from "./ui/copilot-store"

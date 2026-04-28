@@ -66,8 +66,8 @@ const cardVariants = {
 }
 
 const sectionCopy = {
-  ko: { heading: '왜 Compass인가?', sub: '기존 도구들이 각자의 사일로에서 답하지 못하는 질문 — Compass가 연결합니다.' },
-  en: { heading: 'Why Compass?', sub: 'The question no single tool can answer from its own silo — Compass connects them.' },
+  ko: { heading: '왜 yieldo인가?', sub: '기존 도구들이 각자의 사일로에서 답하지 못하는 질문 — yieldo가 연결합니다.' },
+  en: { heading: 'Why yieldo?', sub: 'The question no single tool can answer from its own silo — yieldo connects them.' },
 }
 
 export function ValueProps() {

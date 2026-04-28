@@ -5,7 +5,7 @@ import { TooltipProvider } from "@/shared/ui/tooltip"
 import { LocaleProvider } from "@/shared/i18n"
 
 /*
-  Font stack — Compass Design Migration (2026-04-07, KR 2026-04-09, refined 2026-04-13)
+  Font stack — yieldo Design Migration (2026-04-07, KR 2026-04-09, refined 2026-04-13)
   --------------------------------------------------------------------------------------
   Geist Sans        → UI / Body / Headings (Latin)
   Pretendard        → UI / Body (Korean) — loaded via CDN, Geist-metric-compatible
@@ -45,7 +45,7 @@ const instrumentSerif = Instrument_Serif({
 // Direct CDN load with subset=korean in the URL includes the 한글 glyphs.
 
 export const metadata: Metadata = {
-  title: "project compass — Experiment-to-Investment Decision OS",
+  title: "project yieldo — Experiment-to-Investment Decision OS",
   description:
     "Translate A/B tests, live ops, and market signals into capital allocation decisions. Built for mobile gaming operators.",
 }
