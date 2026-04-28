@@ -7,43 +7,49 @@
  * in sync with globals.css tokens (noted in comments).
  */
 
-/** Shared palette — mirrors globals.css :root tokens */
+/**
+ * Shared palette — mirrors globals.css :root tokens (dark + phosphor edition).
+ *
+ * Updated 2026-04-28 for yieldo dark/terminal rebrand: all values flipped to
+ * dark-theme hex equivalents.  Chart lines now use phosphor-tier colors so
+ * data pops against the #0A0E1A canvas; muted grays only for axis/grid.
+ */
 export const PALETTE = {
   // Brand / chart tokens
-  p50:           "#1A7FE8",  // --chart-p50
-  bandInner:     "rgba(26, 127, 232, 0.18)", // --chart-band-inner
-  bandOuter:     "rgba(26, 127, 232, 0.10)", // --chart-band-outer
-  benchmark:     "#9CA3AF",  // --chart-benchmark
-  observed:      "#0A0A0A",  // --chart-observed
+  p50:           "#4A9EFF",  // --chart-p50 (info-blue, dark-readable)
+  bandInner:     "rgba(74, 158, 255, 0.50)",  // --chart-band-inner — substantial fill
+  bandOuter:     "rgba(74, 158, 255, 0.28)",  // --chart-band-outer
+  benchmark:     "#B8BFCE",  // dashed benchmark — light enough to read
+  observed:      "#FFFFFF",  // datapoint dots — pure white on dark
 
-  // Signal colors
-  positive:      "#00875A",  // --signal-positive
-  caution:       "#B25E09",  // --signal-caution
-  risk:          "#C9372C",  // --signal-risk
+  // Signal colors — phosphor tier for terminal pop
+  positive:      "#00E89A",  // bright phosphor green
+  caution:       "#FFB347",  // phosphor amber
+  risk:          "#FF6B7A",  // phosphor red
 
-  // Cohort categorical
-  cohort1:       "#1A7FE8",  // --chart-cohort-1
-  cohort2:       "#00875A",  // --chart-cohort-2
-  cohort3:       "#B25E09",  // --chart-cohort-3
-  cohort4:       "#7C3AED",  // --chart-cohort-4
-  cohort5:       "#0891B2",  // --chart-cohort-5
-  cohort6:       "#C9372C",  // --chart-cohort-6
+  // Cohort categorical — terminal-saturated
+  cohort1:       "#4A9EFF",  // info blue
+  cohort2:       "#00E89A",  // do green
+  cohort3:       "#F4C842",  // yield yellow
+  cohort4:       "#C39BFF",  // lavender
+  cohort5:       "#5DD3F0",  // cyan
+  cohort6:       "#FF6B7A",  // coral
 
   // Neutral
-  axis:          "#6B7280",  // --fg-2
-  grid:          "#ECECE8",  // --border-subtle
-  border:        "#E2E2DD",  // --border-default
-  bg:            "#FFFFFF",  // --bg-1
-  fg0:           "#0A0A0A",  // --fg-0
-  fg2:           "#6B7280",  // --fg-2
+  axis:          "#C0C8D6",  // --fg-2 (axis labels — readable)
+  grid:          "#2D3548",  // --chart-grid (visible but subtle)
+  border:        "#1F2436",  // --border-default
+  bg:            "#141826",  // --bg-1 (chart panel background)
+  fg0:           "#FFFFFF",  // --fg-0
+  fg2:           "#C0C8D6",  // --fg-2
 
-  // Legacy hex used by older charts (pre-migration)
-  revenue:       "#5B9AFF",
-  uaSpend:       "#FFA94D",
-  roas:          "#3EDDB5",
-  breakeven:     "#FF6B8A",
-  genreAvgGray:  "#CBD5E1",
-  legendGray:    "#64748B",
+  // Legacy hex aliases — re-pointed at terminal-bright palette
+  revenue:       "#5DE7FF",  // phosphor cyan (revenue line — pops)
+  uaSpend:       "#FFB347",  // phosphor amber
+  roas:          "#4DFFA3",  // phosphor green
+  breakeven:     "#FF6B7A",  // phosphor red
+  genreAvgGray:  "#6B7280",  // muted gray for benchmark on dark
+  legendGray:    "#8E96A4",  // --fg-3 (legend labels)
 } as const
 
 // ─── Per-chart configs ───
@@ -87,17 +93,17 @@ export const REVENUE_DECOMP_COLORS = {
 } as const
 
 export const REVENUE_FORECAST_COLORS = {
-  // Posterior (사후 확률 — 데이터 반영된 현재 예측) — green
-  line:       PALETTE.positive,           // #00875A
-  postFill:   "rgba(0, 135, 90, 0.14)",
+  // Posterior (사후 확률 — 데이터 반영된 현재 예측) — phosphor green
+  line:       PALETTE.positive,           // #00E89A
+  postFill:   "rgba(0, 232, 154, 0.22)",
   postLine:   PALETTE.positive,
-  // Prior (사전 확률 — 장르 벤치마크, 넓은 불확실성) — red
-  prior:      PALETTE.risk,               // #C9372C
-  priorFill:  "rgba(201, 55, 44, 0.08)",
-  priorLine:  "rgba(201, 55, 44, 0.55)",
-  // Experiment fork — blue dashed (yieldo brand blue for "if we ship this")
-  experiment: PALETTE.revenue,            // #5B9AFF
-  forkMark:   PALETTE.legendGray,         // #64748B, vertical ship-line
+  // Prior (사전 확률 — 장르 벤치마크, 넓은 불확실성) — phosphor red
+  prior:      PALETTE.risk,               // #FF6B7A
+  priorFill:  "rgba(255, 107, 122, 0.14)",
+  priorLine:  "rgba(255, 107, 122, 0.6)",
+  // Experiment fork — phosphor cyan dashed
+  experiment: PALETTE.revenue,            // #5DE7FF
+  forkMark:   PALETTE.legendGray,         // vertical ship-line
   // Shared neutrals
   grid:       PALETTE.grid,
   axis:       PALETTE.axis,
@@ -107,7 +113,7 @@ export const REVENUE_FORECAST_COLORS = {
 export const MARKET_BENCHMARK_COLORS = {
   p50:        PALETTE.revenue,
   genre:      PALETTE.benchmark,
-  bandFill:   "rgba(148, 163, 184, 0.08)",
+  bandFill:   "rgba(184, 191, 206, 0.12)",
   grid:       PALETTE.grid,
   axis:       PALETTE.axis,
   border:     PALETTE.border,
@@ -178,8 +184,8 @@ export const ROLLOUT_HISTORY_COLORS = {
 
 export const RIPPLE_FORECAST_COLORS = {
   line:       PALETTE.revenue,
-  bandFill:   "rgba(91, 154, 255, 0.18)",
-  bandFillEnd:"rgba(91, 154, 255, 0.04)",
+  bandFill:   "rgba(93, 231, 255, 0.22)",
+  bandFillEnd:"rgba(93, 231, 255, 0.06)",
   grid:       PALETTE.grid,
   axis:       PALETTE.axis,
   border:     PALETTE.border,
@@ -187,29 +193,29 @@ export const RIPPLE_FORECAST_COLORS = {
 
 export const PRIOR_POSTERIOR_COLORS = {
   prior:      PALETTE.benchmark,
-  priorFill:  "rgba(148, 163, 184, 0.3)",
-  priorBorder:"rgba(148, 163, 184, 0.4)",
+  priorFill:  "rgba(184, 191, 206, 0.30)",
+  priorBorder:"rgba(184, 191, 206, 0.45)",
   posterior:  PALETTE.revenue,
-  postFill:   "rgba(91, 154, 255, 0.6)",
+  postFill:   "rgba(93, 231, 255, 0.55)",
   postBorder: PALETTE.revenue,
 } as const
 
 export const MARKET_GAP_PROOF_COLORS = {
   // Operator 시각 언어: 빨강=장르 기대치, 초록=우리 실적, 파랑=격차 accent
-  // Revenue Forecast(REVENUE_FORECAST_COLORS)와 정합 — 같은 palette 재사용
-  genre:           PALETTE.risk,                   // #C9372C — 장르 기대치(prior)
-  genreFill:       "rgba(201, 55, 44, 0.08)",      // 8% 투명도 dashed hatched
-  genreLine:       "rgba(201, 55, 44, 0.55)",      // hatched line 농도
+  // Revenue Forecast와 정합 — 같은 palette 재사용 (phosphor 톤)
+  genre:           PALETTE.risk,                   // #FF6B7A — 장르 기대치(prior)
+  genreFill:       "rgba(255, 107, 122, 0.12)",
+  genreLine:       "rgba(255, 107, 122, 0.6)",
 
-  our:             PALETTE.positive,               // #00875A — 우리 실적(posterior)
-  ourFill:         "rgba(0, 135, 90, 0.14)",       // 14% 투명도 solid
+  our:             PALETTE.positive,               // #00E89A — 우리 실적(posterior)
+  ourFill:         "rgba(0, 232, 154, 0.18)",
 
-  gapAccent:       PALETTE.revenue,                // #5B9AFF — 격차 표시
+  gapAccent:       PALETTE.revenue,                // #5DE7FF — 격차 표시
 
-  // Invest/Hold/Reduce 판정 신호 (HeroVerdict 팔레트와 동일)
-  signalInvest:    PALETTE.positive,               // #00875A
-  signalHold:      PALETTE.legendGray,             // #64748B
-  signalReduce:    PALETTE.risk,                   // #C9372C
+  // Invest/Hold/Reduce 판정 신호
+  signalInvest:    PALETTE.positive,
+  signalHold:      PALETTE.legendGray,
+  signalReduce:    PALETTE.risk,
 
   axis:            PALETTE.axis,
   grid:            PALETTE.grid,
@@ -220,7 +226,7 @@ export const RUNWAY_FAN_COLORS = {
   p50:        PALETTE.p50,
   bandOuter:  PALETTE.bandOuter,
   bandInner:  PALETTE.bandInner,
-  cashOut:    "rgba(201, 55, 44, 0.08)",
+  cashOut:    "rgba(255, 107, 122, 0.12)",
   cashOutBorder: PALETTE.risk,
   axis:       PALETTE.axis,
   grid:       PALETTE.grid,
@@ -239,9 +245,10 @@ export const BUDGET_DONUT_COLORS = {
 } as const
 
 export const COHORT_HEATMAP_COLORS = {
-  level5:     "#5B9AFF",
-  level4:     "#7AAEFF",
-  level3:     "#A8C8FF",
-  level2:     "#D4E7FF",
-  level1:     "#EBF3FF",
+  // Dark-theme heatmap: brightest cell = phosphor cyan, fade to deep navy
+  level5:     "#5DE7FF",
+  level4:     "#3FB8E0",
+  level3:     "#2A8AB5",
+  level2:     "#1F5B85",
+  level1:     "#173F5C",
 } as const

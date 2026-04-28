@@ -86,10 +86,10 @@ function buildMetrics(gameId: string, cohortMonth: string): Metric[] {
 }
 
 const TONE_CLASS: Record<NonNullable<Metric["tone"]>, string> = {
-  neutral: "text-[var(--fg-0)]",
-  positive: "text-[var(--signal-positive)]",
-  caution: "text-[var(--signal-caution)]",
-  risk: "text-[var(--signal-risk)]",
+  neutral: "text-[var(--phosphor-yellow)]",
+  positive: "text-[var(--phosphor-green)]",
+  caution: "text-[var(--phosphor-amber)]",
+  risk: "text-[var(--phosphor-red)]",
 }
 
 // Shared animation variants for dropdowns
