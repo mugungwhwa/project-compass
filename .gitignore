@@ -1,11 +1,9 @@
 .DS_Store
-# .claude/ — settings.json + commands/ tracked, everything else ignored
-.claude/*
-!.claude/settings.json
-!.claude/commands/
+.claude/
 .omc/
 .superpowers/
 .next/
+Yieldo_MVP_Revision_Notes_*.md
 Compass_MVP_Revision_Notes_*.md
 
 # Git worktrees (superpowers)

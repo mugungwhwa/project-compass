@@ -2,7 +2,7 @@
 
 **Date**: 2026-04-28
 **Status**: Approved by user, ready for implementation plan
-**Scope**: Full rebrand from "Compass" to "yieldo" + visual mockup of two surfaces (Landing Hero, Main Dashboard)
+**Scope**: Full rebrand from "yieldo" to "yieldo" + visual mockup of two surfaces (Landing Hero, Main Dashboard)
 **Source**: User-provided yieldo Design Guidelines v1.0 (in conversation context, not yet committed to repo)
 **Isolation**: Worktree `feature/yieldo-rebrand`
 
@@ -30,27 +30,27 @@ Forbidden: uppercase form (`YIELDO`, `Yieldo`), gradient, shadow, custom kerning
 
 | Decision | Choice |
 |---|---|
-| Q1 Root folder rename | (b) Keep `/Users/mike/Downloads/Compass/` as-is, rename only inner `compass/` → `yieldo/` |
+| Q1 Root folder rename | (b) Keep `/Users/mike/Downloads/yieldo/` as-is, rename only inner `yieldo/` → `yieldo/` |
 | Q2 Mockup surface | (c) Both Landing Hero AND Main Dashboard |
 | Q3 `bloomberg-terminal/` clone usage | (b) Visual aesthetic reference only, no code reuse |
-| Q4 Claude tooling rename | (a) Full unification — `compass-verify`, `compass-dev`, `compass-redflags.sh` all → `yieldo-*` |
+| Q4 Claude tooling rename | (a) Full unification — `yieldo-verify`, `yieldo-dev`, `yieldo-redflags.sh` all → `yieldo-*` |
 
 External systems that consequently require user-side adjustment:
-- Vercel project root directory: `compass` → `yieldo` (one-time manual change in Vercel UI before next deploy)
-- GitHub repo (`mugungwhwa/project-compass`) and git remote: **unchanged** (Q1=b)
+- Vercel project root directory: `yieldo` → `yieldo` (one-time manual change in Vercel UI before next deploy)
+- GitHub repo (`mugungwhwa/project-yieldo`) and git remote: **unchanged** (Q1=b)
 
 ---
 
 ## 3. Section 1 — Rename Strategy
 
 ### 3.1 Directory & metadata
-- `/Users/mike/Downloads/Compass/compass/` → `/Users/mike/Downloads/Compass/yieldo/`
-- `package.json` field `name`: `"compass"` → `"yieldo"`
-- `compass/CLAUDE.md`, `compass/AGENTS.md`, `compass/README.md` content: full rewrite (these are short, repo-internal)
+- `/Users/mike/Downloads/yieldo/yieldo/` → `/Users/mike/Downloads/yieldo/yieldo/`
+- `package.json` field `name`: `"yieldo"` → `"yieldo"`
+- `yieldo/CLAUDE.md`, `yieldo/AGENTS.md`, `yieldo/README.md` content: full rewrite (these are short, repo-internal)
 
 ### 3.2 React component identifiers
-- File: `src/shared/ui/compass-logo.tsx` → `src/shared/ui/yieldo-logo.tsx`
-- Component export: `CompassLogo` → `YieldoLogo`
+- File: `src/shared/ui/yieldo-logo.tsx` → `src/shared/ui/yieldo-logo.tsx`
+- Component export: `yieldoLogo` → `YieldoLogo`
 - All 9 import sites updated (sweep TypeScript imports)
 
 ### 3.3 String occurrences in code (~30 files)
@@ -59,17 +59,17 @@ Mechanical replacements with case-aware mapping:
 
 | Pattern | Replacement |
 |---|---|
-| `compass` (identifier/lowercase) | `yieldo` |
-| `Compass` (PascalCase) | `Yieldo` (only in component names; product references should go to `yieldo` lowercase) |
+| `yieldo` (identifier/lowercase) | `yieldo` |
+| `yieldo` (PascalCase) | `Yieldo` (only in component names; product references should go to `yieldo` lowercase) |
 | `COMPASS` (constants) | `YIELDO` |
-| `"Project Compass"` (string literal) | `"yieldo"` |
+| `"yieldo"` (string literal) | `"yieldo"` |
 
 ### 3.4 Claude tooling chain (Q4=a)
-- `.claude/skills/compass-verify/` → `.claude/skills/yieldo-verify/` + SKILL.md content rebrand
-- `.claude/skills/compass-dev/` → `.claude/skills/yieldo-dev/` + SKILL.md content rebrand
-- `.claude/hooks/compass-redflags.sh` → `.claude/hooks/yieldo-redflags.sh`
+- `.claude/skills/yieldo-verify/` → `.claude/skills/yieldo-verify/` + SKILL.md content rebrand
+- `.claude/skills/yieldo-dev/` → `.claude/skills/yieldo-dev/` + SKILL.md content rebrand
+- `.claude/hooks/yieldo-redflags.sh` → `.claude/hooks/yieldo-redflags.sh`
 - `.claude/settings.json` (and `.claude/settings.local.json` if relevant): update hook paths and skill references
-- User-facing slash commands: `/compass-dev`, `/compass-verify` deprecated → `/yieldo-dev`, `/yieldo-verify`
+- User-facing slash commands: `/yieldo-dev`, `/yieldo-verify` deprecated → `/yieldo-dev`, `/yieldo-verify`
 
 ### 3.5 Asset handling
 - `PROJECT_COMPASS_rocko_*.png` (2 files) → move to `archive/` (preserved for reference, not active)
@@ -78,7 +78,7 @@ Mechanical replacements with case-aware mapping:
 ### 3.6 Verification gate for Section 1
 - `tsc -p .` exits 0
 - `npm run dev` boots without runtime errors
-- Single greppable string: case-insensitive `compass` returns only intended residue (`archive/`, `.git/` history, this spec doc, CLAUDE.md historical notes if any)
+- Single greppable string: case-insensitive `yieldo` returns only intended residue (`archive/`, `.git/` history, this spec doc, CLAUDE.md historical notes if any)
 
 ---
 
@@ -88,15 +88,15 @@ Mechanical replacements with case-aware mapping:
 
 This is the canonical mapping. All copy rewrites must use these substitutions.
 
-| Old (Compass) | New (yieldo) — English | New — Korean (operator-friendly) |
+| Old (yieldo) | New (yieldo) — English | New — Korean (operator-friendly) |
 |---|---|---|
-| Project Compass | yieldo | yieldo (소문자 고정) |
+| yieldo | yieldo | yieldo (소문자 고정) |
 | Investment Decision OS | Operating Intelligence Terminal | 게임 스튜디오 운영 인텔리전스 터미널 |
 | Experiment-to-Investment Decision OS | Signal-to-Yield Operating Terminal | 시그널-수익 운영 터미널 |
 | From experiment to investment | From signal to yield, executed | 시그널을 수익으로, 즉시 실행 |
 | Decision Translation Layer | Yield Operating Layer | 운영 결정 layer |
 | Capital Allocation OS | Portfolio Yield OS | 포트폴리오 수익 운영 |
-| Compass transforms... | yieldo turns... | yieldo는 ...을 ...으로 전환합니다 |
+| yieldo transforms... | yieldo turns... | yieldo는 ...을 ...으로 전환합니다 |
 
 ### 4.2 i18n dictionary.ts (32 occurrences)
 - Apply Section 4.1 mapping
@@ -105,13 +105,13 @@ This is the canonical mapping. All copy rewrites must use these substitutions.
 
 ### 4.3 Document files (rename + content update)
 
-Rename pattern: `Project_Compass_<Topic>.md` → `Project_Yieldo_<Topic>.md`, `Compass_<Topic>.md` → `Yieldo_<Topic>.md`.
+Rename pattern: `Project_Yieldo_<Topic>.md` → `Project_Yieldo_<Topic>.md`, `Yieldo_<Topic>.md` → `Yieldo_<Topic>.md`.
 
 Files affected:
-- Root: `Project_Compass_Business_Plan.md`, `Project_Compass_Tech_Stack.md`, `Project_Compass_Engine_Blueprint.md`, `Project_Compass_UI_Guide.md`, `Project_Compass_Legal.md`, `Project_Compass_Data_Sources_Guide.md`, `Project_Compass_Deck_Redesign_Guide.md`, `Project_Compass_Deck_v2.html`, `Compass_MVP_Revision_Notes_2026-04-13.md`, `Compass_Refocus_Checklist_and_PvX_UI_Benchmark.md`, `Compass_Statsig_Style_Landing_Strategy.md`
-- `archive/`: `Project_Compass_Legal_Crawling.md`, `Project_Compass_Legal_API_Integration.md`
-- `docs/`: `Project_Compass_BM_Packaging_Plan.md`, `Project_Compass_B2B_Readiness_Blueprint.md`, `Project_Compass_Design_Migration_Log.md`
-- `docs/superpowers/specs/2026-04-15-compass-positioning-language-layering-design.md` → keep filename (historical record, dated spec) but content brand mentions update with note "(formerly Compass)"
+- Root: `Project_Yieldo_Business_Plan.md`, `Project_Yieldo_Tech_Stack.md`, `Project_Yieldo_Engine_Blueprint.md`, `Project_Yieldo_UI_Guide.md`, `Project_Yieldo_Legal.md`, `Project_Yieldo_Data_Sources_Guide.md`, `Project_Yieldo_Deck_Redesign_Guide.md`, `Project_Yieldo_Deck_v2.html`, `Yieldo_MVP_Revision_Notes_2026-04-13.md`, `Yieldo_Refocus_Checklist_and_PvX_UI_Benchmark.md`, `Yieldo_Statsig_Style_Landing_Strategy.md`
+- `archive/`: `Project_Yieldo_Legal_Crawling.md`, `Project_Yieldo_Legal_API_Integration.md`
+- `docs/`: `Project_Yieldo_BM_Packaging_Plan.md`, `Project_Yieldo_B2B_Readiness_Blueprint.md`, `Project_Yieldo_Design_Migration_Log.md`
+- `docs/superpowers/specs/2026-04-15-yieldo-positioning-language-layering-design.md` → keep filename (historical record, dated spec) but content brand mentions update with note "(formerly yieldo)"
 
 Content scope: **brand mention only**. Retention theory, Bayesian framework, scientific properties, business model methodology — untouched.
 
@@ -120,7 +120,7 @@ Content scope: **brand mention only**. Retention theory, Bayesian framework, sci
 Sections requiring rewrite:
 - Section 1 (Project Identity) — full rewrite of one-liner, definition, what-this-is/isn't
 - Section 7 (Product Architecture) — module names if branded
-- Section 8.4.1 (Vercel deployment) — `compass` → `yieldo` directory reference
+- Section 8.4.1 (Vercel deployment) — `yieldo` → `yieldo` directory reference
 - Section 15 (Document Usage Guide) — file table updated to new names
 
 Sections preserved verbatim:
@@ -132,9 +132,9 @@ Sections preserved verbatim:
 - Section 9-14 — business model, competition, market, GTM, references
 
 ### 4.5 Memory system updates
-- `MEMORY.md` index lines: replace "Compass" mentions with "yieldo"
-- Linked memory files (`project_status.md`, `project_market_gap_alpha_frame.md`, `project_compass_terminal_idea.md`, etc.): brand mention only; project context and learnings preserved
-- File `project_compass_terminal_idea.md` itself rename → `project_yieldo_terminal_idea.md` (and update MEMORY.md pointer)
+- `MEMORY.md` index lines: replace "yieldo" mentions with "yieldo"
+- Linked memory files (`project_status.md`, `project_market_gap_alpha_frame.md`, `project_yieldo_terminal_idea.md`, etc.): brand mention only; project context and learnings preserved
+- File `project_yieldo_terminal_idea.md` itself rename → `project_yieldo_terminal_idea.md` (and update MEMORY.md pointer)
 
 ---
 
@@ -275,7 +275,7 @@ Behavior: command palette and AI Copilot are visual mockups only — no LLM call
 | Risk | Mitigation |
 |---|---|
 | Vercel build breaks after directory rename | User performs one-time root directory change in Vercel UI before next push; documented in Section 8.4.1 of CLAUDE.md update |
-| Slash commands `/compass-*` stop working mid-session | Update `.claude/settings.json` hook paths and skill references in same Commit 1; new commands are `/yieldo-dev`, `/yieldo-verify` |
+| Slash commands `/yieldo-*` stop working mid-session | Update `.claude/settings.json` hook paths and skill references in same Commit 1; new commands are `/yieldo-dev`, `/yieldo-verify` |
 | Existing chart palettes clash with dark theme | `chart-colors.ts` and `CHART_TYPO` are centralized (per memory #104) — single token swap propagates to all 21 charts |
 | Logo SVG missing | Mockup uses Geist Mono text wordmark; SVG production deferred (out of scope) |
 | Memory file rename breaks index lookups | Update `MEMORY.md` pointer line atomically with file rename in same commit |
@@ -283,7 +283,7 @@ Behavior: command palette and AI Copilot are visual mockups only — no LLM call
 
 ### 6.3 Done criteria
 
-- [ ] `grep -ri "compass"` over working tree returns only: `archive/`, this spec, intentional historical references (e.g., MEMORY items with date context, `(formerly Compass)` notes)
+- [ ] `grep -ri "yieldo"` over working tree returns only: `archive/`, this spec, intentional historical references (e.g., MEMORY items with date context, `(formerly yieldo)` notes)
 - [ ] `tsc -p .` exits 0
 - [ ] `npm run dev` boots, no console errors
 - [ ] `/dashboard` renders new dark 2x2 panel grid with right AI Copilot panel
@@ -307,7 +307,7 @@ Behavior: command palette and AI Copilot are visual mockups only — no LLM call
 - Marketing site additional sections (Modules, Proof, Comparison full table)
 - Domain registration (yieldo.com / .io / .ai) — business task, not engineering
 - Trademark filing — legal task, not engineering
-- GitHub repo rename — Q1=b means stay on `project-compass`
+- GitHub repo rename — Q1=b means stay on `project-yieldo`
 
 ---
 
@@ -315,5 +315,5 @@ Behavior: command palette and AI Copilot are visual mockups only — no LLM call
 
 - yieldo Design Guidelines v1.0 (in conversation context, dated 2026-04-28)
 - CLAUDE.md (root) — current product foundation (sections to be selectively rewritten)
-- Memory: `project_status.md`, `project_compass_terminal_idea.md`, `feedback_korean_stats_terms.md`, `project_language_layering.md`
-- Prior compass work: `Project_Compass_*.md` series (to be renamed `Project_Yieldo_*.md`)
+- Memory: `project_status.md`, `project_yieldo_terminal_idea.md`, `feedback_korean_stats_terms.md`, `project_language_layering.md`
+- Prior yieldo work: `Project_Yieldo_*.md` series (to be renamed `Project_Yieldo_*.md`)

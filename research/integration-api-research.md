@@ -1,5 +1,5 @@
 # Integration API Research: Mobile Gaming Data Platforms
-## For Project Compass — Investment Decision OS
+## For yieldo — Operating Intelligence Terminal
 **Research Date**: April 2026 | **Target Stack**: Next.js + Python
 
 ---
@@ -14,7 +14,7 @@
 - **Format**: `Authorization: Bearer <api_token>`
 - **Note**: Different API products may use different token types (V2 API token, Cohort API token)
 
-#### Cohort API (PRIMARY for Compass retention data)
+#### Cohort API (PRIMARY for yieldo retention data)
 - **Endpoint**: `POST https://hq1.appsflyer.com/api/cohorts/v1/data/app/{app_id}`
 - **Auth**: Bearer token (`Authorization: Bearer <cohort_api_token>`)
 - **Content-Type**: `application/json`
@@ -81,7 +81,7 @@
 | **Growth** | $0.05-$0.07/install | Pull API access; premium add-ons (Data Locker, Raw Data) available |
 | **Enterprise** | Custom annual contract | Full API access, Data Locker, unlimited raw data exports, dedicated support |
 
-**Compass recommendation**: Enterprise plan required for Data Locker + Cohort API + raw data. Expect $30K-80K/year minimum for a gaming company with meaningful scale.
+**yieldo recommendation**: Enterprise plan required for Data Locker + Cohort API + raw data. Expect $30K-80K/year minimum for a gaming company with meaningful scale.
 
 ---
 
@@ -188,7 +188,7 @@
 - **API Version**: Header `STATSIG-API-VERSION: 20240601` (optional now, required in future)
 - **Base URL**: `https://statsigapi.net`
 
-#### Console API — Get Experiment Pulse Results (KEY ENDPOINT for Compass)
+#### Console API — Get Experiment Pulse Results (KEY ENDPOINT for yieldo)
 - **Endpoint**: `GET https://statsigapi.net/console/v1/gates/{id}/rules/{ruleID}/pulse_results`
 - **Query params**:
   - `cuped` (string: "true"/"false") — toggle CUPED variance reduction
@@ -245,7 +245,7 @@
 | **Pro** | $150/month baseline + usage | Higher event limits |
 | **Enterprise** | Custom (50%+ discount at 20M+ events/month) | Volume discounts, advanced features |
 
-**Compass recommendation**: Developer plan is sufficient for initial integration and prototyping. Pro/Enterprise when scaling beyond 2M events/month.
+**yieldo recommendation**: Developer plan is sufficient for initial integration and prototyping. Pro/Enterprise when scaling beyond 2M events/month.
 
 ---
 
@@ -288,7 +288,7 @@
   GROUP BY experiment_variant
   ```
 
-#### Limitations for Compass
+#### Limitations for yieldo
 1. **No programmatic API for experiment results** — must use BigQuery export
 2. **No ATE / confidence interval computation** — must calculate yourself from raw BigQuery data
 3. **Experiment management is console-only** — no API to create/start/stop experiments
@@ -369,11 +369,11 @@
 
 ### 3.2 Implementing "Rollout > Measure > Auto-Decide" Loops
 
-No platform provides this out-of-the-box. Compass must build this orchestration layer. Here is the recommended architecture:
+No platform provides this out-of-the-box. yieldo must build this orchestration layer. Here is the recommended architecture:
 
 ```
 ┌─────────────────────────────────────────────────┐
-│              Compass Orchestration               │
+│              yieldo Orchestration               │
 │                  (Python)                        │
 ├─────────────────────────────────────────────────┤
 │                                                  │
@@ -392,7 +392,7 @@ No platform provides this out-of-the-box. Compass must build this orchestration 
 │     → Extract: ATE, confidence intervals, p-val  │
 │                                                  │
 │  4. DECIDE                                      │
-│     → Compass Bayesian engine evaluates:         │
+│     → yieldo Bayesian engine evaluates:         │
 │       - Is ATE significant?                      │
 │       - Is ΔLTV positive with >X% confidence?    │
 │       - Does experiment ROI justify rollout?      │
@@ -422,7 +422,7 @@ No platform provides this out-of-the-box. Compass must build this orchestration 
 
 ## 4. Key Data Points Needed from Each Platform
 
-### 4.1 From MMP → Compass Pipeline
+### 4.1 From MMP → yieldo Pipeline
 
 | Data Point | Field/Source | Platform | Frequency |
 |-----------|-------------|----------|-----------|
@@ -434,7 +434,7 @@ No platform provides this out-of-the-box. Compass must build this orchestration 
 | **UA spend** | `cost` metric | AppsFlyer Master API or Adjust Report Service | Daily |
 | **SKAN conversions** | SKAN raw data reports | AppsFlyer Data Locker | Hourly |
 
-### 4.2 From A/B Platform → Compass Pipeline
+### 4.2 From A/B Platform → yieldo Pipeline
 
 | Data Point | Field/Source | Platform | Frequency |
 |-----------|-------------|----------|-----------|
@@ -460,7 +460,7 @@ Statsig Pulse Results
     ├── testUnits + controlUnits = sample sizes
     │
     ▼
-Compass Bayesian Engine
+yieldo Bayesian Engine
     │
     ├── ATE_retention → project ΔLTV using retention model (Section 3 of CLAUDE.md)
     ├── CI on retention → CI on ΔLTV (uncertainty propagation)
@@ -485,7 +485,7 @@ Investment Decision
 | **MMP** | **AppsFlyer** (primary) | Market leader in gaming; Cohort API provides retention data directly; Data Locker for raw data. Most gaming companies already use it. |
 | **A/B Testing** | **Statsig** (primary) | Free tier is generous; Console API returns ATE + CI directly; Python SDK for server-side; CUPED built-in; best developer experience. |
 | **Feature Flags** | **Statsig** (same platform) | Unified platform = one integration, one SDK, one billing relationship. Feature gates + experiments in one tool. |
-| **Rollout Management** | **Custom (Compass)** | Build the orchestration loop in Python. No platform does "rollout → measure → auto-decide" natively. |
+| **Rollout Management** | **Custom (yieldo)** | Build the orchestration loop in Python. No platform does "rollout → measure → auto-decide" natively. |
 | **Backup/Alternative MMP** | **Adjust** | If customer uses Adjust instead of AppsFlyer. Report Service API is clean; 120-day cohort window is better. |
 
 ### 5.2 Why NOT the Others (for initial build)
@@ -529,7 +529,7 @@ Investment Decision
               ┌──────────────┼──────────────┐
               │              │              │
     ┌─────────▼──────┐ ┌────▼─────┐ ┌──────▼───────┐
-    │  MMP Connector  │ │ Exp Conn │ │ Compass Core │
+    │  MMP Connector  │ │ Exp Conn │ │ yieldo Core │
     │                 │ │          │ │              │
     │ • AppsFlyer     │ │ • Statsig│ │ • Retention  │
     │   Cohort API    │ │   Console│ │   Model      │
@@ -575,7 +575,7 @@ Investment Decision
 | LaunchDarkly (if needed) | $19,500-$72,000/year (avoid unless customer requires it) |
 | Firebase | $0 (free tier; BigQuery costs minimal) |
 
-**Key insight**: MMP costs are almost always borne by the customer, not by Compass. Compass's own platform costs for API access are minimal ($0-$1,800/year for Statsig).
+**Key insight**: MMP costs are almost always borne by the customer, not by yieldo. yieldo's own platform costs for API access are minimal ($0-$1,800/year for Statsig).
 
 ---
 

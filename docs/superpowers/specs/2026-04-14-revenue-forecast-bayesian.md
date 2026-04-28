@@ -2,7 +2,7 @@
 
 **Date**: 2026-04-14
 **Module**: Executive Overview (Module 1)
-**Chart**: `compass/src/widgets/charts/ui/revenue-forecast.tsx`
+**Chart**: `yieldo/src/widgets/charts/ui/revenue-forecast.tsx`
 **Status**: Shipped (commits `278142d`, `eb9c9c3` on main)
 **Scope**: Single-chart redesign per `feedback_chart_specs` rule — one chart at a time
 
@@ -10,11 +10,11 @@
 
 ## 1. Problem Statement
 
-The pre-redesign Revenue Forecast rendered a single P10/P50/P90 band with hardcoded values. It did not express Compass's core differentiator: that forecasts arise from **market-intelligence prior + internal-data posterior + experiment-fork scenarios** per CLAUDE.md §4 (Bayesian Decision Framework) and §5 (Revenue Modeling Engine).
+The pre-redesign Revenue Forecast rendered a single P10/P50/P90 band with hardcoded values. It did not express yieldo's core differentiator: that forecasts arise from **market-intelligence prior + internal-data posterior + experiment-fork scenarios** per CLAUDE.md §4 (Bayesian Decision Framework) and §5 (Revenue Modeling Engine).
 
 Three inputs were invisible:
 
-| Input | Where it lives in Compass | Visible on chart before? |
+| Input | Where it lives in yieldo | Visible on chart before? |
 |---|---|---|
 | Genre benchmark (prior) | Market Intelligence module | ❌ |
 | Internal observed cohort retention (posterior) | Forecast itself, but presented as black-box | ❌ (indirectly) |
@@ -44,7 +44,7 @@ Baseline is always the **current posterior** (user-confirmed: "기본은 당연�
 |---|---|---|
 | Posterior band/line | Green `#00875A` (`PALETTE.positive`) | "Current confident forecast — trust this" |
 | Prior band (hatched) | Red `#C9372C` (`PALETTE.risk`) | "Before data — wider uncertainty, reference only" |
-| Experiment fork line | Blue `#5B9AFF` (`PALETTE.revenue`) | "What-if — Compass brand blue for forward scenarios" |
+| Experiment fork line | Blue `#5B9AFF` (`PALETTE.revenue`) | "What-if — yieldo brand blue for forward scenarios" |
 | Ship-point marker | Slate `#64748B` (`PALETTE.legendGray`) | Neutral vertical rule |
 
 Opacity tuned so red prior doesn't read as "alarm" — 8% fill + 45% line stroke in hatched pattern.
@@ -63,7 +63,7 @@ Opacity tuned so red prior doesn't read as "alarm" — 8% fill + 45% line stroke
 - `Prior` → **사전 확률**
 - `Posterior` → **사후 확률**
 
-Adopted because Compass targets **business operators, not data analysts** (CLAUDE.md §11.2). 통계 교양 수준 Korean is universally decodable; "Prior/Posterior" as English loanwords creates friction for the primary target user.
+Adopted because yieldo targets **business operators, not data analysts** (CLAUDE.md §11.2). 통계 교양 수준 Korean is universally decodable; "Prior/Posterior" as English loanwords creates friction for the primary target user.
 
 ---
 

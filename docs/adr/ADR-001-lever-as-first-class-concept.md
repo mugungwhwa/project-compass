@@ -3,22 +3,22 @@
 **Status**: Proposed
 **Date**: 2026-04-08
 **Deciders**: Mike (Founder)
-**Related**: CLAUDE.md §7.1 (Product Architecture), Project_Compass_UI_Guide.md Modules 3–4, Project_Compass_Engine_Blueprint.md
+**Related**: CLAUDE.md §7.1 (Product Architecture), Project_Yieldo_UI_Guide.md Modules 3–4, Project_Yieldo_Engine_Blueprint.md
 
 ---
 
 ## Context
 
-Compass 현재 ontology는 모든 개입(intervention)을 "Action"이라는 단일 바구니에 담고 있다. CLAUDE.md §7.1 Module 3(Action Impact Board)는 UA, Live Ops, 릴리스, 실험을 "시간순 타임라인 이벤트"로 동일하게 취급한다. 이 구조는 두 가지 문제를 만든다.
+yieldo 현재 ontology는 모든 개입(intervention)을 "Action"이라는 단일 바구니에 담고 있다. CLAUDE.md §7.1 Module 3(Action Impact Board)는 UA, Live Ops, 릴리스, 실험을 "시간순 타임라인 이벤트"로 동일하게 취급한다. 이 구조는 두 가지 문제를 만든다.
 
 1. **존재론적 혼동**: 실험(experiment)은 *모르는 레버를 탐색*하는 활동이고, 운영(operation/LiveOps)은 *이미 검증된 레버를 반복 실행*하는 활동이다. 본질이 다른데 수평으로 묶여 있다.
 2. **시각적 단절**: UI Guide 기준 Module 3(Action Impact)은 7줄로 얇게 설계되어 있고, Module 4(Experiment Investment)는 50+줄로 깊게 설계되어 있다. 둘 사이에 양방향 링크가 없다. 운영자가 "이번 달 라이브이벤트 $120K 매출이 어느 실험에서 검증된 레버였는가"를 추적할 경로가 없다. Experiment-to-Investment 내러티브(CLAUDE.md §1.1)가 UI 레벨에서 끊겨 있다.
 
-이 단절은 Compass의 핵심 가치 제안("실험→투자 결정 OS")과 직접 충돌한다.
+이 단절은 yieldo의 핵심 가치 제안("실험→투자 결정 OS")과 직접 충돌한다.
 
 ## Decision
 
-**Compass 데이터 모델과 문서 체계에 "Lever"를 1급 개념(first-class concept)으로 도입한다.**
+**yieldo 데이터 모델과 문서 체계에 "Lever"를 1급 개념(first-class concept)으로 도입한다.**
 
 - **Lever**: 게임 지표(리텐션/ARPDAU/LTV)를 움직이는 것으로 *검증된* 개입 단위. "Daily login reward 2x", "Event pass monetization", "Onboarding flow v3" 같은 것.
 - **Experiment**: Lever를 *검증*한다 (ATE → ΔLTV로 측정).

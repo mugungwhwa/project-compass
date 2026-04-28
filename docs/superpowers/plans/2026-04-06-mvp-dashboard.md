@@ -1,4 +1,4 @@
-# Compass MVP Dashboard Implementation Plan
+# yieldo MVP Dashboard Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -59,16 +59,16 @@
 - [ ] **Step 1: Initialize Next.js project**
 
 ```bash
-cd /Users/mike/Downloads/Compass
-npx create-next-app@latest compass --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --no-turbopack
+cd /Users/mike/Downloads/yieldo
+npx create-next-app@latest yieldo --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --no-turbopack
 ```
 
-When prompted, accept defaults. This creates the `compass/` subdirectory with full Next.js 15 setup.
+When prompted, accept defaults. This creates the `yieldo/` subdirectory with full Next.js 15 setup.
 
 - [ ] **Step 2: Move into project and install dependencies**
 
 ```bash
-cd /Users/mike/Downloads/Compass/compass
+cd /Users/mike/Downloads/yieldo/yieldo
 npm install recharts lucide-react class-variance-authority clsx tailwind-merge
 npm install @radix-ui/react-slot @radix-ui/react-select @radix-ui/react-slider @radix-ui/react-tooltip @radix-ui/react-separator
 ```
@@ -139,7 +139,7 @@ import "@/styles/globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Compass — Investment Decision OS",
+  title: "yieldo — Operating Intelligence Terminal",
   description: "Capital Allocation Intelligence for Mobile Gaming",
 }
 
@@ -169,7 +169,7 @@ export default function Home() {
 - [ ] **Step 7: Verify dev server starts**
 
 ```bash
-cd /Users/mike/Downloads/Compass/compass
+cd /Users/mike/Downloads/yieldo/yieldo
 npm run dev
 ```
 
@@ -193,7 +193,7 @@ git commit -m "chore: scaffold Next.js 15 project with Tailwind, Recharts, shadc
 - [ ] **Step 1: Initialize shadcn/ui**
 
 ```bash
-cd /Users/mike/Downloads/Compass/compass
+cd /Users/mike/Downloads/yieldo/yieldo
 npx shadcn@latest init
 ```
 
@@ -384,7 +384,7 @@ const I18nContext = createContext<I18nContextType | null>(null)
 export function LocaleProvider({ children }: { children: ReactNode }) {
   const [locale, setLocale] = useState<Locale>(() => {
     if (typeof window !== "undefined") {
-      return (localStorage.getItem("compass-locale") as Locale) || "ko"
+      return (localStorage.getItem("yieldo-locale") as Locale) || "ko"
     }
     return "ko"
   })
@@ -392,7 +392,7 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   const toggleLocale = useCallback(() => {
     setLocale((prev) => {
       const next = prev === "ko" ? "en" : "ko"
-      localStorage.setItem("compass-locale", next)
+      localStorage.setItem("yieldo-locale", next)
       return next
     })
   }, [])
@@ -419,7 +419,7 @@ export function useLocale() {
 - [ ] **Step 3: Verify files compile**
 
 ```bash
-cd /Users/mike/Downloads/Compass/compass
+cd /Users/mike/Downloads/yieldo/yieldo
 npx tsc --noEmit
 ```
 
@@ -443,7 +443,7 @@ git commit -m "feat: add Korean/English i18n dictionary and React context"
 
 ```typescript
 // ============================================================
-// Compass MVP — Mock Data
+// yieldo MVP — Mock Data
 // All dummy data for 5 dashboard modules
 // ============================================================
 
@@ -705,7 +705,7 @@ export function computeScenario(uaBudget: number, targetRoas: number): ScenarioR
 - [ ] **Step 2: Verify types compile**
 
 ```bash
-cd /Users/mike/Downloads/Compass/compass
+cd /Users/mike/Downloads/yieldo/yieldo
 npx tsc --noEmit
 ```
 
@@ -739,7 +739,7 @@ import "@/styles/globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Compass — Investment Decision OS",
+  title: "yieldo — Operating Intelligence Terminal",
   description: "Capital Allocation Intelligence for Mobile Gaming",
 }
 
@@ -778,7 +778,7 @@ import {
   Globe,
   Gamepad2,
   ChevronDown,
-  Compass,
+  yieldo,
 } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 
@@ -804,10 +804,10 @@ export function AppSidebar() {
       {/* Logo */}
       <div className="flex items-center gap-2.5 px-4 py-5">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--brand)] text-white">
-          <Compass className="h-4.5 w-4.5" />
+          <yieldo className="h-4.5 w-4.5" />
         </div>
         <span className="text-[15px] font-semibold text-[var(--text-primary)]">
-          Compass
+          yieldo
         </span>
       </div>
 
@@ -962,7 +962,7 @@ export default function ExecutiveOverviewPage() {
 - [ ] **Step 6: Verify layout renders**
 
 ```bash
-cd /Users/mike/Downloads/Compass/compass
+cd /Users/mike/Downloads/yieldo/yieldo
 npm run dev
 ```
 
@@ -1115,7 +1115,7 @@ export function KPICards({ items }: KPICardsProps) {
 - [ ] **Step 3: Verify compile**
 
 ```bash
-cd /Users/mike/Downloads/Compass/compass
+cd /Users/mike/Downloads/yieldo/yieldo
 npx tsc --noEmit
 ```
 
@@ -1753,7 +1753,7 @@ export function CohortHeatmap() {
 - [ ] **Step 10: Verify all chart components compile**
 
 ```bash
-cd /Users/mike/Downloads/Compass/compass
+cd /Users/mike/Downloads/yieldo/yieldo
 npx tsc --noEmit
 ```
 
@@ -2237,7 +2237,7 @@ export default function AuthLayout({
 "use client"
 
 import { useRouter } from "next/navigation"
-import { Compass } from "lucide-react"
+import { yieldo } from "lucide-react"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -2246,10 +2246,10 @@ export default function LoginPage() {
     <div className="w-full max-w-sm">
       <div className="mb-8 text-center">
         <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--brand)] text-white">
-          <Compass className="h-6 w-6" />
+          <yieldo className="h-6 w-6" />
         </div>
-        <h1 className="text-xl font-semibold text-[var(--text-primary)]">Compass</h1>
-        <p className="text-sm text-[var(--text-muted)]">Investment Decision OS</p>
+        <h1 className="text-xl font-semibold text-[var(--text-primary)]">yieldo</h1>
+        <p className="text-sm text-[var(--text-muted)]">Operating Intelligence Terminal</p>
       </div>
       <div className="rounded-xl border border-[var(--border)] bg-white p-6">
         <div className="space-y-4">
@@ -2257,7 +2257,7 @@ export default function LoginPage() {
             <label className="mb-1.5 block text-xs font-medium text-[var(--text-secondary)]">Email</label>
             <input
               type="email"
-              defaultValue="demo@compass.io"
+              defaultValue="demo@yieldo.io"
               className="w-full rounded-lg border border-[var(--border)] px-3 py-2 text-sm focus:border-[var(--brand)] focus:outline-none focus:ring-1 focus:ring-[var(--brand)]"
             />
           </div>
@@ -2301,7 +2301,7 @@ git commit -m "feat: add dummy login page with redirect to dashboard"
 - [ ] **Step 1: Run production build**
 
 ```bash
-cd /Users/mike/Downloads/Compass/compass
+cd /Users/mike/Downloads/yieldo/yieldo
 npm run build
 ```
 

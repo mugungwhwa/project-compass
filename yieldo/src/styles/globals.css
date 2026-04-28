@@ -1,0 +1,569 @@
+@import "tailwindcss";
+
+/*
+  yieldo Design Tokens — v2 (Dark Terminal Edition)
+  --------------------------------------------------
+  Source of truth: docs/Project_Yieldo_Design_Migration_Log.md §1.2 +
+                   yieldo Design Guidelines v1.0 §2.1
+
+  Mood: "Bloomberg Terminal × Vercel × Linear"
+  Theme default: dark.  Light theme via html[data-theme="light"] (opt-in).
+
+  Brand accents:
+    --accent-yield (#F4C842, Yield Yellow) — yield/KPI signal, primary CTA
+    --accent-do    (#00D984, Action Green) — execute/positive movement
+*/
+
+:root {
+  /* ---------- Background scale (Dark — yieldo terminal v3) ----------
+     Pushed deeper toward black so phosphor accents (yellow/green/red)
+     fully detach from the canvas.  Bloomberg ref: #000000 black; we sit
+     just above it (#060912) to soften eye fatigue while keeping contrast. */
+  --bg-0: #060912;   /* outermost canvas — near-black terminal */
+  --bg-1: #0E1320;   /* cards, panels — distinct but tight to canvas */
+  --bg-2: #161B2C;   /* subtle panel, hover tint */
+  --bg-3: #232A40;   /* hover strong, inset, focus */
+  --bg-4: #313A56;   /* highest elevation / divider on dark */
+
+  /* ---------- Foreground / Text scale ----------
+     Re-tiered twice for dark-on-dark legibility.  After v2 user still found
+     labels muted at 12px mono — pushed every tier one more step toward
+     white, narrowing the spread but keeping fg-0 the clear top.             */
+  --fg-0: #FFFFFF;   /* headlines, hero numbers, wordmark — pure white now */
+  --fg-1: #ECF1F7;   /* body text — almost-white, very present */
+  --fg-2: #C0C8D6;   /* labels, eyebrow, KPI captions (was #9AA3B5) */
+  --fg-3: #8E96A4;   /* meta, footnote, disabled (was #6B7280) */
+
+  /* ---------- Border ---------- */
+  --border-subtle: #141826;
+  --border-default: #1F2436;
+  --border-strong: #2D3548;
+
+  /* ---------- Brand (yieldo Yield) ---------- */
+  --brand: #F4C842;          /* Yield Yellow — primary accent, KPIs, CTA */
+  --brand-hover: #E5B72E;
+  --brand-tint: rgba(244, 200, 66, 0.12); /* subtle fill behind CTAs */
+
+  /* ---------- yieldo Accent System ----------
+     2026-04-28: dropped amber (#FF9F43 / #FFB347) — read as 황토색 ochre
+     on dark navy.  caution-tier now collapses into yield (Bloomberg-style
+     3-color signal: yellow=caution+highlight / green=positive / red=risk). */
+  --accent-yield:   #F4C842;  /* yield / KPI signal / caution (was distinct amber) */
+  --accent-do:      #00D984;  /* execute / positive */
+  --accent-warning: #F4C842;  /* aliased to yield — kept var name for back-compat */
+  --accent-danger:  #FF4757;  /* risk / decline */
+  --accent-info:    #4A9EFF;  /* neutral information */
+
+  /* ---------- Phosphor Highlight Tier (terminal moments) ----------
+     Used ONLY for emphasis: active pulses, chart hover crosshairs, tooltip
+     edges, alert states.  Bumped luminance ~15-25% from accent base; do NOT
+     paint large areas with these — they exist to flash and recede.        */
+  --phosphor-yellow: #FFE45E;
+  --phosphor-green:  #4DFFA3;
+  --phosphor-cyan:   #5DE7FF;
+  --phosphor-amber:  #FFE45E;  /* aliased to yellow — was #FFB347 ochre */
+  --phosphor-red:    #FF6B7A;
+
+  /* ---------- Signal colors (decision surfaces) ---------- */
+  --signal-positive: var(--accent-do);
+  --signal-positive-bg: rgba(0, 232, 154, 0.12);    /* updated: phosphor-green tone */
+  --signal-caution: var(--accent-yield);            /* alias: yellow doubles as caution */
+  --signal-caution-bg: rgba(244, 200, 66, 0.12);    /* was amber #FF9F43 — caused 황토색 */
+  --signal-risk: var(--accent-danger);
+  --signal-risk-bg: rgba(255, 107, 122, 0.12);      /* updated: phosphor-red tone */
+  --signal-pending: var(--fg-2);
+  --signal-pending-bg: rgba(107, 114, 128, 0.10);
+
+  /* ---------- Chart tokens ----------
+     2026-04-28: re-tuned for Bloomberg-grade visibility on dark.  Old bands
+     at 0.22 / 0.12 opacity were ghostly.  New scale doubles the inner band
+     and bumps the grid from #1F2436 (almost invisible) to #2D3548 (subtle
+     but readable). Lines stay full saturation, fills stay translucent
+     enough to not dominate, but every layer is now legible. */
+  --chart-p50: var(--accent-info);                    /* median line */
+  --chart-band-inner: rgba(74, 158, 255, 0.50);       /* P25-P75 — was 0.22 */
+  --chart-band-outer: rgba(74, 158, 255, 0.28);       /* P10-P90 — was 0.12 */
+  --chart-benchmark: #B8BFCE;                         /* dashed benchmark — was --fg-2 */
+  --chart-observed: var(--fg-0);                      /* datapoint dots */
+  --chart-grid: #2D3548;                              /* visible but subtle — was --bg-2 */
+
+  /* 6-cohort categorical palette (dark-theme bright, terminal-saturated) */
+  --chart-cohort-1: #4A9EFF;   /* info blue */
+  --chart-cohort-2: #00E89A;   /* do green — pushed brighter */
+  --chart-cohort-3: #F4C842;   /* yield yellow */
+  --chart-cohort-4: #C39BFF;   /* lavender */
+  --chart-cohort-5: #5DD3F0;   /* cyan */
+  --chart-cohort-6: #FF6B7A;   /* coral */
+
+  /* ---------- Radius (Bloomberg terminal = sharp/angular) ---------- */
+  --radius-inline: 0px;   /* truly sharp — was 2px */
+  --radius-card: 2px;     /* was 6px — Bloomberg uses 0; 2 is a compromise */
+  --radius-modal: 4px;    /* was 8px */
+
+  /* ---------- Spacing ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+
+  /* ---------- Motion ---------- */
+  --duration-micro: 120ms;
+  --duration-component: 200ms;
+  --duration-chart: 300ms;
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* ---------- Font roles ---------- */
+  --font-mono: var(--font-geist-mono);
+  --font-num: var(--font-geist-mono);
+
+  /* ---------- Legacy aliases (transitional) ---------- */
+  --background: var(--bg-0);
+  --card: var(--bg-1);
+  --border: var(--border-default);
+  --text-primary: var(--fg-0);
+  --text-secondary: var(--fg-1);
+  --text-muted: var(--fg-2);
+  --brand-light: var(--brand-tint);
+  --signal-green: var(--signal-positive);
+  --signal-green-bg: var(--signal-positive-bg);
+  --signal-green-border: var(--border-default);
+  --signal-amber: var(--signal-caution);
+  --signal-amber-bg: var(--signal-caution-bg);
+  --signal-amber-border: var(--border-default);
+  --signal-red: var(--signal-risk);
+  --signal-red-bg: var(--signal-risk-bg);
+  --signal-red-border: var(--border-default);
+  --chart-primary: var(--chart-p50);
+  --chart-revenue: var(--chart-p50);
+  --chart-success: var(--signal-positive);
+  --chart-danger: var(--signal-risk);
+  --chart-experiment: var(--chart-cohort-4);
+  --chart-asymptotic: var(--signal-positive);
+  --duration-fast: var(--duration-micro);
+  --duration-normal: var(--duration-component);
+  --duration-slow: var(--duration-chart);
+  --ease-out-expo: var(--ease-out-quart);
+
+  /* Deck accent palette aliases — mapped to new cohort palette. */
+  --accent-blue: var(--chart-cohort-1);
+  --accent-green: var(--chart-cohort-2);
+  --accent-orange: var(--chart-cohort-3);
+  --accent-lavender: var(--chart-cohort-4);
+  --accent-coral: var(--chart-cohort-6);
+
+  /* Glow tokens — neutralized in v2. */
+  --glow-blue: rgba(74, 158, 255, 0.06);
+  --glow-green: rgba(0, 217, 132, 0.06);
+}
+
+/* ---------- Light theme (opt-in) ---------- */
+html[data-theme="light"] {
+  --bg-0: #FAFAF7;
+  --bg-1: #FFFFFF;
+  --bg-2: #F5F5F2;
+  --bg-3: #ECECE8;
+  --bg-4: #E2E2DD;
+  --fg-0: #0A0A0A;
+  --fg-1: #1F2937;
+  --fg-2: #6B7280;
+  --fg-3: #9CA3AF;
+  --border-subtle: #ECECE8;
+  --border-default: #E2E2DD;
+  --border-strong: #C9C9C2;
+  --brand: #1A7FE8;
+  --brand-hover: #1568C4;
+  --brand-tint: #E8F1FC;
+  --chart-p50: #1A7FE8;
+  --chart-band-inner: rgba(26, 127, 232, 0.18);
+  --chart-band-outer: rgba(26, 127, 232, 0.10);
+  --chart-observed: #0A0A0A;
+  --chart-grid: #ECECE8;
+}
+
+/* ---------- Cursor standardization ---------- */
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+[role="option"],
+[role="tab"],
+[role="menuitem"],
+select,
+summary,
+a[href] {
+  cursor: pointer;
+}
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+/* ---------- Base body ---------- */
+/*
+  yieldo terminal type chain (2026-04-28):
+    Geist Mono (Latin)  →  D2 Coding (한글 monospace, Naver)
+    →  JetBrains Mono   →  ui-monospace  →  monospace fallback
+  Browsers pick glyphs per-character, so Latin renders in Geist Mono and
+  Korean automatically uses D2 Coding — both monospace, both terminal.
+*/
+body {
+  font-family:
+    var(--font-geist-mono),
+    "D2Coding",
+    "D2 Coding",
+    "JetBrains Mono",
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+  background: var(--bg-0);
+  color: var(--fg-0);
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Global tabular numerals — every number in yieldo is comparable */
+* {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Font role utilities ---------- */
+.font-display {
+  font-family: var(--font-instrument-serif), "Noto Serif KR", Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.font-mono {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.font-mono-num,
+.font-num {
+  font-family: var(--font-geist-mono), "JetBrains Mono", ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* yieldo wordmark (lowercase, mono, tight tracking) */
+.yieldo-wordmark {
+  font-family: var(--font-geist-mono), "JetBrains Mono", ui-monospace, monospace;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+}
+
+/* ---------- Typography scale ---------- */
+.text-display {
+  font-family: var(--font-instrument-serif), "Noto Serif KR", Georgia, serif;
+  font-size: 36px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+.text-h1 {
+  font-size: 24px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+.text-h2 {
+  font-size: 18px;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+  font-weight: 600;
+}
+.text-h3 {
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.text-body {
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+.text-caption {
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  font-weight: 500;  /* bumped from 400 — mono captions need weight on dark */
+}
+
+/*
+  ============================================================================
+  LEGACY UTILITIES — Transitional block
+  ============================================================================
+  These classes prevent existing widgets from breaking during the incremental
+  refactor.  Do NOT use in new code.
+  Tracking: docs/Project_Yieldo_Design_Migration_Log.md §3
+  ============================================================================
+*/
+
+.card-premium {
+  background: var(--bg-1);
+  border-radius: var(--radius-card);
+  box-shadow: 0 1px 0 var(--border-subtle);
+  transition: border-color var(--duration-micro) var(--ease-out-quart);
+}
+.card-premium:hover {
+  border-color: var(--border-strong);
+}
+
+.card-glow {
+  transition: border-color var(--duration-micro) var(--ease-out-quart);
+}
+.card-glow:hover {
+  border-color: var(--border-strong);
+}
+
+.text-hero {
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.text-hero-lg {
+  font-size: 4rem;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.text-glow {
+  text-shadow: none;
+}
+
+.signal-bg-invest {
+  background: var(--signal-positive-bg);
+}
+.signal-bg-hold {
+  background: var(--signal-caution-bg);
+}
+.signal-bg-reduce {
+  background: var(--signal-risk-bg);
+}
+
+/*
+  Landing page widget override — Sprint 5
+  ---------------------------------------
+  Dashboard widgets use position:sticky.  In the landing page they must NOT
+  stick — any element inside `.landing-static-widget` gets sticky neutralized.
+*/
+.landing-static-widget .sticky,
+.landing-static-widget [class*="sticky"] {
+  position: static !important;
+  top: auto !important;
+  z-index: auto !important;
+  margin-bottom: 0 !important;
+}
+
+/*
+  ============================================================================
+  yieldo-specific Surface Utilities
+  ============================================================================
+  Used by Landing Hero, Dashboard panels, AI Copilot.  New code SHOULD use
+  these utilities instead of inline arbitrary classes.
+*/
+
+/* Terminal panel — primary container in dashboard workspace */
+.yieldo-panel {
+  background: var(--bg-1);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-card);
+}
+.yieldo-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-default);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+
+/* KPI numeric — large display number, mono, tabular */
+.yieldo-kpi {
+  font-family: var(--font-geist-mono), "JetBrains Mono", ui-monospace, monospace;
+  font-feature-settings: "tnum" 1;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg-0);
+}
+
+/* Yield-class numbers — yellow accent for the headline KPI */
+.yieldo-kpi-yield {
+  color: var(--accent-yield);
+}
+
+/* Do-class numbers — green positive movement */
+.yieldo-kpi-do {
+  color: var(--accent-do);
+}
+
+/* Risk-class numbers — red negative movement */
+.yieldo-kpi-risk {
+  color: var(--accent-danger);
+}
+
+/*
+  Tooltip surface — Bloomberg-style dark with terminal-yellow neon edge.
+  Used by both Radix tooltip and Recharts ChartTooltip shell.
+*/
+.yieldo-tooltip {
+  background: var(--bg-2);
+  border: 1px solid var(--phosphor-yellow);
+  border-radius: var(--radius-card);
+  padding: 10px 14px;
+  font-family: var(--font-geist-mono), "D2Coding", "JetBrains Mono", ui-monospace, monospace;
+  font-size: 13px;        /* was 12px — text larger for legibility */
+  line-height: 1.55;
+  color: #FFFFFF;          /* was --fg-0 — locked to pure white for max bright */
+  min-width: 160px;
+  box-shadow:
+    0 0 0 1px rgba(255, 228, 94, 0.30),
+    0 0 22px rgba(255, 228, 94, 0.22),
+    0 10px 32px rgba(0, 0, 0, 0.6);
+}
+
+.yieldo-tooltip-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--phosphor-yellow);
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 228, 94, 0.25);
+  text-shadow: 0 0 6px rgba(255, 228, 94, 0.3);
+}
+
+/*
+  ============================================================================
+  Recharts SVG overrides — terminal philosophy applied globally
+  ============================================================================
+  Recharts sets stroke-width on SVG attrs (not inline style), so a CSS
+  rule with !important wins.  These selectors hit every chart at once
+  without touching individual chart components.
+*/
+
+/* All line/curve strokes thicker — terminals draw fat strokes for legibility.
+   Sharp line ends + miter joins for Bloomberg-grade crispness (no rounded
+   pillows where lines meet). */
+.recharts-line-curve,
+.recharts-curve.recharts-line-curve,
+.recharts-area-curve {
+  stroke-width: 2.5 !important;
+  stroke-linecap: butt !important;
+  stroke-linejoin: miter !important;
+  stroke-miterlimit: 4 !important;
+}
+
+/* Hover crosshair = phosphor-yellow (Bloomberg trader style) */
+.recharts-tooltip-cursor {
+  stroke: var(--phosphor-yellow) !important;
+  stroke-width: 1 !important;
+  stroke-dasharray: 3 3 !important;
+  opacity: 0.9 !important;
+}
+
+/* Active datapoint dot — phosphor halo on hover */
+.recharts-active-dot {
+  stroke-width: 2 !important;
+}
+.recharts-active-dot circle {
+  filter: drop-shadow(0 0 6px rgba(255, 228, 94, 0.6));
+}
+
+/* Cartesian grid — keep subtle but visible */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: var(--chart-grid) !important;
+  stroke-dasharray: 2 4 !important;
+}
+
+/* Axis lines themselves — drop them (Bloomberg style) */
+.recharts-xAxis .recharts-cartesian-axis-line,
+.recharts-yAxis .recharts-cartesian-axis-line {
+  stroke: var(--border-default) !important;
+}
+
+/* Reference line emphasis */
+.recharts-reference-line line {
+  stroke-width: 1.5 !important;
+}
+
+/* ---------- Phosphor utility classes ---------- */
+
+/* Live pulse dot — for streaming/active indicators */
+.yieldo-pulse-dot {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--phosphor-green);
+  box-shadow: 0 0 8px rgba(77, 255, 163, 0.8), 0 0 16px rgba(77, 255, 163, 0.3);
+}
+.yieldo-pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid var(--phosphor-green);
+  opacity: 0;
+  animation: yieldo-pulse 1.6s ease-out infinite;
+}
+@keyframes yieldo-pulse {
+  0%   { opacity: 0.6; transform: scale(0.7); }
+  60%  { opacity: 0; transform: scale(1.8); }
+  100% { opacity: 0; transform: scale(1.8); }
+}
+
+/* Phosphor text emphasis — for KPI hover, alert states */
+.yieldo-phosphor-yield  { color: var(--phosphor-yellow); text-shadow: 0 0 12px rgba(255, 228, 94, 0.4); }
+.yieldo-phosphor-do     { color: var(--phosphor-green);  text-shadow: 0 0 12px rgba(77, 255, 163, 0.4); }
+.yieldo-phosphor-info   { color: var(--phosphor-cyan);   text-shadow: 0 0 12px rgba(93, 231, 255, 0.4); }
+.yieldo-phosphor-danger { color: var(--phosphor-red);    text-shadow: 0 0 12px rgba(255, 107, 122, 0.4); }
+
+.yieldo-tooltip-row {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.yieldo-tooltip-name {
+  color: #FFFFFF;     /* pure white — was fg-0 + 0.85 opacity (muted) */
+  opacity: 1;
+  font-weight: 500;
+}
+
+.yieldo-tooltip-value {
+  margin-left: auto;
+  padding-left: 14px;
+  font-weight: 700;
+  color: var(--phosphor-yellow);  /* phosphor-yellow value — Bloomberg pattern: numbers in yellow */
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 6px rgba(255, 228, 94, 0.35);
+}
+
+/* Eyebrow — small uppercase label above headlines */
+.yieldo-eyebrow {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+}

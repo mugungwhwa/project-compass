@@ -1,4 +1,4 @@
-# Compass Context Index
+# yieldo Context Index
 
 **용도**: 새 세션에서 이 파일만 먼저 읽으면 전체 프로젝트 상태를 파악하고, 필요한 문서만 선택적으로 로드할 수 있음.
 
@@ -6,13 +6,13 @@
 
 ## 프로젝트 한줄 요약
 
-모바일 게임 업계용 Experiment-to-Investment Decision OS — A/B 테스트, 라이브 운영, UA 캠페인 등 모든 인터벤션이 실제로 투자 가치(LTV)를 창출하는지 측정하고, 그 결과를 자본 배분 결정으로 번역하는 SaaS 플랫폼. 핵심 파이프라인: ATE → ΔLTV → 자본 배분 결정.
+모바일 게임 업계용 Signal-to-Yield Operating Terminal — A/B 테스트, 라이브 운영, UA 캠페인 등 모든 인터벤션이 실제로 투자 가치(LTV)를 창출하는지 측정하고, 그 결과를 자본 배분 결정으로 번역하는 SaaS 플랫폼. 핵심 파이프라인: ATE → ΔLTV → 자본 배분 결정.
 
 ## 현재 상태
 
 - **단계**: 설계 문서 완료, 코드 미작성
 - **팀**: 2인 (풀스택 개발자 + 데이터/AI 엔지니어)
-- **다음 액션**: `/compass-dev onboarding` 또는 `/compass-dev phase 1`로 개발 시작
+- **다음 액션**: `/yieldo-dev onboarding` 또는 `/yieldo-dev phase 1`로 개발 시작
 
 ## 문서 맵 — "이 작업엔 이 문서를"
 
@@ -35,8 +35,8 @@
 | **법적 질문** | `Legal.md` | 전체 (13KB) |
 | **UI 디자인 토큰/패턴** | `UI_Guide.md` Sec 8 | 색상/타이포/컴포넌트 |
 | **투자 덱 / 사업계획** | `Business_Plan.md` 또는 `Deck.html` | 필요 섹션 |
-| **개발 명령 실행** | `/compass-dev` 스킬 (`.claude/skills/compass-dev/`) | 스킬 호출 |
-| **코드 검증** | `/compass-verify` 스킬 (`.claude/skills/compass-verify/`) | 스킬 호출 |
+| **개발 명령 실행** | `/yieldo-dev` 스킬 (`.claude/skills/yieldo-dev/`) | 스킬 호출 |
+| **코드 검증** | `/yieldo-verify` 스킬 (`.claude/skills/yieldo-verify/`) | 스킬 호출 |
 
 ## 핵심 의사결정 (변경 금지)
 
@@ -58,5 +58,5 @@
 | Data_Sources_Guide.md | 32KB | 섹션별 부분 로드 |
 | UI_Guide.md | 30KB | 섹션별 부분 로드 |
 | Legal.md | 13KB | 법적 질문 시 전체 |
-| compass-dev.md | 10KB | 개발 시 전체 |
+| yieldo-dev.md | 10KB | 개발 시 전체 |
 | **CONTEXT_INDEX.md** | **3KB** | **항상 먼저** |
