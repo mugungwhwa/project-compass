@@ -370,7 +370,7 @@ export function RunwayStatusBar() {
             <ChevronDown className="h-3 w-3 flex-shrink-0 self-center text-[var(--fg-3)]" aria-hidden />
           </Popover.Trigger>
           <Popover.Portal>
-            <Popover.Positioner side="bottom" align="end" sideOffset={4}>
+            <Popover.Positioner side="bottom" align="end" sideOffset={4} style={{ zIndex: 9999 }}>
               <Popover.Popup
                 className={cn(dropdownBase, "min-w-[220px] outline-none")}
                 onKeyDown={handleGameDropdownKeyDown}
@@ -441,7 +441,7 @@ export function RunwayStatusBar() {
             <ChevronDown className="h-3 w-3 flex-shrink-0 self-center text-[var(--fg-3)]" aria-hidden />
           </Popover.Trigger>
           <Popover.Portal>
-            <Popover.Positioner side="bottom" align="end" sideOffset={4}>
+            <Popover.Positioner side="bottom" align="end" sideOffset={4} style={{ zIndex: 9999 }}>
               <Popover.Popup
                 id={calListId}
                 aria-label="Select date range"
