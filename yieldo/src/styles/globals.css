@@ -422,30 +422,30 @@ body {
 */
 .yieldo-tooltip {
   background: var(--bg-2);
-  border: 1px solid var(--phosphor-yellow); /* phosphor edge — defines the surface */
+  border: 1px solid var(--phosphor-yellow);
   border-radius: var(--radius-card);
-  padding: 8px 12px;
+  padding: 10px 14px;
   font-family: var(--font-geist-mono), "D2Coding", "JetBrains Mono", ui-monospace, monospace;
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--fg-0);
-  min-width: 140px;
-  /* Phosphor halo: thin inner ring + soft outer glow + cast shadow */
+  font-size: 13px;        /* was 12px — text larger for legibility */
+  line-height: 1.55;
+  color: #FFFFFF;          /* was --fg-0 — locked to pure white for max bright */
+  min-width: 160px;
   box-shadow:
-    0 0 0 1px rgba(255, 228, 94, 0.25),
-    0 0 22px rgba(255, 228, 94, 0.18),
-    0 8px 28px rgba(0, 0, 0, 0.55);
+    0 0 0 1px rgba(255, 228, 94, 0.30),
+    0 0 22px rgba(255, 228, 94, 0.22),
+    0 10px 32px rgba(0, 0, 0, 0.6);
 }
 
 .yieldo-tooltip-label {
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--phosphor-yellow);
   margin-bottom: 6px;
   padding-bottom: 4px;
-  border-bottom: 1px solid var(--border-default);
+  border-bottom: 1px solid rgba(255, 228, 94, 0.25);
+  text-shadow: 0 0 6px rgba(255, 228, 94, 0.3);
 }
 
 /*
@@ -544,16 +544,18 @@ body {
 }
 
 .yieldo-tooltip-name {
-  color: var(--fg-0);
-  opacity: 0.85;
+  color: #FFFFFF;     /* pure white — was fg-0 + 0.85 opacity (muted) */
+  opacity: 1;
+  font-weight: 500;
 }
 
 .yieldo-tooltip-value {
   margin-left: auto;
-  padding-left: 12px;
-  font-weight: 600;
-  color: var(--fg-0);
+  padding-left: 14px;
+  font-weight: 700;
+  color: var(--phosphor-yellow);  /* phosphor-yellow value — Bloomberg pattern: numbers in yellow */
   font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 6px rgba(255, 228, 94, 0.35);
 }
 
 /* Eyebrow — small uppercase label above headlines */
