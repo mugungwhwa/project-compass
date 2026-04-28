@@ -70,7 +70,7 @@ export function CausalImpactPanel({
       </div>
 
       <ResponsiveContainer width="100%" height={220}>
-        <ComposedChart data={bandData} margin={{ top: 12, right: 20, left: 4, bottom: 12 }}>
+        <ComposedChart data={bandData} margin={{ top: 28, right: 20, left: 4, bottom: 12 }}>
           <defs>
             <linearGradient id="cfBand" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor={PALETTE.benchmark} stopOpacity={0.28} />

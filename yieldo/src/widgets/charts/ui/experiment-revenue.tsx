@@ -185,7 +185,7 @@ export function ExperimentRevenue({ data, stats, expanded: externalExpanded, onT
 
       <div className="flex-1" style={{ minHeight: chartHeight }}>
       <ResponsiveContainer width="100%" height="100%">
-        <ComposedChart data={data} margin={{ top: 20, right: 16, left: 8, bottom: 0 }}>
+        <ComposedChart data={data} margin={{ top: 28, right: 16, left: 8, bottom: 12 }}>
           <CartesianGrid strokeDasharray="4 4" stroke={C.grid} vertical={false} />
           <XAxis
             dataKey="month"

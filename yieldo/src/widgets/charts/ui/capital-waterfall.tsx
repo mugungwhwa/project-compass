@@ -148,7 +148,7 @@ export function CapitalWaterfall({ data, expanded: externalExpanded, onToggle: e
       </div>
       <div className="flex-1" style={{ minHeight: chartHeight }}>
       <ResponsiveContainer width="100%" height="100%">
-        <ComposedChart data={rows} margin={{ top: 16, right: 16, left: 8, bottom: 0 }}>
+        <ComposedChart data={rows} margin={{ top: 24, right: 20, left: 8, bottom: 12 }}>
           <CartesianGrid strokeDasharray="3 3" stroke={PALETTE.grid} vertical={false} />
           <XAxis
             dataKey="label"

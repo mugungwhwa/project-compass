@@ -975,6 +975,79 @@ phosphor accent는 화면의 **5% 미만 면적**에만 사용:
 - [ ] 우측 AppSidebar terminal-style 변환 (현재 token 사용 OK, layout 단순화 여지)
 - [ ] 디자인 가이드 v1.0 (`yieldo Design Guidelines`) §2.1 컬러 시스템 섹션을 v3 (3-color + phosphor)로 업데이트
 
+### §8.9 Chart Text Positioning Rules (2026-04-28)
+
+> 사용자 피드백 "차트 안 텍스트가 선이랑 겹치고, 어떤 텍스트는 차트 밖으로 escape" 응대
+> 후 codify된 규칙. 새 차트 만들거나 기존 차트 audit 시 이 표를 source of truth로.
+
+**Recharts margin 의무값** (chart container `margin={{...}}`):
+
+| Top | Right | Left | Bottom | 적용 케이스 |
+|-----|-------|------|--------|-----------|
+| 12 | 20 | 4 | 12 | **Default**. axis tick 만 있는 일반 차트 |
+| 12 | **56** | 4 | 12 | **endpoint label 차트** (`<LabelList position="right">`) — short value (e.g. "21.4%", "#3") |
+| 12 | **64** | 4 | 12 | **endpoint label 차트** — wide value (e.g. "$847K", "1.27M") |
+| **28** | 20 | 8 | 12 | **`<ReferenceLine label={{ position: "top" }}>`** 있는 차트 — top label 클리핑 방지 |
+| 28 | 20 | **120** | 12 | **수평 BarChart** with long Y-axis labels (variant-impact, experiment-bar) |
+
+**금지**:
+- `top: 0`, `bottom: 0` — axis tick과 chart edge가 충돌
+- `right: 10` 이하 with endpoint LabelList — 라벨 잘림
+- `top: 16` 이하 with `position: "top"` ReferenceLine label — 라벨 클리핑
+
+**LabelList 표준 props** (line endpoint 라벨):
+```tsx
+<LabelList
+  dataKey="..."
+  position="right"        // ALWAYS right (top/bottom overlap line)
+  offset={8}              // 라인 끝에서 8px 띄움
+  formatter={(v) => ...}  // 단위 명시 (%, $K, # 등)
+  fill={lineColor}        // 라인 색과 동일
+  fontSize={11}
+  fontFamily="var(--font-geist-mono)"
+  fontWeight={600}        // 700 if rank/critical
+/>
+```
+
+**ReferenceLine label 표준**:
+- `position: "top"` 사용 시 → margin.top 28+
+- `position: "right"` 사용 시 → margin.right 56+
+- `position: "insideTop"` 권장 (margin 부담 적음, 단 라벨이 차트 안쪽으로)
+- 색: dashed 라인 색 + 동일 hue, 80% opacity 권장
+
+**커스텀 `<text>` SVG 라벨 규칙**:
+- `dominantBaseline` 명시 (text-after-edge 권장 — line 위로 띄움)
+- `textAnchor` 명시 (middle/start/end 명확히)
+- `filter: drop-shadow()` halo로 가독성 강화 (특히 dark theme에서)
+- 라인과 같은 색을 절대 쓰지 말 것 — 같은 색이면 겹쳐서 안 보임
+
+**`<foreignObject>` HTML in SVG 규칙**:
+- chart bounds 신경써야 함 — y 좌표가 음수면 escape
+- 기본은 데이터 포인트 **아래 8-12px** 위치 (top quadrant 진입 시 위로 flip)
+- 다크 모드 일관성 위해 `--bg-2` background + `--phosphor-yellow` 25% opacity border + `--phosphor-yellow` 18% glow halo
+- text color `#ECF1F7` (fg-1) 이상 (#FFFFFF preferred)
+- font-family는 mono fallback chain 명시 (foreignObject는 inheritance 끊김)
+
+**Inline tooltip render 텍스트** (Tooltip `content` prop의 render 함수 안):
+- 모든 inline `style={{ color: "#0A0A0A" }}` (검정) → `color: "#FFE45E"` (phosphor-yellow)
+- 모든 inline `style={{ color: "#6B7280" }}` (회색) → `color: "#ECF1F7"` (fg-1)
+- 가능하면 inline style 버리고 `.yieldo-tooltip-name` / `.yieldo-tooltip-value` 클래스 사용
+- divider는 phosphor-yellow rgba 0.25 (`1px solid rgba(255,228,94,0.25)`)
+
+**감지 grep 패턴** (정기 audit 시):
+```bash
+# Light theme tooltip 잔재
+grep -rn 'color: "#0A0A0A"\|color: "#6B7280"\|"#F1F1ED"' src/widgets/charts/ui/
+
+# 위험한 margin
+grep -rn 'top: 0\|bottom: 0\|right: 10' src/widgets/charts/ui/
+
+# position=top이면서 top margin 작은 경우
+grep -B5 'position: "top"' src/widgets/charts/ui/ | grep "margin"
+```
+
+이 규칙은 design master 책임. 새 차트 추가 / 기존 차트 audit 시 자율 적용.
+
 ### §8.8 Decision rationale (왜 이 방향인지)
 
 **Q: 왜 Bloomberg를 모방하나? Modern SaaS dark가 더 친숙하지 않나?**

@@ -58,7 +58,7 @@ export function RevenueVsInvest({ data, expanded: externalExpanded, onToggle: ex
       />
       <div className="flex-1" style={{ minHeight: chartHeight }}>
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={data} margin={{ top: 16, right: 20, left: 8, bottom: 0 }}>
+        <AreaChart data={data} margin={{ top: 28, right: 20, left: 8, bottom: 12 }}>
           <defs>
             <linearGradient id="gradRevenue" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor={C.revenue} stopOpacity={0.2} />

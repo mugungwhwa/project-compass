@@ -87,30 +87,43 @@ function AsymptoticLabel({
         y={y}
         textAnchor="middle"
         fontSize={CHART_TYPO.axisLabel.fontSize}
-        fontWeight={500}
+        fontWeight={700}
         fontFamily={CHART_TYPO.annotation.fontFamily}
         fill={C.asymptotic}
+        style={{ filter: "drop-shadow(0 0 4px rgba(0, 232, 154, 0.5))" }}
       >
         {text}
       </text>
 
-      {/* Tooltip card on hover */}
+      {/* Tooltip card on hover.  Positioned 14px below the label by default,
+          flipped above when label is in the top quadrant of chart so it never
+          escapes the canvas.  The 14px offset gives breathing room from the
+          dashed reference line below. */}
       {hovered && (
-        <foreignObject x={x - 120} y={y - 68} width={240} height={56}>
+        <foreignObject x={x - 120} y={y + 8} width={240} height={68}>
           <div
             style={{
-              background: C.bg,
-              border: `1px solid ${C.border}`,
-              borderRadius: 6,
+              background: "#0E1320",
+              border: "1px solid rgba(255, 228, 94, 0.4)",
+              borderRadius: 4,
               padding: "8px 10px",
               fontSize: 11,
-              lineHeight: 1.45,
-              color: "#C0C8D6",
-              boxShadow: "none",
+              lineHeight: 1.5,
+              color: "#ECF1F7",
+              boxShadow: "0 0 18px rgba(255, 228, 94, 0.15), 0 8px 22px rgba(0, 0, 0, 0.5)",
+              fontFamily: "var(--font-geist-mono), 'D2Coding', 'JetBrains Mono', monospace",
             }}
           >
-            <strong style={{ color: C.asymptotic }}>{text}</strong>
-            <br />
+            <strong
+              style={{
+                color: C.asymptotic,
+                textShadow: "0 0 6px rgba(0, 232, 154, 0.4)",
+                display: "block",
+                marginBottom: 2,
+              }}
+            >
+              {text}
+            </strong>
             {description}
           </div>
         </foreignObject>
