@@ -38,7 +38,7 @@ export function SignalCard({ status, confidence, factors, payback }: SignalCardP
   const p50Pos = Math.min((payback.p50 / maxDay) * 100, 100)
 
   return (
-    <div className={cn("relative rounded-xl border border-[var(--border)] p-6 mb-8 sticky top-0 z-10", config.cardBg)} style={{ boxShadow: "0 8px 40px rgba(91,154,255,0.12)" }}>
+    <div className={cn("relative rounded-xl border border-[var(--border)] p-6 mb-8 sticky top-0 z-10", config.cardBg)} style={{ boxShadow: "none" }}>
       {/* Top: badge + confidence */}
       <div className="flex items-center justify-between mb-4">
         <div className={cn("inline-flex items-center gap-2 rounded-full px-5 py-2 text-lg font-extrabold border", config.badgeBg, config.badgeText, config.badgeBorder)}>
@@ -82,18 +82,19 @@ export function SignalCard({ status, confidence, factors, payback }: SignalCardP
       <div className="flex items-center gap-3 pt-3 border-t border-[var(--border)]">
         <div className="text-xs text-[var(--text-secondary)] whitespace-nowrap font-medium">Payback</div>
         <div className="flex-1">
-          <div className="relative h-1.5 bg-blue-50 rounded-full">
+          <div className="relative h-1.5 bg-[var(--bg-2)] rounded-[var(--radius-inline)] overflow-hidden">
             <motion.div
-              className="absolute left-0 top-0 h-full rounded-full bg-gradient-to-r from-blue-200 to-[var(--accent-blue)]"
+              className="absolute left-0 top-0 h-full rounded-[var(--radius-inline)] bg-[var(--phosphor-yellow)]"
+              style={{ boxShadow: "0 0 8px rgba(255,228,94,0.5)" }}
               initial={{ width: "0%" }}
               animate={{ width: `${p50Pos}%` }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
             />
           </div>
-          <div className="flex justify-between mt-1">
-            <span className="text-[10px] text-[var(--text-muted)]" style={{ fontVariantNumeric: "tabular-nums" }}>D{payback.p10}</span>
-            <span className="text-[10px] font-bold text-[var(--brand)]" style={{ fontVariantNumeric: "tabular-nums" }}>D{payback.p50}</span>
-            <span className="text-[10px] text-[var(--text-muted)]" style={{ fontVariantNumeric: "tabular-nums" }}>D{payback.p90}</span>
+          <div className="flex justify-between mt-1 font-mono">
+            <span className="text-[10px] text-[var(--fg-3)]" style={{ fontVariantNumeric: "tabular-nums" }}>D{payback.p10}</span>
+            <span className="text-[10px] font-bold text-[var(--phosphor-yellow)]" style={{ fontVariantNumeric: "tabular-nums" }}>D{payback.p50}</span>
+            <span className="text-[10px] text-[var(--fg-3)]" style={{ fontVariantNumeric: "tabular-nums" }}>D{payback.p90}</span>
           </div>
         </div>
         <div className="text-[10px] text-[var(--text-muted)] whitespace-nowrap">P10 / P50 / P90</div>

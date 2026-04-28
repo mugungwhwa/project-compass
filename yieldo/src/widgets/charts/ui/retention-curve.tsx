@@ -105,7 +105,7 @@ function AsymptoticLabel({
               fontSize: 11,
               lineHeight: 1.45,
               color: "#4B5563",
-              boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
+              boxShadow: "none",
             }}
           >
             <strong style={{ color: C.asymptotic }}>{text}</strong>

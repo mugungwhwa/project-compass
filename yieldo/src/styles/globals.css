@@ -66,11 +66,11 @@
 
   /* ---------- Signal colors (decision surfaces) ---------- */
   --signal-positive: var(--accent-do);
-  --signal-positive-bg: rgba(0, 217, 132, 0.10);
-  --signal-caution: var(--accent-warning);
-  --signal-caution-bg: rgba(255, 159, 67, 0.10);
+  --signal-positive-bg: rgba(0, 232, 154, 0.12);    /* updated: phosphor-green tone */
+  --signal-caution: var(--accent-yield);            /* alias: yellow doubles as caution */
+  --signal-caution-bg: rgba(244, 200, 66, 0.12);    /* was amber #FF9F43 — caused 황토색 */
   --signal-risk: var(--accent-danger);
-  --signal-risk-bg: rgba(255, 71, 87, 0.10);
+  --signal-risk-bg: rgba(255, 107, 122, 0.12);      /* updated: phosphor-red tone */
   --signal-pending: var(--fg-2);
   --signal-pending-bg: rgba(107, 114, 128, 0.10);
 

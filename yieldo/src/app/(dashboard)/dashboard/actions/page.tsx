@@ -104,7 +104,7 @@ export default function ActionsPage() {
                       <td className="px-3 py-2.5 text-xs text-[var(--fg-2)]">{action.date}</td>
                       <td className="px-3 py-2.5">
                         <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
-                          action.type === "ua" ? "bg-blue-50 text-blue-700" :
+                          action.type === "ua" ? "bg-[var(--accent-info)]/10 text-[var(--phosphor-cyan)]" :
                           action.type === "liveops" ? "bg-purple-50 text-purple-700" :
                           "bg-amber-50 text-amber-700"
                         }`}>{t(`action.${action.type}` as const)}</span>

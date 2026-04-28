@@ -52,7 +52,7 @@ export default function ExperimentsPage() {
       </FadeInUp>
 
       <FadeInUp>
-        <div className="rounded-xl border border-[var(--border)] bg-white p-5">
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-1)] p-5">
           <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Experiment Detail</h3>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -82,7 +82,7 @@ export default function ExperimentsPage() {
                     <td className="px-3 py-2.5 text-center">
                       <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
                         exp.status === "shipped" ? "bg-green-50 text-green-700" :
-                        exp.status === "running" ? "bg-blue-50 text-blue-700" :
+                        exp.status === "running" ? "bg-[var(--accent-info)]/10 text-[var(--phosphor-cyan)]" :
                         "bg-red-50 text-red-700"
                       }`}>{t(`exp.${exp.status}` as const)}</span>
                     </td>
@@ -90,7 +90,7 @@ export default function ExperimentsPage() {
                       <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
                         exp.decision === "win" ? "bg-green-50 text-green-700" :
                         exp.decision === "lose" ? "bg-red-50 text-red-700" :
-                        "bg-slate-50 text-slate-600"
+                        "bg-[var(--bg-2)] text-[var(--fg-2)]"
                       }`}>{t(`exp.${exp.decision}` as const)}</span>
                     </td>
                   </tr>

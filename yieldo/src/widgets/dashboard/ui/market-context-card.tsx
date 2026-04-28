@@ -40,7 +40,7 @@ export function MarketContextCard({ data, expanded: externalExpanded, onToggle: 
     <motion.div
       layout
       className={`rounded-xl border border-[var(--border)] p-6 card-glow card-premium h-full flex flex-col ${gridClassName}`}
-      style={{ boxShadow: "0 4px 24px rgba(91,154,255,0.08)" }}
+      style={{ boxShadow: "none" }}
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
       {/* Header */}

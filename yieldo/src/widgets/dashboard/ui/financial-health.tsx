@@ -18,7 +18,7 @@ export function FinancialHealth({ burnTolerance, netRunway, kpis, paybackDay, ru
   const isAffordable = paybackDay < runwayEndDay
 
   return (
-    <div className="rounded-xl border border-[var(--border)] bg-white p-5">
+    <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-1)] p-5">
       <div className="flex items-center gap-2 mb-4">
         <span className="text-lg">💰</span>
         <h3 className="text-sm font-semibold text-[var(--text-primary)]">{t("finance.title")}</h3>
@@ -66,7 +66,7 @@ export function FinancialHealth({ burnTolerance, netRunway, kpis, paybackDay, ru
 
       {/* Financial KPIs */}
       <div className="grid grid-cols-3 gap-3 mb-4">
-        <div className="bg-slate-50 rounded-lg p-3 text-center">
+        <div className="bg-[var(--bg-2)] rounded-lg p-3 text-center">
           <div className="text-lg font-bold" style={{ fontVariantNumeric: "tabular-nums", color: kpis.capEfficiency >= 1 ? "var(--signal-green)" : "var(--signal-amber)" }}>
             {kpis.capEfficiency}
           </div>
@@ -78,7 +78,7 @@ export function FinancialHealth({ burnTolerance, netRunway, kpis, paybackDay, ru
             {kpis.capEfficiency >= 1 ? t("finance.recovering") : t("finance.deficit")}
           </div>
         </div>
-        <div className="bg-slate-50 rounded-lg p-3 text-center">
+        <div className="bg-[var(--bg-2)] rounded-lg p-3 text-center">
           <div className="text-lg font-bold text-[var(--signal-green)]" style={{ fontVariantNumeric: "tabular-nums" }}>
             {kpis.revPerSpend}x
           </div>
@@ -88,7 +88,7 @@ export function FinancialHealth({ burnTolerance, netRunway, kpis, paybackDay, ru
           </div>
           <div className="text-[10px] text-[var(--signal-green)]">{t("finance.recovering")}</div>
         </div>
-        <div className="bg-slate-50 rounded-lg p-3 text-center">
+        <div className="bg-[var(--bg-2)] rounded-lg p-3 text-center">
           <div className="text-lg font-bold" style={{ fontVariantNumeric: "tabular-nums", color: kpis.netBurn < 0 ? "var(--signal-red)" : "var(--signal-green)" }}>
             {kpis.netBurn >= 0 ? "+" : ""}${kpis.netBurn}K
           </div>
