@@ -43,7 +43,7 @@ function StatsBar({
 }) {
   if (mode === "organic") {
     return (
-      <div className="mb-3 flex items-center gap-6 rounded-md bg-[var(--bg-2)] px-4 py-2.5">
+      <div className="mb-3 flex items-center gap-6 rounded-[var(--radius-card)] bg-[var(--bg-2)] px-4 py-2.5">
         <div className="text-[11px] text-[var(--fg-2)]">
           <span className="font-medium text-[var(--fg-0)]">
             +{stats.organicQoQ}% QoQ
@@ -56,7 +56,7 @@ function StatsBar({
   }
 
   return (
-    <div className="mb-3 flex items-center justify-between rounded-md bg-[var(--bg-2)] px-4 py-2.5">
+    <div className="mb-3 flex items-center justify-between rounded-[var(--radius-card)] bg-[var(--bg-2)] px-4 py-2.5">
       <div className="text-[11px] text-[var(--fg-2)]">
         <span className="mr-1 font-semibold text-[var(--fg-0)]">
           {locale === "ko" ? "속도" : "Velocity"}

@@ -120,7 +120,7 @@ function StepFrame({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 4 }}
             transition={{ duration: 0.15 }}
-            className="absolute -top-12 left-1/2 -translate-x-1/2 z-20 whitespace-nowrap rounded-md border border-[var(--border-default)] bg-[var(--bg-1)] px-2.5 py-1.5 shadow-lg text-[10px]"
+            className="absolute -top-12 left-1/2 -translate-x-1/2 z-20 whitespace-nowrap rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] px-2.5 py-1.5 shadow-lg text-[10px]"
           >
             <span className="text-[var(--fg-2)]">{step.label}: </span>
             <span style={{ color: C.genre }}>{step.prior.p50.toFixed(1)}</span>

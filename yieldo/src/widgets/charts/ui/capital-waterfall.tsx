@@ -130,7 +130,7 @@ export function CapitalWaterfall({ data, expanded: externalExpanded, onToggle: e
   return (
     <motion.div
       layout
-      className={`rounded-xl border border-[var(--border)] p-6 card-glow card-premium h-full flex flex-col ${gridClassName}`}
+      className={`rounded-[var(--radius-card)] border border-[var(--border)] p-6 card-glow card-premium h-full flex flex-col ${gridClassName}`}
       style={{ boxShadow: "none" }}
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >

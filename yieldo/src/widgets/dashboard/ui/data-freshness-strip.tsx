@@ -86,7 +86,7 @@ export function DataFreshnessStrip({ data }: DataFreshnessStripProps) {
 
   return (
     <div
-      className="rounded-xl border border-[var(--border)] p-5 card-glow card-premium h-full"
+      className="rounded-[var(--radius-card)] border border-[var(--border)] p-5 card-glow card-premium h-full"
       style={{ boxShadow: "none" }}
     >
       <h3 className="text-h2 mb-4">{t("data.freshness")}</h3>

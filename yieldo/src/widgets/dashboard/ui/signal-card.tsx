@@ -38,7 +38,7 @@ export function SignalCard({ status, confidence, factors, payback }: SignalCardP
   const p50Pos = Math.min((payback.p50 / maxDay) * 100, 100)
 
   return (
-    <div className={cn("relative rounded-xl border border-[var(--border)] p-6 mb-8 sticky top-0 z-10", config.cardBg)} style={{ boxShadow: "none" }}>
+    <div className={cn("relative rounded-[var(--radius-card)] border border-[var(--border)] p-6 mb-8 sticky top-0 z-10", config.cardBg)} style={{ boxShadow: "none" }}>
       {/* Top: badge + confidence */}
       <div className="flex items-center justify-between mb-4">
         <div className={cn("inline-flex items-center gap-2 rounded-full px-5 py-2 text-lg font-extrabold border", config.badgeBg, config.badgeText, config.badgeBorder)}>

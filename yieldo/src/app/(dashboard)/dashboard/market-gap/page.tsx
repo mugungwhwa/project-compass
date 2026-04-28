@@ -61,7 +61,7 @@ export default function MarketGapPage() {
           <SaturationTrendChart data={mockSaturationTrend} expanded={satGrid.expandedId === "chart-0"} onToggle={() => satGrid.toggle("chart-0")} />
         </motion.div>
         <motion.div layout className={`${satGrid.getClassName("chart-1", 1)} h-full`} transition={GRID_TRANSITION}>
-        <div className="rounded-2xl border border-[var(--border)] bg-gradient-to-br from-white to-slate-50/50 p-6 card-premium h-full">
+        <div className="rounded-[var(--radius-modal)] border border-[var(--border)] bg-[var(--bg-1)] p-6 card-premium h-full">
           <div className="mb-4">
             <h3 className="text-[15px] font-bold text-[var(--text-primary)]">Top 10 Competitors</h3>
             <p className="text-xs text-[var(--text-muted)] mt-0.5">Puzzle genre · Revenue ranked</p>

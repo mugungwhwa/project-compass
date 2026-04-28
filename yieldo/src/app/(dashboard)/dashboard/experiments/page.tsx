@@ -52,7 +52,7 @@ export default function ExperimentsPage() {
       </FadeInUp>
 
       <FadeInUp>
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-1)] p-5">
+        <div className="rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--bg-1)] p-5">
           <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Experiment Detail</h3>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">

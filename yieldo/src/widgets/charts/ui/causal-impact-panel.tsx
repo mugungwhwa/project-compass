@@ -48,19 +48,19 @@ export function CausalImpactPanel({
       />
 
       <div className="mb-4 grid grid-cols-3 gap-3 text-xs">
-        <div className="rounded-lg border border-[var(--border-default)] bg-[var(--bg-2)] px-3 py-2">
+        <div className="rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-2)] px-3 py-2">
           <div className="text-[10px] uppercase tracking-wide text-[var(--fg-2)]">{t("chart.causalImpact.ate")}</div>
           <div className="mt-1 text-lg font-semibold text-[var(--fg-0)]">+{ate.toFixed(1)}pp</div>
           <div className="text-[10px] text-[var(--fg-2)]">90% CI: [{ateLow.toFixed(1)}, {ateHigh.toFixed(1)}]</div>
         </div>
-        <div className="rounded-lg border border-[var(--border-default)] bg-[var(--bg-2)] px-3 py-2">
+        <div className="rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-2)] px-3 py-2">
           <div className="text-[10px] uppercase tracking-wide text-[var(--fg-2)]">{t("chart.causalImpact.probability")}</div>
           <div className="mt-1 text-lg font-semibold" style={{ color: PALETTE.positive }}>
             {(probability * 100).toFixed(0)}%
           </div>
           <div className="text-[10px] text-[var(--fg-2)]">{t("chart.causalImpact.probSubtitle")}</div>
         </div>
-        <div className="rounded-lg border border-[var(--border-default)] bg-[var(--bg-2)] px-3 py-2">
+        <div className="rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-2)] px-3 py-2">
           <div className="text-[10px] uppercase tracking-wide text-[var(--fg-2)]">{t("chart.causalImpact.verdict")}</div>
           <div className="mt-1 text-sm font-semibold" style={{ color: PALETTE.positive }}>
             {t("chart.causalImpact.verdict.real")}
