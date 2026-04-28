@@ -57,7 +57,7 @@ export function KPICards({ items, basisKey }: KPICardsProps) {
 
   return (
     <div>
-      <div className={cn("grid gap-5", gridClass)}>
+      <div className={cn("grid gap-3", gridClass)}>
         {items.map((item) => {
           const isPositive = item.trend > 0
           const isNegative = item.trend < 0
@@ -75,7 +75,7 @@ export function KPICards({ items, basisKey }: KPICardsProps) {
           return (
             <div
               key={item.labelKey}
-              className="rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-5 transition-colors hover:border-[var(--border-strong)]"
+              className="rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] px-3 py-2.5 transition-colors hover:border-[var(--phosphor-yellow)]"
             >
               <div className="flex items-center gap-1">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--fg-2)]">
@@ -83,21 +83,21 @@ export function KPICards({ items, basisKey }: KPICardsProps) {
                 </p>
                 {infoKey && <InfoHint content={t(infoKey)} size={12} />}
               </div>
-              <div className="flex items-baseline gap-2 mt-3">
+              <div className="flex items-baseline gap-1.5 mt-1.5">
                 <span
-                  className="text-hero font-mono-num text-[var(--phosphor-yellow)]"
-                  style={{ textShadow: "0 0 22px rgba(255, 228, 94, 0.35)" }}
+                  className="text-3xl font-mono-num text-[var(--phosphor-yellow)] leading-none tracking-tight"
+                  style={{ textShadow: "0 0 16px rgba(255, 228, 94, 0.35)" }}
                 >
                   {typeof item.value === 'number'
                     ? <AnimatedNumber value={item.value} />
                     : item.value}
                 </span>
                 {item.unit && (
-                  <span className="text-base text-[var(--fg-2)] font-mono">{item.unit}</span>
+                  <span className="text-sm text-[var(--fg-2)] font-mono">{item.unit}</span>
                 )}
               </div>
-              <div className={cn("flex items-center gap-1.5 mt-3 text-sm font-semibold font-mono", displayTrendColor)}>
-                <TrendIcon className="h-4 w-4" />
+              <div className={cn("flex items-center gap-1 mt-1.5 text-xs font-semibold font-mono", displayTrendColor)}>
+                <TrendIcon className="h-3 w-3" />
                 <span>
                   {Math.abs(item.trend)}{item.unit === "%" ? "pp" : ""} {item.trendLabel}
                 </span>

@@ -15,12 +15,15 @@
 */
 
 :root {
-  /* ---------- Background scale (Dark — yieldo default) ---------- */
-  --bg-0: #0A0E1A;   /* outermost canvas — terminal dark navy */
-  --bg-1: #141826;   /* cards, panels, elevated surfaces */
-  --bg-2: #1F2436;   /* subtle panel, hover tint */
-  --bg-3: #2D3548;   /* hover strong, inset, focus */
-  --bg-4: #3A4258;   /* highest elevation / divider on dark */
+  /* ---------- Background scale (Dark — yieldo terminal v3) ----------
+     Pushed deeper toward black so phosphor accents (yellow/green/red)
+     fully detach from the canvas.  Bloomberg ref: #000000 black; we sit
+     just above it (#060912) to soften eye fatigue while keeping contrast. */
+  --bg-0: #060912;   /* outermost canvas — near-black terminal */
+  --bg-1: #0E1320;   /* cards, panels — distinct but tight to canvas */
+  --bg-2: #161B2C;   /* subtle panel, hover tint */
+  --bg-3: #232A40;   /* hover strong, inset, focus */
+  --bg-4: #313A56;   /* highest elevation / divider on dark */
 
   /* ---------- Foreground / Text scale ----------
      Re-tiered twice for dark-on-dark legibility.  After v2 user still found
@@ -41,10 +44,13 @@
   --brand-hover: #E5B72E;
   --brand-tint: rgba(244, 200, 66, 0.12); /* subtle fill behind CTAs */
 
-  /* ---------- yieldo Accent System ---------- */
-  --accent-yield:   #F4C842;  /* yield / KPI signal */
+  /* ---------- yieldo Accent System ----------
+     2026-04-28: dropped amber (#FF9F43 / #FFB347) — read as 황토색 ochre
+     on dark navy.  caution-tier now collapses into yield (Bloomberg-style
+     3-color signal: yellow=caution+highlight / green=positive / red=risk). */
+  --accent-yield:   #F4C842;  /* yield / KPI signal / caution (was distinct amber) */
   --accent-do:      #00D984;  /* execute / positive */
-  --accent-warning: #FF9F43;  /* attention */
+  --accent-warning: #F4C842;  /* aliased to yield — kept var name for back-compat */
   --accent-danger:  #FF4757;  /* risk / decline */
   --accent-info:    #4A9EFF;  /* neutral information */
 
@@ -55,7 +61,7 @@
   --phosphor-yellow: #FFE45E;
   --phosphor-green:  #4DFFA3;
   --phosphor-cyan:   #5DE7FF;
-  --phosphor-amber:  #FFB347;
+  --phosphor-amber:  #FFE45E;  /* aliased to yellow — was #FFB347 ochre */
   --phosphor-red:    #FF6B7A;
 
   /* ---------- Signal colors (decision surfaces) ---------- */
@@ -89,10 +95,10 @@
   --chart-cohort-5: #5DD3F0;   /* cyan */
   --chart-cohort-6: #FF6B7A;   /* coral */
 
-  /* ---------- Radius (terminal = angular) ---------- */
-  --radius-inline: 2px;
-  --radius-card: 6px;
-  --radius-modal: 8px;
+  /* ---------- Radius (Bloomberg terminal = sharp/angular) ---------- */
+  --radius-inline: 0px;   /* truly sharp — was 2px */
+  --radius-card: 2px;     /* was 6px — Bloomberg uses 0; 2 is a compromise */
+  --radius-modal: 4px;    /* was 8px */
 
   /* ---------- Spacing ---------- */
   --space-1: 4px;
@@ -442,6 +448,55 @@ body {
   border-bottom: 1px solid var(--border-default);
 }
 
+/*
+  ============================================================================
+  Recharts SVG overrides — terminal philosophy applied globally
+  ============================================================================
+  Recharts sets stroke-width on SVG attrs (not inline style), so a CSS
+  rule with !important wins.  These selectors hit every chart at once
+  without touching individual chart components.
+*/
+
+/* All line/curve strokes thicker — terminals draw fat strokes for legibility */
+.recharts-line-curve,
+.recharts-curve.recharts-line-curve {
+  stroke-width: 2.5 !important;
+}
+
+/* Hover crosshair = phosphor-yellow (Bloomberg trader style) */
+.recharts-tooltip-cursor {
+  stroke: var(--phosphor-yellow) !important;
+  stroke-width: 1 !important;
+  stroke-dasharray: 3 3 !important;
+  opacity: 0.9 !important;
+}
+
+/* Active datapoint dot — phosphor halo on hover */
+.recharts-active-dot {
+  stroke-width: 2 !important;
+}
+.recharts-active-dot circle {
+  filter: drop-shadow(0 0 6px rgba(255, 228, 94, 0.6));
+}
+
+/* Cartesian grid — keep subtle but visible */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: var(--chart-grid) !important;
+  stroke-dasharray: 2 4 !important;
+}
+
+/* Axis lines themselves — drop them (Bloomberg style) */
+.recharts-xAxis .recharts-cartesian-axis-line,
+.recharts-yAxis .recharts-cartesian-axis-line {
+  stroke: var(--border-default) !important;
+}
+
+/* Reference line emphasis */
+.recharts-reference-line line {
+  stroke-width: 1.5 !important;
+}
+
 /* ---------- Phosphor utility classes ---------- */
 
 /* Live pulse dot — for streaming/active indicators */
@@ -483,7 +538,8 @@ body {
 }
 
 .yieldo-tooltip-name {
-  color: var(--fg-1);
+  color: var(--fg-0);
+  opacity: 0.85;
 }
 
 .yieldo-tooltip-value {

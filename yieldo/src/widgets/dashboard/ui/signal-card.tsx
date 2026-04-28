@@ -48,7 +48,7 @@ export function SignalCard({ status, confidence, factors, payback }: SignalCardP
           {t(config.label)}
         </div>
         <div className="text-sm text-[var(--text-secondary)]">
-          {t("signal.confidence")}: <span className="text-2xl font-bold text-[var(--text-primary)] font-mono-num" style={{ fontVariantNumeric: "tabular-nums" }}><AnimatedNumber value={confidence} suffix="%" /></span>
+          {t("signal.confidence")}: <span className="text-2xl font-bold text-[var(--phosphor-yellow)] font-mono-num" style={{ fontVariantNumeric: "tabular-nums", textShadow: "0 0 14px rgba(255, 228, 94, 0.35)" }}><AnimatedNumber value={confidence} suffix="%" /></span>
         </div>
       </div>
 

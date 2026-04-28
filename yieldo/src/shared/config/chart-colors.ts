@@ -22,9 +22,9 @@ export const PALETTE = {
   benchmark:     "#B8BFCE",  // dashed benchmark — light enough to read
   observed:      "#FFFFFF",  // datapoint dots — pure white on dark
 
-  // Signal colors — phosphor tier for terminal pop
+  // Signal colors — phosphor tier for terminal pop (3-color Bloomberg-style)
   positive:      "#00E89A",  // bright phosphor green
-  caution:       "#FFB347",  // phosphor amber
+  caution:       "#FFE45E",  // phosphor yellow (was #FFB347 ochre — dropped amber)
   risk:          "#FF6B7A",  // phosphor red
 
   // Cohort categorical — terminal-saturated
@@ -45,7 +45,7 @@ export const PALETTE = {
 
   // Legacy hex aliases — re-pointed at terminal-bright palette
   revenue:       "#5DE7FF",  // phosphor cyan (revenue line — pops)
-  uaSpend:       "#FFB347",  // phosphor amber
+  uaSpend:       "#FFE45E",  // phosphor yellow (was #FFB347 ochre)
   roas:          "#4DFFA3",  // phosphor green
   breakeven:     "#FF6B7A",  // phosphor red
   genreAvgGray:  "#6B7280",  // muted gray for benchmark on dark
