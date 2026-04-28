@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { useLocale } from "@/shared/i18n"
 import type { RankingHistoryPoint } from "@/shared/api/mock-data"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, LabelList } from "recharts"
-import { endpointLabel } from "@/shared/ui/chart-endpoint-label"
+import { sparseLineLabels } from "@/shared/ui/chart-endpoint-label"
 import { RANKING_TREND_COLORS } from "@/shared/config/chart-colors"
 import { CHART_TYPO } from "@/shared/config/chart-typography"
 import { ChartHeader } from "@/shared/ui/chart-header"
@@ -69,13 +69,13 @@ export function RankingTrend({ data, expanded: externalExpanded, onToggle: exter
           />
           <ReferenceLine y={5} stroke={C.top5} strokeDasharray="3 3" strokeOpacity={0.5} label={{ value: "Top 5", position: "right", ...CHART_TYPO.axisLabel, fontFamily: CHART_TYPO.annotation.fontFamily, fill: C.top5 }} />
           <Line type="linear" dataKey="myRank" stroke={C.line} strokeWidth={3} dot={{ r: 4, fill: "#FFFFFF", stroke: C.line, strokeWidth: 2 }} animationBegin={400} animationDuration={1200} animationEasing="ease-out">
-            {/* Endpoint-only — see §8.9.  Weight 700 for rank as headline metric. */}
+            {/* Density-aware — 6-month rank trend has ≤7 points so all
+                points get labeled.  Weight 700 for rank as headline metric. */}
             <LabelList
-              content={endpointLabel(
-                data.length - 1,
+              content={sparseLineLabels(
                 (v) => `#${v}`,
                 C.line,
-                { fontWeight: 700 },
+                { total: data.length, fontWeight: 700 },
               )}
             />
           </Line>

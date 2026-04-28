@@ -13,7 +13,7 @@ import { REVENUE_FORECAST_COLORS } from "@/shared/config/chart-colors"
 import { CHART_TYPO } from "@/shared/config/chart-typography"
 import { cn } from "@/shared/lib"
 import { AreaChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, LabelList } from "recharts"
-import { endpointLabel } from "@/shared/ui/chart-endpoint-label"
+import { sparseLineLabels } from "@/shared/ui/chart-endpoint-label"
 
 // Dropdown animation — mirrors runway-status-bar patterns for app-wide consistency
 const dropdownVariants = {
@@ -459,12 +459,12 @@ export function RevenueForecast({ data, meta, title, expanded: externalExpanded,
 
             {/* Layer 4: Posterior P50 (top, always) — solid blue 2px */}
             <Line type="linear" dataKey="p50" stroke={C.line} strokeWidth={2.25} dot={false} animationBegin={400} animationDuration={1000} animationEasing="ease-out">
-              {/* Endpoint-only — see §8.9 */}
+              {/* Density-aware — see §8.9 */}
               <LabelList
-                content={endpointLabel(
-                  chartData.length - 1,
+                content={sparseLineLabels(
                   (v) => `$${(v / 1000).toFixed(0)}K`,
                   C.line,
+                  { total: chartData.length },
                 )}
               />
             </Line>
