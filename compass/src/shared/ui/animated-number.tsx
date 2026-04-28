@@ -8,6 +8,7 @@ type AnimatedNumberProps = {
   prefix?: string
   suffix?: string
   duration?: number
+  /** Decimal digits. If omitted, auto-detected: 0 for integers, 2 for floats. */
   decimals?: number
   className?: string
 }
@@ -17,12 +18,17 @@ export function AnimatedNumber({
   prefix = "",
   suffix = "",
   duration = 1.2,
-  decimals = 0,
+  decimals,
   className = "",
 }: AnimatedNumberProps) {
+  // Auto-detect decimals from the input so floats like 1.27 don't render as "1".
+  const effectiveDecimals = decimals ?? (Number.isInteger(value) ? 0 : 2)
   const ref = useRef<HTMLSpanElement>(null)
   const isInView = useInView(ref, { once: true })
-  const [display, setDisplay] = useState(0)
+  // Start at the real value so SSR / pre-animation paint is correct.
+  // Without this, every animated KPI flashes "0 <unit>" until useInView fires —
+  // which leaks "0 days" / "0 months" cards into screenshots and demos.
+  const [display, setDisplay] = useState(value)
 
   useEffect(() => {
     if (!isInView) return
@@ -48,7 +54,7 @@ export function AnimatedNumber({
 
   return (
     <span ref={ref} className={`font-mono-num ${className}`}>
-      {prefix}{decimals > 0 ? display.toFixed(decimals) : Math.round(display)}{suffix}
+      {prefix}{effectiveDecimals > 0 ? display.toFixed(effectiveDecimals) : Math.round(display)}{suffix}
     </span>
   )
 }
