@@ -21,6 +21,7 @@ import { useLocale } from "@/shared/i18n"
 import type { RetentionDataPoint } from "@/shared/api/mock-data"
 import { ChartHeader } from "@/shared/ui/chart-header"
 import { ChartTooltip, TooltipDot } from "@/shared/ui/chart-tooltip"
+import { endpointLabel } from "@/shared/ui/chart-endpoint-label"
 import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 import { RETENTION_CURVE_COLORS } from "@/shared/config/chart-colors"
@@ -252,18 +253,15 @@ export function RetentionCurve({ data, asymptoticDay, expanded: externalExpanded
             animationDuration={1000}
             animationEasing="ease-out"
           >
-            {/* Bloomberg-style endpoint label — the final value, painted on the
-                line tip in mono, so traders can read "where are we now" without
-                hovering. */}
+            {/* Endpoint-only label (last data point, 14px clear of line tip).
+                Paint-order stroke creates a knockout halo so the text never
+                overlaps the line.  See §8.9 chart text rules. */}
             <LabelList
-              dataKey="p50"
-              position="right"
-              offset={8}
-              formatter={(v) => (typeof v === "number" ? `${v.toFixed(1)}%` : "")}
-              fill={C.p50}
-              fontSize={11}
-              fontFamily="var(--font-geist-mono)"
-              fontWeight={600}
+              content={endpointLabel(
+                chartData.length - 1,
+                (v) => `${v.toFixed(1)}%`,
+                C.p50,
+              )}
             />
           </Line>
 

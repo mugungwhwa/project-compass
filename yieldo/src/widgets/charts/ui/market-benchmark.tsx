@@ -10,6 +10,7 @@ import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 import { MARKET_BENCHMARK_COLORS } from "@/shared/config/chart-colors"
 import { CHART_TYPO } from "@/shared/config/chart-typography"
 import { AreaChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, LabelList } from "recharts"
+import { endpointLabel } from "@/shared/ui/chart-endpoint-label"
 
 type MarketBenchmarkProps = { data: RetentionDataPoint[]; expanded?: boolean; onToggle?: () => void }
 
@@ -73,15 +74,13 @@ export function MarketBenchmark({ data, expanded: externalExpanded, onToggle: ex
           <Area type="linear" dataKey="p10" stroke="none" fill="none" animationBegin={200} animationDuration={1200} animationEasing="ease-out" />
           <Line type="linear" dataKey="genre" stroke={C.genre} strokeWidth={1.5} strokeDasharray="6 3" dot={false} name={t("chart.genreAvg")} animationBegin={400} animationDuration={1000} animationEasing="ease-out" />
           <Line type="linear" dataKey="p50" stroke={C.p50} strokeWidth={2.5} dot={{ r: 3, fill: "#FFF", stroke: C.p50, strokeWidth: 2 }} name="Match League" animationBegin={400} animationDuration={1000} animationEasing="ease-out">
+            {/* Endpoint-only — see §8.9 */}
             <LabelList
-              dataKey="p50"
-              position="right"
-              offset={8}
-              formatter={(v) => (typeof v === "number" ? `${v.toFixed(1)}%` : "")}
-              fill={C.p50}
-              fontSize={11}
-              fontFamily="var(--font-geist-mono)"
-              fontWeight={600}
+              content={endpointLabel(
+                chartData.length - 1,
+                (v) => `${v.toFixed(1)}%`,
+                C.p50,
+              )}
             />
           </Line>
           <Legend verticalAlign="bottom" height={36} iconSize={12} wrapperStyle={{ ...CHART_TYPO.legend }} />

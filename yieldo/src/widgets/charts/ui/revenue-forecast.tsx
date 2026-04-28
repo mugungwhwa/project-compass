@@ -13,6 +13,7 @@ import { REVENUE_FORECAST_COLORS } from "@/shared/config/chart-colors"
 import { CHART_TYPO } from "@/shared/config/chart-typography"
 import { cn } from "@/shared/lib"
 import { AreaChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, LabelList } from "recharts"
+import { endpointLabel } from "@/shared/ui/chart-endpoint-label"
 
 // Dropdown animation — mirrors runway-status-bar patterns for app-wide consistency
 const dropdownVariants = {
@@ -458,16 +459,13 @@ export function RevenueForecast({ data, meta, title, expanded: externalExpanded,
 
             {/* Layer 4: Posterior P50 (top, always) — solid blue 2px */}
             <Line type="linear" dataKey="p50" stroke={C.line} strokeWidth={2.25} dot={false} animationBegin={400} animationDuration={1000} animationEasing="ease-out">
-              {/* Bloomberg-style endpoint inline value label */}
+              {/* Endpoint-only — see §8.9 */}
               <LabelList
-                dataKey="p50"
-                position="right"
-                offset={8}
-                formatter={(v) => (typeof v === "number" ? `$${(v / 1000).toFixed(0)}K` : "")}
-                fill={C.line}
-                fontSize={11}
-                fontFamily="var(--font-geist-mono)"
-                fontWeight={600}
+                content={endpointLabel(
+                  chartData.length - 1,
+                  (v) => `$${(v / 1000).toFixed(0)}K`,
+                  C.line,
+                )}
               />
             </Line>
 
