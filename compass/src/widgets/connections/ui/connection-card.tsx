@@ -6,6 +6,8 @@ import type {
   Connection,
   ConnectionStatus,
 } from "@/shared/api/mock-connections"
+import { useLiveAfData } from "@/shared/api/appsflyer/use-live-af-data"
+import type { AppStatus } from "@/shared/api/appsflyer/types"
 import { cn } from "@/shared/lib/utils"
 
 type ConnectionCardProps = {
@@ -48,10 +50,33 @@ const PRIMARY_CTA: Record<ConnectionStatus, string> = {
   disconnected: "연결하기",
 }
 
+/** 6-state live status sublabel — connected 카드에서만 표시. */
+const LIVE_LABEL: Record<AppStatus, string> = {
+  backfilling: "백필 중",
+  active: "정상",
+  stale: "지연",
+  failed: "실패",
+  credential_invalid: "재등록 필요",
+  app_missing: "앱 권한 확인",
+}
+
+/** 6-state live status에 따라 CTA 오버라이드. */
+const LIVE_CTA_OVERRIDE: Partial<Record<AppStatus, string>> = {
+  credential_invalid: "재등록",
+  app_missing: "확인",
+  failed: "재시도",
+  stale: "재시도",
+}
+
 export function ConnectionCard({ connection, href, onClick }: ConnectionCardProps) {
   const style = STATUS_STYLE[connection.status]
-  const cta = PRIMARY_CTA[connection.status]
   const isActive = connection.status !== "disconnected"
+
+  // Live status polling — connected 카드만 활성화
+  const live = useLiveAfData(connection.status === "connected" ? connection.id : null)
+
+  const cta = (live.status && LIVE_CTA_OVERRIDE[live.status]) ?? PRIMARY_CTA[connection.status]
+  const liveLabel = live.status ? LIVE_LABEL[live.status] : null
 
   // Phosphor accent line on active cards (Bloomberg terminal aesthetic)
   const cardClass = cn(
@@ -77,7 +102,7 @@ export function ConnectionCard({ connection, href, onClick }: ConnectionCardProp
           )}
         >
           <span className={cn("w-1.5 h-1.5 rounded-full", style.dot)} />
-          {style.label}
+          {liveLabel ?? style.label}
         </span>
       </div>
 

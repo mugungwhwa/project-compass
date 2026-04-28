@@ -8,13 +8,19 @@ import {
   DialogTitle,
 } from "@/shared/ui/dialog"
 import type { Connection } from "@/shared/api/mock-connections"
+import { RegisterForm } from "./register-form"
 
 type ConnectionDialogProps = {
   connection: Connection | null
   onClose: () => void
+  onRegistered?: (appId: string) => void
 }
 
-export function ConnectionDialog({ connection, onClose }: ConnectionDialogProps) {
+export function ConnectionDialog({
+  connection,
+  onClose,
+  onRegistered,
+}: ConnectionDialogProps) {
   const open = connection !== null
 
   return (
@@ -27,29 +33,45 @@ export function ConnectionDialog({ connection, onClose }: ConnectionDialogProps)
               <DialogDescription>{connection.description}</DialogDescription>
             </DialogHeader>
 
-            <div className="mt-4 space-y-3">
-              <div className="rounded-lg border border-border bg-muted/40 p-4 text-sm text-muted-foreground">
-                연동 등록 폼은 PR 4에서 활성화됩니다.
-              </div>
-
-              {connection.metrics && connection.metrics.length > 0 && (
-                <div className="grid grid-cols-2 gap-3">
-                  {connection.metrics.map((m) => (
-                    <div
-                      key={m.label}
-                      className="rounded-lg border border-border p-3"
-                    >
-                      <div
-                        className="phosphor-text text-lg font-bold"
-                        style={{ fontVariantNumeric: "tabular-nums" }}
-                      >
-                        {m.value}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {m.label}
-                      </div>
+            <div className="mt-4">
+              {connection.status === "disconnected" ? (
+                <RegisterForm
+                  onSuccess={(appId) => {
+                    onRegistered?.(appId)
+                    onClose()
+                  }}
+                />
+              ) : (
+                <div className="space-y-3">
+                  <div className="rounded-lg border border-border bg-muted/40 p-4 text-sm">
+                    상태:{" "}
+                    <span className="font-bold">{connection.status}</span>
+                    {connection.lastSync && (
+                      <span className="ml-2 text-muted-foreground">
+                        · {connection.lastSync}
+                      </span>
+                    )}
+                  </div>
+                  {connection.metrics && connection.metrics.length > 0 && (
+                    <div className="grid grid-cols-2 gap-3">
+                      {connection.metrics.map((m) => (
+                        <div
+                          key={m.label}
+                          className="rounded-lg border border-border p-3"
+                        >
+                          <div
+                            className="phosphor-text text-lg font-bold"
+                            style={{ fontVariantNumeric: "tabular-nums" }}
+                          >
+                            {m.value}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {m.label}
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  )}
                 </div>
               )}
             </div>
