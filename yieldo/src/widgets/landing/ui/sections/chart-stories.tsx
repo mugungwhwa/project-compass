@@ -109,7 +109,7 @@ function ChartStoryB() {
           viewport={VIEWPORT}
           className="max-w-3xl mb-14 mx-auto"
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.08em] text-zinc-500 mb-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--fg-3)] mb-4">
             Evidence
           </p>
           <h2
@@ -119,7 +119,7 @@ function ChartStoryB() {
             {t("landing.v2.chart2.headline")}
           </h2>
           <p
-            className={`text-lg md:text-xl leading-relaxed text-zinc-300 mb-4 ${locale === "ko" ? "font-medium" : "font-normal"}`}
+            className={`text-lg md:text-xl leading-relaxed text-[var(--fg-1)] mb-4 ${locale === "ko" ? "font-medium" : "font-normal"}`}
             style={{ wordBreak: "keep-all" }}
           >
             {t("landing.v2.chart2.description")}

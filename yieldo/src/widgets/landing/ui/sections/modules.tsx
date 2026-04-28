@@ -58,7 +58,7 @@ export function ModulesSection() {
         <h2 className="font-display text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-[-0.03em] text-white [word-break:keep-all] [overflow-wrap:break-word]">
           {t("landing.v2.modules.headline")}
         </h2>
-        <p className={`mt-6 text-lg md:text-xl leading-relaxed text-zinc-300 max-w-3xl mx-auto [word-break:keep-all] ${locale === "ko" ? "font-medium" : "font-normal"}`}>
+        <p className={`mt-6 text-lg md:text-xl leading-relaxed text-[var(--fg-1)] max-w-3xl mx-auto [word-break:keep-all] ${locale === "ko" ? "font-medium" : "font-normal"}`}>
           {t("landing.v2.modules.description")}
         </p>
       </motion.div>
@@ -72,16 +72,16 @@ export function ModulesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.38, ease: EASE_OUT_QUART, delay: i * 0.08 }}
-            className="p-7 bg-white/5 border border-white/10 rounded-[var(--radius-card)]"
+            className="p-7 bg-[var(--bg-1)] border border-[var(--border-default)] rounded-[var(--radius-card)]"
           >
-            <span className="text-xs font-mono text-zinc-500">{mod.num}</span>
+            <span className="text-xs font-mono text-[var(--fg-3)]">{mod.num}</span>
             <h3 className="text-base font-semibold text-white mt-3 tracking-[-0.01em] [word-break:keep-all]">
               {t(mod.nameKey)}
             </h3>
             <p className="text-sm text-[var(--brand)] mt-1 font-medium [word-break:keep-all]">
               {locale === "ko" ? mod.question.ko : mod.question.en}
             </p>
-            <p className={`text-sm text-zinc-400 mt-4 leading-relaxed [word-break:keep-all] ${locale === "ko" ? "font-medium" : "font-normal"}`}>
+            <p className={`text-sm text-[var(--fg-2)] mt-4 leading-relaxed [word-break:keep-all] ${locale === "ko" ? "font-medium" : "font-normal"}`}>
               {t(mod.descKey)}
             </p>
           </motion.div>

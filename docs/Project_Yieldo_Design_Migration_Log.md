@@ -847,3 +847,132 @@ L2 (Methodology Modal, 2026-04-16~17):
 - `docs/Project_Yieldo_Engine_Blueprint.md` — 엔진 파이프라인
 - `docs/Project_Yieldo_UI_Guide.md` — 기존 UI 가이드 (업데이트 필요)
 - `yieldo/node_modules/next/dist/docs/01-app/` — Next 16 API 참조
+
+---
+
+## §8. v3 — Bloomberg-Grade Terminal Philosophy (2026-04-28)
+
+> 이 섹션은 yieldo의 시각 정체성에 대한 final source of truth.
+> 새 컴포넌트/페이지를 만들 땐 §8.2 (color philosophy) + §8.3 (token ledger)부터 참조.
+
+### §8.1 트리거 — 사용자 audit
+
+- "회색 글씨 가독성 떨어진다" → fg tier 3차 lift
+- "그래프 색이 옅어 보인다" → chart-colors.ts 라이트 hex 누락 마이그레이션 발견 + 수정
+- "터미널은 형광 색을 명확히 쓴다" → phosphor highlight tier 신설
+- "황토색이 부적절하다" → amber tier 폐기, 3-color signal로 단순화
+- "디자인 마스터로서 self-loop 돌아라" → 시각 audit 6개 loop 자율 실행
+
+### §8.2 Color Philosophy (final)
+
+**3-Color Signal System** (Bloomberg 정합):
+| Hue | 의미 |
+|---|---|
+| **Yellow** (`--accent-yield #F4C842`) | yield / KPI primary / caution / highlight (단일 색이 4가지 의미 담당) |
+| **Green** (`--accent-do #00D984`) | execute / positive direction |
+| **Red** (`--accent-danger #FF4757`) | risk / negative direction |
+| ~~Amber~~ | 폐기 — yellow로 흡수 (#FF9F43 / #FFB347 모두 dark navy bg에서 황토색으로 읽힘) |
+| Blue (`--accent-info #4A9EFF`) | 보조 information only (대시보드 지배 색은 아님) |
+
+**2-Tier Saturation**:
+- **Base accents** (`--accent-*`) — Bloomberg-tuned saturated, 8시간 응시 안전
+- **Phosphor highlights** (`--phosphor-*`) — emphasis only, 화면의 5% 미만
+  - `--phosphor-yellow #FFE45E` (KPI 숫자 default, tooltip edge, hover crosshair, LIVE pulse)
+  - `--phosphor-green #4DFFA3` (positive delta, LIVE indicator)
+  - `--phosphor-cyan #5DE7FF` (revenue/info pop)
+  - `--phosphor-red #FF6B7A` (negative delta)
+  - ~~`--phosphor-amber`~~ → aliased to phosphor-yellow
+
+**Inheritance principle**:
+- Body 텍스트 = 흰색 (legibility 우선, 8시간 응시 안전)
+- 데이터/숫자 영역 = phosphor (terminal pop)
+- "modern dark SaaS의 안전성 + Bloomberg-style 데이터 명확성"의 hybrid
+
+### §8.3 Token Ledger (v2 → v3)
+
+| Token | v2 | v3 | 사유 |
+|---|---|---|---|
+| **Background scale** | | | Bloomberg ref: pure black; 우리는 #060912로 한 칸 위 |
+| `--bg-0` | `#0A0E1A` | `#060912` | canvas → near-black, phosphor가 더 떨어짐 |
+| `--bg-1` | `#141826` | `#0E1320` | cards, canvas와 tight 차이 |
+| `--bg-2` | `#1F2436` | `#161B2C` | hover |
+| **Foreground tier** (3차 lift) | | | dark에선 색만으론 위계 안 됨; weight + size로 보완 |
+| `--fg-0` | `#F8F8F8` | `#FFFFFF` | pure white (off-white 의미 없음) |
+| `--fg-1` | `#B8BFCE` | `#ECF1F7` | body almost-white |
+| `--fg-2` | `#6B7280` | `#C0C8D6` | labels — 황토 위험 영역 탈출 |
+| `--fg-3` | `#4A5568` | `#8E96A4` | meta — finally distinct from disabled |
+| **Radius** | | | Bloomberg = 0px, sharp |
+| `--radius-inline` | `2px` | `0px` | chips/pills sharp |
+| `--radius-card` | `6px` | `2px` | cards barely rounded |
+| `--radius-modal` | `8px` | `4px` | modals tighter |
+| **Signal-bg rgba** | | | 옛 amber rgba가 황토색의 root cause |
+| `--signal-caution-bg` | `rgba(255,159,67,0.10)` | `rgba(244,200,66,0.12)` | yellow-yellow |
+| `--signal-positive-bg` | `rgba(0,217,132,0.10)` | `rgba(0,232,154,0.12)` | phosphor-green tone |
+| `--signal-risk-bg` | `rgba(255,71,87,0.10)` | `rgba(255,107,122,0.12)` | phosphor-red tone |
+| **Chart palette** (`chart-colors.ts`) | | | 라이트 hex가 누락 마이그레이션됐던 21차트 일괄 |
+| PALETTE.p50 | `#1A7FE8` | `#4A9EFF` | dark-readable info-blue |
+| PALETTE.bandInner | `rgba(...,0.18)` | `rgba(74,158,255,0.50)` | substantial fill |
+| PALETTE.observed | `#0A0A0A` | `#FFFFFF` | datapoint dots — visible at last |
+| PALETTE.bg | `#FFFFFF` | `#141826` | chart panel matches card |
+| ... 나머지 11개 token | (라이트) | dark+phosphor | |
+
+### §8.4 Recharts SVG Override Block
+
+CSS variable이 SVG attrs에서 resolve 안 되는 문제는 chart-colors.ts hex로 해결.
+But stroke-width/cursor color는 globals.css의 단일 selector block으로 일괄 제어:
+
+```css
+.recharts-line-curve { stroke-width: 2.5 !important }
+.recharts-tooltip-cursor { stroke: var(--phosphor-yellow); stroke-dasharray: 3 3 }
+.recharts-active-dot circle { filter: drop-shadow(0 0 6px rgba(255,228,94,0.6)) }
+.recharts-cartesian-grid line { stroke-dasharray: 2 4 }
+```
+
+이 block 한 번 정의로 21개 차트 컴포넌트 안 건드리고 일괄 적용.
+
+### §8.5 Phosphor 적용 5% 룰
+
+phosphor accent는 화면의 **5% 미만 면적**에만 사용:
+- ✅ KPI 숫자 (한 카드당 ~30px 영역)
+- ✅ Tooltip 가장자리 (1px border)
+- ✅ Chart hover crosshair (1px dashed line)
+- ✅ Active datapoint halo (drop-shadow 6px)
+- ✅ LIVE pulse dot (8px circle + 애니메이션 ring)
+- ❌ 카드 배경 전체 (X — too aggressive)
+- ❌ 본문 텍스트 (X — eye strain)
+- ❌ 차트 라인 fill (X — 데이터가 노이즈로 읽힘)
+
+### §8.6 Tooltip 두 종류
+
+| 종류 | 용도 | 통제 방식 |
+|---|---|---|
+| **Radix Tooltip** (`shared/ui/tooltip.tsx`) | KPI ⓘ 아이콘 hover, 일반 UI tooltip | `.yieldo-tooltip` CSS class via tailwind |
+| **Recharts Tooltip** (`shared/ui/chart-tooltip.tsx`) | 차트 hover 데이터 박스 | `<Tooltip content={<ChartTooltip>}/>` 패턴 + 같은 `.yieldo-tooltip` class |
+
+**둘 다 동일 CSS class로 통일**: `--bg-2` 배경 + `--phosphor-yellow` border + halo glow.
+
+### §8.7 후속 작업 / 미적용 영역
+
+- [ ] `scenario-simulator.tsx` Recharts default Tooltip → ChartTooltip 통일
+- [ ] HeroVerdict / PortfolioVerdict 인라인 차트 visual audit (payback window)
+- [ ] 정보 밀도 더 높일 후보: 카드 안 padding, 행간 (현재 1.6 → 1.4 검토)
+- [ ] 우측 AppSidebar terminal-style 변환 (현재 token 사용 OK, layout 단순화 여지)
+- [ ] 디자인 가이드 v1.0 (`yieldo Design Guidelines`) §2.1 컬러 시스템 섹션을 v3 (3-color + phosphor)로 업데이트
+
+### §8.8 Decision rationale (왜 이 방향인지)
+
+**Q: 왜 Bloomberg를 모방하나? Modern SaaS dark가 더 친숙하지 않나?**
+A: yieldo의 핵심 약속은 "operating intelligence terminal." 단순 dashboard가 아닌 **운영 결정 도구**. 운영자가 화면을 보면 "여기는 결정하는 곳"임을 즉시 알아야 함. Bloomberg/터미널 미학은 40년 검증된 "결정 도구의 시각 언어".
+
+**Q: 왜 amber tier를 폐기했나? 3-tier 신호가 더 표현력 좋지 않나?**
+A: Bloomberg는 amber tier가 없음. 4색(orange/yellow/green/red)만 사용. caution은 yellow가 담당. 단순화된 신호 시스템이 운영자 의사결정 속도를 높임. 4색이 5색보다 정보 디자인 측면에서 우월함 (Cleveland & McGill 1984).
+
+**Q: 왜 base accent 위에 phosphor tier를 따로 두나? 그냥 phosphor를 default로 쓰면 안 되나?**
+A: 화면 전체가 phosphor면 역설적으로 phosphor 효과 사라짐 — 모든 게 빛나면 어떤 것도 빛나지 않음. Bloomberg가 base를 saturated로 두고 emphasis를 colored로 처리하는 이유. 5% 룰이 핵심.
+
+**Q: pure black이 아닌 #060912를 선택한 이유?**
+A: pure black은 OLED에선 절전이지만 LCD에선 contrast가 너무 강해 8시간 응시 시 잔상/피로 심함. #060912는 black의 95% 에너지로 phosphor 효과 거의 동일하면서 LCD/IPS에 친화적. trade-off의 sweet spot.
+
+---
+
+
