@@ -265,11 +265,21 @@ export function RunwayStatusBar() {
   // Compute dropdown anchor positions when they open / on window resize.
   // Position:fixed coords are viewport-relative, so they escape any
   // ancestor overflow:hidden — the dropdown can render anywhere on screen.
+  // Drop FROM the status bar's bottom edge, not from each individual button.
+  // This makes the dropdown read as an extension of the top bar — flush with
+  // its lower border, sharing visual continuity.  Right edge still anchors
+  // to the trigger button so opens from the right side.
+  function getHeaderBottom(): number {
+    if (typeof document === "undefined") return 56
+    const headerEl = document.querySelector('header[role="banner"]') as HTMLElement | null
+    return headerEl ? headerEl.getBoundingClientRect().bottom : 56
+  }
+
   useEffect(() => {
     if (!gameOpen) return
     function compute() {
       const r = gameTriggerRef.current?.getBoundingClientRect()
-      if (r) setGameAnchor({ top: r.bottom + 4, right: window.innerWidth - r.right })
+      if (r) setGameAnchor({ top: getHeaderBottom(), right: window.innerWidth - r.right })
     }
     compute()
     window.addEventListener("resize", compute)
@@ -284,7 +294,7 @@ export function RunwayStatusBar() {
     if (!calendarOpen) return
     function compute() {
       const r = calTriggerRef.current?.getBoundingClientRect()
-      if (r) setCalAnchor({ top: r.bottom + 4, right: window.innerWidth - r.right })
+      if (r) setCalAnchor({ top: getHeaderBottom(), right: window.innerWidth - r.right })
     }
     compute()
     window.addEventListener("resize", compute)
@@ -360,9 +370,12 @@ export function RunwayStatusBar() {
   // Position is provided via inline style (top/right coords from anchor state),
   // so dropdownBase only carries appearance + z-index.  Portal target is
   // document.body, escaping any ancestor overflow:hidden.
+  // Top corners squared (rounded-b-only) so the dropdown reads as a direct
+  // extension of the status bar above it — Bloomberg menu-bar pattern.
   const dropdownBase = cn(
     "z-[60]",
-    "rounded-[var(--radius-card)] border border-[var(--phosphor-yellow)]/40 bg-[var(--bg-1)]",
+    "rounded-b-[var(--radius-card)] rounded-t-none",
+    "border border-t-0 border-[var(--phosphor-yellow)]/40 bg-[var(--bg-1)]",
     "shadow-[0_0_18px_rgba(255,228,94,0.10),0_12px_36px_rgba(0,0,0,0.55)] py-1",
   )
 
@@ -517,7 +530,8 @@ export function RunwayStatusBar() {
                 aria-label="Select date range"
                 className={cn(
                   "z-[60]",
-                  "rounded-[var(--radius-card)] border border-[var(--phosphor-yellow)]/40 bg-[var(--bg-1)]",
+                  "rounded-b-[var(--radius-card)] rounded-t-none",
+                  "border border-t-0 border-[var(--phosphor-yellow)]/40 bg-[var(--bg-1)]",
                   "shadow-[0_0_18px_rgba(255,228,94,0.10),0_12px_36px_rgba(0,0,0,0.55)] p-4",
                 )}
                 style={{ position: "fixed", top: calAnchor.top, right: calAnchor.right }}
