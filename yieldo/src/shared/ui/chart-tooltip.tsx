@@ -66,7 +66,7 @@ export function ChartTooltip({
 
   if (render) {
     return (
-      <div className={`yieldo-tooltip ${className}`} style={TOOLTIP_STYLE}>
+      <div className={`yieldo-tooltip ${className}`}>
         {render({ active: !!active, payload, label })}
       </div>
     )
@@ -74,42 +74,15 @@ export function ChartTooltip({
 
   // Default rendering: label + rows with color dots
   return (
-    <div className={`yieldo-tooltip ${className}`} style={TOOLTIP_STYLE}>
-      {label != null && (
-        <div style={{ fontSize: 11, fontWeight: 600, color: "#0A0A0A", marginBottom: 4 }}>
-          {label}
-        </div>
-      )}
+    <div className={`yieldo-tooltip ${className}`}>
+      {label != null && <div className="yieldo-tooltip-label">{label}</div>}
       {payload.map((item, i) => (
-        <div key={i} style={{ display: "flex", alignItems: "center", fontSize: 12, lineHeight: 1.6 }}>
+        <div key={i} className="yieldo-tooltip-row">
           {item.color && <TooltipDot color={item.color} />}
-          <span style={{ color: "#6B7280" }}>{item.name}</span>
-          <span
-            style={{
-              marginLeft: "auto",
-              paddingLeft: 12,
-              fontWeight: 500,
-              color: "#0A0A0A",
-              fontVariantNumeric: "tabular-nums",
-            }}
-          >
-            {item.value}
-          </span>
+          <span className="yieldo-tooltip-name">{item.name}</span>
+          <span className="yieldo-tooltip-value">{item.value}</span>
         </div>
       ))}
     </div>
   )
-}
-
-/** Shared tooltip visual style — single source of truth */
-const TOOLTIP_STYLE: React.CSSProperties = {
-  borderRadius: 4,               // --radius-card
-  border: "1px solid #E2E2DD",   // --border-default
-  backgroundColor: "#FFFFFF",     // --bg-1
-  padding: "8px 12px",
-  fontSize: 12,
-  lineHeight: 1.5,
-  boxShadow: "0 1px 0 rgba(0,0,0,0.04)",
-  fontFamily: "inherit",
-  minWidth: 120,
 }

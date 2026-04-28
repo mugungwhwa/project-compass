@@ -34,8 +34,8 @@ export function YieldoCopilotStrip() {
             <span className="yieldo-eyebrow">
               {isKo ? "YIELDO COPILOT · 오늘의 신호" : "YIELDO COPILOT · TODAY"}
             </span>
-            <span className="inline-flex items-center gap-1 rounded-full bg-[var(--accent-do)]/10 px-2 py-0.5 text-[10px] font-medium text-[var(--accent-do)]">
-              <span className="h-1 w-1 rounded-full bg-[var(--accent-do)]" />
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--accent-do)]/10 px-2 py-0.5 text-[10px] font-medium text-[var(--phosphor-green)]">
+              <span className="yieldo-pulse-dot" style={{ width: 6, height: 6 }} />
               {isKo ? "실시간" : "LIVE"}
             </span>
           </div>
@@ -48,13 +48,13 @@ export function YieldoCopilotStrip() {
 
           <div className="mt-3 flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center gap-1.5 rounded-[var(--radius-inline)] bg-[var(--bg-2)] px-2 py-1 text-xs font-mono text-[var(--fg-1)]">
-              CPI ↑ <span className="text-[var(--accent-danger)]">+12%</span>
+              CPI ↑ <span className="yieldo-phosphor-danger">+12%</span>
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-[var(--radius-inline)] bg-[var(--bg-2)] px-2 py-1 text-xs font-mono text-[var(--fg-1)]">
-              D7 ret ↓ <span className="text-[var(--accent-danger)]">-0.8pp</span>
+              D7 ret ↓ <span className="yieldo-phosphor-danger">-0.8pp</span>
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-[var(--radius-inline)] bg-[var(--bg-2)] px-2 py-1 text-xs font-mono text-[var(--fg-1)]">
-              ARPDAU ↑ <span className="text-[var(--accent-do)]">+3%</span>
+              ARPDAU ↑ <span className="yieldo-phosphor-do">+3%</span>
             </span>
           </div>
 

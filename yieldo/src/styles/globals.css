@@ -48,6 +48,16 @@
   --accent-danger:  #FF4757;  /* risk / decline */
   --accent-info:    #4A9EFF;  /* neutral information */
 
+  /* ---------- Phosphor Highlight Tier (terminal moments) ----------
+     Used ONLY for emphasis: active pulses, chart hover crosshairs, tooltip
+     edges, alert states.  Bumped luminance ~15-25% from accent base; do NOT
+     paint large areas with these — they exist to flash and recede.        */
+  --phosphor-yellow: #FFE45E;
+  --phosphor-green:  #4DFFA3;
+  --phosphor-cyan:   #5DE7FF;
+  --phosphor-amber:  #FFB347;
+  --phosphor-red:    #FF6B7A;
+
   /* ---------- Signal colors (decision surfaces) ---------- */
   --signal-positive: var(--accent-do);
   --signal-positive-bg: rgba(0, 217, 132, 0.10);
@@ -398,6 +408,90 @@ body {
 /* Risk-class numbers — red negative movement */
 .yieldo-kpi-risk {
   color: var(--accent-danger);
+}
+
+/*
+  Tooltip surface — Bloomberg-style dark with terminal-yellow neon edge.
+  Used by both Radix tooltip and Recharts ChartTooltip shell.
+*/
+.yieldo-tooltip {
+  background: var(--bg-2);
+  border: 1px solid var(--phosphor-yellow); /* phosphor edge — defines the surface */
+  border-radius: var(--radius-card);
+  padding: 8px 12px;
+  font-family: var(--font-geist-mono), "D2Coding", "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--fg-0);
+  min-width: 140px;
+  /* Phosphor halo: thin inner ring + soft outer glow + cast shadow */
+  box-shadow:
+    0 0 0 1px rgba(255, 228, 94, 0.25),
+    0 0 22px rgba(255, 228, 94, 0.18),
+    0 8px 28px rgba(0, 0, 0, 0.55);
+}
+
+.yieldo-tooltip-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--phosphor-yellow);
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border-default);
+}
+
+/* ---------- Phosphor utility classes ---------- */
+
+/* Live pulse dot — for streaming/active indicators */
+.yieldo-pulse-dot {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--phosphor-green);
+  box-shadow: 0 0 8px rgba(77, 255, 163, 0.8), 0 0 16px rgba(77, 255, 163, 0.3);
+}
+.yieldo-pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid var(--phosphor-green);
+  opacity: 0;
+  animation: yieldo-pulse 1.6s ease-out infinite;
+}
+@keyframes yieldo-pulse {
+  0%   { opacity: 0.6; transform: scale(0.7); }
+  60%  { opacity: 0; transform: scale(1.8); }
+  100% { opacity: 0; transform: scale(1.8); }
+}
+
+/* Phosphor text emphasis — for KPI hover, alert states */
+.yieldo-phosphor-yield  { color: var(--phosphor-yellow); text-shadow: 0 0 12px rgba(255, 228, 94, 0.4); }
+.yieldo-phosphor-do     { color: var(--phosphor-green);  text-shadow: 0 0 12px rgba(77, 255, 163, 0.4); }
+.yieldo-phosphor-info   { color: var(--phosphor-cyan);   text-shadow: 0 0 12px rgba(93, 231, 255, 0.4); }
+.yieldo-phosphor-danger { color: var(--phosphor-red);    text-shadow: 0 0 12px rgba(255, 107, 122, 0.4); }
+
+.yieldo-tooltip-row {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.yieldo-tooltip-name {
+  color: var(--fg-1);
+}
+
+.yieldo-tooltip-value {
+  margin-left: auto;
+  padding-left: 12px;
+  font-weight: 600;
+  color: var(--fg-0);
+  font-variant-numeric: tabular-nums;
 }
 
 /* Eyebrow — small uppercase label above headlines */
