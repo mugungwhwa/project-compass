@@ -29,6 +29,12 @@ if command -v gh >/dev/null 2>&1; then
   else
     echo "  ⚠️  CodeRabbit 트리거 실패 (수동 추가 필요)" >&2
   fi
+
+  if gh pr merge "$PR_NUM" --auto --merge >/dev/null 2>&1; then
+    echo "  ✅ Auto-merge 활성화됨 (모든 checks 통과 시 main 자동 머지)" >&2
+  else
+    echo "  ⚠️  Auto-merge 활성화 실패 (수동: gh pr merge $PR_NUM --auto --merge)" >&2
+  fi
 fi
 
 VERCEL_URL=""
