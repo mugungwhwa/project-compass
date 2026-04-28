@@ -1,5 +1,8 @@
 .DS_Store
-.claude/
+# .claude/ — settings.json + commands/ tracked, everything else ignored
+.claude/*
+!.claude/settings.json
+!.claude/commands/
 .omc/
 .superpowers/
 .next/

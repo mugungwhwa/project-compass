@@ -36,7 +36,7 @@ const navItems = [
 ]
 
 const settingsItems = [
-  { key: "nav.integrations" as const, href: "#", icon: Settings },
+  { key: "nav.integrations" as const, href: "/dashboard/connections", icon: Settings },
   { key: "nav.account" as const,      href: "#", icon: User },
 ]
 

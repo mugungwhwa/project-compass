@@ -768,3 +768,42 @@ These users are **business operators**, not data analysts. They want investment 
 - Section 8.5 (External Platform Integration) outlines the integration model
 - Section 8.6 (Market Intelligence Data Strategy) explains data sourcing compliance
 - `Project_Compass_Legal.md` provides detailed legal analysis, Korean law, and action items
+
+---
+
+## 16. 작업 컨벤션 (하네스)
+
+### 16.1 사용자 프로필
+- **Mike는 비개발자**. 제품 방향을 정의하나 기술 트레이드오프 판단은 어려움.
+- **추천-OK 워크플로우**: A/B/C/D 메뉴형 질문보다 단일 추천안 + 근거 제시를 선호. 사용자 응답은 OK / 다르게 2가지로 수렴.
+
+### 16.2 브랜치 / Worktree 규약
+- **모든 코드 작업(feature/fix/refactor)은 `git worktree` 기본**. `git checkout -b`로 같은 디렉터리에서 브랜치 이동 금지.
+- 시작 커맨드: `/dev-start <type> <name>` — worktree + 브랜치 + `npm install --legacy-peer-deps` (compass/ 안에서) 자동화.
+- Worktree 경로: `.worktrees/<type>-<name>/` (워크스페이스 내부)
+- 메타 파일(`docs/`, `CLAUDE.md`, `scripts/`, `README.md`, `.claude/`) 수정은 main 워크트리에서 직접 해도 됨.
+
+### 16.3 GitHub 계정 분리
+- **회사 계정**: `treenod-mike` → `treenod-*` repo 전용 (SSH `git@github.com-treenod`)
+- **개인 계정**: `mugungwhwa` → 개인 repo 전용 (SSH `git@github.com-mugung`)
+- 계정 오염 시 즉시 `gh auth switch` 후 identity 재확인. `git config user.*` 설정을 절대 수정하지 말 것.
+
+### 16.4 하네스 자동 작동 목록
+세션마다 아래가 자동으로 돎 — Claude가 수동 호출할 필요 없음:
+
+| 순간 | 작동 | 실패 시 |
+|---|---|---|
+| 세션 시작 | 현재 브랜치·최근 커밋 3·열린 PR·최신 spec 3·활성 worktree 자동 요약 | — |
+| `git commit` 시도 | `compass/` 안에서 tsc + npm test 자동 실행 | 커밋 차단 (exit 2), 오류 메시지 반환 |
+| `gh pr create` 성공 | `@coderabbitai review` 코멘트 + Vercel preview URL 폴링 (최대 30초) | 에러 메시지만 출력, 후속 작업 안 막음 |
+
+스크립트 위치: `scripts/harness/{session-brief,precommit-gate,postpr-enrich}.sh`
+Hook 등록: `.claude/settings.json`
+별도 디자인 변경 감지 hook: `.claude/hooks/yieldo-redflags.sh` (PostToolUse:Write|Edit, 별도 매처라 공존)
+
+### 16.5 하네스 범위 밖 (수동 실행 슬래시 커맨드)
+- `/yieldo-dev` — Compass/yieldo 기능 구현 오케스트레이션 (`.claude/skills/yieldo-dev`)
+- `/yieldo-verify` — 5-Point 검증 (`.claude/skills/yieldo-verify`)
+- `/arch-check` — 큰 구조 변경(여러 레이어 수정, FSD 경계 재정의) 커밋 전 수동 실행
+- `/oh-my-claudecode:ralph` — 복잡한 버그 추적이나 긴 리팩토링에 자율 루프로 선택 사용
+- `/ultrareview` — 사용자가 직접 PR에 트리거 (회사 IP 외부 노출 주의)
