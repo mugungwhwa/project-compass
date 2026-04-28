@@ -62,33 +62,41 @@ export function KPICards({ items, basisKey }: KPICardsProps) {
           const isPositive = item.trend > 0
           const isNegative = item.trend < 0
           const TrendIcon = isPositive ? TrendingUp : isNegative ? TrendingDown : Minus
-          const trendColor = isPositive ? "text-[var(--signal-green)]" : isNegative ? "text-[var(--signal-red)]" : "text-[var(--text-muted)]"
-          const displayTrendColor = item.trendLabel === "faster" ? "text-[var(--signal-green)]" : trendColor
+          // Phosphor (terminal-bright) for direction signals; muted gray for flat.
+          const trendColor = isPositive
+            ? "yieldo-phosphor-do"
+            : isNegative
+              ? "yieldo-phosphor-danger"
+              : "text-[var(--fg-3)]"
+          const displayTrendColor =
+            item.trendLabel === "faster" ? "yieldo-phosphor-do" : trendColor
           const infoKey = resolveInfoKey(item.labelKey, item.infoKey)
 
           return (
             <div
               key={item.labelKey}
-              className="rounded-xl border border-[var(--border)] p-6 card-glow card-premium"
-              style={{ boxShadow: "0 4px 24px rgba(91,154,255,0.08)" }}
+              className="rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-5 transition-colors hover:border-[var(--border-strong)]"
             >
               <div className="flex items-center gap-1">
-                <p className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--fg-2)]">
                   {t(item.labelKey)}
                 </p>
                 {infoKey && <InfoHint content={t(infoKey)} size={12} />}
               </div>
               <div className="flex items-baseline gap-2 mt-3">
-                <span className="text-hero font-mono-num text-[var(--text-primary)] text-glow">
+                <span
+                  className="text-hero font-mono-num text-[var(--phosphor-yellow)]"
+                  style={{ textShadow: "0 0 22px rgba(255, 228, 94, 0.35)" }}
+                >
                   {typeof item.value === 'number'
                     ? <AnimatedNumber value={item.value} />
                     : item.value}
                 </span>
                 {item.unit && (
-                  <span className="text-base text-[var(--text-muted)]">{item.unit}</span>
+                  <span className="text-base text-[var(--fg-2)] font-mono">{item.unit}</span>
                 )}
               </div>
-              <div className={cn("flex items-center gap-1.5 mt-3 text-sm font-medium", displayTrendColor)}>
+              <div className={cn("flex items-center gap-1.5 mt-3 text-sm font-semibold font-mono", displayTrendColor)}>
                 <TrendIcon className="h-4 w-4" />
                 <span>
                   {Math.abs(item.trend)}{item.unit === "%" ? "pp" : ""} {item.trendLabel}
