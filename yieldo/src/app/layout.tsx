@@ -45,9 +45,9 @@ const instrumentSerif = Instrument_Serif({
 // Direct CDN load with subset=korean in the URL includes the 한글 glyphs.
 
 export const metadata: Metadata = {
-  title: "project yieldo — Experiment-to-Investment Decision OS",
+  title: "yieldo — Operating Intelligence Terminal",
   description:
-    "Translate A/B tests, live ops, and market signals into capital allocation decisions. Built for mobile gaming operators.",
+    "From signal to yield, executed. Translate A/B tests, live ops, and market signals into daily capital allocation decisions for mobile gaming operators.",
 }
 
 export default function RootLayout({

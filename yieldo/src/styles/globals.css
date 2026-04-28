@@ -1,72 +1,82 @@
 @import "tailwindcss";
 
 /*
-  yieldo Design Tokens — US Enterprise Edition
-  ----------------------------------------------
-  Source of truth: docs/Project_yieldo_Design_Migration_Log.md §1.2
-  Mood: "Bloomberg Terminal meets Vercel"
-  Theme default: light. Dark via html[data-theme="dark"].
-  DO NOT add decorative colors (coral, lavender, glow effects).
-  Every color must justify itself against a decision.
+  yieldo Design Tokens — v2 (Dark Terminal Edition)
+  --------------------------------------------------
+  Source of truth: docs/Project_Yieldo_Design_Migration_Log.md §1.2 +
+                   yieldo Design Guidelines v1.0 §2.1
+
+  Mood: "Bloomberg Terminal × Vercel × Linear"
+  Theme default: dark.  Light theme via html[data-theme="light"] (opt-in).
+
+  Brand accents:
+    --accent-yield (#F4C842, Yield Yellow) — yield/KPI signal, primary CTA
+    --accent-do    (#00D984, Action Green) — execute/positive movement
 */
 
 :root {
-  /* ---------- Background scale (Light) ---------- */
-  --bg-0: #FAFAF7;   /* outermost canvas, off-white */
-  --bg-0: #F7F8FA;   /* app shell background — very light gray (Toss DPS ref) */
-  --bg-1: #FFFFFF;   /* cards, panels, elevated surfaces */
-  --bg-2: #F5F5F2;   /* subtle panel, table stripe */
-  --bg-3: #ECECE8;   /* hover, inset */
-  --bg-4: #E2E2DD;   /* borders strong, dividers */
+  /* ---------- Background scale (Dark — yieldo default) ---------- */
+  --bg-0: #0A0E1A;   /* outermost canvas — terminal dark navy */
+  --bg-1: #141826;   /* cards, panels, elevated surfaces */
+  --bg-2: #1F2436;   /* subtle panel, hover tint */
+  --bg-3: #2D3548;   /* hover strong, inset, focus */
+  --bg-4: #3A4258;   /* highest elevation / divider on dark */
 
   /* ---------- Foreground / Text scale ---------- */
-  --fg-0: #0A0A0A;   /* headlines, hero numbers */
-  --fg-1: #1F2937;   /* body text */
+  --fg-0: #F8F8F8;   /* headlines, hero numbers, wordmark */
+  --fg-1: #B8BFCE;   /* body text */
   --fg-2: #6B7280;   /* secondary, labels */
-  --fg-3: #9CA3AF;   /* disabled, captions */
+  --fg-3: #4A5568;   /* disabled, captions, meta */
 
   /* ---------- Border ---------- */
-  --border-subtle: #ECECE8;
-  --border-default: #E2E2DD;
-  --border-strong: #C9C9C2;
+  --border-subtle: #141826;
+  --border-default: #1F2436;
+  --border-strong: #2D3548;
 
-  /* ---------- Brand ---------- */
-  --brand: #1A7FE8;          /* Precision Blue. P50 line, CTA, focus */
-  --brand-hover: #1568C4;
-  --brand-tint: #E8F1FC;     /* subtle fill behind CTAs */
+  /* ---------- Brand (yieldo Yield) ---------- */
+  --brand: #F4C842;          /* Yield Yellow — primary accent, KPIs, CTA */
+  --brand-hover: #E5B72E;
+  --brand-tint: rgba(244, 200, 66, 0.12); /* subtle fill behind CTAs */
 
-  /* ---------- Signal colors (decisions only) ---------- */
-  --signal-positive: #00875A;      /* green — invest / ship / safe */
-  --signal-positive-bg: #E6F4EF;
-  --signal-caution: #B25E09;       /* amber — hold / watch */
-  --signal-caution-bg: #FBF1E1;
-  --signal-risk: #C9372C;          /* red — reduce / pull back */
-  --signal-risk-bg: #F9E7E5;
-  --signal-pending: #6B7280;       /* gray — no data = no signal */
-  --signal-pending-bg: #F3F4F6;
+  /* ---------- yieldo Accent System ---------- */
+  --accent-yield:   #F4C842;  /* yield / KPI signal */
+  --accent-do:      #00D984;  /* execute / positive */
+  --accent-warning: #FF9F43;  /* attention */
+  --accent-danger:  #FF4757;  /* risk / decline */
+  --accent-info:    #4A9EFF;  /* neutral information */
+
+  /* ---------- Signal colors (decision surfaces) ---------- */
+  --signal-positive: var(--accent-do);
+  --signal-positive-bg: rgba(0, 217, 132, 0.10);
+  --signal-caution: var(--accent-warning);
+  --signal-caution-bg: rgba(255, 159, 67, 0.10);
+  --signal-risk: var(--accent-danger);
+  --signal-risk-bg: rgba(255, 71, 87, 0.10);
+  --signal-pending: var(--fg-2);
+  --signal-pending-bg: rgba(107, 114, 128, 0.10);
 
   /* ---------- Chart tokens ---------- */
-  --chart-p50: #1A7FE8;              /* median line */
-  --chart-band-inner: rgba(26, 127, 232, 0.18); /* P25-P75 */
-  --chart-band-outer: rgba(26, 127, 232, 0.10); /* P10-P90 */
-  --chart-benchmark: #9CA3AF;        /* neutral gray dashed */
-  --chart-observed: #0A0A0A;         /* actual datapoint dots */
-  --chart-grid: #ECECE8;
+  --chart-p50: var(--accent-info);                    /* median line — info-blue, readable on dark */
+  --chart-band-inner: rgba(74, 158, 255, 0.22);       /* P25-P75 */
+  --chart-band-outer: rgba(74, 158, 255, 0.12);       /* P10-P90 */
+  --chart-benchmark: var(--fg-2);                     /* neutral gray dashed */
+  --chart-observed: var(--fg-0);                      /* actual datapoint dots */
+  --chart-grid: var(--bg-2);
 
-  /* 6-cohort categorical palette (low saturation, colorblind-safe) */
-  --chart-cohort-1: #1A7FE8;
-  --chart-cohort-2: #00875A;
-  --chart-cohort-3: #B25E09;
-  --chart-cohort-4: #7C3AED;
-  --chart-cohort-5: #0891B2;
-  --chart-cohort-6: #C9372C;
+  /* 6-cohort categorical palette (dark-theme readable) */
+  --chart-cohort-1: #4A9EFF;   /* info blue */
+  --chart-cohort-2: #00D984;   /* do green */
+  --chart-cohort-3: #F4C842;   /* yield yellow */
+  --chart-cohort-4: #C39BFF;   /* lavender */
+  --chart-cohort-5: #5DD3F0;   /* cyan */
+  --chart-cohort-6: #FF6B7A;   /* coral */
 
-  /* ---------- Radius (enterprise = angular) ---------- */
+  /* ---------- Radius (terminal = angular) ---------- */
   --radius-inline: 2px;
-  --radius-card: 4px;
-  --radius-modal: 6px;
+  --radius-card: 6px;
+  --radius-modal: 8px;
 
-  /* ---------- Spacing (Tailwind v4 base, exposed for non-utility use) ---------- */
+  /* ---------- Spacing ---------- */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -76,15 +86,16 @@
   --space-12: 48px;
 
   /* ---------- Motion ---------- */
-  --duration-micro: 120ms;    /* hover, badge */
-  --duration-component: 220ms; /* panel, card transitions */
-  --duration-chart: 400ms;     /* data updates */
+  --duration-micro: 120ms;
+  --duration-component: 200ms;
+  --duration-chart: 300ms;
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 
-  /* ---------- Legacy aliases (transitional — remove after full migration) ---------- */
-  /* These keep existing widgets from breaking while we refactor them module-by-module.
-     Each alias should be removed as its last consumer is migrated to the new tokens.
-     Tracking: docs/Project_yieldo_Design_Migration_Log.md §3 */
+  /* ---------- Font roles ---------- */
+  --font-mono: var(--font-geist-mono);
+  --font-num: var(--font-geist-mono);
+
+  /* ---------- Legacy aliases (transitional) ---------- */
   --background: var(--bg-0);
   --card: var(--bg-1);
   --border: var(--border-default);
@@ -103,7 +114,6 @@
   --signal-red-border: var(--border-default);
   --chart-primary: var(--chart-p50);
   --chart-revenue: var(--chart-p50);
-  --chart-benchmark: var(--chart-benchmark);
   --chart-success: var(--signal-positive);
   --chart-danger: var(--signal-risk);
   --chart-experiment: var(--chart-cohort-4);
@@ -113,52 +123,43 @@
   --duration-slow: var(--duration-chart);
   --ease-out-expo: var(--ease-out-quart);
 
-  /* Deck accent palette aliases — mapped to new cohort palette.
-     Old widgets use these names; new code MUST use --chart-cohort-* instead. */
+  /* Deck accent palette aliases — mapped to new cohort palette. */
   --accent-blue: var(--chart-cohort-1);
   --accent-green: var(--chart-cohort-2);
   --accent-orange: var(--chart-cohort-3);
   --accent-lavender: var(--chart-cohort-4);
   --accent-coral: var(--chart-cohort-6);
 
-  /* Glow tokens — deliberately reduced to near-zero.
-     The new design language has no glows; these aliases keep old CSS compiling
-     while effectively making glows invisible. */
-  --glow-blue: rgba(26, 127, 232, 0.04);
-  --glow-green: rgba(0, 135, 90, 0.04);
+  /* Glow tokens — neutralized in v2. */
+  --glow-blue: rgba(74, 158, 255, 0.06);
+  --glow-green: rgba(0, 217, 132, 0.06);
 }
 
-/* ---------- Dark theme (opt-in via html[data-theme="dark"]) ---------- */
-html[data-theme="dark"] {
-  --bg-0: #090C0F;
-  --bg-1: #0E1318;
-  --bg-2: #141B22;
-  --bg-3: #1C2630;
-  --bg-4: #243040;
-  --fg-0: #E8EDF2;
-  --fg-1: #A8B4C0;
-  --fg-2: #6A7A8A;
-  --fg-3: #3D4E5C;
-  --border-subtle: #1C2630;
-  --border-default: #243040;
-  --border-strong: #3D4E5C;
+/* ---------- Light theme (opt-in) ---------- */
+html[data-theme="light"] {
+  --bg-0: #FAFAF7;
+  --bg-1: #FFFFFF;
+  --bg-2: #F5F5F2;
+  --bg-3: #ECECE8;
+  --bg-4: #E2E2DD;
+  --fg-0: #0A0A0A;
+  --fg-1: #1F2937;
+  --fg-2: #6B7280;
+  --fg-3: #9CA3AF;
+  --border-subtle: #ECECE8;
+  --border-default: #E2E2DD;
+  --border-strong: #C9C9C2;
   --brand: #1A7FE8;
-  --brand-hover: #4A9AF0;
-  --brand-tint: rgba(26, 127, 232, 0.12);
-  --chart-observed: #E8EDF2;
-  --chart-grid: #243040;
-  --chart-band-inner: rgba(26, 127, 232, 0.28);
-  --chart-band-outer: rgba(26, 127, 232, 0.14);
+  --brand-hover: #1568C4;
+  --brand-tint: #E8F1FC;
+  --chart-p50: #1A7FE8;
+  --chart-band-inner: rgba(26, 127, 232, 0.18);
+  --chart-band-outer: rgba(26, 127, 232, 0.10);
+  --chart-observed: #0A0A0A;
+  --chart-grid: #ECECE8;
 }
 
 /* ---------- Cursor standardization ---------- */
-/*
-  Policy: all interactive elements show pointer cursor.
-  This avoids per-component cursor-pointer classes.
-  - buttons, links, selects, summary → pointer
-  - disabled → not-allowed (handled by :disabled)
-  - text inputs → text (browser default, no override needed)
-*/
 button:not(:disabled),
 [role="button"]:not([aria-disabled="true"]),
 [role="option"],
@@ -175,12 +176,6 @@ button:disabled,
 }
 
 /* ---------- Base body ---------- */
-/*
-  Font fallback chain:
-  Geist Sans (Latin) → Pretendard (Korean, via CDN) → system-ui → default sans
-  Browsers pick glyphs per-character from this list, so Latin characters
-  render in Geist while Korean characters automatically use Pretendard.
-*/
 body {
   font-family:
     var(--font-geist-sans),
@@ -191,7 +186,7 @@ body {
     system-ui,
     -apple-system,
     sans-serif;
-  background: var(--bg-1);
+  background: var(--bg-0);
   color: var(--fg-0);
   font-feature-settings: "cv11", "ss01";
   -webkit-font-smoothing: antialiased;
@@ -215,9 +210,19 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-.font-mono-num {
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
+.font-mono-num,
+.font-num {
+  font-family: var(--font-geist-mono), "JetBrains Mono", ui-monospace, monospace;
   font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* yieldo wordmark (lowercase, mono, tight tracking) */
+.yieldo-wordmark {
+  font-family: var(--font-geist-mono), "JetBrains Mono", ui-monospace, monospace;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
 }
 
 /* ---------- Typography scale ---------- */
@@ -263,18 +268,12 @@ body {
   ============================================================================
   LEGACY UTILITIES — Transitional block
   ============================================================================
-  These classes exist only to prevent existing widgets from breaking during
-  the incremental refactor to <DecisionSurface> and new tokens. They are
-  visually dialed down toward the new design language (no gradients, no glows,
-  restrained shadows) so that even unrefactored pages already look closer to
-  the target. Each class should be deleted as its last consumer is migrated.
-
-  Do NOT use these in new code. Use the new tokens and <DecisionSurface>.
-  Tracking: docs/Project_yieldo_Design_Migration_Log.md §3
+  These classes prevent existing widgets from breaking during the incremental
+  refactor.  Do NOT use in new code.
+  Tracking: docs/Project_Yieldo_Design_Migration_Log.md §3
   ============================================================================
 */
 
-/* Legacy card — was gradient+glow, now a flat enterprise card */
 .card-premium {
   background: var(--bg-1);
   border-radius: var(--radius-card);
@@ -285,7 +284,6 @@ body {
   border-color: var(--border-strong);
 }
 
-/* Legacy hover lift — now a subtle border change, no transform */
 .card-glow {
   transition: border-color var(--duration-micro) var(--ease-out-quart);
 }
@@ -293,7 +291,6 @@ body {
   border-color: var(--border-strong);
 }
 
-/* Legacy hero numbers — kept size, removed glow */
 .text-hero {
   font-size: 3rem;
   line-height: 1;
@@ -309,12 +306,10 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* Legacy text glow — neutralized to no-op */
 .text-glow {
   text-shadow: none;
 }
 
-/* Legacy signal card backgrounds — flattened to tint only, no gradient */
 .signal-bg-invest {
   background: var(--signal-positive-bg);
 }
@@ -326,12 +321,10 @@ body {
 }
 
 /*
-  Landing page widget override — 2026-04-14 Sprint 5
-  ---------------------------------------------------
-  Dashboard widgets (HeroVerdict, SignalCard) use `position: sticky`
-  so they pin to the top of the dashboard viewport on scroll. In the
-  landing page they must NOT stick — any element inside a
-  `.landing-static-widget` wrapper gets sticky neutralized.
+  Landing page widget override — Sprint 5
+  ---------------------------------------
+  Dashboard widgets use position:sticky.  In the landing page they must NOT
+  stick — any element inside `.landing-static-widget` gets sticky neutralized.
 */
 .landing-static-widget .sticky,
 .landing-static-widget [class*="sticky"] {
@@ -339,4 +332,65 @@ body {
   top: auto !important;
   z-index: auto !important;
   margin-bottom: 0 !important;
+}
+
+/*
+  ============================================================================
+  yieldo-specific Surface Utilities
+  ============================================================================
+  Used by Landing Hero, Dashboard panels, AI Copilot.  New code SHOULD use
+  these utilities instead of inline arbitrary classes.
+*/
+
+/* Terminal panel — primary container in dashboard workspace */
+.yieldo-panel {
+  background: var(--bg-1);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-card);
+}
+.yieldo-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-default);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+
+/* KPI numeric — large display number, mono, tabular */
+.yieldo-kpi {
+  font-family: var(--font-geist-mono), "JetBrains Mono", ui-monospace, monospace;
+  font-feature-settings: "tnum" 1;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg-0);
+}
+
+/* Yield-class numbers — yellow accent for the headline KPI */
+.yieldo-kpi-yield {
+  color: var(--accent-yield);
+}
+
+/* Do-class numbers — green positive movement */
+.yieldo-kpi-do {
+  color: var(--accent-do);
+}
+
+/* Risk-class numbers — red negative movement */
+.yieldo-kpi-risk {
+  color: var(--accent-danger);
+}
+
+/* Eyebrow — small uppercase label above headlines */
+.yieldo-eyebrow {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-2);
 }
