@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from "@/shared/ui/dialog"
 import type { Connection } from "@/shared/api/mock-connections"
+import { PlaceholderWizardDialog } from "./placeholder-wizard-dialog"
 import { RegisterForm } from "./register-form"
 
 type ConnectionDialogProps = {
@@ -34,7 +35,12 @@ export function ConnectionDialog({
             </DialogHeader>
 
             <div className="mt-4">
-              {connection.status === "disconnected" ? (
+              {connection.id !== "appsflyer" ? (
+                <PlaceholderWizardDialog
+                  connection={connection}
+                  onClose={onClose}
+                />
+              ) : connection.status === "disconnected" ? (
                 <RegisterForm
                   onSuccess={(appId) => {
                     onRegistered?.(appId)
