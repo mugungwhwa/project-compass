@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from "@/shared/ui/dialog"
 import type { Connection } from "@/shared/api/mock-connections"
+import { FinancialInputForm } from "./financial-input-form"
 import { PlaceholderWizardDialog } from "./placeholder-wizard-dialog"
 import { RegisterForm } from "./register-form"
 
@@ -35,7 +36,12 @@ export function ConnectionDialog({
             </DialogHeader>
 
             <div className="mt-4">
-              {connection.id !== "appsflyer" ? (
+              {connection.id === "manual-financial" ? (
+                <FinancialInputForm
+                  onSaved={() => onRegistered?.("manual-financial")}
+                  onClose={onClose}
+                />
+              ) : connection.id !== "appsflyer" ? (
                 <PlaceholderWizardDialog
                   connection={connection}
                   onClose={onClose}
