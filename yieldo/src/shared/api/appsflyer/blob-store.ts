@@ -4,6 +4,7 @@ import {
   type Account, type App, type AppState as State, type CohortSummary,
   type ExtendedInstall, type EventRow,
 } from "./types"
+import { PosteriorSnapshotSchema, type PosteriorSnapshot } from "@/shared/api/posterior/snapshot-v2"
 
 const PREFIX = "appsflyer"
 
@@ -156,4 +157,20 @@ export async function readAllEvents(appId: string): Promise<EventRow[]> {
     for (const l of lines) all.push(JSON.parse(l))
   }
   return all
+}
+
+// ========== posterior snapshot (v2) ==========
+// Note: PosteriorSnapshot wraps CohortSummary (sensitive cohort data) plus engine output.
+// Stored in the private blob store, mirroring the existing putCohortSummary/getCohortSummary
+// convention. The spec used `posterior/${appId}.json` as the key (no PREFIX) — preserved here.
+export async function putPosteriorSnapshot(
+  appId: string,
+  snapshot: PosteriorSnapshot,
+): Promise<void> {
+  const validated = PosteriorSnapshotSchema.parse(snapshot)
+  await put(`posterior/${appId}.json`, JSON.stringify(validated), writeOpts)
+}
+
+export async function getPosteriorSnapshot(appId: string): Promise<PosteriorSnapshot | null> {
+  return fetchJson(`posterior/${appId}.json`, PosteriorSnapshotSchema)
 }
