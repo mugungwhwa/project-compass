@@ -86,6 +86,18 @@ else
   echo "  ✅ eslint 통과 ($(echo "$STAGED_TS" | wc -l | tr -d ' ')개 파일)" >&2
 fi
 
+# 2.5 verify-seed — seed/engine 관련 파일 staged 시만 실행 (drift 사전 차단)
+SEED_RELATED=$(echo "$STAGED" | grep -E '^yieldo/(src/shared/data/seed-posterior\.json|src/shared/data/genre-priors\.json|src/shared/lib/bayesian-stats/|src/shared/api/posterior/|scripts/(build|verify)-seed-snapshot\.ts)$' || true)
+if [ -n "$SEED_RELATED" ]; then
+  echo "▸ verify-seed (seed/engine 변경 감지)..." >&2
+  if ! (cd "$APP_DIR" && npx tsx scripts/verify-seed-snapshot.ts) > /tmp/yieldo-seed.log 2>&1; then
+    cat /tmp/yieldo-seed.log >&2
+    add_failure "verify-seed" "seed-posterior.json out of date — run 'npm run prebuild:seed' and re-commit"
+  else
+    echo "  ✅ verify-seed 통과" >&2
+  fi
+fi
+
 # 3. arch-guard (현재 stub, 항상 0)
 echo "▸ arch-guard..." >&2
 if ! bash "$LIB_DIR/arch-guard-wrapper.sh" "$APP_DIR" > /tmp/yieldo-arch.log 2>&1; then
