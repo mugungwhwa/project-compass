@@ -53,7 +53,7 @@ describe("validateRevenuePosterior", () => {
 
 describe("validatePrior", () => {
   it("rejects when essRetention < 5000", () => {
-    const v = validatePrior({ essRetention: 3000 } as any)
+    const v = validatePrior({ essRetention: 3000 } as Parameters<typeof validatePrior>[0])
     expect(v).toEqual({
       valid: false,
       reason: "prior_ess_too_low",
@@ -62,7 +62,7 @@ describe("validatePrior", () => {
   })
 
   it("accepts when essRetention >= 5000", () => {
-    const v = validatePrior({ essRetention: 8000 } as any)
+    const v = validatePrior({ essRetention: 8000 } as Parameters<typeof validatePrior>[0])
     expect(v).toEqual({ valid: true })
   })
 })

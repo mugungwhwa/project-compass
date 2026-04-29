@@ -67,6 +67,12 @@ const monthlyRevenueMetric: MetricDefinition<LogNormalPrior, { monthlyValues: nu
   validate: validateRevenuePosterior,
 }
 
+// Heterogeneous metric registry: each entry has its own Prior/Obs types
+// (Beta+{n,k} vs LogNormal+{monthlyValues}). `any` is required here for
+// covariant assignment — `unknown` would reject valid sub-types because
+// MetricDefinition is invariant in both type parameters. Consumers narrow
+// via metricId at lookup time.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const METRIC_REGISTRY: Record<string, MetricDefinition<any, any>> = {
   retention_d1: makeRetentionMetric(1),
   retention_d7: makeRetentionMetric(7),
