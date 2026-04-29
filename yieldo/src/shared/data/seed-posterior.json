@@ -1,0 +1,89 @@
+{
+  "cohortSummary": {
+    "updatedAt": "2026-04-29T00:00:00.000Z",
+    "cohorts": [
+      {
+        "cohortDate": "2026-02-28",
+        "installs": 8000,
+        "retainedByDay": {
+          "d1": 1840,
+          "d7": 392,
+          "d30": 80
+        },
+        "uaSpendUsd": 24000
+      }
+    ],
+    "revenue": {
+      "daily": [
+        {
+          "date": "2026-02-15",
+          "sumUsd": 50000,
+          "purchasers": 280
+        },
+        {
+          "date": "2026-03-15",
+          "sumUsd": 60000,
+          "purchasers": 320
+        },
+        {
+          "date": "2026-04-15",
+          "sumUsd": 70000,
+          "purchasers": 360
+        }
+      ],
+      "total": {
+        "sumUsd": 180000,
+        "purchasers": 960
+      }
+    },
+    "spend": {
+      "totalUsd": 24000,
+      "homeCurrency": "USD"
+    }
+  },
+  "posterior": {
+    "retention_d1": {
+      "mean": 0.245,
+      "ci_low": 0.2383663899122784,
+      "ci_high": 0.25169399092743266,
+      "sampleSize": 16000
+    },
+    "retention_d7": {
+      "mean": 0.0515,
+      "ci_low": 0.04812895310762563,
+      "ci_high": 0.054977238939801484,
+      "sampleSize": 16000
+    },
+    "retention_d30": {
+      "mean": 0.011,
+      "ci_low": 0.009442568534452815,
+      "ci_high": 0.012673175490159271,
+      "sampleSize": 16000
+    },
+    "monthly_revenue_usd": {
+      "mean": 208939.10058877128,
+      "ci_low": 21036.405910925212,
+      "ci_high": 851251.7583491642,
+      "sampleSize": 9
+    }
+  },
+  "metadata": {
+    "engineVersion": "1.0.0",
+    "priorVersion": "genre-priors-2026-04-29",
+    "genreUsed": "match-3",
+    "validity": {
+      "retention_d1": {
+        "valid": true
+      },
+      "retention_d7": {
+        "valid": true
+      },
+      "retention_d30": {
+        "valid": true
+      },
+      "monthly_revenue_usd": {
+        "valid": true
+      }
+    }
+  }
+}
