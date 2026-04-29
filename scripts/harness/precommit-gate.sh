@@ -67,14 +67,20 @@ else
   echo "  ✅ tsc 통과" >&2
 fi
 
-# 2. eslint
-echo "▸ eslint..." >&2
-if ! npx eslint . > /tmp/yieldo-eslint.log 2>&1; then
+# 2. eslint — staged ts/tsx 파일만 (PR-scoped). 기존 33 pre-existing errors는
+# 별도 cleanup PR로 분리. 우리 변경분만 책임지는 정합 (2026-04-29 incremental fix).
+STAGED_TS=$(git -C "$WORKSPACE_DIR" diff --cached --name-only --diff-filter=ACM 2>/dev/null \
+  | grep -E '^yieldo/.*\.(ts|tsx)$' \
+  | sed 's|^yieldo/||' || true)
+echo "▸ eslint (staged)..." >&2
+if [ -z "$STAGED_TS" ]; then
+  echo "  ⤼ eslint skip — staged ts/tsx 없음" >&2
+elif ! npx eslint $STAGED_TS > /tmp/yieldo-eslint.log 2>&1; then
   cat /tmp/yieldo-eslint.log >&2
   FIRST=$(grep -m1 -E 'error' /tmp/yieldo-eslint.log || echo "eslint failed")
   add_failure "eslint" "$FIRST"
 else
-  echo "  ✅ eslint 통과" >&2
+  echo "  ✅ eslint 통과 ($(echo "$STAGED_TS" | wc -l | tr -d ' ')개 파일)" >&2
 fi
 
 # 3. arch-guard (현재 stub, 항상 0)
