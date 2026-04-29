@@ -8,12 +8,14 @@ import {
   CATEGORY_ORDER,
   type Connection,
 } from "@/shared/api/mock-connections"
+import { loadFinancialInput } from "@/shared/api/financial-input"
 import { ConnectionCard } from "./connection-card"
 import { ConnectionDialog } from "./connection-dialog"
 
 export function ConnectionsClient() {
   const [active, setActive] = useState<Connection | null>(null)
   const [registered, setRegistered] = useState<string[]>([])
+  const [hasFinancialInput, setHasFinancialInput] = useState(false)
   const [loading, setLoading] = useState(true)
 
   const refreshApps = useCallback(async () => {
@@ -29,14 +31,26 @@ export function ConnectionsClient() {
     }
   }, [])
 
+  const refreshFinancial = useCallback(() => {
+    setHasFinancialInput(loadFinancialInput() !== null)
+  }, [])
+
   useEffect(() => {
     refreshApps()
   }, [refreshApps])
 
+  useEffect(() => {
+    refreshFinancial()
+  }, [refreshFinancial])
+
   const allConnectors: Connection[] = AVAILABLE_CONNECTORS.map(
     (c): Connection => ({
       ...c,
-      status: registered.includes(c.id) ? "connected" : "disconnected",
+      status:
+        registered.includes(c.id) ||
+        (c.id === "manual-financial" && hasFinancialInput)
+          ? "connected"
+          : "disconnected",
     }),
   )
 
@@ -89,8 +103,12 @@ export function ConnectionsClient() {
       <ConnectionDialog
         connection={active}
         onClose={() => setActive(null)}
-        onRegistered={() => {
-          refreshApps()
+        onRegistered={(id) => {
+          if (id === "manual-financial") {
+            refreshFinancial()
+          } else {
+            refreshApps()
+          }
         }}
       />
     </div>

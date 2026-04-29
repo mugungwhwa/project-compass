@@ -19,6 +19,14 @@ const statsig: Connection = {
   status: "disconnected",
 }
 
+const manualFinancial: Connection = {
+  id: "manual-financial",
+  brand: "재무 직접 입력",
+  category: "financial",
+  description: "5-metric",
+  status: "disconnected",
+}
+
 describe("ConnectionDialog branching", () => {
   it("renders RegisterForm for AppsFlyer disconnected", () => {
     render(<ConnectionDialog connection={appsflyer} onClose={() => {}} />)
@@ -26,10 +34,16 @@ describe("ConnectionDialog branching", () => {
     expect(screen.getByText("App ID")).toBeInTheDocument()
   })
 
-  it("renders PlaceholderWizardDialog for non-AppsFlyer connector", () => {
+  it("renders PlaceholderWizardDialog for non-AppsFlyer non-financial connector", () => {
     render(<ConnectionDialog connection={statsig} onClose={() => {}} />)
     // wizard 고유 텍스트
     expect(screen.getByText(/시연용 placeholder/i)).toBeInTheDocument()
     expect(screen.queryByText("App ID")).not.toBeInTheDocument()
+  })
+
+  it("renders FinancialInputForm for manual-financial connector", () => {
+    render(<ConnectionDialog connection={manualFinancial} onClose={() => {}} />)
+    expect(screen.getByLabelText(/월 매출/)).toBeInTheDocument()
+    expect(screen.queryByText(/시연용 placeholder/i)).not.toBeInTheDocument()
   })
 })
