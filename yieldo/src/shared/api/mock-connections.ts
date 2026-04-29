@@ -57,7 +57,7 @@ export const AVAILABLE_CONNECTORS: Array<
     id: "adjust",
     brand: "Adjust",
     category: "mmp",
-    description: "Mobile attribution & marketing analytics. Report Service API로 D120 long-term cohort 수집.",
+    description: "어트리뷰션 데이터 — Report Service API로 D120 long-term cohort 수집.",
   },
   {
     id: "statsig",
