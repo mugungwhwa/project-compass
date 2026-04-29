@@ -30,7 +30,10 @@ if [[ "${YIELDO_GATE_SKIP:-0}" == "1" ]]; then
   exit 0
 fi
 
-WORKSPACE_DIR="${CLAUDE_PROJECT_DIR:-$(pwd)}"
+# Prefer git worktree root — handles multi-worktree setup correctly.
+# CLAUDE_PROJECT_DIR points to primary project dir, which can mislead build-check.sh
+# into running against the wrong yieldo/ (e.g., main worktree when commit fires from feature worktree).
+WORKSPACE_DIR=$(git rev-parse --show-toplevel 2>/dev/null || echo "${CLAUDE_PROJECT_DIR:-$(pwd)}")
 APP_DIR="$WORKSPACE_DIR/yieldo"
 LIB_DIR="$WORKSPACE_DIR/scripts/harness/lib"
 
