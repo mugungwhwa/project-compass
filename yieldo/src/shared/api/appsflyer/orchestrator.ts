@@ -3,7 +3,7 @@ import { decryptToken } from "./crypto"
 import { aggregate } from "./aggregation"
 import {
   getApp, getAccount, getState, putState,
-  appendInstalls, appendEvents, putCohortSummary,
+  appendInstalls, appendEvents, putCohortSummary, putPosteriorSnapshot,
   readAllInstalls, readAllEvents,
 } from "./blob-store"
 import { acquireLock, releaseLock, incrementCalls, resetIfDue } from "./rate-limiter"
@@ -11,6 +11,7 @@ import {
   CredentialInvalidError, AppMissingError, ThrottledError, BackfillInProgressError,
 } from "./errors"
 import { toExtendedInstall, toEventRow, type AppState } from "./types"
+import { computePosterior } from "@/shared/api/posterior"
 import { randomUUID } from "node:crypto"
 
 export type SyncWindow = { fromIso: string; toIso: string }
@@ -183,6 +184,24 @@ export async function runAppsFlyerSync(
     const allEvents = await readAllEvents(appId)
     const summary = aggregate(allInstalls, allEvents, account.currency)
     await putCohortSummary(appId, summary)
+
+    // PR2 (D Bayesian): derive + persist posterior snapshot. Failures are non-fatal —
+    // cohort summary write already succeeded above, so the next cron cycle retries.
+    try {
+      const posteriorSnapshot = computePosterior(summary, app.genre)
+      await putPosteriorSnapshot(appId, posteriorSnapshot)
+    } catch (err) {
+      // Surface in failureHistory but do not change `status`. Cron auto-retries.
+      const failureEntry = {
+        at: new Date().toISOString(),
+        type: "partial" as const,
+        message: `posterior compute failed: ${(err as Error).message}`,
+        report: "compute_posterior",
+      }
+      state = await mutateState(appId, (fresh) => ({
+        failureHistory: [...fresh.failureHistory, failureEntry].slice(-10) as AppState["failureHistory"],
+      }))
+    }
 
     return await mutateState(appId, () => ({
       status: "active",
