@@ -2,6 +2,7 @@
 export { ENGINE_VERSION } from "./version"
 export * from "./types"
 export { betaBinomialModel } from "./beta-binomial"
+export { betaQuantile } from "./beta-quantile"
 export { lognormalModel } from "./lognormal"
 export {
   ESS_RETENTION_CAP,
