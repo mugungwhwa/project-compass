@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useId, useState } from "react"
+import { useId, useState } from "react"
 import {
   loadFinancialInput,
   saveFinancialInput,
@@ -43,17 +43,20 @@ const FIELDS: Array<{
 ]
 
 const formatNumber = (raw: string): string => {
-  const digits = raw.replace(/[^\d-]/g, "")
-  if (!digits) return ""
-  const n = Number(digits)
+  // Strip everything except digits and a leading minus
+  const isNegative = raw.trimStart().startsWith("-")
+  const digits = raw.replace(/[^\d]/g, "")
+  if (!digits) return isNegative ? "-" : ""
+  const n = isNegative ? -Number(digits) : Number(digits)
   if (!Number.isFinite(n)) return ""
   return n.toLocaleString("ko-KR")
 }
 
 const parseNumber = (raw: string): number | null => {
-  const digits = raw.replace(/[^\d-]/g, "")
-  if (!digits) return null
-  const n = Number(digits)
+  // Remove thousands separators, then parse
+  const trimmed = raw.replace(/,/g, "").trim()
+  if (!trimmed || trimmed === "-") return null
+  const n = Number(trimmed)
   return Number.isFinite(n) ? n : null
 }
 
@@ -70,14 +73,9 @@ const initialFromStored = (stored: FinancialInput | null): FormState => {
 
 export function FinancialInputForm({ onSaved, onClose }: Props) {
   const idPrefix = useId()
-  const [form, setForm] = useState<FormState>(EMPTY)
+  const [form, setForm] = useState<FormState>(() => initialFromStored(loadFinancialInput()))
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({})
   const [savedFlash, setSavedFlash] = useState(false)
-
-  useEffect(() => {
-    const stored = loadFinancialInput()
-    if (stored) setForm(initialFromStored(stored))
-  }, [])
 
   const handleChange = (key: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value
