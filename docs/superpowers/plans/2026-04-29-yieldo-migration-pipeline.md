@@ -755,6 +755,20 @@ The worktree itself is tracked by git (worktree pointer in `.git/worktrees/`), b
 
 ---
 
+## Reality Check (post-execution, 2026-04-29 14:00 KST)
+
+실행 과정에서 plan 가정과 실제 상태의 차이가 드러남:
+
+| Plan 가정 | 실제 |
+|---|---|
+| Task 13: `/dev-start feature pymc-bayesian` 신규 worktree 생성 | **D PR1 이미 머지 완료** (`7fc20ae`) + **D PR2 worktree 활성** (`.worktrees/feature-d-bayesian-pr2-appsflyer-integration/`). 신규 worktree 시동 X, 기존 상태 인식 + memory 업데이트로 대체 |
+| main yieldo 빌드 정상 | ESLint 위반 4건 (`route.test.ts` vitest mock `as any`). 게이트가 첫 가동에서 잡음 — 게이트 가치 즉시 입증. 별도 fix(eslint test override) 적용 |
+| 게이트가 풀 eslint 검사 | **별도 agent가 PR-scoped로 자가 개선** — staged ts/tsx만 검사. pre-existing 33 errors는 별도 cleanup PR로 분리 |
+
+**Scope A 머지 순서 재정의:** D PR2 → F → M5 (PR1은 이미 main에 흡수)
+
+---
+
 ## Definition of Done
 
 After Task 13, the system is in this state:
