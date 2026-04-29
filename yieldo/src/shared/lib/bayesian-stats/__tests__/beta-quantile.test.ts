@@ -19,8 +19,8 @@ describe("betaQuantile", () => {
     expect(betaQuantile(0.025, 50, 950)).toBeCloseTo(0.03725, 3)
   })
 
-  it("matches qbeta(0.975, 50, 950) ≈ 0.06511", () => {
-    expect(betaQuantile(0.975, 50, 950)).toBeCloseTo(0.06511, 3)
+  it("matches qbeta(0.975, 50, 950) ≈ 0.06433", () => {
+    expect(betaQuantile(0.975, 50, 950)).toBeCloseTo(0.06433, 3)
   })
 
   it("returns 0 at p=0", () => {
