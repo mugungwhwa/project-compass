@@ -240,7 +240,7 @@ export function ExperimentRevenue({ data, stats, expanded: externalExpanded, onT
                       )}
                       {mode === "all" && (
                         <>
-                          <div style={{ borderTop: "1px solid #E2E2DD", margin: "4px 0" }} />
+                          <div style={{ borderTop: "1px solid rgba(255, 228, 94, 0.20)", margin: "4px 0" }} />
                           <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
                             <span style={{ color: C.fg2 }}>{locale === "ko" ? "총 매출" : "Total"}</span>
                             <span style={{ marginLeft: "auto", paddingLeft: 12, fontWeight: 700, color: C.fg0, fontVariantNumeric: CHART_TYPO.tooltipValue.fontVariantNumeric, fontFamily: CHART_TYPO.tooltipValue.fontFamily }}>

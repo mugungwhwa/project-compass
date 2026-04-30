@@ -120,7 +120,7 @@ export function RevenueVsInvest({ data, expanded: externalExpanded, onToggle: ex
                         </span>
                       </div>
                       {/* Divider */}
-                      <div style={{ borderTop: "1px solid #E2E2DD", margin: "4px 0" }} />
+                      <div style={{ borderTop: "1px solid rgba(255, 228, 94, 0.20)", margin: "4px 0" }} />
                       {/* Cumulative */}
                       <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, lineHeight: 1.6 }}>
                         <TooltipDot color={C.revenue} />

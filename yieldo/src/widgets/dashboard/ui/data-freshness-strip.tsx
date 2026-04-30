@@ -54,7 +54,7 @@ function Row({ color, label, value, info }: RowProps) {
       />
       <span
         className="text-[11px] font-medium uppercase tracking-wide flex-1 flex items-center gap-1"
-        style={{ color: "var(--text-muted)" }}
+        style={{ color: "var(--fg-2)" }}
       >
         {label}
         {info && <InfoHint content={info} size={11} />}
@@ -86,8 +86,7 @@ export function DataFreshnessStrip({ data }: DataFreshnessStripProps) {
 
   return (
     <div
-      className="rounded-[var(--radius-card)] border border-[var(--border)] p-5 card-glow card-premium h-full"
-      style={{ boxShadow: "none" }}
+      className="rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-5 h-full"
     >
       <h3 className="text-h2 mb-4">{t("data.freshness")}</h3>
 
@@ -124,7 +123,7 @@ export function DataFreshnessStrip({ data }: DataFreshnessStripProps) {
 
         {/* Anomalies */}
         {data.anomalies.length > 0 && (
-          <div className="flex flex-col gap-2 pt-1 border-t border-[var(--border)]">
+          <div className="flex flex-col gap-2 pt-1 border-t border-[var(--border-default)]">
             {data.anomalies.map((anomaly, i) => (
               <div key={i} className="flex items-start gap-1.5">
                 <span className="text-xs shrink-0">

@@ -26,14 +26,14 @@ export function MethodologyModal({ open, onOpenChange, snapshot }: Props) {
           <DialogTitle>{t("market.methodology.title")}</DialogTitle>
         </DialogHeader>
         <dl className="grid grid-cols-[max-content_1fr] gap-x-4 gap-y-2 text-sm">
-          <dt className="text-[var(--text-muted)]">{t("market.methodology.engineVersion")}</dt>
+          <dt className="text-[var(--fg-2)]">{t("market.methodology.engineVersion")}</dt>
           <dd className="font-mono">{snapshot.metadata.engineVersion}</dd>
-          <dt className="text-[var(--text-muted)]">{t("market.methodology.priorVersion")}</dt>
+          <dt className="text-[var(--fg-2)]">{t("market.methodology.priorVersion")}</dt>
           <dd className="font-mono text-xs">{snapshot.metadata.priorVersion}</dd>
-          <dt className="text-[var(--text-muted)]">{t("market.methodology.genreUsed")}</dt>
+          <dt className="text-[var(--fg-2)]">{t("market.methodology.genreUsed")}</dt>
           <dd className="font-mono">{snapshot.metadata.genreUsed}</dd>
         </dl>
-        <div className="mt-4 border-t border-[var(--border)] pt-3 space-y-1 text-xs text-[var(--text-muted)]">
+        <div className="mt-4 border-t border-[var(--border-default)] pt-3 space-y-1 text-xs text-[var(--fg-2)]">
           {Object.entries(snapshot.metadata.validity).map(([metricId, validity]) => (
             <div key={metricId} className="flex justify-between">
               <span className="font-mono">{metricId}</span>
