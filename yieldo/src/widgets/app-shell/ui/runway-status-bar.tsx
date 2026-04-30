@@ -25,7 +25,7 @@ import { Gamepad2, ChevronDown, Calendar, Check } from "lucide-react"
 import { DayPicker, type DateRange } from "react-day-picker"
 import { ko as koLocale, enUS } from "react-day-picker/locale"
 import "react-day-picker/style.css"
-import { mockCashRunway, mockFinancialHealth, mockCapitalKPIs, getGameData } from "@/shared/api"
+import { mockCashRunway, mockCapitalKPIs, getGameData, useLiveFinancial } from "@/shared/api"
 import { useSelectedGame } from "@/shared/store/selected-game"
 import { YieldoLogo } from "@/shared/ui/yieldo-logo"
 import { useLocale } from "@/shared/i18n"
@@ -75,12 +75,12 @@ type Metric = {
   goodWhen?: "up" | "down"
 }
 
-function buildMetrics(gameId: string, cohortMonth: string): Metric[] {
+function buildMetrics(gameId: string, cohortMonth: string, live: ReturnType<typeof useLiveFinancial>): Metric[] {
   const data = getGameData(gameId, cohortMonth)
   const cashM = (data.cashRunway.initialCash / 1000).toFixed(1)
-  const runwayValue = data.financialHealth.netRunway.value
+  const runwayValue = live?.netRunway.value ?? data.financialHealth.netRunway.value
   const runway = runwayValue.toFixed(1)
-  const paybackValue = data.financialHealth.paybackDay
+  const paybackValue = live?.paybackDay ?? data.financialHealth.paybackDay
   const capEffValue = data.capitalKPIs.capitalEff.value
   const capEff = capEffValue.toFixed(2)
 
@@ -220,11 +220,13 @@ export function RunwayStatusBar() {
 
   // Position/portal/outside-click all handled by base-ui Popover.
 
+  const live = useLiveFinancial()
+
   // Derive cohort month from dateRange for metrics lookup
   const selectedCohort = dateRange.from
     ? `${dateRange.from.getFullYear()}-${String(dateRange.from.getMonth() + 1).padStart(2, "0")}`
     : "2026-03"
-  const metrics = buildMetrics(selectedGame.id, selectedCohort)
+  const metrics = buildMetrics(selectedGame.id, selectedCohort, live)
 
   // Keyboard active-index for game dropdown
   const [gameActiveIdx, setGameActiveIdx] = useState(-1)
