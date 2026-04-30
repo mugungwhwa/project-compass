@@ -144,10 +144,10 @@ export const SATURATION_BAR_COLORS = {
 } as const
 
 export const ACTION_TIMELINE_COLORS = {
-  retention:  PALETTE.revenue,
-  ua:         PALETTE.revenue,
-  liveops:    "#A78BFA",
-  release:    PALETTE.uaSpend,
+  retention:  PALETTE.revenue,   // phosphor cyan — data line
+  ua:         PALETTE.cohort3,   // yield yellow — UA marker
+  liveops:    PALETTE.cohort4,   // lavender — live-ops marker
+  release:    PALETTE.cohort1,   // info blue — release marker
   grid:       PALETTE.grid,
   axis:       PALETTE.axis,
   border:     PALETTE.border,
@@ -167,7 +167,7 @@ export const VARIANT_IMPACT_COLORS = {
   reverted:   PALETTE.breakeven,
   control:    PALETTE.benchmark,
   running:    PALETTE.revenue,
-  errorBar:   "#0F172A",
+  errorBar:   "rgba(255, 255, 255, 0.55)",  // neutral monochrome whiskers — readable on dark
   grid:       PALETTE.grid,
   axis:       PALETTE.axis,
   border:     PALETTE.border,
@@ -251,4 +251,16 @@ export const COHORT_HEATMAP_COLORS = {
   level3:     "#2A8AB5",
   level2:     "#1F5B85",
   level1:     "#173F5C",
+} as const
+
+export const CAPITAL_WATERFALL_COLORS = {
+  inflow:     PALETTE.positive,                  // #00E89A — phosphor green
+  outflow:    PALETTE.risk,                      // #FF6B7A — phosphor red
+  netPos:     PALETTE.p50,                       // #4A9EFF — info blue (net positive)
+  netNeg:     "rgba(255, 107, 122, 0.55)",       // muted phosphor red (net negative)
+  running:    PALETTE.legendGray,                // #8E96A4 — cumulative line/dot
+  grid:       PALETTE.grid,
+  axis:       PALETTE.axis,
+  border:     PALETTE.border,
+  fg2:        PALETTE.fg2,                       // tooltip cumulative value
 } as const

@@ -6,14 +6,32 @@ import { TrendingUp, TrendingDown, Minus } from "lucide-react"
 import { AnimatedNumber } from "@/shared/ui/animated-number"
 import { InfoHint } from "@/shared/ui/info-hint"
 
+export type KPIValueTone = "yield" | "do" | "risk" | "info"
+
 export type KPIItem = {
   labelKey: TranslationKey
   value: string | number
   unit?: string
   trend: number
   trendLabel: string
+  /** Phosphor tone for the headline value. Default `yield` (yellow). */
+  valueTone?: KPIValueTone
   /** Override auto-mapped infoKey. By default we try `info.{labelKey}`. */
   infoKey?: TranslationKey
+}
+
+const TONE_COLOR: Record<KPIValueTone, string> = {
+  yield: "var(--phosphor-yellow)",
+  do:    "var(--phosphor-green)",
+  risk:  "var(--phosphor-red)",
+  info:  "var(--phosphor-cyan)",
+}
+
+const TONE_SHADOW: Record<KPIValueTone, string> = {
+  yield: "0 0 16px rgba(255, 228, 94, 0.35)",
+  do:    "0 0 16px rgba(77, 255, 163, 0.35)",
+  risk:  "0 0 16px rgba(255, 107, 122, 0.35)",
+  info:  "0 0 16px rgba(93, 231, 255, 0.35)",
 }
 
 type KPICardsProps = {
@@ -85,8 +103,11 @@ export function KPICards({ items, basisKey }: KPICardsProps) {
               </div>
               <div className="flex items-baseline gap-1.5 mt-1.5">
                 <span
-                  className="text-3xl font-mono-num text-[var(--phosphor-yellow)] leading-none tracking-tight"
-                  style={{ textShadow: "0 0 16px rgba(255, 228, 94, 0.35)" }}
+                  className="text-3xl font-mono-num leading-none tracking-tight"
+                  style={{
+                    color: TONE_COLOR[item.valueTone ?? "yield"],
+                    textShadow: TONE_SHADOW[item.valueTone ?? "yield"],
+                  }}
                 >
                   {typeof item.value === 'number'
                     ? <AnimatedNumber value={item.value} />
@@ -107,7 +128,7 @@ export function KPICards({ items, basisKey }: KPICardsProps) {
         })}
       </div>
       {basisKey && (
-        <p className="mt-3 text-[11px] text-[var(--text-muted)] text-right">
+        <p className="mt-3 text-[11px] text-[var(--fg-2)] text-right">
           {t(basisKey)}
         </p>
       )}

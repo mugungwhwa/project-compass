@@ -9,6 +9,7 @@ import { ChartTooltip, TooltipDot } from "@/shared/ui/chart-tooltip"
 import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 import { CHART_TYPO } from "@/shared/config/chart-typography"
+import { CAPITAL_WATERFALL_COLORS as COLORS } from "@/shared/config/chart-colors"
 import {
   ComposedChart,
   Bar,
@@ -25,17 +26,6 @@ type CapitalWaterfallProps = {
   data: CapitalWaterfallStep[]
   expanded?: boolean
   onToggle?: () => void
-}
-
-const PALETTE = {
-  inflow:     "#00875A",
-  outflow:    "#C9372C",
-  netPos:     "#1A7FE8",
-  netNeg:     "#8B2A1F",
-  running:    "#6B7280",
-  grid:       "#ECECE8",
-  axis:       "#6B7280",
-  border:     "#E2E2DD",
 }
 
 type WaterfallRow = {
@@ -81,9 +71,9 @@ function buildWaterfallRows(data: CapitalWaterfallStep[], locale: "ko" | "en"): 
 }
 
 function getBarColor(row: WaterfallRow): string {
-  if (row.type === "inflow")  return PALETTE.inflow
-  if (row.type === "outflow") return PALETTE.outflow
-  return row.value >= 0 ? PALETTE.netPos : PALETTE.netNeg
+  if (row.type === "inflow")  return COLORS.inflow
+  if (row.type === "outflow") return COLORS.outflow
+  return row.value >= 0 ? COLORS.netPos : COLORS.netNeg
 }
 
 type LegendChipProps = { color: string; label: string; shape?: "square" | "line" }
@@ -130,8 +120,7 @@ export function CapitalWaterfall({ data, expanded: externalExpanded, onToggle: e
   return (
     <motion.div
       layout
-      className={`rounded-[var(--radius-card)] border border-[var(--border)] p-6 card-glow card-premium h-full flex flex-col ${gridClassName}`}
-      style={{ boxShadow: "none" }}
+      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 h-full flex flex-col ${gridClassName}`}
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
       <ChartHeader
@@ -140,24 +129,24 @@ export function CapitalWaterfall({ data, expanded: externalExpanded, onToggle: e
         actions={<ExpandButton expanded={expanded} onToggle={toggle} />}
       />
       <div className="mb-2 flex flex-wrap items-center gap-x-4 gap-y-1">
-        <LegendChip color={PALETTE.inflow}  label={t("chart.legend.inflow")} />
-        <LegendChip color={PALETTE.outflow} label={t("chart.legend.outflow")} />
-        <LegendChip color={PALETTE.netPos}  label={t("chart.legend.netPos")} />
-        <LegendChip color={PALETTE.netNeg}  label={t("chart.legend.netNeg")} />
-        <LegendChip color={PALETTE.running} label={t("chart.legend.running")} shape="line" />
+        <LegendChip color={COLORS.inflow}  label={t("chart.legend.inflow")} />
+        <LegendChip color={COLORS.outflow} label={t("chart.legend.outflow")} />
+        <LegendChip color={COLORS.netPos}  label={t("chart.legend.netPos")} />
+        <LegendChip color={COLORS.netNeg}  label={t("chart.legend.netNeg")} />
+        <LegendChip color={COLORS.running} label={t("chart.legend.running")} shape="line" />
       </div>
       <div className="flex-1" style={{ minHeight: chartHeight }}>
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart data={rows} margin={{ top: 24, right: 20, left: 8, bottom: 12 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke={PALETTE.grid} vertical={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke={COLORS.grid} vertical={false} />
           <XAxis
             dataKey="label"
-            tick={{ ...CHART_TYPO.axisTick, fill: PALETTE.axis }}
-            axisLine={{ stroke: PALETTE.border }}
+            tick={{ ...CHART_TYPO.axisTick, fill: COLORS.axis }}
+            axisLine={{ stroke: COLORS.border }}
             tickLine={false}
           />
           <YAxis
-            tick={{ ...CHART_TYPO.axisTick, fill: PALETTE.axis }}
+            tick={{ ...CHART_TYPO.axisTick, fill: COLORS.axis }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v: number) => `$${(v / 1000).toFixed(0)}K`}
@@ -198,7 +187,7 @@ export function CapitalWaterfall({ data, expanded: externalExpanded, onToggle: e
                         </span>
                       </div>
                       <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, lineHeight: 1.6, marginTop: 2 }}>
-                        <TooltipDot color={PALETTE.running} />
+                        <TooltipDot color={COLORS.running} />
                         <span style={{ color: "#ECF1F7" }}>
                           {locale === "ko" ? "누적" : "Cumulative"}
                         </span>
@@ -206,7 +195,7 @@ export function CapitalWaterfall({ data, expanded: externalExpanded, onToggle: e
                           marginLeft: "auto",
                           paddingLeft: 12,
                           fontWeight: 500,
-                          color: "#374151",
+                          color: COLORS.fg2,
                           fontVariantNumeric: CHART_TYPO.tooltipValue.fontVariantNumeric,
                           fontFamily: CHART_TYPO.tooltipValue.fontFamily,
                         }}>
@@ -231,10 +220,10 @@ export function CapitalWaterfall({ data, expanded: externalExpanded, onToggle: e
           <Line
             type="linear"
             dataKey="runningTotal"
-            stroke={PALETTE.running}
+            stroke={COLORS.running}
             strokeWidth={1.5}
             strokeDasharray="4 4"
-            dot={{ r: 2.5, fill: PALETTE.running, stroke: PALETTE.running }}
+            dot={{ r: 2.5, fill: COLORS.running, stroke: COLORS.running }}
             activeDot={{ r: 4 }}
             isAnimationActive={false}
           />

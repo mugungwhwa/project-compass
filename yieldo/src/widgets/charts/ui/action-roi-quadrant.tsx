@@ -91,7 +91,7 @@ export function ActionRoiQuadrant({ actions, expanded: extExpanded, onToggle }: 
           <ZAxis range={[80, 80]} />
           <ReferenceLine x={medianCost} stroke={PALETTE.benchmark} strokeDasharray="3 3" strokeOpacity={0.5} />
           <ReferenceLine y={medianLtv} stroke={PALETTE.benchmark} strokeDasharray="3 3" strokeOpacity={0.5} />
-          <Tooltip content={<ChartTooltip />} cursor={{ strokeDasharray: "3 3" }} />
+          <Tooltip content={<ChartTooltip />} />
           <Scatter data={rows} animationDuration={800}>
             {rows.map((row, i) => (
               <Cell key={i} fill={typeColor[row.type]} fillOpacity={0.85} />

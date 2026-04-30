@@ -91,13 +91,13 @@ function TooltipGroup({ color, title, children }: { color: string; title: string
 function TooltipRow({ label, value, emphasized, muted, accentColor }: { label: string; value: string; emphasized?: boolean; muted?: boolean; accentColor?: string }) {
   return (
     <div style={{ display: "flex", alignItems: "center", fontSize: 11, lineHeight: 1.55 }}>
-      <span style={{ color: muted ? "#9CA3AF" : "#6B7280" }}>{label}</span>
+      <span style={{ color: "#9AA3B5" }}>{label}</span>
       <span
         style={{
           marginLeft: "auto",
           paddingLeft: 12,
           fontWeight: emphasized ? 600 : 500,
-          color: accentColor ?? (muted ? "#9CA3AF" : "#0A0A0A"),
+          color: accentColor ?? (muted ? "#7B8494" : "#ECF1F7"),
           fontVariantNumeric: CHART_TYPO.tooltipValue.fontVariantNumeric,
           fontFamily: CHART_TYPO.tooltipValue.fontFamily,
         }}

@@ -97,9 +97,26 @@ export default function ExecutiveOverviewPage() {
           <KPICards
             items={[
               { labelKey: "kpi.roas",    value: `${gameData.charts.kpis.roas.value}%`,   trend: gameData.charts.kpis.roas.trend,    trendLabel: gameData.charts.kpis.roas.trendLabel },
-              { labelKey: "kpi.payback", value: gameData.charts.kpis.payback.value,      unit: _t("common.days"),   trend: gameData.charts.kpis.payback.trend, trendLabel: gameData.charts.kpis.payback.trendLabel },
+              {
+                labelKey: "kpi.payback",
+                value: gameData.charts.kpis.payback.value,
+                unit: _t("common.days"),
+                trend: gameData.charts.kpis.payback.trend,
+                trendLabel: gameData.charts.kpis.payback.trendLabel,
+                valueTone: gameData.charts.kpis.payback.trendLabel === "faster" ? "do" : "yield",
+              },
               { labelKey: "kpi.bep",     value: `${gameData.charts.kpis.bep.value}%`,    trend: gameData.charts.kpis.bep.trend,     trendLabel: gameData.charts.kpis.bep.trendLabel },
-              { labelKey: "kpi.burn",    value: gameData.charts.kpis.burn.value,         unit: _t("common.months"), trend: gameData.charts.kpis.burn.trend,    trendLabel: gameData.charts.kpis.burn.trendLabel },
+              {
+                labelKey: "kpi.burn",
+                value: gameData.charts.kpis.burn.value,
+                unit: _t("common.months"),
+                trend: gameData.charts.kpis.burn.trend,
+                trendLabel: gameData.charts.kpis.burn.trendLabel,
+                valueTone:
+                  Number(gameData.charts.kpis.burn.value) >= 12 ? "do"
+                  : Number(gameData.charts.kpis.burn.value) >= 6 ? "yield"
+                  : "risk",
+              },
             ]}
             basisKey="kpi.basis"
           />

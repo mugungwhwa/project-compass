@@ -39,8 +39,7 @@ export function MarketContextCard({ data, expanded: externalExpanded, onToggle: 
   return (
     <motion.div
       layout
-      className={`rounded-[var(--radius-card)] border border-[var(--border)] p-6 card-glow card-premium h-full flex flex-col ${gridClassName}`}
-      style={{ boxShadow: "none" }}
+      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 h-full flex flex-col ${gridClassName}`}
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
       {/* Header */}
@@ -55,7 +54,7 @@ export function MarketContextCard({ data, expanded: externalExpanded, onToggle: 
 
         {/* Genre Growth */}
         <div className="flex items-center justify-between">
-          <span className="text-caption" style={{ color: "var(--text-muted)" }}>
+          <span className="text-caption" style={{ color: "var(--fg-2)" }}>
             {t("market.genreGrowth")}
           </span>
           <div className="flex items-center gap-1.5">
@@ -68,7 +67,7 @@ export function MarketContextCard({ data, expanded: externalExpanded, onToggle: 
 
         {/* Competitive Intensity */}
         <div className="flex items-center justify-between">
-          <span className="text-caption" style={{ color: "var(--text-muted)" }}>
+          <span className="text-caption" style={{ color: "var(--fg-2)" }}>
             {t("market.competitive")}
           </span>
           <div className="flex items-center gap-1.5">
@@ -86,7 +85,7 @@ export function MarketContextCard({ data, expanded: externalExpanded, onToggle: 
 
         {/* CPI Environment */}
         <div className="flex items-center justify-between gap-3">
-          <span className="text-caption shrink-0" style={{ color: "var(--text-muted)" }}>
+          <span className="text-caption shrink-0" style={{ color: "var(--fg-2)" }}>
             {t("market.cpiEnv")}
           </span>
           <div className="flex items-center gap-1.5 flex-wrap justify-end">
@@ -108,7 +107,7 @@ export function MarketContextCard({ data, expanded: externalExpanded, onToggle: 
 
         {/* Seasonality */}
         <div className="flex items-center justify-between">
-          <span className="text-caption" style={{ color: "var(--text-muted)" }}>
+          <span className="text-caption" style={{ color: "var(--fg-2)" }}>
             {t("market.season")}
           </span>
           <span className="text-sm font-medium text-right" style={{ color: "var(--fg-1)" }}>
@@ -119,7 +118,7 @@ export function MarketContextCard({ data, expanded: externalExpanded, onToggle: 
       </div>
 
       {/* AI Summary */}
-      <div className="mt-4 pt-3 border-t border-[var(--border)]">
+      <div className="mt-4 pt-3 border-t border-[var(--border-default)]">
         <p className="text-xs italic" style={{ color: "var(--fg-2)" }}>
           {data.aiSummary[locale]}
         </p>

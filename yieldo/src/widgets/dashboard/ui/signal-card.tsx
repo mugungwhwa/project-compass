@@ -81,7 +81,7 @@ export function SignalCard({ status, confidence, factors, payback }: SignalCardP
           {status === "reduce" && <TrendingDown className="h-5 w-5" />}
           {t(config.label)}
         </div>
-        <div className="text-sm text-[var(--text-secondary)]">
+        <div className="text-sm text-[var(--fg-1)]">
           {t("signal.confidence")}: <span className="text-2xl font-bold text-[var(--phosphor-yellow)] font-mono-num" style={{ fontVariantNumeric: "tabular-nums", textShadow: "0 0 14px rgba(255, 228, 94, 0.35)" }}><AnimatedNumber value={confidence} suffix="%" /></span>
         </div>
       </div>
@@ -90,13 +90,13 @@ export function SignalCard({ status, confidence, factors, payback }: SignalCardP
       <div className="relative mb-1">
         <div className="h-3 rounded-full bg-gradient-to-r from-[var(--signal-red)] via-[var(--signal-amber)] to-[var(--signal-green)] opacity-25" />
         <motion.div
-          className="absolute top-[-4px] w-[3px] h-[20px] bg-[var(--text-primary)] rounded-sm"
+          className="absolute top-[-4px] w-[3px] h-[20px] bg-[var(--fg-0)] rounded-sm"
           initial={{ left: "0%" }}
           animate={{ left: `${config.gaugePos}%` }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
         />
       </div>
-      <div className="flex justify-between text-[10px] text-[var(--text-muted)] mb-4">
+      <div className="flex justify-between text-[10px] text-[var(--fg-2)] mb-4">
         <span>Reduce</span>
         <span>Hold</span>
         <span>Invest</span>
@@ -105,7 +105,7 @@ export function SignalCard({ status, confidence, factors, payback }: SignalCardP
       {/* Key signal factors */}
       <div className="flex flex-col gap-1.5 mb-4">
         {factors.map((f, i) => (
-          <div key={i} className="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
+          <div key={i} className="flex items-center gap-2 text-xs text-[var(--fg-1)]">
             {factorIcons[f.status]}
             <span>{f.text[locale]}</span>
           </div>
@@ -113,8 +113,8 @@ export function SignalCard({ status, confidence, factors, payback }: SignalCardP
       </div>
 
       {/* Payback progress bar */}
-      <div className="flex items-center gap-3 pt-3 border-t border-[var(--border)]">
-        <div className="text-xs text-[var(--text-secondary)] whitespace-nowrap font-medium">Payback</div>
+      <div className="flex items-center gap-3 pt-3 border-t border-[var(--border-default)]">
+        <div className="text-xs text-[var(--fg-1)] whitespace-nowrap font-medium">Payback</div>
         <div className="flex-1">
           <div className="relative h-1.5 bg-[var(--bg-2)] rounded-[var(--radius-inline)] overflow-hidden">
             <motion.div
@@ -131,7 +131,7 @@ export function SignalCard({ status, confidence, factors, payback }: SignalCardP
             <span className="text-[10px] text-[var(--fg-3)]" style={{ fontVariantNumeric: "tabular-nums" }}>D{payback.p90}</span>
           </div>
         </div>
-        <div className="text-[10px] text-[var(--text-muted)] whitespace-nowrap">P10 / P50 / P90</div>
+        <div className="text-[10px] text-[var(--fg-2)] whitespace-nowrap">P10 / P50 / P90</div>
       </div>
     </div>
   )

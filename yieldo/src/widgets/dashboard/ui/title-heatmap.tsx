@@ -40,7 +40,7 @@ const TREND_ICON: Record<TitleHealthRow["retentionTrend"], typeof TrendingUp> = 
 
 const TREND_COLOR: Record<TitleHealthRow["retentionTrend"], string> = {
   improving: "text-[var(--signal-positive)]",
-  stable:    "text-[var(--text-muted)]",
+  stable:    "text-[var(--fg-2)]",
   declining: "text-[var(--signal-risk)]",
 }
 
@@ -51,8 +51,7 @@ export function TitleHeatmap({ titles, expanded: externalExpanded, onToggle: ext
   return (
     <motion.div
       layout
-      className={`rounded-[var(--radius-card)] border border-[var(--border)] p-6 card-glow card-premium h-full flex flex-col ${gridClassName}`}
-      style={{ boxShadow: "none" }}
+      className={`rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--bg-1)] p-6 h-full flex flex-col ${gridClassName}`}
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
       <ChartHeader
@@ -63,22 +62,22 @@ export function TitleHeatmap({ titles, expanded: externalExpanded, onToggle: ext
       <div className="flex-1" style={{ minHeight: chartHeight }}>
       {/* Header row */}
       <div className="grid grid-cols-[1fr_auto_auto_auto_auto_auto] gap-x-6 px-1 mb-2">
-        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
+        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--fg-2)]">
           {t("common.game")}
         </span>
-        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)] text-right">
+        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--fg-2)] text-right">
           {t("portfolio.signal")}
         </span>
-        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)] text-right">
+        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--fg-2)] text-right">
           {t("signal.confidence")}
         </span>
-        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)] text-right">
+        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--fg-2)] text-right">
           {t("portfolio.paybackCol")}
         </span>
-        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)] text-right">
+        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--fg-2)] text-right">
           {t("portfolio.roasCol")}
         </span>
-        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)] text-right">
+        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--fg-2)] text-right">
           {t("portfolio.trend")}
         </span>
       </div>
@@ -94,10 +93,10 @@ export function TitleHeatmap({ titles, expanded: externalExpanded, onToggle: ext
             >
               {/* Title + genre */}
               <div className="flex flex-col gap-0.5 min-w-0">
-                <span className="text-body text-[var(--text-primary)] truncate">
+                <span className="text-body text-[var(--fg-0)] truncate">
                   {row.label}
                 </span>
-                <span className="text-caption text-[var(--text-muted)]">
+                <span className="text-caption text-[var(--fg-2)]">
                   {row.genre}
                 </span>
               </div>
@@ -110,17 +109,17 @@ export function TitleHeatmap({ titles, expanded: externalExpanded, onToggle: ext
               </span>
 
               {/* Confidence */}
-              <span className="font-mono-num text-body text-[var(--text-primary)] text-right tabular-nums">
+              <span className="font-mono-num text-body text-[var(--fg-0)] text-right tabular-nums">
                 {row.confidence}%
               </span>
 
               {/* Payback */}
-              <span className="font-mono-num text-body text-[var(--text-primary)] text-right tabular-nums">
+              <span className="font-mono-num text-body text-[var(--fg-0)] text-right tabular-nums">
                 D{row.paybackD}
               </span>
 
               {/* ROAS */}
-              <span className="font-mono-num text-body text-[var(--text-primary)] text-right tabular-nums">
+              <span className="font-mono-num text-body text-[var(--fg-0)] text-right tabular-nums">
                 {row.roas}%
               </span>
 
