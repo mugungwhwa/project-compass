@@ -8,3 +8,9 @@ Compass_MVP_Revision_Notes_*.md
 
 # Git worktrees (superpowers)
 .worktrees/
+
+# Harness runtime state (ultraqa cycle counter, etc.)
+.harness-state/
+
+# External reference clones (not part of this repo)
+bloomberg-terminal/

@@ -3,20 +3,27 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { useLocale } from "@/shared/i18n"
-import type { PriorPosterior } from "@/shared/api/mock-data"
+import type { TranslationKey } from "@/shared/i18n"
+import type { PriorPosteriorRow, PosteriorSnapshot } from "@/shared/api/posterior"
 import { ChartHeader } from "@/shared/ui/chart-header"
 import { ExpandButton } from "@/shared/ui/expand-button"
 import { useChartExpand } from "@/shared/hooks/use-chart-expand"
 import { MARKET_GAP_PROOF_COLORS } from "@/shared/config/chart-colors"
 import { computeMarketSignal } from "@/shared/lib"
-import { MethodologyModal } from "@/shared/ui/methodology-modal"
-import { CyclicUpdateTimeline } from "./cyclic-update-timeline"
-import { mockCyclicUpdate_matchLeague_d7 } from "@/shared/api/mock-data"
+import { MethodologyModal } from "@/widgets/dashboard"
 
 const C = MARKET_GAP_PROOF_COLORS
 
+const VALIDITY_REASON_KEY: Record<string, string> = {
+  insufficient_installs: "market.validity.insufficientInstalls",
+  insufficient_history: "market.validity.insufficientHistory",
+  prior_ess_too_low: "market.validity.priorEssTooLow",
+  engine_version_mismatch: "market.validity.engineVersionMismatch",
+}
+
 type PriorPosteriorChartProps = {
-  data: PriorPosterior[]
+  data: PriorPosteriorRow[]
+  snapshot?: PosteriorSnapshot | null
 }
 
 /**
@@ -26,7 +33,7 @@ type PriorPosteriorChartProps = {
  * L1(operator UI)에는 Prior/Posterior/Bayesian/Alpha 용어 사용 금지. 장르 기대치 / 우리 실적 /
  * Invest·Hold·Reduce 신호 언어로 통일. 색상은 Revenue Forecast와 정합 (빨강=장르, 초록=우리, 파랑=격차 accent).
  */
-export function PriorPosteriorChart({ data }: PriorPosteriorChartProps) {
+export function PriorPosteriorChart({ data, snapshot }: PriorPosteriorChartProps) {
   const { t } = useLocale()
   const [methodologyOpen, setMethodologyOpen] = useState(false)
   const { expanded, toggle, gridClassName } = useChartExpand()
@@ -58,7 +65,7 @@ export function PriorPosteriorChart({ data }: PriorPosteriorChartProps) {
           const allValues = [item.prior.ci_low, item.prior.ci_high, item.posterior.ci_low, item.posterior.ci_high]
           const min = Math.min(...allValues) * 0.8
           const max = Math.max(...allValues) * 1.2
-          const range = max - min
+          const range = max - min || 1
 
           const genreLeft = ((item.prior.ci_low - min) / range) * 100
           const genreWidth = ((item.prior.ci_high - item.prior.ci_low) / range) * 100
@@ -68,10 +75,23 @@ export function PriorPosteriorChart({ data }: PriorPosteriorChartProps) {
           const ourWidth = ((item.posterior.ci_high - item.posterior.ci_low) / range) * 100
           const ourMean = ((item.posterior.mean - min) / range) * 100
 
+          const metricLabel = t(`metric.${item.metricId}` as TranslationKey)
+          const validityReasonKey = item.validity.valid
+            ? null
+            : ((VALIDITY_REASON_KEY[item.validity.reason] ?? "market.validity.suspended") as TranslationKey)
+
           return (
-            <div key={item.metric}>
+            <div key={item.metricId}>
               <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
-                <span className="text-sm font-bold text-[var(--fg-0)]">{item.metric}</span>
+                <span className="text-sm font-bold text-[var(--fg-0)]">
+                  {metricLabel}
+                  {!item.validity.valid && (
+                    <span className="ml-2 inline-flex items-center rounded-sm border border-[var(--signal-caution)]/40 bg-[var(--signal-caution)]/10 px-1.5 py-0.5 text-[10px] font-bold text-[var(--signal-caution)]">
+                      {t("market.validity.suspended")}
+                      {validityReasonKey ? ` — ${t(validityReasonKey)}` : null}
+                    </span>
+                  )}
+                </span>
                 <div className="flex items-center gap-3 text-xs font-mono-num">
                   <span className="text-[var(--fg-2)]">
                     {t("market.proof.genreLabel")}: {item.prior.mean.toFixed(2)}
@@ -162,21 +182,14 @@ export function PriorPosteriorChart({ data }: PriorPosteriorChartProps) {
         </button>
       </div>
 
-      {/* L2 Methodology Modal */}
-      <MethodologyModal
-        open={methodologyOpen}
-        onOpenChange={setMethodologyOpen}
-        title={t("methodology.title").replace("{metric}", data[0]?.metric ?? "D7 Retention")}
-        subtitle={t("methodology.subtitle")}
-        footer={
-          <div className="text-caption text-[var(--fg-2)] leading-relaxed">
-            <p>{t("methodology.footer")}</p>
-            <p className="mt-1 italic text-[var(--fg-3)]">{t("methodology.footerL2")}</p>
-          </div>
-        }
-      >
-        <CyclicUpdateTimeline data={mockCyclicUpdate_matchLeague_d7} />
-      </MethodologyModal>
+      {/* L2 Methodology Modal — engine version, prior version, validity */}
+      {snapshot && (
+        <MethodologyModal
+          open={methodologyOpen}
+          onOpenChange={setMethodologyOpen}
+          snapshot={snapshot}
+        />
+      )}
     </motion.div>
   )
 }

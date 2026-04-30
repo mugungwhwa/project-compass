@@ -256,6 +256,29 @@ const dictionary = {
   "market.signal.hold":      { ko: "Hold 신호",                    en: "Hold signal" },
   "market.signal.reduce":    { ko: "Reduce 신호",                   en: "Reduce signal" },
 
+  // PR4: validity gate L1 카피 (memory: feedback_korean_stats_terms)
+  "market.priorPosterior.posteriorLabel": { ko: "사후 분포 (우리 데이터 반영)", en: "Posterior (our data)" },
+  "market.priorPosterior.priorLabel":     { ko: "사전 분포 (장르 기대치)",      en: "Prior (genre baseline)" },
+  "market.priorPosterior.ciLabel":        { ko: "95% 신뢰 구간",                 en: "95% credible interval" },
+  "market.validity.suspended":            { ko: "보류",                          en: "Suspended" },
+  "market.validity.insufficientInstalls": { ko: "데이터 부족",                   en: "Insufficient data" },
+  "market.validity.insufficientHistory":  { ko: "관측 기간 부족",                en: "Insufficient history" },
+  "market.validity.priorEssTooLow":       { ko: "장르 기준값 부족",              en: "Prior baseline too weak" },
+  "market.validity.engineVersionMismatch":{ ko: "엔진 갱신 중",                  en: "Engine updating" },
+
+  // PR4: methodology modal L2 카피
+  "market.methodology.title":             { ko: "방법론",                        en: "Methodology" },
+  "market.methodology.engineVersion":     { ko: "엔진 버전",                     en: "Engine version" },
+  "market.methodology.priorVersion":      { ko: "사전값 버전",                   en: "Prior version" },
+  "market.methodology.genreUsed":         { ko: "사용된 장르",                   en: "Genre used" },
+  "market.methodology.sampleSize":        { ko: "유효 표본 수",                  en: "Effective sample size" },
+
+  // Metric display labels
+  "metric.retention_d1":                  { ko: "D1 리텐션",                     en: "D1 retention" },
+  "metric.retention_d7":                  { ko: "D7 리텐션",                     en: "D7 retention" },
+  "metric.retention_d30":                 { ko: "D30 리텐션",                    en: "D30 retention" },
+  "metric.monthly_revenue_usd":           { ko: "월 수익 (USD)",                 en: "Monthly revenue (USD)" },
+
   // ─── Methodology Modal (L2 — 방법론 패널, Alpha/Bayesian 허용) ─────
   "methodology.title":         { ko: "방법론: {metric} 판정의 근거",      en: "Methodology: basis for {metric} judgment" },
   "methodology.subtitle":     { ko: "장르 기대치가 내부 데이터로 업데이트되는 과정",

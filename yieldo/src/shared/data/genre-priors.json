@@ -1,0 +1,38 @@
+{
+  "version": "genre-priors-2026-04-29",
+  "essRetention": 8000,
+  "genres": {
+    "portfolio": {
+      "retention": {
+        "d1": { "alpha": 1830, "beta": 6170 },
+        "d7":  { "alpha": 336,  "beta": 7664 },
+        "d30": { "alpha": 68,   "beta": 7932 }
+      },
+      "monthlyRevenueUsd": { "mu0": 11.51, "sigma0": 1.20 }
+    },
+    "match-3": {
+      "retention": {
+        "d1": { "alpha": 2080, "beta": 5920 },
+        "d7":  { "alpha": 432,  "beta": 7568 },
+        "d30": { "alpha": 96,   "beta": 7904 }
+      },
+      "monthlyRevenueUsd": { "mu0": 12.21, "sigma0": 1.15 }
+    },
+    "puzzle": {
+      "retention": {
+        "d1": { "alpha": 1920, "beta": 6080 },
+        "d7":  { "alpha": 360,  "beta": 7640 },
+        "d30": { "alpha": 76,   "beta": 7924 }
+      },
+      "monthlyRevenueUsd": { "mu0": 11.85, "sigma0": 1.18 }
+    },
+    "idle": {
+      "retention": {
+        "d1": { "alpha": 1680, "beta": 6320 },
+        "d7":  { "alpha": 288,  "beta": 7712 },
+        "d30": { "alpha": 56,   "beta": 7944 }
+      },
+      "monthlyRevenueUsd": { "mu0": 11.30, "sigma0": 1.25 }
+    }
+  }
+}

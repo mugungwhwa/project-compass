@@ -8,10 +8,10 @@ import {
   mockRetention,
   mockCompetitors,
   mockMarketHero,
-  mockPriorPosterior,
   mockRankingHistory,
   mockSaturationTrend,
 } from "@/shared/api"
+import { useLivePosterior, snapshotToRows } from "@/shared/api/posterior"
 import { PageTransition, FadeInUp } from "@/shared/ui/page-transition"
 import { useGridLayout } from "@/shared/hooks"
 import { motion } from "framer-motion"
@@ -20,6 +20,8 @@ const GRID_TRANSITION = { duration: 0.3, ease: [0.16, 1, 0.3, 1] as [number, num
 
 export default function MarketGapPage() {
   const { t } = useLocale()
+  const { data: snapshot } = useLivePosterior("demo")
+  const rows = snapshot ? snapshotToRows(snapshot) : []
   const benchGrid = useGridLayout(2)
   const satGrid = useGridLayout(2)
 
@@ -42,7 +44,7 @@ export default function MarketGapPage() {
 
       {/* 2. Prior vs Posterior — Bayesian differentiator */}
       <FadeInUp className="mb-8">
-        <PriorPosteriorChart data={mockPriorPosterior} />
+        <PriorPosteriorChart data={rows} snapshot={snapshot ?? null} />
       </FadeInUp>
 
       {/* 3. Retention benchmark + Ranking trend */}

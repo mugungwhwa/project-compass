@@ -399,7 +399,13 @@ export const mockExperimentVariants: ExperimentVariant[] = [
     ltv_ci_high: 0,
     sample_size: 48200,
     status: "control",
-    rollout_history: [],
+    rollout_history: [
+      { date: "2026-02-18", percentage: 95, cumulative_ltv: 4800 },
+      { date: "2026-02-22", percentage: 85, cumulative_ltv: 12600 },
+      { date: "2026-03-01", percentage: 65, cumulative_ltv: 24800 },
+      { date: "2026-03-10", percentage: 40, cumulative_ltv: 38400 },
+      { date: "2026-03-18", percentage: 0,  cumulative_ltv: 42100 },
+    ],
   },
   {
     id: "exp1-v1",
@@ -411,7 +417,12 @@ export const mockExperimentVariants: ExperimentVariant[] = [
     ltv_ci_high: 1.5,
     sample_size: 24100,
     status: "loser",
-    rollout_history: [],
+    rollout_history: [
+      { date: "2026-01-15", percentage: 5,  cumulative_ltv: -1200 },
+      { date: "2026-01-22", percentage: 15, cumulative_ltv: -4800 },
+      { date: "2026-01-29", percentage: 25, cumulative_ltv: -9600 },
+      { date: "2026-02-08", percentage: 0,  cumulative_ltv: -9600 },
+    ],
   },
   {
     id: "exp1-v2",
@@ -443,7 +454,12 @@ export const mockExperimentVariants: ExperimentVariant[] = [
     ltv_ci_high: 0,
     sample_size: 31200,
     status: "control",
-    rollout_history: [],
+    rollout_history: [
+      { date: "2026-01-20", percentage: 95, cumulative_ltv: 3400 },
+      { date: "2026-01-25", percentage: 85, cumulative_ltv: 9200 },
+      { date: "2026-02-01", percentage: 75, cumulative_ltv: 18600 },
+      { date: "2026-02-03", percentage: 100, cumulative_ltv: 22800 },
+    ],
   },
   {
     id: "exp2-v1",
@@ -474,7 +490,12 @@ export const mockExperimentVariants: ExperimentVariant[] = [
     ltv_ci_high: 0.3,
     sample_size: 15450,
     status: "loser",
-    rollout_history: [],
+    rollout_history: [
+      { date: "2026-02-10", percentage: 5,  cumulative_ltv: -900 },
+      { date: "2026-02-15", percentage: 15, cumulative_ltv: -3600 },
+      { date: "2026-02-19", percentage: 25, cumulative_ltv: -7800 },
+      { date: "2026-02-22", percentage: 0,  cumulative_ltv: -7800 },
+    ],
   },
   // Experiment 4: Reward Calendar (running, partial rollout)
   {
@@ -487,7 +508,11 @@ export const mockExperimentVariants: ExperimentVariant[] = [
     ltv_ci_high: 0,
     sample_size: 22800,
     status: "control",
-    rollout_history: [],
+    rollout_history: [
+      { date: "2026-03-25", percentage: 95, cumulative_ltv: 2200 },
+      { date: "2026-03-30", percentage: 85, cumulative_ltv: 7600 },
+      { date: "2026-04-03", percentage: 75, cumulative_ltv: 14100 },
+    ],
   },
   {
     id: "exp4-v1",
@@ -499,7 +524,12 @@ export const mockExperimentVariants: ExperimentVariant[] = [
     ltv_ci_high: 1.9,
     sample_size: 11400,
     status: "loser",
-    rollout_history: [],
+    rollout_history: [
+      { date: "2026-03-10", percentage: 5,  cumulative_ltv: -600 },
+      { date: "2026-03-15", percentage: 15, cumulative_ltv: -2400 },
+      { date: "2026-03-20", percentage: 25, cumulative_ltv: -5100 },
+      { date: "2026-03-22", percentage: 0,  cumulative_ltv: -5100 },
+    ],
   },
   {
     id: "exp4-v2",
