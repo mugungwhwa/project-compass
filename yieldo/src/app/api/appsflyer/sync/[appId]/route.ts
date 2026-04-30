@@ -27,15 +27,19 @@ export async function POST(
       toIso: utcDate(today),
     })
     return NextResponse.json({ appId, state }, { status: 200 })
-  } catch (err: any) {
+  } catch (err: unknown) {
     if (err instanceof BackfillInProgressError) {
       return NextResponse.json(
         { error: "in_progress", message: err.message },
         { status: 409 },
       )
     }
+    const e = err instanceof Error ? err : null
     return NextResponse.json(
-      { error: err?.name ?? "sync_failed", message: err?.message ?? "unknown error" },
+      {
+        error: e?.name ?? "sync_failed",
+        message: e?.message ?? "unknown error",
+      },
       { status: 500 },
     )
   }

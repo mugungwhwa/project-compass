@@ -16,17 +16,21 @@ import { randomUUID } from "node:crypto"
 
 export type SyncWindow = { fromIso: string; toIso: string }
 
+type HttpErrorShape = { httpStatus?: number; message?: string; name?: string }
+const asHttp = (e: unknown): HttpErrorShape => (e ?? {}) as HttpErrorShape
+
 export async function validateCredentials(devToken: string, appId: string): Promise<void> {
   // Lightest 1-call probe = installs_report 1-day window
   const today = new Date().toISOString().slice(0, 10)
   try {
     await fetchPullReport(devToken, { appId, from: today, to: today }, "installs_report")
-  } catch (err: any) {
-    if (err.httpStatus === 401 || err.httpStatus === 403) {
-      throw new CredentialInvalidError(err.httpStatus, "AppsFlyer credentials invalid")
+  } catch (err: unknown) {
+    const status = asHttp(err).httpStatus
+    if (status === 401 || status === 403) {
+      throw new CredentialInvalidError(status, "AppsFlyer credentials invalid")
     }
-    if (err.httpStatus === 404) throw new AppMissingError(appId)
-    if (err.httpStatus === 429) throw new ThrottledError(60)
+    if (status === 404) throw new AppMissingError(appId)
+    if (status === 429) throw new ThrottledError(60)
     throw err
   }
 }
@@ -36,13 +40,14 @@ type FailureClassification = {
   failureType: AppState["failureHistory"][number]["type"]
 }
 
-function classifyError(err: any): FailureClassification {
+function classifyError(err: unknown): FailureClassification {
   if (err instanceof CredentialInvalidError) return { status: "credential_invalid", failureType: "auth_invalid" }
   if (err instanceof AppMissingError) return { status: "app_missing", failureType: "not_found" }
   if (err instanceof ThrottledError) return { status: null, failureType: "throttled" }
-  if (err?.httpStatus === 401 || err?.httpStatus === 403) return { status: "credential_invalid", failureType: "auth_invalid" }
-  if (err?.httpStatus === 404) return { status: "app_missing", failureType: "not_found" }
-  if (err?.httpStatus === 429) return { status: null, failureType: "throttled" }
+  const status = asHttp(err).httpStatus
+  if (status === 401 || status === 403) return { status: "credential_invalid", failureType: "auth_invalid" }
+  if (status === 404) return { status: "app_missing", failureType: "not_found" }
+  if (status === 429) return { status: null, failureType: "throttled" }
   return { status: null, failureType: "partial" }
 }
 
@@ -143,12 +148,12 @@ export async function runAppsFlyerSync(
         state = await mutateState(appId, () => ({
           progress: { step: stepIdx, total: 5, currentReport: s.report, rowsFetched },
         }))
-      } catch (err: any) {
+      } catch (err: unknown) {
         const cls = classifyError(err)
         const failureEntry = {
           at: new Date().toISOString(),
           type: cls.failureType,
-          message: err.message ?? String(err),
+          message: asHttp(err).message ?? String(err),
           report: s.report,
         } as const
 

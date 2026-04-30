@@ -25,8 +25,9 @@ export async function GET(req: Request): Promise<Response> {
     try {
       const state = await runAppsFlyerSync(app.appId, window)
       results.push({ appId: app.appId, state })
-    } catch (err: any) {
-      results.push({ appId: app.appId, error: err?.message ?? String(err) })
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err)
+      results.push({ appId: app.appId, error: message })
     }
   }
   return NextResponse.json({ ranAt: new Date().toISOString(), results }, { status: 200 })
