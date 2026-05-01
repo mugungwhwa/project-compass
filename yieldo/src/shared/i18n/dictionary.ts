@@ -311,18 +311,40 @@ const dictionary = {
   "status.capEff":         { ko: "자본 효율",     en: "Cap Eff" },
 
   // --- App shell: bottom copilot command bar (2026-04-08, refined 2026-04-09) ---
-  "copilot.askYieldo":    { ko: "질문하기",
-                             en: "Ask yieldo" },
-  "copilot.placeholder":   { ko: "yieldo에게 무엇이든 물어보세요… (샘플 답변을 보려면 클릭)",
-                             en: "Ask yieldo anything…  (v0 preview — click to see sample answer)" },
+  // 2026-05-01 agent perception pass: card now frames itself as a live AI
+  // agent (reasoning trace + LIVE identity) instead of a passive chatbot.
+  "copilot.askYieldo":    { ko: "yieldo Agent에게 질문",
+                             en: "Ask yieldo Agent" },
+  "copilot.placeholder":   { ko: "yieldo Agent에게 무엇이든 물어보세요…  (클릭해서 추론 과정 보기)",
+                             en: "Ask yieldo Agent anything…  (click to see live reasoning)" },
   "copilot.comingSoon":    { ko: "AI 질의응답 — 준비 중",
                              en: "AI copilot — coming soon" },
   "copilot.context":       { ko: "현재 화면",
                              en: "Context" },
-  "copilot.footer":        { ko: "yieldo 질의응답 v0 · 샘플 미리보기 · 실제 AI 연결은 로드맵 §5 참조",
-                             en: "yieldo Copilot v0 · Static preview · Real AI in Level 2 (see roadmap §5)" },
+  "copilot.footer":        { ko: "Match-3 Saga · 코호트 2026-03 컨텍스트로 추론 · Agent v0 미리보기",
+                             en: "Reasoning over Match-3 Saga · Cohort 2026-03 context · Agent v0 preview" },
   "copilot.module1Ctx":    { ko: "한눈에 보기 · 코호트 2026-03",
                              en: "Module 1 · Executive Overview · Cohort 2026-03" },
+
+  // Agent identity (replaces generic "Module" eyebrow in the floating card)
+  "copilot.agent.id":      { ko: "YIELDO AGENT",
+                             en: "YIELDO AGENT" },
+  "copilot.agent.status":  { ko: "실시간",
+                             en: "LIVE" },
+  "copilot.agent.context": { ko: "Match-3 Saga · 코호트 2026-03",
+                             en: "Match-3 Saga · Cohort 2026-03" },
+
+  // Reasoning trace — staggered "thinking" steps shown above the answer.
+  // This is the single biggest "AI agent vs chatbot" perception lever
+  // (see 2026-04-30 market research note in commit message).
+  "copilot.trace.title":   { ko: "추론 과정 · 3 단계",
+                             en: "Reasoning · 3 steps" },
+  "copilot.trace.s1":      { ko: "Match-3 Saga 코호트 데이터 조회 중…",
+                             en: "Pulling Match-3 Saga cohort data…" },
+  "copilot.trace.s2":      { ko: "Facebook US CPI 변동 분석 중…",
+                             en: "Analyzing Facebook US CPI shift…" },
+  "copilot.trace.s3":      { ko: "ΔLTV 영향 계산 및 권고 생성 중…",
+                             en: "Computing ΔLTV impact and recommendation…" },
 
   // Mock answer for the v0 Copilot preview
   "copilot.mock.user":     { ko: "회수 시점이 D42에서 D47로 늦춰진 이유가 뭐야?",
