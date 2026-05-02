@@ -78,10 +78,17 @@ export function ConnectionCard({ connection, href, onClick }: ConnectionCardProp
   const cta = (live.status && LIVE_CTA_OVERRIDE[live.status]) ?? PRIMARY_CTA[connection.status]
   const liveLabel = live.status ? LIVE_LABEL[live.status] : null
 
-  // Phosphor accent line on active cards (Bloomberg terminal aesthetic)
+  // Status-aware hover border (green/amber/red/primary) + phosphor accent on active cards
+  const HOVER_BORDER: Record<ConnectionStatus, string> = {
+    connected: "hover:border-success",
+    warn: "hover:border-warning",
+    error: "hover:border-destructive",
+    disconnected: "hover:border-primary",
+  }
   const cardClass = cn(
     "group relative block w-full text-left rounded-2xl border border-border bg-card p-5",
-    "transition-all hover:border-primary hover:shadow-sm",
+    "transition-all hover:shadow-sm",
+    HOVER_BORDER[connection.status],
     isActive &&
       "before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-[var(--phosphor)]",
   )

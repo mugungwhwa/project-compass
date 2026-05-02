@@ -1,5 +1,6 @@
 "use client"
 
+import { cn } from "@/shared/lib/utils"
 import {
   Dialog,
   DialogContent,
@@ -7,7 +8,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog"
-import type { Connection } from "@/shared/api/mock-connections"
+import type {
+  Connection,
+  ConnectionStatus,
+} from "@/shared/api/mock-connections"
 import { FinancialInputForm } from "./financial-input-form"
 import { PlaceholderWizardDialog } from "./placeholder-wizard-dialog"
 import { RegisterForm } from "./register-form"
@@ -18,20 +22,71 @@ type ConnectionDialogProps = {
   onRegistered?: (appId: string) => void
 }
 
+const STATUS_STYLE: Record<
+  ConnectionStatus,
+  { label: string; dot: string; pill: string; accent: string }
+> = {
+  connected: {
+    label: "연결됨",
+    dot: "bg-success",
+    pill: "bg-success/15 text-success",
+    accent: "var(--success, #16A34A)",
+  },
+  warn: {
+    label: "검토 필요",
+    dot: "bg-warning",
+    pill: "bg-warning/20 text-warning",
+    accent: "var(--warning, #D97706)",
+  },
+  error: {
+    label: "에러",
+    dot: "bg-destructive",
+    pill: "bg-destructive/15 text-destructive",
+    accent: "var(--destructive, #DC2626)",
+  },
+  disconnected: {
+    label: "미연결",
+    dot: "bg-muted-foreground/60",
+    pill: "bg-muted text-muted-foreground",
+    accent: "var(--phosphor)",
+  },
+}
+
 export function ConnectionDialog({
   connection,
   onClose,
   onRegistered,
 }: ConnectionDialogProps) {
   const open = connection !== null
+  const style = connection ? STATUS_STYLE[connection.status] : null
 
   return (
     <Dialog open={open} onOpenChange={(next) => !next && onClose()}>
-      <DialogContent className="sm:max-w-md">
-        {connection && (
+      <DialogContent
+        className="sm:max-w-md"
+        style={
+          style
+            ? ({ "--dialog-accent": style.accent } as React.CSSProperties)
+            : undefined
+        }
+      >
+        {connection && style && (
           <>
             <DialogHeader>
-              <DialogTitle>{connection.brand}</DialogTitle>
+              <div className="flex items-start justify-between gap-3">
+                <DialogTitle>{connection.brand}</DialogTitle>
+                <span
+                  className={cn(
+                    "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-bold flex-shrink-0",
+                    style.pill,
+                  )}
+                >
+                  <span
+                    className={cn("w-1.5 h-1.5 rounded-full", style.dot)}
+                  />
+                  {style.label}
+                </span>
+              </div>
               <DialogDescription>{connection.description}</DialogDescription>
             </DialogHeader>
 
