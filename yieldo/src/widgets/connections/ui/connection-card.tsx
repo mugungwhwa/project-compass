@@ -88,8 +88,18 @@ export function ConnectionCard({ connection, href, onClick }: ConnectionCardProp
 
   const Body = (
     <>
-      {/* 1행 — 브랜드 + 상태 (브랜드 아이콘 블록 제거됨) */}
-      <div className="flex items-start justify-between gap-3">
+      {/* 1행 — 브랜드 chip + 이름 + 상태 */}
+      <div className="flex items-start gap-3">
+        {connection.initials && connection.brandColor && (
+          <div
+            className="flex h-8 w-8 items-center justify-center rounded-lg flex-shrink-0 text-xs font-bold text-white"
+            style={{ background: connection.brandColor }}
+            data-testid="brand-chip"
+            aria-hidden="true"
+          >
+            {connection.initials}
+          </div>
+        )}
         <div className="min-w-0 flex-1">
           <div className="font-bold text-foreground text-base leading-tight truncate">
             {connection.brand}

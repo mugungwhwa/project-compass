@@ -24,8 +24,8 @@ describe("ConnectionCard", () => {
     expect(screen.getByText("AppsFlyer")).toBeInTheDocument()
   })
 
-  it("does not render brand icon block (icons removed per spec)", () => {
-    const { container } = render(
+  it("renders brand initials chip when initials + brandColor provided", () => {
+    render(
       <ConnectionCard
         connection={{
           ...baseConnection,
@@ -35,8 +35,21 @@ describe("ConnectionCard", () => {
         }}
       />,
     )
-    expect(
-      container.querySelector('[aria-hidden="true"][style*="background"]'),
-    ).toBeNull()
+    const chip = screen.getByTestId("brand-chip")
+    expect(chip).toBeInTheDocument()
+    expect(chip).toHaveTextContent("AF")
+    expect(chip).toHaveStyle({ background: "#00b2e5" })
+  })
+
+  it("omits brand chip when initials/brandColor are absent", () => {
+    render(
+      <ConnectionCard
+        connection={{
+          ...baseConnection,
+          status: "connected",
+        }}
+      />,
+    )
+    expect(screen.queryByTestId("brand-chip")).toBeNull()
   })
 })
