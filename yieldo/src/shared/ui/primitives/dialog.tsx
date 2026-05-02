@@ -35,7 +35,9 @@ function DialogOverlay({
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
 const dialogContentVariants = cva(
-  "fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border bg-background p-6 shadow-lg duration-200 outline-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
+  // Yieldo terminal aesthetic — opaque bg-card + 2xl radius + explicit border-border + subtle shadow + phosphor accent on top.
+  // Override accent per-dialog by setting `style={{ "--dialog-accent": "..." }}` on DialogContent.
+  "fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-2xl border border-border bg-card p-6 shadow-md duration-200 outline-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-[var(--dialog-accent,var(--phosphor))] before:rounded-t-2xl data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
   {
     variants: {
       size: {

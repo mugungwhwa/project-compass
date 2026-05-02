@@ -10,14 +10,32 @@ type Props = {
 }
 
 const GUIDE_BY_ID: Record<string, string> = {
+  // MMP
   adjust:
     "Adjust Dashboard → Settings → Report Service API에서 token 발급 후 입력합니다.",
+  singular:
+    "Singular → Account → API Keys에서 Reporting API key를 발급합니다.",
+  // Experimentation
   statsig:
     "Statsig Console → Project Settings → API Keys에서 Server Secret Key를 발급해 입력합니다.",
+  firebase:
+    "Firebase Console → Project Settings → Service Accounts에서 BigQuery export key 발급합니다.",
+  optimizely:
+    "Optimizely Dashboard → Settings → API Tokens에서 Personal Access Token을 발급합니다.",
+  // Financial
   "manual-financial":
     "월 매출, UA 지출, 현금 잔고, 월 burn, 목표 payback 5개 지표를 직접 입력합니다.",
+  quickbooks:
+    "QuickBooks → Apps → Developer Portal에서 OAuth client credentials 발급 후 인증합니다.",
+  xero:
+    "Xero → My Xero → Connected Apps → Add a custom integration에서 OAuth 인증을 진행합니다.",
+  // Market
   gameanalytics:
     "GameAnalytics Studio → Settings → API Keys에서 Game Key + Secret Key를 발급합니다.",
+  sensortower:
+    "Sensor Tower → Settings → API에서 Bearer Token을 발급합니다 (Enterprise plan 필요).",
+  appmagic:
+    "AppMagic → Settings → API에서 token을 발급합니다 (Pro/Business plan 필요).",
 }
 
 const STEP_LABELS = ["인증 정보", "검증", "연결 완료"]

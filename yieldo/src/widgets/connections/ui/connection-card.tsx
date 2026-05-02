@@ -78,18 +78,35 @@ export function ConnectionCard({ connection, href, onClick }: ConnectionCardProp
   const cta = (live.status && LIVE_CTA_OVERRIDE[live.status]) ?? PRIMARY_CTA[connection.status]
   const liveLabel = live.status ? LIVE_LABEL[live.status] : null
 
-  // Phosphor accent line on active cards (Bloomberg terminal aesthetic)
+  // Status-aware hover border (green/amber/red/primary) + phosphor accent on active cards
+  const HOVER_BORDER: Record<ConnectionStatus, string> = {
+    connected: "hover:border-success",
+    warn: "hover:border-warning",
+    error: "hover:border-destructive",
+    disconnected: "hover:border-primary",
+  }
   const cardClass = cn(
     "group relative block w-full text-left rounded-2xl border border-border bg-card p-5",
-    "transition-all hover:border-primary hover:shadow-sm",
+    "transition-all hover:shadow-sm",
+    HOVER_BORDER[connection.status],
     isActive &&
       "before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-[var(--phosphor)]",
   )
 
   const Body = (
     <>
-      {/* 1행 — 브랜드 + 상태 (브랜드 아이콘 블록 제거됨) */}
-      <div className="flex items-start justify-between gap-3">
+      {/* 1행 — 브랜드 chip + 이름 + 상태 */}
+      <div className="flex items-start gap-3">
+        {connection.initials && connection.brandColor && (
+          <div
+            className="flex h-8 w-8 items-center justify-center rounded-lg flex-shrink-0 text-xs font-bold text-white"
+            style={{ background: connection.brandColor }}
+            data-testid="brand-chip"
+            aria-hidden="true"
+          >
+            {connection.initials}
+          </div>
+        )}
         <div className="min-w-0 flex-1">
           <div className="font-bold text-foreground text-base leading-tight truncate">
             {connection.brand}
