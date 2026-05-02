@@ -17,15 +17,18 @@
 
 http://localhost:3000/dashboard/connections 또는 Vercel 프로덕션 URL.
 
-| 카테고리 | 카드 | 상태 라벨 |
-|---|---|---|
-| MMP | AppsFlyer | "연결됨" — 실제 가동 |
-| MMP | Adjust | "미연결" |
-| 실험 | Statsig | "미연결" |
-| 재무 | 재무 직접 입력 | "미연결" → 입력 후 "연결됨" |
-| 시장 | GameAnalytics | "미연결" |
+페이지 상단 stats header — 전체 12개 connector / N개 연결됨 + 진행률 바 + 4-silo 카운트 칩 (각 사일로당 3개).
 
-> "4개 사일로의 통합 진입점. AppsFlyer는 6시간마다 cron으로 cohort 데이터를 끌어와 LTV 계산에 신선한 신호를 공급합니다. 다른 connector도 같은 패턴으로 들어옵니다."
+| 사일로 | 카드 (3개씩) |
+|---|---|
+| MMP | **AppsFlyer** (실제 가동) · Adjust · Singular |
+| 실험 | Statsig · Firebase · Optimizely |
+| 재무 | **재무 직접 입력** (실제 폼) · QuickBooks · Xero |
+| 시장 | GameAnalytics · Sensor Tower · AppMagic |
+
+각 카드 좌측에 brand color chip + initials (예: AF / AJ / SG / ST / FB / OP / 재 / QB / XR / GA / SN / AM).
+
+> "4개 사일로의 통합 진입점. AppsFlyer는 매일 cron으로 cohort 데이터를 끌어와 LTV 계산에 신선한 신호를 공급합니다. 12개 connector 중 정식 연동은 Phase별 단계 출시 — Sensor Tower / AppMagic 등은 partnership 협의 시 활성화."
 
 **참고**: cron schedule은 Vercel Hobby plan 호환을 위해 매일 18:00 UTC 1회로 설정 (PR-A follow-up `6daeae9`).
 
@@ -67,7 +70,7 @@ AppsFlyer 카드 클릭:
 
 ## 5. Other Connectors — 정직한 placeholder (15초)
 
-Statsig, Adjust, GameAnalytics 카드 중 하나 클릭:
+Statsig / Firebase / Optimizely / Adjust / Singular / GameAnalytics / Sensor Tower / AppMagic / QuickBooks / Xero 중 하나 클릭:
 - 3-step wizard dialog: 자격 정보 → 검증 → 연결 완료
 - footer: "시연용 placeholder — 실제 등록 흐름은 추후 릴리즈에서 활성화됩니다"
 
