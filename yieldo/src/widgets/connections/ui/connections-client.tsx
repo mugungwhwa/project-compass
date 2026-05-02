@@ -11,6 +11,7 @@ import {
 import { loadFinancialInput } from "@/shared/api/financial-input"
 import { ConnectionCard } from "./connection-card"
 import { ConnectionDialog } from "./connection-dialog"
+import { DemoSeedToolbar } from "./demo-seed-toolbar"
 
 export function ConnectionsClient() {
   const [active, setActive] = useState<Connection | null>(null)
@@ -62,6 +63,10 @@ export function ConnectionsClient() {
 
   return (
     <div className="space-y-8">
+      <DemoSeedToolbar
+        hasInput={hasFinancialInput}
+        onChange={refreshFinancial}
+      />
       <div className="flex items-center justify-end gap-2">
         {loading && (
           <span className="text-xs text-muted-foreground">불러오는 중...</span>
