@@ -736,6 +736,9 @@ These users are **business operators**, not data analysts. They want investment 
 | **Project_Yieldo_Data_Sources_Guide.md** | 데이터 소스별 URL, API 사양, 저장 스키마, 수집 스케줄 | Internal dev team (실전 구현 참조) |
 | **Project_Yieldo_Engine_Blueprint.md** | 통계/추론 엔진 구현 블루프린트 — 데이터→예측→번역→판정 전체 파이프라인 코드 | Internal dev team (구현 지침) |
 | **Project_Yieldo_UI_Guide.md** | UI/UX 설계 지침 — 레이아웃, 시그널 시각화, 불확실성 표현, 모듈별 화면 가이드 | Frontend dev (디자인 참조) |
+| **Project_Yieldo_Data_Architecture.md** | 데이터 저장·연산·흐름 명세 — 3-layer storage(L1 Postgres / L2 Redis / L3 GCS), Databricks 미도입 근거, Phase별 진화 경로 | Internal dev team, technical due-diligence |
+| **Project_Yieldo_Data_Policy.md** | 데이터 분류·법적 기반·암호화·감사·라이프사이클 — 4-tier classification(T1 영업비밀~T4 공개), RLS template, Customer-Authorized Agent pattern | Internal, legal review, enterprise security audit |
+| **Project_Yieldo_Demo_Data_Strategy.md** | 시연·세일즈용 데이터 전략 — Schema-level 격리, 3 페르소나(A/B/C), synthetic generators 우선순위, sales workflow | Dev team, sales/BD partner |
 | **`.claude/skills/yieldo-dev/`** | 개발 오케스트레이션 — `/yieldo-dev` 명령으로 병렬 에이전트 디스패치 (SKILL.md + agents.md + tasks.md) | Claude Code 개발 세션 |
 | **`.claude/skills/yieldo-verify/`** | 5-Point 검증 독립 스킬 — `/yieldo-verify` 명령으로 단독 검증 수행 | Claude Code 검증 세션 |
 
